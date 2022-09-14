@@ -5,6 +5,7 @@ import '../../SevicesListAll_Screens/Medicines.dart';
 import '../../SevicesListAll_Screens/Pregnancy.dart';
 import '../../SevicesListAll_Screens/Vactionations.dart';
 import '../../UTILS/Utils.dart';
+import '../CycleTrackingPageViewBuilder/CycleTracking_Page.dart';
 import '../Login.dart';
 import '../Signup.dart';
 import 'package:pet_app/Colors/COLORS.dart';
@@ -33,7 +34,7 @@ static   List<String> ImageName =['Cycle Tracking','Medications','Vaccinations',
 
  static List url = ['assets/png_image/Group 32.png','assets/png_image/Group 32.png','assets/png_image/Group 32.png','assets/png_image/Group 32.png','assets/png_image/Group 32.png'];
 
-   List<Widget> PageRoute =[Login(),Medicines(),Vaccinations(),Deworming(),Pregnancy()];
+   List<Widget> PageRoute =[CycleTrackingPage(),Medicines(),Vaccinations(),Deworming(),Pregnancy()];
 
       final List<DetailModel> DetailData = List.generate(
         ImageName.length,

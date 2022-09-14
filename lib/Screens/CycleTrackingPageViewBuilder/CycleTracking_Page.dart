@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:page_indicator/page_indicator.dart';
 import 'package:pet_app/Screens/Add_Pets/addPet1.dart';
-import 'package:pet_app/SevicesListAll_Screens/Cycle_Tracking.dart';
+import 'package:pet_app/Screens/CycleTrackingPageViewBuilder/Cycle_Tracking4.dart';
 
 import '../../Colors/COLORS.dart';
 import '../../UTILS/Utils.dart';
+import 'CycleTracking1.dart';
+import 'CycleTracking3.dart';
+import 'CycleTracking5.dart';
+import 'WheelList_CycleTracking2.dart';
 
 
 class CycleTrackingPage extends StatefulWidget {
@@ -23,11 +27,11 @@ int index = 0;
   int mCurrentIndex = -1;
   List<Widget> pages = [
    
+    Cycle_Tracking1(),
+   CycleTracking2(),
+    CycleTracking3(),
     Cycle_Tracking(),
-    Cycle_Tracking(),
-    Cycle_Tracking(),
-    Cycle_Tracking(),
-    Cycle_Tracking(),
+    CycleTracking5(),
     
 
   ];
@@ -50,54 +54,71 @@ var w;
       
       extendBodyBehindAppBar: true,
    
-      body: Stack(
-        children: [
-
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+      
         
-
-          Container(
-              child: PageView.builder(
-                allowImplicitScrolling: true,
-             
-                // physics: NeverScrollableScrollPhysics(),
-                controller: _controller,
-                onPageChanged: _onPageViewChange,
-                itemBuilder: (context, position) {
-                  return pages[position];
-                },
-                itemCount: 5,
-              )),
-
-
+      
+            Container(
+              height: h*0.7,
+              margin: EdgeInsets.only(top: h*0.125),
+                child: PageView.builder(
+                  allowImplicitScrolling: true,
+               
+                  physics: NeverScrollableScrollPhysics(),
+                  controller: _controller,
+                  onPageChanged: _onPageViewChange,
+                  itemBuilder: (context, position) {
+                    return pages[position];
+                  },
+                  itemCount: 5,
+                )),
+      
+      
+            
+            Container(
+         
+              alignment: Alignment.bottomCenter,
+              padding: EdgeInsets.only(bottom: h*0.040),
+              child:  
+      
+                 Column(
+                   children: [
+                     MaterialButton(
+                      elevation: 0,
+                      minWidth:  w*0.75,
+                      height: h*0.057,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10),
+                      
+                      
+                      ),
+                      
+                      color:
+               GREEN_CLR,
+                      onPressed: (){
+                       
+                           print(mCurrentIndex);
+                              _controller.nextPage(
+                                  duration: _kDuration, curve: _kCurve);
+                      },
+                      child:styleText( "Next",WHITE_CLR, FontWeight.normal, 15)),
+      
+                      SizedBox(height: h*0.020,),
+      
+                       GestureDetector(onTap: (){
           
-          Container(
-       
-            alignment: Alignment.bottomCenter,
-            padding: EdgeInsets.only(bottom: 50),
-            child:  
-
-
-               MaterialButton(
-                elevation: 0,
-                minWidth:  w*0.5,
-                height: h*0.057,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10),
-                
-                
-                ),
-                
-                color:
-             GREEN_CLR,
-                onPressed: (){
-                 
-                     print(mCurrentIndex);
-                        _controller.nextPage(
-                            duration: _kDuration, curve: _kCurve);
-                },
-                child:styleText( "Continue",WHITE_CLR, FontWeight.normal, 15))
-       
-          )
-        ],
+        }, child: styleText("Skip", GREEN_CLR, FontWeight.normal, 15)),
+                   ],
+                 ),
+         
+            ),
+      
+               
+      
+          ],
+        ),
       ),
     );
   }

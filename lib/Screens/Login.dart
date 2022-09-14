@@ -4,8 +4,10 @@ import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Componants/Images&Icons.dart';
 import 'package:pet_app/Provider/LoginProvider.dart';
 import 'package:pet_app/Provider/Provider.dart';
+import 'package:pet_app/Screens/HOME/Home.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 import 'package:provider/provider.dart';
+import 'ForgotPassword.dart';
 import 'Signup.dart';
 
 
@@ -236,8 +238,11 @@ class _LoginState extends State<Login> {
                                   SizedBox(
                                     width: w * 0.005,
                                   ),
-                                  styleText(FORGOT_PASSWORD, NON_DARK_CLR,
-                                      FontWeight.normal, 15)
+                                  GestureDetector(
+                                    onTap: ()=>Navigate_to(context, ForgotPassword()),
+                                    child: styleText(FORGOT_PASSWORD, NON_DARK_CLR,
+                                        FontWeight.normal, 15),
+                                  )
                                 ],
                               ),
                               SizedBox(
@@ -254,7 +259,7 @@ class _LoginState extends State<Login> {
                                     setState(() {
                                       
                                     });
-                                   Navigate_to(context, Signup());
+                                   Navigate_to(context, Home());
                                    }
                                   
           

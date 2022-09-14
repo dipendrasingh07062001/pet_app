@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/parser.dart';
 import 'package:pet_app/Colors/COLORS.dart';
+import 'package:pet_app/Screens/EnterOTP.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 import 'package:provider/provider.dart';
 
@@ -128,6 +129,8 @@ var w;
                                   DefaultButton(text: "Forgot Password", ontap: (){
                                     if(_formkey.currentState!.validate()){
                                       emailError = "";
+
+                                      Navigate_to(context, EnterOTP());
    
                                     }
                                   }, fontsize: 18, height: h*0.060, width: w*1),

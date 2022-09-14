@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../Colors/COLORS.dart';
-import '../UTILS/Utils.dart';
+import '../../Colors/COLORS.dart';
+import '../../UTILS/Utils.dart';
 
 class Cycle_Tracking extends StatefulWidget {
   const Cycle_Tracking({super.key});
@@ -31,9 +31,11 @@ var w;
     
    body: Padding(
      padding:  EdgeInsets.all(h*0.020),
-     child: Column(children: [
+     child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
 
-      styleText("Some factors affect your pet’s  \n cycle. are your pet currently?", DARK_CLR, FontWeight.bold, 20),
+      styleText("Some factors affect your pet’s \ncycle. are your pet currently?", DARK_CLR, FontWeight.bold, 20),
     DefaultRadioButton(text: "Pregnant", groupValue: _prengnant, value: 1, ontap: (value){
       setState(() {
 _prengnant = value!;
@@ -70,14 +72,7 @@ _prengnantvalue ="None of these";
     }
     ),
 
-SizedBox(height: h*0.22,),
 
-    DefaultButton(text: "Next", ontap: (){}, fontsize: 16, height: h*0.06, width: w*1),
-    SizedBox(height: h*0.010,),
-
-    GestureDetector(onTap: (){
-      
-    }, child: styleText("Skip", GREEN_CLR, FontWeight.normal, 15))
           ])
           ,
            )

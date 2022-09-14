@@ -19,7 +19,7 @@ import 'SevicesListAll_Screens/Add_Deworming.dart';
 import 'SevicesListAll_Screens/Add_Medicine.dart';
 import 'SevicesListAll_Screens/Add_Pregnancy.dart';
 import 'SevicesListAll_Screens/Add_Vaccinations.dart';
-import 'SevicesListAll_Screens/Cycle_Tracking.dart';
+import 'Screens/CycleTrackingPageViewBuilder/Cycle_Tracking4.dart';
 
 void main() {
   runApp( MyApp(),
@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
          buttonColor: BLACK_CLR,
         primarySwatch: Colors.blue,
       ),
-      home:  CycleTrackingPage(),
+      home:  Splash(),
     
     
     );

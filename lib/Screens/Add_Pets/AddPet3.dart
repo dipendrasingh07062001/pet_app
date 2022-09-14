@@ -26,8 +26,13 @@ class _Addpet3State extends State<Addpet3> {
     h = MediaQuery.of(context).size.height;
     w =MediaQuery.of(context).size.width;
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+
+        Padding(
+          padding:  EdgeInsets.only(left: w*0.040),
+          child: styleText("Upload Pictures", DARK_CLR, FontWeight.bold, 19),
+        ),
       
   Row(
   crossAxisAlignment: CrossAxisAlignment.center,
@@ -44,7 +49,7 @@ class _Addpet3State extends State<Addpet3> {
                         alignment: Alignment.center,
                         height: h*0.16,
                         width: w*0.4,
-                        margin: EdgeInsets.only(top: h*0.15),
+                    margin: EdgeInsets.only(top: h*0.020),
                         decoration: BoxDecoration(
                           color: WHITE70_CLR ,
                           borderRadius: BorderRadius.circular(8),
@@ -82,7 +87,7 @@ class _Addpet3State extends State<Addpet3> {
                       alignment: Alignment.center,
                       height: h*0.16,
                       width: w*0.4,
-                      margin: EdgeInsets.only(top: h*0.15),
+                      margin: EdgeInsets.only(top: h*0.020),
                       decoration: BoxDecoration(
                         color: WHITE70_CLR ,
                         borderRadius: BorderRadius.circular(8),
@@ -139,60 +144,18 @@ Align(
     
   
      return   Container(
-  
-    
-  
-      
-  
+
       alignment: Alignment.center,
-  
-      
-  
-    
-  
-      
-  
-    
   
         margin: EdgeInsets.only(top: h*0.040,left: 10,right: 5),
   
-    
-  
-      
-  
-    
-  
         height: h*0.8,
-  
-    
-  
-      
-  
-    
-  
+
         width: w*0.26,
-  
-    
-  
-      
-  
-    
   
         decoration:BoxDecoration(borderRadius: BorderRadius.circular(20),
   
-    
-  
-      
-  
-    
-  
           border: Border.all(color: GRAY_CLR.withOpacity(0.5)),
-  
-    
-  
-      
-  
-    
   
          color: FADE_BLUE_CLR.withOpacity(0.3),),
   

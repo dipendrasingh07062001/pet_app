@@ -44,13 +44,17 @@ final List<PetsModal> PetDetails = List.generate(petName.length, (index) => Pets
     return Scaffold(
       backgroundColor: WHITE70_CLR,
      
-  body: Column(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
+  body: Padding(
+ padding: const EdgeInsets.only(left: 20,right: 20,),
+     child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      
+      children: [
+      
+      TutorialText("Select type", DARK_CLR, FontWeight.bold, 19),
 
-      Padding(
-        padding: const EdgeInsets.only(left: 20,right: 20,top: 15),
-        child: GridView.builder(
+
+        GridView.builder(
           itemCount: petName.length,
          scrollDirection: Axis.vertical,
          
@@ -88,8 +92,8 @@ final List<PetsModal> PetDetails = List.generate(petName.length, (index) => Pets
 
          },
           ),
-      ),
-    ],
+      ],
+    ),
   ),
     );
   }

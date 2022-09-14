@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_app/Colors/COLORS.dart';
+import 'package:pet_app/Screens/Add_Pets/addPet.dart';
 import 'package:pet_app/Screens/HOME/ServicesList.dart';
 import 'package:pet_app/Screens/Login.dart';
 import 'package:pet_app/Screens/Signup.dart';
@@ -166,7 +167,9 @@ class _HomeState extends State<Home> {
                       height: h*0.042,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
                       color: GREEN_CLR,
-                      onPressed: (){},child: styleText("Add New Pet", WHITE70_CLR, FontWeight.normal, 13),),
+                      onPressed: (){
+                        Navigate_to(context, AddPetpage());
+                      },child: styleText("Add New Pet", WHITE70_CLR, FontWeight.normal, 13),),
                   ))
                
               ],

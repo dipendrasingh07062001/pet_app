@@ -57,24 +57,34 @@ AppBar DefaultAppBar(
   String _text
 ){
   return  AppBar(centerTitle: true,
-      toolbarHeight: 55,
+      toolbarHeight: 60,
       backgroundColor: WHITE70_CLR,
       elevation: 1,
-      title: styleText( "Cycle Tracking", DARK_CLR, FontWeight.bold, 17), 
+      title: styleText( _text, DARK_CLR, FontWeight.bold, 17), 
       );
 }
 
 //DefultText
 Text styleText(
-    String _value, Color _color, FontWeight _weight, double _fontSize) {
+    String _value, Color _color, FontWeight _weight, double _fontSize,) {
+  return Text(
+    _value,
+    style: TextStyle(color: _color, fontWeight: _weight, fontSize: _fontSize),
+    textAlign: TextAlign.start,
+  );
+}
+
+
+
+
+Text TutorialText(
+    String _value, Color _color, FontWeight _weight, double _fontSize,) {
   return Text(
     _value,
     style: TextStyle(color: _color, fontWeight: _weight, fontSize: _fontSize),
     textAlign: TextAlign.center,
   );
 }
-
-
 
 
   class DefaultRadioButton extends StatelessWidget{

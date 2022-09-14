@@ -67,13 +67,13 @@ class _TutorialState extends State<Tutorial> {
                 ,
 
 
-           isClick==false? styleText(TITLE, DARK_CLR, FontWeight.bold, 25):styleText(TITLE, DARK_CLR, FontWeight.bold, 25),
+           isClick==false? TutorialText(TITLE, DARK_CLR, FontWeight.bold, 25):TutorialText(TITLE, DARK_CLR, FontWeight.bold, 25),
                 SizedBox(
                   height: h*0.010,
                 ),
 
-          isClick==false? styleText(TUTORIAL_SUB_TITLE, DARK_CLR, FontWeight.normal, 18):
-                          styleText(TUTORIAL_SUB_TITLE, DARK_CLR, FontWeight.normal, 18),
+          isClick==false? TutorialText(TUTORIAL_SUB_TITLE, DARK_CLR, FontWeight.normal, 18):
+                          TutorialText(TUTORIAL_SUB_TITLE, DARK_CLR, FontWeight.normal, 18),
 
 
 

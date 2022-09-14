@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/parser.dart';
 import 'package:pet_app/Colors/COLORS.dart';
+import 'package:pet_app/Screens/ChangePassword.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 import 'package:provider/provider.dart';
 
@@ -296,7 +297,7 @@ String? otp;
                                   DefaultButton(text: "Verify", ontap: (){
                                     if(_formkey.currentState!.validate()){
                                     
-   
+                                      Navigate_to(context, ChangePassword());
                                     }
                                   }, fontsize: 18, height: h*0.060, width: w*1),
    

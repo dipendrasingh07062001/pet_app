@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:page_indicator/page_indicator.dart';
 import 'package:pet_app/Screens/Add_Pets/addPet1.dart';
+import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 import '../../Colors/COLORS.dart';
 import '../../UTILS/Utils.dart';
@@ -53,12 +54,31 @@ var w;
       
       extendBodyBehindAppBar: true,
    
-      body: Stack(
+      body: Column(
         children: [
 
-        
+          
+              Container(
+                padding: EdgeInsets.all(15),
+                margin: EdgeInsets.only(top: 120),
+                child: StepProgressIndicator(
+    totalSteps: 3,
+    currentStep: 1,
+    size: 20,
+    selectedColor: Colors.amber,
+    unselectedColor: Colors.black,
+    roundedEdges: Radius.circular(10),
+    gradientColor: LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [Colors.orange, Colors.white],
+    ),
+),
+              ),
 
           Container(
+            height: 500,
+            // margin: EdgeInsets.only(top: h*0.060),
               child: PageView.builder(
                 allowImplicitScrolling: true,
              
@@ -72,11 +92,13 @@ var w;
               )),
 
 
+
+
           
           Container(
        
             alignment: Alignment.bottomCenter,
-            padding: EdgeInsets.only(bottom: 50),
+          
             child:  
 
 
@@ -107,6 +129,7 @@ var w;
 
   _onPageViewChange(int page) {
     setState(() {
+     
       mCurrentIndex = page;
       // print(mCurrentIndex);
     });

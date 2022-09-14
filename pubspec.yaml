@@ -41,6 +41,9 @@ dependencies:
   page_indicator: ^0.4.1
   image_picker: ^0.8.5
   intl: ^0.17.0
+  flutter_calendar_carousel: ^2.4.0
+  flutter_calendar_widget: ^0.0.2
+  step_progress_indicator: ^1.0.2
 
 dev_dependencies:
   flutter_test:
