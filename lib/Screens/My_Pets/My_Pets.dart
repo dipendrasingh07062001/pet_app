@@ -6,6 +6,7 @@ import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Screens/HOME/ServicesList.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 
+import '../Add_Pets/addPet.dart';
 import '../Add_Pets/addPet1.dart';
 
 class My_Pets extends StatefulWidget {
@@ -27,17 +28,15 @@ class _My_PetsState extends State<My_Pets> {
 
     return Scaffold(
       backgroundColor: WHITE70_CLR,
-      appBar: AppBar(centerTitle: true,
-      backgroundColor: WHITE70_CLR,
-      elevation: 1,
-      title: styleText( "My Pets", DARK_CLR, FontWeight.bold, 17), 
-      ),
+      appBar: DefaultAppBar("My Pet"),
 
 
        floatingActionButton: FloatingActionButton(
         backgroundColor: WHITE70_CLR,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50)),side: BorderSide(color: GREEN_CLR)),
-        onPressed: (){},child: Icon(Icons.add,size: 40,color: GREEN_CLR,),heroTag: "b1",),
+        onPressed: (){
+          Navigate_to(context, AddPetpage());
+        },child: Icon(Icons.add,size: 40,color: GREEN_CLR,),heroTag: "b1",),
 
       body: ListView.builder(
         scrollDirection: Axis.vertical,
@@ -87,8 +86,8 @@ class _My_PetsState extends State<My_Pets> {
                      SizedBox(
                       height: h*0.040,
                        child: GestureDetector(
-                        onTap: ()=>Navigate_to(context, AddPets()),
-                        child: CircleAvatar(backgroundColor: FADE_BLUE_CLR,child: Icon(Icons.edit,color: WHITE70_CLR,),),),
+                        onTap: ()=>Navigate_to(context, AddPetpage()),
+                        child: CircleAvatar(backgroundColor: FADE_BLUE_CLR,child: Icon(Icons.edit,color: WHITE70_CLR,size: 20,),),),
                      ),
 
                 SizedBox(width: w*0.010,),
@@ -96,6 +95,11 @@ class _My_PetsState extends State<My_Pets> {
                 SizedBox(
                   height: h*0.040,
                   child: GestureDetector(
+                    onTap: (){
+                      setState(() {
+                        _Delete(context);
+                      });
+                    },
               child: CircleAvatar(backgroundColor: FADE_BLUE_CLR,child: Icon(Icons.delete,color: WHITE70_CLR,size: 20,),),
               
         ),
@@ -118,4 +122,50 @@ class _My_PetsState extends State<My_Pets> {
       ),
     );
   }
+}
+
+
+
+
+
+Future<void> _Delete(BuildContext context) {
+var h;
+var w;
+
+h= MediaQuery.of(context).size.height;
+w= MediaQuery.of(context).size.width;
+  return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          title: Center(
+            child: TutorialText("Are you sure you want to delete this pet?", BLACK_CLR, FontWeight.normal, 17),
+          ),
+          content: Container(
+            height: h*0.15,
+            width: w*0.32,
+            child: Column(
+              children: [
+
+                SizedBox(height: h*0.010,),
+
+                DefaultButton(text: "Delete", ontap: (){
+                  Navigator.of(context).pop();
+                }, fontsize: 17, height: 40, width: 150),
+
+                SizedBox(height: 20,),
+
+                GestureDetector(
+                  onTap: ()=>Navigator.of(context).pop(),
+                  child: styleText("Cancel", GREEN_CLR, FontWeight.normal, 17)),
+               
+                    ],
+                  ),
+                ),
+              
+            
+          
+        );
+      });
 }

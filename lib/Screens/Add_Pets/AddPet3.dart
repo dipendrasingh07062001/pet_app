@@ -29,6 +29,8 @@ class _Addpet3State extends State<Addpet3> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
 
+
+SizedBox(height: h*0.15,),
         Padding(
           padding:  EdgeInsets.only(left: w*0.040),
           child: styleText("Upload Pictures", DARK_CLR, FontWeight.bold, 19),

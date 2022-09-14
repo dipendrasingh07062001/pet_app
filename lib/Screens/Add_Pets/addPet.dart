@@ -21,6 +21,8 @@ int index = 0;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
+  final List text = ["Select Type","Fill the Details","Upload Pictures"];
+
   int mCurrentIndex = -1;
   List<Widget> pages = [
    
@@ -54,75 +56,70 @@ var w;
       
       extendBodyBehindAppBar: true,
    
-      body: Column(
-        children: [
-
-          
-              Container(
-                padding: EdgeInsets.all(15),
-                margin: EdgeInsets.only(top: 120),
-                child: StepProgressIndicator(
-    totalSteps: 3,
-    currentStep: 1,
-    size: 20,
-    selectedColor: Colors.amber,
-    unselectedColor: Colors.black,
-    roundedEdges: Radius.circular(10),
-    gradientColor: LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: [Colors.orange, Colors.white],
-    ),
-),
-              ),
-
-          Container(
-            height: 500,
-            // margin: EdgeInsets.only(top: h*0.060),
-              child: PageView.builder(
-                allowImplicitScrolling: true,
-             
-                // physics: NeverScrollableScrollPhysics(),
-                controller: _controller,
-                onPageChanged: _onPageViewChange,
-                itemBuilder: (context, position) {
-                  return pages[position];
-                },
-                itemCount: 3,
-              )),
-
-
-
-
-          
-          Container(
-       
-            alignment: Alignment.bottomCenter,
-          
-            child:  
-
-
-               MaterialButton(
-                elevation: 0,
-                minWidth:  mCurrentIndex==2?w*0.7: w*0.5,
-                height: h*0.057,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10),
-                side: mCurrentIndex==2? BorderSide(color:GREEN_CLR ):BorderSide(color: Colors.transparent)
-                
-                ),
-                
-                color:
-                mCurrentIndex==2?WHITE_CLR: GREEN_CLR,
-                onPressed: (){
+      body: Padding(
+        padding:  EdgeInsets.only(top:h*0.020,left: w*0.030,right: w*0.030),
+        child: Stack(
+          children: [
+              PageView.builder(
+           
+              physics: NeverScrollableScrollPhysics(),
+              controller: _controller,
+              onPageChanged: _onPageViewChange,
+              itemBuilder: (context, position) {
+                return pages[position];
+              },
+              itemCount: 3,
+            ),
                  
-                     print(mCurrentIndex);
-                        _controller.nextPage(
-                            duration: _kDuration, curve: _kCurve);
-                },
-                child:styleText(  mCurrentIndex==2?"Skip and Continue":"Continue",mCurrentIndex==2?FADE_GREEN_CLR: WHITE_CLR, FontWeight.normal, 15))
-       
-          )
-        ],
+                    Container(
+                  padding: EdgeInsets.all(1),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: GREEN_CLR,width: 1.5)),
+                  margin: EdgeInsets.only(top: h*0.125),
+                  child: StepProgressIndicator(
+                    direction: Axis.horizontal,
+                    selectedSize: 12,
+
+    totalSteps: 3,
+    currentStep:mCurrentIndex+1,
+    size: 10,
+    selectedColor:GREEN_CLR,
+    unselectedColor:WHITE70_CLR,
+    roundedEdges: Radius.circular(20),
+   
+),
+                ),
+
+            
+            Container(
+         padding: EdgeInsets.only(bottom: 20),
+              alignment: Alignment.bottomCenter,
+            
+              child:  
+
+                 MaterialButton(
+                  elevation: 0,
+                  minWidth:  mCurrentIndex==2?w*0.7: w*0.55,
+                  height: h*0.057,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10),
+                  side: mCurrentIndex==2? BorderSide(color:GREEN_CLR ):BorderSide(color: Colors.transparent)
+                  
+                  ),
+                  
+                  color:
+                  mCurrentIndex==2?WHITE_CLR: GREEN_CLR,
+                  onPressed: (){
+                   
+                       print(mCurrentIndex);
+                          _controller.nextPage(
+                              duration: _kDuration, curve: _kCurve);
+                  },
+                  child:styleText(  mCurrentIndex==2?"Skip and Continue":"Continue",mCurrentIndex==2?FADE_GREEN_CLR: WHITE_CLR, FontWeight.normal, 15))
+         
+            )
+          ],
+        ),
       ),
     );
   }

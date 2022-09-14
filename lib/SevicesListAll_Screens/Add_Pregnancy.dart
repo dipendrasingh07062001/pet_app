@@ -35,6 +35,19 @@ class _Add_PregnancyState extends State<Add_Pregnancy> {
 
 
 
+ String? _selectedTime;
+
+  Future<void> _show() async {
+    final TimeOfDay? result =
+        await showTimePicker(context: context, initialTime: TimeOfDay.now());
+    if (result != null) {
+      setState(() {
+        _selectedTime = result.format(context);
+      });
+    }
+  }
+
+
   
 int _radioSelected = 1;
 String? _radioVal;
@@ -158,7 +171,7 @@ var w;
                           Container(
                                       padding: EdgeInsets.only(left: 10),
                                         alignment: Alignment.center,
-                                        height: h*0.07,
+                                        height: h*0.065,
                                         margin: EdgeInsets.only(top: h * 0.010),
                                     decoration: BoxDecoration(
                                 
@@ -377,15 +390,15 @@ var w;
                               child:Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text("00",style: TextStyle(color: GRAY_CLR,fontSize: 14),),
+                                  Text(_selectedTime != null ? _selectedTime! : '00:05 AM',style: TextStyle(color: GRAY_CLR,fontSize: 14),),
                             
                                  GestureDetector(
                                   onTap: (){
                                     setState(() {
-                                     
+                                     _show();
                                     });
                                   },
-                                  child: Icon(Icons.timelapse,color: GRAY_CLR.withOpacity(0.5),size: 20,)),
+                                  child: Icon(Icons.access_time_rounded,color: GRAY_CLR.withOpacity(0.5),size: 20,)),
                                 
                                   ],
                               ),
@@ -400,7 +413,7 @@ var w;
 
                       Align(
                         alignment: Alignment.bottomCenter,
-                        child: DefaultButton(text: "Continue", ontap: (){}, fontsize: 15, height: h*0.060, width: w*0.65))
+                        child: DefaultButton(text: "Continue", ontap: (){}, fontsize: 15, height: h*0.060, width: w*0.8))
      
         ]
                           ),

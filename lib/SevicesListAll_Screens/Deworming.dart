@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Screens/HOME/ServicesList.dart';
+import 'package:pet_app/SevicesListAll_Screens/Add_Deworming.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 
 class Deworming extends StatefulWidget {
@@ -26,17 +27,7 @@ class _DewormingState extends State<Deworming> {
 
     return Scaffold(
       backgroundColor: WHITE70_CLR,
-      appBar: AppBar(centerTitle: true,
-      backgroundColor: WHITE70_CLR,
-      elevation: 1,
-      title: styleText( "Demorning", DARK_CLR, FontWeight.bold, 17), 
-      ),
-
-
-      //  floatingActionButton: FloatingActionButton(
-      //   backgroundColor: WHITE70_CLR,
-      //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50)),side: BorderSide(color: GREEN_CLR)),
-      //   onPressed: (){},child: Icon(Icons.add,size: 40,color: GREEN_CLR,),heroTag: "b1",),
+      appBar: DefaultAppBar("Deworming"),
 
       body: ListView.builder(
         scrollDirection: Axis.vertical,
@@ -66,9 +57,14 @@ class _DewormingState extends State<Deworming> {
 
       
                   SizedBox(
-                   height: h*0.050,
+                   height: h*0.040,
                     child: GestureDetector(
-                     child: CircleAvatar(backgroundColor: FADE_BLUE_CLR,child: Icon(Icons.edit,color: WHITE70_CLR,),),),
+                      onTap: (){
+                        setState(() {
+                          Navigate_to(context, Add_Deworming());
+                        });
+                      },
+                     child: CircleAvatar(backgroundColor: FADE_BLUE_CLR,child: Icon(Icons.edit,color: WHITE70_CLR,size: 20,),),),
                   ),
 
 
@@ -113,7 +109,7 @@ class _DewormingState extends State<Deworming> {
                    Container(
                     height: h*0.08,
                     width: w*0.5,
-                    margin: EdgeInsets.only(top: h*0.010,bottom: h*0.015),
+                    margin: EdgeInsets.only(bottom: h*0.010),
                     decoration: BoxDecoration(borderRadius: BorderRadius.circular(5),
                     color: WHITE_CLR,
                     boxShadow: [
@@ -133,7 +129,7 @@ class _DewormingState extends State<Deworming> {
       
       
                    Divider(thickness: 1,color: GRAY_CLR.withOpacity(0.1),),
-                     SizedBox(height: h*0.015,),
+                     SizedBox(height: h*0.010,),
       
                    Row(children: [
                  
@@ -143,7 +139,7 @@ class _DewormingState extends State<Deworming> {
                    ],),
       
       
-                   SizedBox(height: h*0.020,),
+                   SizedBox(height: h*0.010,),
       
 Row(
                     crossAxisAlignment: CrossAxisAlignment.start,

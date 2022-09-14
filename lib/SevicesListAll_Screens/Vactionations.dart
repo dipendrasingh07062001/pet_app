@@ -6,6 +6,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Screens/HOME/ServicesList.dart';
+import 'package:pet_app/SevicesListAll_Screens/Add_Vaccinations.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 
 class Vaccinations extends StatefulWidget {
@@ -27,17 +28,14 @@ class _VaccinationsState extends State<Vaccinations> {
 
     return Scaffold(
       backgroundColor: WHITE70_CLR,
-      appBar: AppBar(centerTitle: true,
-      backgroundColor: WHITE70_CLR,
-      elevation: 1,
-      title: styleText( "Vaccinations", DARK_CLR, FontWeight.bold, 17), 
-      ),
-
+      appBar: DefaultAppBar("Vaccination"),
 
        floatingActionButton: FloatingActionButton(
         backgroundColor: WHITE70_CLR,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50)),side: BorderSide(color: GREEN_CLR)),
-        onPressed: (){},child: Icon(Icons.add,size: 40,color: GREEN_CLR,),heroTag: "b1",),
+        onPressed: (){
+          Navigate_to(context, Add_Vaccinations());
+        },child: Icon(Icons.add,size: 40,color: GREEN_CLR,),heroTag: "b1",),
 
       body: ListView.builder(
         scrollDirection: Axis.vertical,
@@ -108,15 +106,15 @@ class _VaccinationsState extends State<Vaccinations> {
                       
               
                  SizedBox(
-                  height: h*0.050,
+                  height: h*0.040,
                    child: GestureDetector(
                     child: CircleAvatar(backgroundColor: FADE_BLUE_CLR,child: Icon(Icons.edit,color: WHITE70_CLR,),),),
                  ),
 
-SizedBox(width: w*0.030,),
+SizedBox(width: w*0.010,),
 
             SizedBox(
-              height: h*0.050,
+              height: h*0.040,
               child: GestureDetector(
           child: CircleAvatar(backgroundColor: FADE_BLUE_CLR,child: Icon(Icons.delete,color: WHITE70_CLR,size: 20,),),
           

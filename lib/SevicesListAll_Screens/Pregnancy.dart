@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Screens/HOME/ServicesList.dart';
+import 'package:pet_app/SevicesListAll_Screens/Add_Pregnancy.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 
 class Pregnancy extends StatefulWidget {
@@ -24,18 +25,7 @@ class _PregnancyState extends State<Pregnancy> {
 
     return Scaffold(
       backgroundColor: WHITE70_CLR,
-      appBar: AppBar(centerTitle: true,
-      backgroundColor: WHITE70_CLR,
-      elevation: 1,
-      title: styleText( "Pregnancy", DARK_CLR, FontWeight.bold, 17), 
-      ),
-
-
-      //  floatingActionButton: FloatingActionButton(
-      //   backgroundColor: WHITE70_CLR,
-      //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50)),side: BorderSide(color: GREEN_CLR)),
-      //   onPressed: (){},child: Icon(Icons.add,size: 40,color: GREEN_CLR,),heroTag: "b1",),
-
+      appBar: DefaultAppBar("Pregnancy"),
       body: ListView.builder(
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
@@ -64,9 +54,12 @@ class _PregnancyState extends State<Pregnancy> {
 
       
                   SizedBox(
-                   height: h*0.050,
+                   height: h*0.040,
                     child: GestureDetector(
-                     child: CircleAvatar(backgroundColor: FADE_BLUE_CLR,child: Icon(Icons.edit,color: WHITE70_CLR,),),),
+                      onTap: (){
+                        Navigate_to(context, Add_Pregnancy());
+                      },
+                     child: CircleAvatar(backgroundColor: FADE_BLUE_CLR,child: Icon(Icons.edit,color: WHITE70_CLR,size: 20,),),),
                   ),
 
 
@@ -125,7 +118,7 @@ class _PregnancyState extends State<Pregnancy> {
                    ],),
       
       
-                   SizedBox(height: h*0.020,),
+                   SizedBox(height: h*0.010,),
       
                    
 

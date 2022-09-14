@@ -36,7 +36,17 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
     }
   }
 
+  String? _selectedTime;
 
+  Future<void> _show() async {
+    final TimeOfDay? result =
+        await showTimePicker(context: context, initialTime: TimeOfDay.now());
+    if (result != null) {
+      setState(() {
+        _selectedTime = result.format(context);
+      });
+    }
+  }
 
   
 int _radioSelected = 1;
@@ -52,14 +62,7 @@ var w;
     return Scaffold(
       
        backgroundColor: WHITE70_CLR,
-      appBar: AppBar(centerTitle: true,
-      toolbarHeight: h*0.08,
-      backgroundColor: WHITE70_CLR,
-      elevation: 1,
-      title: styleText( "Add Vaccinations", DARK_CLR, FontWeight.bold, 17), 
-      ),
-      
-     
+      appBar: DefaultAppBar("Add Vaccination"),
    body: Padding(
      padding:  EdgeInsets.only(left: w*0.030,right: w*0.030,top: h*0.020,bottom: h*0.050),
      child: SingleChildScrollView(
@@ -67,7 +70,7 @@ var w;
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
      
-       styleText("Vaccination Name", BLACK_CLR, FontWeight.bold, 15),
+       styleText("Vaccination Name", BLACK_CLR, FontWeight.normal, 15),
        
         Container(
                               height: h*0.065,
@@ -98,7 +101,7 @@ var w;
                                   .toList(),
      
                              
-                              icon: Icon(Icons.keyboard_arrow_down_sharp,color: GRAY_CLR,size: 25,),
+                              icon: Icon(Icons.keyboard_arrow_down_sharp,color: GRAY_CLR.withOpacity(0.5),size: 25,),
                               iconSize: 30,
                              
      
@@ -108,7 +111,7 @@ var w;
      
                         SizedBox(height: h*0.020,),
      
-      styleText("Vacccination Status", BLACK_CLR, FontWeight.bold, 15),
+      styleText("Vacccination Status", BLACK_CLR, FontWeight.normal, 15),
        
         Container(
                               height: h*0.065,
@@ -139,7 +142,7 @@ var w;
                                   .toList(),
      
                              
-                              icon: Icon(Icons.keyboard_arrow_down_sharp,color: GRAY_CLR,size: 25,),
+                              icon: Icon(Icons.keyboard_arrow_down_sharp,color: GRAY_CLR.withOpacity(0.5),size: 25,),
                               iconSize: 30,
                              
      
@@ -147,7 +150,7 @@ var w;
                           ),
                         ),
                         SizedBox(height: h*0.020,),
-                       styleText("Vacccination Date", BLACK_CLR, FontWeight.bold, 15),
+                       styleText("Vacccination Date", BLACK_CLR, FontWeight.normal, 15),
        
                         Container(
                               height: h*0.065,
@@ -169,7 +172,7 @@ var w;
                                   _datechange1(context);
                                 });
                               },
-                              child: Icon(Icons.calendar_month_sharp,color: GRAY_CLR,size: 25,)),
+                              child: Icon(Icons.calendar_month_sharp,color: GRAY_CLR.withOpacity(0.5),size: 20,)),
                             
                               ],
                           ),
@@ -177,11 +180,11 @@ var w;
                             ),
                             SizedBox(height: h*0.020,),
      
-                            styleText("Vacccination Certificate", BLACK_CLR, FontWeight.bold, 15),
+                            styleText("Vacccination Certificate", BLACK_CLR, FontWeight.normal, 15),
   
                              Container(
                     alignment: Alignment.center,
-                    height: h*0.16,
+                    height: h*0.15,
                     width: w*1,
                     margin: EdgeInsets.only(top: h*0.010),
                     decoration: BoxDecoration(
@@ -208,7 +211,7 @@ var w;
      
                            SizedBox(height: h*0.020,),
      
-                        styleText("Reminder", BLACK_CLR, FontWeight.bold, 15),
+                        styleText("Reminder", BLACK_CLR, FontWeight.normal, 15),
                            
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -262,91 +265,81 @@ var w;
               ),
      
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              styleText("At Date", BLACK_CLR, FontWeight.bold, 15),
+                          SizedBox(
+                            width: w*0.45,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                styleText("At Date", BLACK_CLR, FontWeight.normal, 15),
        
-                               Container(
-                                  height: h*0.065,
-                                  padding: EdgeInsets.only(left: w*0.030,right: w*0.030),
-                                  margin: EdgeInsets.only(top: h*0.010),
-                              decoration: BoxDecoration(
-                                color: WHITE_CLR,
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: BORDER_CLR,width: 1)
-                              ),
-                              child:Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text( _currentdate1==null?"":"$_currentdate1",style: TextStyle(color: GRAY_CLR,fontSize: 14),),
-                       
-                                 GestureDetector(
-                                  onTap:() async {
-
-                                    DateTime? pickedDate = await showDatePicker(
-                      context: context, initialDate: DateTime.now(),
-                      firstDate: DateTime(2000), 
-                      lastDate: DateTime(2101)
-                  );
-                  
-                  if(pickedDate != null ){
-                      print(pickedDate);  
-                      String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate); 
-                      print(formattedDate); 
-
-                      setState(() {
-                       
-                      });
-                  }else{
-                      print("Date is not selected");
-                  }
-                },
-        
-           child: Icon(Icons.calendar_month_sharp,color: GRAY_CLR,size: 25,))
-                                
-                                  ],
-                              ),
-     
+                                 Container(
+                                    height: h*0.065,
+                                    padding: EdgeInsets.only(left: w*0.030,right: w*0.030),
+                                    margin: EdgeInsets.only(top: h*0.010),
+                                decoration: BoxDecoration(
+                                  color: WHITE_CLR,
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(color: BORDER_CLR,width: 1)
                                 ),
-                            ],
+                                child:Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text("12/12/1245",style: TextStyle(color: GRAY_CLR,fontSize: 14),),
+                       
+                                   GestureDetector(
+                                    onTap:() async {
 
+                                    },
+        
+                                   child: Icon(Icons.calendar_month_sharp,color: GRAY_CLR.withOpacity(0.5),size: 20,))
+                                  
+                                    ],
+                                ),
+     
+                                  ),
+                              ],
+
+                            ),
                           ),
 
-                            Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              styleText("At Time", BLACK_CLR, FontWeight.bold, 15),
+                            SizedBox(
+                              width: w*0.45,
+                              child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                styleText("At Time", BLACK_CLR, FontWeight.normal, 15),
        
         Container(
-                                  height: h*0.065,
-                                  padding: EdgeInsets.only(left: w*0.030,right: w*0.030),
-                                  margin: EdgeInsets.only(top: h*0.010),
-                              decoration: BoxDecoration(
-                                color: WHITE_CLR,
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: BORDER_CLR,width: 1)
-                              ),
-                              child:Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text("$_currentdate1",style: TextStyle(color: GRAY_CLR,fontSize: 14),),
-                            
-                                 GestureDetector(
-                                  onTap: (){
-                                    setState(() {
-                                      _datechange1(context);
-                                    });
-                                  },
-                                  child: Icon(Icons.timelapse,color: GRAY_CLR,size: 25,)),
-                                
-                                  ],
-                              ),
-     
+                                    height: h*0.065,
+                                    padding: EdgeInsets.only(left: w*0.030,right: w*0.030),
+                                    margin: EdgeInsets.only(top: h*0.010),
+                                decoration: BoxDecoration(
+                                  color: WHITE_CLR,
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(color: BORDER_CLR,width: 1)
                                 ),
-                            ],
+                                child:Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(   _selectedTime != null ? _selectedTime! : '00:8 AM',style: TextStyle(color: GRAY_CLR,fontSize: 14),),
+                              
+                                   GestureDetector(
+                                    onTap: (){
+                                      setState(() {
+                                        _show();
+                                      });
+                                    },
+                                    child: Icon(Icons.access_time_rounded,color: GRAY_CLR.withOpacity(0.5),size: 20,)),
+                                  
+                                    ],
+                                ),
+     
+                                  ),
+                              ],
                           ),
+                            ),
                         ],
                       ),
 
@@ -354,7 +347,9 @@ var w;
 
                       Align(
                         alignment: Alignment.bottomCenter,
-                        child: DefaultButton(text: "Continue", ontap: (){}, fontsize: 15, height: h*0.060, width: w*0.65))
+                        child: DefaultButton(text: "Done", ontap: (){
+                          Navigator.of(context).pop();
+                        }, fontsize: 15, height: h*0.060, width: w*0.8))
      
         ]
                           ),

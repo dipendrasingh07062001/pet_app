@@ -13,6 +13,7 @@ import 'package:pet_app/UTILS/Utils.dart';
 import '../BlogDetails.dart';
 import '../DrawerScreen.dart';
 import '../LocationBottomSeet.dart';
+import '../Reminder.dart';
 
 class Home extends StatefulWidget {
    Home({super.key,});
@@ -183,7 +184,7 @@ class _HomeState extends State<Home> {
       drawer: MyDrawer(),
 
       floatingActionButton: FloatingActionButton(onPressed: (){
-        Navigate_to(context, Blog_Details());
+        Navigate_to(context, Reminder());
       },child: SvgPicture.asset('assets/svg_image/Group 33.svg'),),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
 

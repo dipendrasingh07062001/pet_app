@@ -14,15 +14,7 @@ class _Blog_DetailsState extends State<Blog_Details> {
   Widget build(BuildContext context) {
     return Scaffold(
      backgroundColor: WHITE70_CLR,
-      appBar: AppBar(
-        elevation: 1,
-        centerTitle: true,
-        backgroundColor: WHITE70_CLR,
-        
-        title: styleText("Blog Details" ,DARK_CLR, FontWeight.bold, 17),
-
-   
-      ),
+      appBar: DefaultAppBar("Blog Details"),
 
 
 

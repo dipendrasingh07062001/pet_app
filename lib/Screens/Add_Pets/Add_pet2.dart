@@ -45,7 +45,7 @@ class _AddPet2State extends State<AddPet2> {
     h =MediaQuery.of(context).size.height;
     w=  MediaQuery.of(context).size.width;
     return Padding(
-      padding:  EdgeInsets.only(left: w*0.050,right: w*0.050,),
+      padding:  EdgeInsets.only(left: w*0.050,right: w*0.050,top: h*0.155),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,7 +56,7 @@ class _AddPet2State extends State<AddPet2> {
                                        Container(
                                         padding: EdgeInsets.only(left: 10),
                                           alignment: Alignment.center,
-                                          height: h*0.07,
+                                          height: h*0.065,
                                           margin: EdgeInsets.only(top: h * 0.010),
                                       decoration: BoxDecoration(
                                   
@@ -83,7 +83,7 @@ class _AddPet2State extends State<AddPet2> {
                                             Container(
                                               padding: EdgeInsets.only(left: 10),
                                           alignment: Alignment.center,
-                                          height: h*0.07,
+                                          height: h*0.065,
                                           margin: EdgeInsets.only(top: h * 0.020),
                                       decoration: BoxDecoration(
                                   
@@ -108,7 +108,7 @@ class _AddPet2State extends State<AddPet2> {
       
       
                           Container(
-                            height: h*0.07,
+                            height: h*0.065,
                             margin: EdgeInsets.only(top: h*0.020),
                         decoration: BoxDecoration(
                           color: WHITE_CLR,
@@ -136,7 +136,7 @@ class _AddPet2State extends State<AddPet2> {
                                 .toList(),
       
                             // add extra sugar..
-                            icon: Icon(Icons.keyboard_arrow_down_sharp,color: GRAY_CLR,size: 30,),
+                            icon: Icon(Icons.keyboard_arrow_down_sharp,color: GRAY_CLR.withOpacity(0.5),size: 30,),
                             iconSize: 30,
                            
       
@@ -147,20 +147,13 @@ class _AddPet2State extends State<AddPet2> {
       
                                           
                       Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                       
                         children:<Widget>[
                           SizedBox(
-                            width: w*0.3,
-                            height: h*0.050,
-      
-                            child: RadioListTile(
-                              contentPadding: EdgeInsets.zero,
-                              dense: true,
+                            width: 20,
+                            height: 20,
+                            child: Radio(
                             activeColor: GREEN_CLR,
-                            title: Padding(
-                              padding: const EdgeInsets.only(right:20),
-                              child: Text("Male"),
-                            ),
                             value: "male", 
                             groupValue: gender, 
                             onChanged: (value){
@@ -170,24 +163,23 @@ class _AddPet2State extends State<AddPet2> {
                             },
                   ),
                           ),
+                          SizedBox(width: w*0.030,),
+
+                  styleText("Male", DARK_CLR, FontWeight.normal, 15),
                     
-                     SizedBox(
-                      width: w*0.45,
-                      height: h*0.080,
-                       child: RadioListTile(
-                       contentPadding: EdgeInsets.zero,
-                    dense: true,
-                       activeColor: GREEN_CLR,
-                        title: Text("Female"),
-                        value: "female", 
-                        groupValue: gender, 
-                        onChanged: (value){
-                          setState(() {
-                              gender = value.toString();
-                          });
-                        },
+                     Radio(
+                    
+                     activeColor: GREEN_CLR,
+                  
+                      value: "female", 
+                      groupValue: gender, 
+                      onChanged: (value){
+                        setState(() {
+                            gender = value.toString();
+                        });
+                      },
                   ),
-                     ),
+                         styleText("Female", DARK_CLR, FontWeight.normal, 15),
                         ],
                       ),
       
@@ -195,7 +187,7 @@ class _AddPet2State extends State<AddPet2> {
               
       
                           Container(
-                            height: h*0.07,
+                            height: h*0.065,
                          
                         decoration: BoxDecoration(
                           color: WHITE_CLR,
@@ -227,7 +219,7 @@ class _AddPet2State extends State<AddPet2> {
                               children: [
                                 Text("KG",style: TextStyle(color: GRAY_CLR,fontSize: 15),),
                                 
-                                Icon(Icons.keyboard_arrow_down_sharp,color: GRAY_CLR,size: 30,),
+                                Icon(Icons.keyboard_arrow_down_sharp,color: GRAY_CLR.withOpacity(0.5),size: 30,),
                               ],
                             ),
                             iconSize: 30,
@@ -240,7 +232,7 @@ class _AddPet2State extends State<AddPet2> {
       
                          
                                     Container(
-                            height: h*0.07,
+                            height: h*0.065,
                             margin: EdgeInsets.only(top: h*0.020),
                         decoration: BoxDecoration(
                           color: WHITE_CLR,
@@ -261,7 +253,7 @@ class _AddPet2State extends State<AddPet2> {
                               onTap: (){
                                 _datechange1(context);
                               },
-                              child: Icon(Icons.calendar_month,color: GRAY_CLR,size: 18,))]
+                              child: Icon(Icons.calendar_month,color: GRAY_CLR.withOpacity(0.5),size: 18,))]
                            
                            
       
@@ -275,7 +267,7 @@ class _AddPet2State extends State<AddPet2> {
       
         Container(
                     alignment: Alignment.center,
-                    height: h*0.18,
+                    height: h*0.16,
                     width: w*1,
                     margin: EdgeInsets.only(top: h*0.020),
                     decoration: BoxDecoration(

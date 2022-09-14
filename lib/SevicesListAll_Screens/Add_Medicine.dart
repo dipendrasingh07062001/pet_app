@@ -37,6 +37,17 @@ class _Add_MedicineState extends State<Add_Medicine> {
   }
 
 
+  String? _selectedTime;
+  Future<void> _show() async {
+    final TimeOfDay? result =
+        await showTimePicker(context: context, initialTime: TimeOfDay.now());
+    if (result != null) {
+      setState(() {
+        _selectedTime = result.format(context);
+      });
+    }
+  }
+
 
   
 int _radioSelected = 1;
@@ -55,16 +66,10 @@ var w;
     return Scaffold(
       
        backgroundColor: WHITE70_CLR,
-      appBar: AppBar(centerTitle: true,
-      toolbarHeight: h*0.08,
-      backgroundColor: WHITE70_CLR,
-      elevation: 1,
-      title: styleText( "Medicine", DARK_CLR, FontWeight.bold, 17), 
-      ),
-      
-     
+      appBar: DefaultAppBar("Medicine"),
+  
    body: Padding(
-     padding:  EdgeInsets.only(left: w*0.030,right: w*0.030,top: h*0.020,bottom: h*0.050),
+     padding:  EdgeInsets.only(left: w*0.030,right: w*0.030,top: h*0.020,bottom: h*0.020),
      child: SingleChildScrollView(
        child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -338,15 +343,15 @@ var w;
                         child:Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("00:08 AM",style: TextStyle(color: GRAY_CLR,fontSize: 14),),
+                            Text( _selectedTime != null ? _selectedTime! : '00:08 AM',style: TextStyle(color: GRAY_CLR,fontSize: 14),),
                       
                            GestureDetector(
                             onTap: (){
                               setState(() {
-                               
+                              _show();
                               });
                             },
-                            child: Icon(Icons.timelapse,color: GRAY_CLR.withOpacity(0.5),size: 20,)),
+                            child: Icon(Icons.access_time_rounded,color: GRAY_CLR.withOpacity(0.5),size: 20,)),
                           
                             ],
                         ),
@@ -359,7 +364,9 @@ var w;
 
                       Align(
                         alignment: Alignment.bottomCenter,
-                        child: DefaultButton(text: "Done", ontap: (){}, fontsize: 15, height: h*0.060, width: w*0.75))
+                        child: DefaultButton(text: "Done", ontap: (){
+                          Navigator.of(context).pop();
+                        }, fontsize: 15, height: h*0.060, width: w*0.8))
      
         ]
                           ),
@@ -368,6 +375,7 @@ var w;
 
     );
   }
+  
 
   
 }
