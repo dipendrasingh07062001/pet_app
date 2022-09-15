@@ -27,15 +27,21 @@ var w;
       body: Padding(
         padding:  EdgeInsets.all(h*0.020),
         child: Column(children: [
-             Card(
+            Card(
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                    child: FlutterCalendar(
+                    style: const CalendarStyle(
+                      rangeLineColor: FADE_GREEN_CLR,
+        markerColor: GREEN_CLR,
+    ),
                     isHeaderDisplayed: true,
-                               selectionMode: CalendarSelectionMode.single,
-                              onDayPressed: (DateTime date) {
-                            
-                               print(date);
-                     }
+    selectionMode: CalendarSelectionMode.multiple,                  
+                onMultipleDates: (List<DateTime> dates) {
+              for (var date in dates) {
+               
+            print(date);
+        }
+    },
                  ),
                  ),
 

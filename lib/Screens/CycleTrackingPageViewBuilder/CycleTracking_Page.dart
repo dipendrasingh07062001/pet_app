@@ -8,6 +8,7 @@ import '../../UTILS/Utils.dart';
 import 'CycleTracking1.dart';
 import 'CycleTracking3.dart';
 import 'CycleTracking5.dart';
+import 'Cycle_Tracking6.dart';
 import 'WheelList_CycleTracking2.dart';
 
 
@@ -100,8 +101,14 @@ var w;
                       onPressed: (){
                        
                            print(mCurrentIndex);
+
+
                               _controller.nextPage(
                                   duration: _kDuration, curve: _kCurve);
+
+                                  if(mCurrentIndex==4){
+                                    Navigate_to(context, Cycle_Tracking6());
+                                  }
                       },
                       child:styleText( "Next",WHITE_CLR, FontWeight.normal, 15)),
       

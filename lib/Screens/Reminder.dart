@@ -324,7 +324,7 @@ w= MediaQuery.of(context).size.width;
  
         Container(
                               height: h*0.06,
-                              width: w*0.4,
+                              width: w*0.55,
                               margin: EdgeInsets.only(top: h*0.010),
                           decoration: BoxDecoration(
                             color: WHITE_CLR,
@@ -354,7 +354,7 @@ w= MediaQuery.of(context).size.width;
                                   .toList(),
      
                              
-                              icon: Icon(Icons.keyboard_double_arrow_down,color: GRAY_CLR.withOpacity(0.5),size: 25,),
+                              icon: Icon(Icons.keyboard_arrow_down,color: GRAY_CLR.withOpacity(0.5),size: 25,),
                               iconSize: 25,
                              
      
@@ -367,7 +367,7 @@ w= MediaQuery.of(context).size.width;
 
                 DefaultButton(text: "Add", ontap: (){
                   Navigator.of(context).pop(false);
-                }, fontsize: 17, height: 40, width: 150),
+                }, fontsize: 17, height: 40, width: w*0.55),
 
                 SizedBox(height: 20,),
 

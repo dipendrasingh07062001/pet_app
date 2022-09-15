@@ -4,6 +4,8 @@ import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 
 import 'My_Pets/My_Pets.dart';
+import 'Profile.dart';
+import 'Setting.dart';
 
 class MyDrawer extends StatefulWidget {
   const MyDrawer({super.key});
@@ -91,7 +93,13 @@ class _MyDrawerState extends State<MyDrawer> {
 
                  SvgPicture.asset("assets/svg_icon/Icon feather-user.svg"),
                   SizedBox(width: 10,),
-                    styleText("Profile", WHITE60_CLR, FontWeight.normal, 15),
+                    GestureDetector(
+                      onTap: (){
+                        setState(() {
+                          Navigate_to(context, Profile1());
+                        });
+                      },
+                      child: styleText("Profile", WHITE60_CLR, FontWeight.normal, 15)),
                 ],
                ),
                 SizedBox(height: h*0.025,),
@@ -128,7 +136,11 @@ class _MyDrawerState extends State<MyDrawer> {
 
                    SvgPicture.asset("assets/svg_icon/Icon feather-settings(1).svg"),
                     SizedBox(width: 10,),
-                      styleText("Settings   |  ", WHITE60_CLR, FontWeight.normal, 15),
+                      GestureDetector(
+                        onTap: (){
+                          Navigate_to(context, Setting());
+                        },
+                        child: styleText("Settings   |  ", WHITE60_CLR, FontWeight.normal, 15)),
                            SizedBox(width: 15,),
 
                       GestureDetector(

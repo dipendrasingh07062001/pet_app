@@ -47,7 +47,9 @@ var w;
           child: FloatingActionButton(
           
             backgroundColor: FADE_GREEN_CLR,
-            onPressed: (){},child: Icon(Icons.arrow_back_ios_new),),
+            onPressed: (){
+              Navigator.of(context).pop();
+            },child: Icon(Icons.arrow_back_ios_new),),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,

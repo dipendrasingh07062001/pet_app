@@ -19,4 +19,5 @@ const BORDER_CLR  = Color(0xFFDFDFDF);
 const DROP_CLR = Color(0xFF00000029);
 const TEXT_GREEN_CLR = Color(0xFF28CE00);
 const TFFBORDER_CLR = Color(0xFFD6D6D6);
+const BROUN_CLR  = Color(0xFFF1F1F1);
 

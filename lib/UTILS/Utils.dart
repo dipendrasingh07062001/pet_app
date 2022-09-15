@@ -57,7 +57,7 @@ AppBar DefaultAppBar(
   String _text
 ){
   return  AppBar(centerTitle: true,
-      toolbarHeight: 60,
+      toolbarHeight: 70,
       backgroundColor: WHITE70_CLR,
       elevation: 1,
       title: styleText( _text, DARK_CLR, FontWeight.bold, 17), 
