@@ -50,7 +50,7 @@ class _HomeState extends State<Home> {
       key: _scaffoldKey,
       extendBody: true,
       resizeToAvoidBottomInset: false,
-      backgroundColor: WHITE70_CLR,
+      // backgroundColor: WHITE70_CLR,
         appBar:  AppBar(
         toolbarHeight: h*0.095,
          automaticallyImplyLeading: false,
@@ -60,7 +60,7 @@ class _HomeState extends State<Home> {
            GestureDetector(
             onTap: () => _scaffoldKey.currentState!.openDrawer(),
     
-            child: Image.asset('assets/png_icon/Icon ionic-ios-menu.png')),
+            child: Image.asset('assets/png_icon/Icon ionic-ios-menu.png',color: GRAY_CLR,)),
           iconTheme: IconThemeData(color: BLACK_CLR),
        backgroundColor: WHITE70_CLR,
        elevation: 0,
@@ -183,9 +183,12 @@ class _HomeState extends State<Home> {
     ),
       drawer: MyDrawer(),
 
-      floatingActionButton: FloatingActionButton(onPressed: (){
-        Navigate_to(context, Reminder());
-      },child: SvgPicture.asset('assets/svg_image/Group 33.svg'),),
+      floatingActionButton: SizedBox(
+        height: 70,
+        child: FloatingActionButton(onPressed: (){
+          Navigate_to(context, Reminder());
+        },child: SvgPicture.asset('assets/svg_image/Group 33.svg'),),
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
 
       body: Container(
@@ -205,14 +208,14 @@ class _HomeState extends State<Home> {
               children: [
                                   Container(
                                     alignment: Alignment.center,
-                                    height: h*0.07,
-                                    margin: EdgeInsets.only(top: h * 0.035),
+                                    height: h*0.065,
+                                    margin: EdgeInsets.only(top: h * 0.03),
                                 decoration: BoxDecoration(
                             
                                   color: WHITE70_CLR,
                                   borderRadius: BorderRadius.circular(15),
                                   boxShadow: [
-                                    BoxShadow(blurRadius: 8,color: SHADOW_CLR.withOpacity(0.2)),
+                                    BoxShadow(blurRadius: 8,color: SHADOW_CLR.withOpacity(0.1)),
                                     
                                   ],
                                   
@@ -227,11 +230,9 @@ class _HomeState extends State<Home> {
                                               color: GRAY_CLR,
                                               fontSize: 16,
                                               fontWeight: FontWeight.normal),
-                                          prefixIcon: Icon(
-                                            Icons.search_outlined,
-                                            color: GRAY_CLR,
-                                            size: 20,
-                                          ),
+                                          prefixIcon: 
+                                            Icon(Icons.search,size: 22,color: GRAY_CLR,),
+                                          
           
                                           suffixIcon:Image.asset('assets/png_icon/filter_filters_funnel_list_navigation_sort_sorting_icon_123212.png') ,
                                           border: InputBorder.none)),
@@ -248,7 +249,7 @@ class _HomeState extends State<Home> {
                                     ),
           
           
-                                    SizedBox(height: h*0.16,
+                                    SizedBox(height: h*0.145,
                                       child: ListView.builder(
                                         shrinkWrap: true,
                                         controller: _scrollController,
@@ -268,8 +269,8 @@ class _HomeState extends State<Home> {
 
                                               child: Container(
                                                 margin: EdgeInsets.symmetric(horizontal: 5),
-                                                height: h*0.1,
-                                                width: w*0.21,
+                                                height: 70,
+                                                width: 70,
                                                 alignment: Alignment.center,
                                               decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
                                               color: 
@@ -299,7 +300,7 @@ class _HomeState extends State<Home> {
         
         
         
-                                   SizedBox(height: h*0.020,),
+
                                     
                                     styleText("Explore", BLACK_CLR, FontWeight.bold, 19),
         
@@ -313,61 +314,65 @@ class _HomeState extends State<Home> {
                                         scrollDirection: Axis.horizontal,
                                         itemCount: 3,
                                          itemBuilder: (BuildContext context, int index) {  
-                                        return Container(
-                                             
-                                                      padding: EdgeInsets.all(8),                    
-                                             height: h*0.25,
-                                             alignment: Alignment.bottomCenter,
-                                                                          
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(15),
-                                            // color: Colors.red,
-                                            image: DecorationImage(image: AssetImage("assets/png_image/download-1.png",),fit: BoxFit.cover)
-                                          ),
-                                         
-                                          child: GestureDetector(
-                                            onTap: (() => Navigate_to(context, Blog_Details())),
+                                        return GestureDetector(
+                                          onTap: (() => Navigate_to(context, Blog_Details())),
+                                          child: Container(
+                                               
+                                                        padding: EdgeInsets.all(8),                    
+                                               height: h*0.25,
+                                               alignment: Alignment.bottomCenter,
+                                                                            
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(15),
+                                              // color: Colors.red,
+                                              image: DecorationImage(image: AssetImage("assets/png_image/download-1.png",),fit: BoxFit.cover)
+                                            ),
+                                           
                                             child: Padding(
                                               padding: const EdgeInsets.only(bottom: 8),
                                               child: SizedBox(
                                                 height: h*0.095,width:w*0.42,
                                                 child: Card(
                                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                                                  child: Column(
-                                                    // crossAxisAlignment: CrossAxisAlignment.start,
-                                                    children: [
-                                                                                 
-                                                    SizedBox(
-                                                      height: h*0.005,
-                                                    ),
-                                                      RichText(textScaleFactor: 1,
-                                                                                      
-                                                    text: TextSpan(
-                                                                                   children: <InlineSpan>[
-                                                                                  TextSpan(text: 'Heatlth ', style: TextStyle(color: GRAY_CLR,fontSize: 10,)),
-                                                                                 
-                                                    WidgetSpan(
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.only(left: 5),
+                                                    child: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      children: [
+                                                                                   
+                                                      SizedBox(
+                                                        height: h*0.005,
+                                                      ),
+                                                        RichText(textScaleFactor: 1,
+                                                                                        
+                                                      text: TextSpan(
+                                                                                     children: <InlineSpan>[
+                                                                                    TextSpan(text: 'Heatlth ', style: TextStyle(color: GRAY_CLR,fontSize: 10,)),
+                                                                                   
+                                                      WidgetSpan(
                                                  alignment: PlaceholderAlignment.top,
                                                  baseline: TextBaseline.alphabetic,
                                                  child: SizedBox(width: w*0.1,)),
                                                 TextSpan(text: '18 August 2022 ',style: TextStyle(color: GRAY_CLR,fontSize: 10) ),
-                                                                                  
-                                                  ],
-                                                                                  
-                                                  ),
-                                                      ),
-                                                                                 
-                                                      SizedBox(height: h*0.005,),
+                                                                                    
+                                                    ],
+                                                                                    
+                                                    ),
+                                                        ),
+                                                                                   
+                                                        SizedBox(height: h*0.005,),
                                               
-                                                                                 
-                                                      styleText("Lorem Ipsum is simply dummy text of....", DARK_CLR, FontWeight.bold, 12,)
-                                                  ]),
+                                                                                   
+                                                        styleText("Lorem Ipsum is simply dummy text of....", DARK_CLR, FontWeight.bold, 12,)
+                                                    ]),
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                          ) ,
-                                       
-                                         );
+                                            ) ,
+                                                                               
+                                           ),
+                                        );
                                          }
                                        ),
                                      ),

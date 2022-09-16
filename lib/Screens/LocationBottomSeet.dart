@@ -29,19 +29,19 @@ class _LocationBottomSeetState extends State<LocationBottomSeet> {
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(16), topRight: Radius.circular(16))),
       child: Padding(
-        padding:  EdgeInsets.only(top: h*0.020,right: w*0.035,left: w*0.030),
+        padding:  EdgeInsets.only(top: h*0.020,right: w*0.040,left: w*0.030),
         child: Column(children: [
 
 
                              Align(alignment: Alignment.bottomRight,
                               child: GestureDetector(
                               onTap: ()=>Navigator.of(context).pop(),
-                                child: styleText("Done", GREEN_CLR, FontWeight.bold, 13))),
+                                child: styleText("Done", GREEN_CLR, FontWeight.bold, 15))),
 
                                    Container(
                                       alignment: Alignment.center,
-                                      height: h*0.07,
-                                      margin: EdgeInsets.only(top: h * 0.035),
+                                      height: h*0.065,
+                                      margin: EdgeInsets.only(top: h * 0.020),
                                   decoration: BoxDecoration(
                               
                                     color: WHITE_CLR,
@@ -86,12 +86,12 @@ class _LocationBottomSeetState extends State<LocationBottomSeet> {
                                   ),
 
                                   child: SizedBox(
-                                    height: h*0.35,
+                                    height: h*0.36,
                                     child: ListView.builder(
-                                      itemCount: 5,
+                                      itemCount: 8,
                                       itemBuilder: (BuildContext context, int index) {  
                                       return Padding(
-                                      padding:  EdgeInsets.only(top: h*0.020,right: w*0.030,left: w*0.030),
+                                      padding:  EdgeInsets.only(top: h*0.010,right: w*0.030,left: w*0.030),
                                         child: Column(
                                           children: [
                                             Row(children: [

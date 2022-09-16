@@ -67,13 +67,13 @@ class _SignupState extends State<Signup> {
                         "assets/png_image/Group 1.png",
                       ),
                       SizedBox(
-                        height: h * 0.040,
+                        height: h * 0.020,
                       ),
                       styleText("Hello!", WHITE70_CLR, FontWeight.normal, 21),
                       Padding(
                         padding: const EdgeInsets.all(15),
                         child: Container(
-                          padding: EdgeInsets.only(top: h * 0.030),
+                          padding: EdgeInsets.only(top: h * 0.020),
                           alignment: Alignment.topCenter,
                           height: h * 0.78,
                           width: w * 1,
@@ -90,13 +90,13 @@ class _SignupState extends State<Signup> {
                                 styleText("Create Account", BLACK_CLR,
                                     FontWeight.bold, 19),
                                 Container(
-                                  height: h*0.07,
+                                  height: h*0.06,
                                   margin: EdgeInsets.only(top: h * 0.030),
                                   decoration: BoxDecoration(
                                     color: WHITE70_CLR,
                                       borderRadius: BorderRadius.circular(10),
                                       boxShadow: [
-                                        BoxShadow(blurRadius: 14,color: SHADOW_CLR.withOpacity(0.2))
+                                        BoxShadow(blurRadius: 14,color: SHADOW_CLR.withOpacity(0.1))
                                       ]
                                     
                                       ),
@@ -143,13 +143,13 @@ class _SignupState extends State<Signup> {
 
 
                                 Container(
-                                  height: h*0.07,
+                                  height: h*0.06,
                                   margin: EdgeInsets.only(top: h * 0.020),
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
                                        color: WHITE70_CLR,
                                        boxShadow: [BoxShadow(color: SHADOW_CLR.
-                                       withOpacity(0.2),blurRadius: 14)]
+                                       withOpacity(0.1),blurRadius: 14)]
                                      ),
                                   
                                   
@@ -206,11 +206,11 @@ class _SignupState extends State<Signup> {
 
 
                                 Container(
-                                  height: h*0.07,
+                                  height: h*0.06,
                                   margin: EdgeInsets.only(top: h * 0.020),
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
-                                      boxShadow: [BoxShadow(color: SHADOW_CLR.withOpacity(0.2),blurRadius: 14)],
+                                      boxShadow: [BoxShadow(color: SHADOW_CLR.withOpacity(0.1),blurRadius: 14)],
                                        color: WHITE70_CLR,
                                       ),
                                  
@@ -289,16 +289,45 @@ class _SignupState extends State<Signup> {
                                 ),
                                 styleText("Or Continue with", GREEN_CLR,
                                     FontWeight.normal, 15),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      "assets/png_icon/Group 7.png",
-                                    ),
-                                    Image.asset("assets/png_icon/Group 8.png"),
-                                    Image.asset("assets/png_icon/Group 9.png"),
-                                  ],
-                                ),
+                                    SizedBox(height: h*0.015,),
+                              Row(
+                                // crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                              Container(
+                                height: 45,width: 45,alignment: Alignment.center,
+                                  
+                                  decoration: BoxDecoration(
+                                    color: WHITE_CLR,
+                                    borderRadius: BorderRadius.circular(50)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10),
+                                    child: Image.asset("assets/png_icon/google.png",height: 40,),
+                                  )
+                                  
+                                  ),
+
+                                  Container(height: 45,width: 45,alignment: Alignment.center,
+                                  margin: EdgeInsets.only(left: 15,),
+                                  decoration: BoxDecoration(
+                                    color: WHITE_CLR,
+                                    borderRadius: BorderRadius.circular(50)),
+                                  child: Icon(Icons.apple,size: 35,)
+                                  
+                                  ),
+                                
+                                  Container(height: 45,width: 45,alignment: Alignment.center,
+                                  margin: EdgeInsets.only(left: 15,),
+                                  decoration: BoxDecoration(
+                                    color: WHITE_CLR,
+                                    borderRadius: BorderRadius.circular(50)),
+                                  child: Icon(Icons.facebook,size: 35,color: Color.fromARGB(255, 56, 1, 145),)
+                                  
+                                  ),
+                                ],
+                              ),
+
+                                SizedBox(height: h*0.015,),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -307,8 +336,8 @@ class _SignupState extends State<Signup> {
                                     Consumer<ProviderTutorial>(builder:
                                         (BuildContext context, value,
                                             Widget? child) {
-                                      return TextButton(
-                                          onPressed: () => ProviderTutorial()
+                                      return GestureDetector(
+                                          onTap: () => ProviderTutorial()
                                               .NavigateLogin(context),
                                           child: styleText("Login", GREEN_CLR,
                                               FontWeight.normal, 15));

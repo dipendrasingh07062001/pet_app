@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/parser.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Screens/ChangePassword.dart';
+import 'package:pet_app/Screens/SuccesFullVerified.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 import 'package:provider/provider.dart';
 
@@ -81,30 +82,34 @@ String? otp;
       extendBody: true,
       resizeToAvoidBottomInset: true,
       backgroundColor: WHITE70_CLR,
-      floatingActionButton: Padding(
-          padding:  EdgeInsets.only(top: h*0.050,left: w*0.030),
-        child: SizedBox(
-          height:45,width: 45,
-          child: FloatingActionButton(
-          
-            backgroundColor: FADE_GREEN_CLR,
-            onPressed: (){},child: Icon(Icons.arrow_back_ios_new),),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,
-
+   
 
  body: Form(
   key: _formkey,
    child: SingleChildScrollView(
      child: Container(
-      padding: EdgeInsets.only(top: h*0.17,left: w*0.050,right: w*0.050),
+      padding: EdgeInsets.only(top: h*0.1,left: w*0.035,right: w*0.035),
       alignment: Alignment.center,
       height: h*1,
        child: Column(
         
         crossAxisAlignment: CrossAxisAlignment.center, 
         children: [
+
+
+
+            Align(
+            alignment: Alignment.topLeft,
+            child: SizedBox(
+            height:40,width: 40,
+            child: CircleAvatar(
+            
+              backgroundColor: FADE_GREEN_CLR,
+               child: Icon(Icons.arrow_back_ios_new,size: 22,color: WHITE70_CLR,),),
+                  ),
+          ),
+
+          SizedBox(height: h*0.020,),
               SizedBox(
                 height: h*0.25,
                 width: w*0.8,
@@ -136,8 +141,8 @@ String? otp;
         child:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Container(
-            height: h*0.080,
-            width: w*0.16,
+            height: 60,
+            width: 60,
             child: TextFormField(
               controller: first,
               focusNode: pin1FocusNode,
@@ -166,8 +171,8 @@ String? otp;
           ),
 
           Container(
-        height: h*0.080,
-            width: w*0.16,
+          height: 60,
+            width: 60,
             child: TextFormField(
               maxLength: 1,
                 controller: second,
@@ -205,8 +210,8 @@ String? otp;
                 }),
           ),
           SizedBox(
-           height: h*0.080,
-            width: w*0.16,
+          height: 60,
+            width: 60,
             child: TextFormField(
               maxLength: 1,
                 controller: third,
@@ -238,9 +243,10 @@ String? otp;
                   
                 }),
           ),
-          SizedBox(
-        height: h*0.080,
-            width: w*0.16,
+          Container(
+            alignment: Alignment.center,
+           height: 60,
+            width: 60,
             child: TextFormField(
               maxLength: 1,
               controller: fourth,
@@ -288,10 +294,10 @@ String? otp;
              styleText("Didn't receive the verification OTP? ", GRAY_CLR,
                                         FontWeight.normal, 15,),
 
-                                      TextButton(onPressed: (){}, child: Text("Resend again",style: TextStyle(color: GREEN_CLR,fontSize: 15),)),
+                                      GestureDetector(onTap: (){}, child: Text("Resend again",style: TextStyle(color: GREEN_CLR,fontSize: 15),)),
    
                                   SizedBox(
-                                    height: h*0.010,
+                                    height: h*0.030,
                                   ),
    
                                   DefaultButton(text: "Verify", ontap: (){

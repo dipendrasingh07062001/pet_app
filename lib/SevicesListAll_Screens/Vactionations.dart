@@ -28,7 +28,7 @@ class _VaccinationsState extends State<Vaccinations> {
 
     return Scaffold(
       backgroundColor: WHITE70_CLR,
-      appBar: DefaultAppBar("Vaccination"),
+      appBar: DefaultAppBar("Vaccinations"),
 
        floatingActionButton: FloatingActionButton(
         backgroundColor: WHITE70_CLR,
@@ -41,26 +41,27 @@ class _VaccinationsState extends State<Vaccinations> {
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         itemCount: 5,
+        padding: EdgeInsets.symmetric(vertical: 20),
         itemBuilder: (BuildContext context, int index) {  
         return Padding(
-              padding:  EdgeInsets.only(left: w*0.030,right: w*0.030,top: h*0.015,bottom: h*0.020),
+              padding:  EdgeInsets.only(left: w*0.030,right: w*0.030,bottom: h*0.020),
           child: Container(
-            // height: h*0.45,
+          
             width: w*1,
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
             color:Colors.white,
             boxShadow: [
-              BoxShadow(color: DROP_CLR.withOpacity(0.2),blurRadius: 16)
+              BoxShadow(color: DROP_CLR.withOpacity(0.1),blurRadius: 16)
             ]),
             child: Padding(
-              padding:  EdgeInsets.only(left: w*0.030,right: w*0.030,top: h*0.015,bottom: h*0.010),
+              padding:  EdgeInsets.only(left: w*0.030,right: w*0.030,top: h*0.010,bottom: h*0.005),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
 
                 styleText("Canine Parvovirus", BLACK_CLR, FontWeight.bold, 16),
       
-                SizedBox(height: h*0.010,),
+                SizedBox(height: h*0.005,),
       
                    Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,13 +94,15 @@ class _VaccinationsState extends State<Vaccinations> {
       
       
       
-                   SizedBox(height: h*0.020,),
+                   SizedBox(height: h*0.005,),
       
                    Row(
+                    
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                    children: [
                        
-                       Image.asset('assets/png_image/NoPath.png'),
+                       Container(
+                        child: Image.asset('assets/png_image/download-1.png',height: 60,)),
    
                   Row(crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

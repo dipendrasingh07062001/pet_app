@@ -3,19 +3,18 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/parser.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Screens/Login.dart';
-import 'package:pet_app/Screens/SuccesFullVerified.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 import 'package:provider/provider.dart';
 
 import '../Provider/Provider.dart';
-class ChangePassword extends StatefulWidget {
-  const ChangePassword({super.key});
+class ChangePassword1 extends StatefulWidget {
+  const ChangePassword1({super.key});
 
   @override
-  State<ChangePassword> createState() => _ChangePasswordState();
+  State<ChangePassword1> createState() => _ChangePassword1State();
 }
 
-class _ChangePasswordState extends State<ChangePassword> {
+class _ChangePassword1State extends State<ChangePassword1> {
 
   final _formkey =GlobalKey<FormState>();
 
@@ -56,14 +55,14 @@ var w;
 
           
             GestureDetector(
-              onTap: (){
-                Navigator.of(context).pop();
-              },
+               onTap: (){
+                Navigator.of(context).pop();},
               child: Align(
               alignment: Alignment.topLeft,
               child: SizedBox(
               height:40,width: 40,
               child: CircleAvatar(
+              
                 backgroundColor: FADE_GREEN_CLR,
                  child: Icon(Icons.arrow_back_ios_new,size: 22,color: WHITE70_CLR,),),
                     ),
@@ -81,7 +80,79 @@ var w;
     
              styleText("Change Password", BLACK_CLR, FontWeight.bold, 19),
 
-                  
+                  Container(
+                                height: h*0.06,
+                                margin: EdgeInsets.only(top: h * 0.025),
+                                decoration: BoxDecoration(
+                                  color: WHITE70_CLR,
+                                    borderRadius: BorderRadius.circular(10),
+                                    boxShadow: [
+                                      BoxShadow(color: SHADOW_CLR.withOpacity(0.1),blurRadius: 14)
+                                    ]
+                                    ),
+                                // color: WHITE_CLR,
+                                
+                                child: TextFormField(
+                                  controller: _creatPasswordCantrolller,
+                                  validator: (value){
+                                    if(value!.isEmpty){
+
+                                      newPassError ="Please enter old password";
+                                      setState(() {
+                                        
+                                      });
+                                      return "";
+                                    }
+                                    else{
+                                      newPassError="";
+                                    }
+                                  },
+                                  //  validator: (value){
+                                  //   formProvider.validPassword(value);
+                                  //  },
+                                 
+                                
+                                  obscureText: _passwordVisible1,
+                                  textCapitalization: TextCapitalization.none,
+                                  textAlign: TextAlign.start,
+                                  decoration: InputDecoration(
+                                    errorText: "",
+                                    errorStyle: TextStyle(height: 0),
+                                      hintText: "Old Password",
+                                      hintStyle: TextStyle(
+                                          color: GRAY_CLR,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.normal),
+                                      prefixIcon: Icon(
+                                        Icons.lock_open_outlined,
+                                        color: GRAY_CLR,
+                                        size: 20,
+                                      ),
+                                      border: InputBorder.none,
+                                      suffixIcon: IconButton(
+                                        icon: Icon(
+                                            _passwordVisible1
+                                                ? Icons.visibility
+                                                : Icons.visibility_off,
+                                            color: GRAY_CLR),
+                                        onPressed: () {
+                                          setState(() {
+                                            _passwordVisible1 = !_passwordVisible1;
+                                          });
+                                        },
+                                      )),
+                                ),
+                              ),
+    
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Visibility(
+                                      visible: newPassError!="",
+                                      child: Text(newPassError,style: TextStyle(color: Colors.red,fontSize: 12),textAlign: TextAlign.start,)),
+                                  ),
+   
+                                
+    
             Container(
                                 height: h*0.06,
                                 margin: EdgeInsets.only(top: h * 0.025),
@@ -235,7 +306,7 @@ var w;
                                       passError = "";
                                       newPassError ="";
 
-                                      Navigate_to(context, SuccessFullyVerified());
+                                      Navigate_to(context, Login());
    
                                     }
                                   }, fontsize: 18, height: h*0.060, width: w*1),

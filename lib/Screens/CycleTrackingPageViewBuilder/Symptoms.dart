@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Screens/Add_Pets/AddPet3.dart';
 
-import '../UTILS/Utils.dart';
+import '../../UTILS/Utils.dart';
 
 class Symptoms extends StatefulWidget {
   const Symptoms({super.key});
@@ -35,6 +35,7 @@ class _SymptomsState extends State<Symptoms> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          SizedBox(height: h*0.080,),
           styleText("25,August,2022", BLACK_CLR, FontWeight.bold, 19),
           SizedBox(
             height: h * 0.010,
@@ -43,24 +44,19 @@ class _SymptomsState extends State<Symptoms> {
               alignment: Alignment.topCenter,
               // color: Colors.red,
               margin: EdgeInsets.only(top: 15),
-              height: h * 0.4,
+              height: h * 0.45,
               width: w * 1,
               child: CarouselSlider(
                 items: [Symptomslst[index]],
                 options: CarouselOptions(
-                    height: h * 0.4,
-                    aspectRatio: 16/9,
-                    viewportFraction: 0.8,
-                    initialPage: 0,
+                    height: h * 0.45,
+                    aspectRatio: 1/4,
+                    viewportFraction: 0.75,
+                    initialPage: 2,
                     scrollDirection: Axis.horizontal,
                     enableInfiniteScroll: true,
                     reverse: true,
-                    
-                    // autoPlay: true,
-                    // autoPlayInterval: Duration(seconds: 3),
-                    // autoPlayAnimationDuration: Duration(milliseconds: 800),
-                    // autoPlayCurve: Curves.ease,
-                    enlargeCenterPage: false,
+                    enlargeCenterPage: true,
                     onPageChanged: (index, reason) {
                       setState(() {
                         currentIndex = index;
@@ -123,7 +119,7 @@ class _symptomslstState extends State<symptomslst> {
             Container(
                 alignment: Alignment.centerLeft,
                 width: w * 1,
-                height: h * 0.040,
+                height: 40,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(10),
@@ -138,19 +134,19 @@ class _symptomslstState extends State<symptomslst> {
             Container(
                 alignment: Alignment.centerLeft,
                 width: w * 1,
-                height: h * 0.040,
+                height: 40,
                 color: WHITE_CLR,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 10),
                   child: styleText("Select all that apply.", BLACK_CLR,
                       FontWeight.normal, 14),
                 )),
-            Divider(
-              thickness: 1,
-              color: GRAY_CLR.withOpacity(0.3),
-            ),
+            // Divider(
+            //   thickness: 1,
+            //   color: GRAY_CLR.withOpacity(0.3),
+            // ),
             Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10),
+              padding: const EdgeInsets.only(left: 10, right: 10,top: 10),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -181,7 +177,7 @@ class _symptomslstState extends State<symptomslst> {
               color: GRAY_CLR.withOpacity(0.3),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10),
+              padding: const EdgeInsets.only(left: 10, right: 10,top: 5),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -212,7 +208,7 @@ class _symptomslstState extends State<symptomslst> {
               color: GRAY_CLR.withOpacity(0.3),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10),
+              padding: const EdgeInsets.only(left: 10, right: 10,top: 5),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -244,7 +240,7 @@ class _symptomslstState extends State<symptomslst> {
               color: GRAY_CLR.withOpacity(0.3),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10),
+              padding: const EdgeInsets.only(left: 10, right: 10,top: 5),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -274,37 +270,39 @@ class _symptomslstState extends State<symptomslst> {
               thickness: 1,
               color: GRAY_CLR.withOpacity(0.3),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    styleText(
-                        "Abdominal Cramps", DARK_CLR, FontWeight.normal, 14),
-                    SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: Radio(
-                          value: 5,
-                          groupValue: _radioSelected,
-                          activeColor: GREEN_CLR,
-                          onChanged: (value) {
-                            setState((){
-                              _radioSelected = value!;
-                            _radioVal = 'five';
-                            });
+            // Padding(
+            //   padding: const EdgeInsets.only(left: 10, right: 10,top: 5),
+            //   child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //       children: [
+            //         styleText(
+            //             "Abdominal Cramps", DARK_CLR, FontWeight.normal, 14),
+            //         SizedBox(
+            //             height: 20,
+            //             width: 20,
+            //             child: Radio(
+            //               value: 5,
+            //               groupValue: _radioSelected,
+            //               activeColor: GREEN_CLR,
+            //               onChanged: (value) {
+            //                 setState((){
+            //                   _radioSelected = value!;
+            //                 _radioVal = 'five';
+            //                 });
                             
-                          },
-                        ))
-                  ]),
-            ),
-            SizedBox(
-              height: h * 0.010,
-            ),
-            Divider(
-              thickness: 1,
-              color: GRAY_CLR.withOpacity(0.3),
-            ),
+            //               },
+            //             ))
+            //       ]),
+            // ),
+            // SizedBox(
+            //   height: h * 0.010,
+            // ),
+            // Divider(
+            //   thickness: 1,
+            //   color: GRAY_CLR.withOpacity(0.3),
+            // ),
+
+            
           ],
         ),
       ),

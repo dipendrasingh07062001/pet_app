@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 import '../../Colors/COLORS.dart';
 import '../../UTILS/Utils.dart';
@@ -75,6 +76,7 @@ var w;
      child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        SizedBox(height: h*0.050,),
 
       styleText("Period predictions and \n notifications?", DARK_CLR, FontWeight.bold, 20),
 
@@ -116,7 +118,23 @@ var w;
                                           ]
                                         )
     ),
+// ToggleSwitch(
+//   minWidth: 35.0,
+//   minHeight: 25,
+//   cornerRadius: 50.0,
+//   activeBgColors: [[Colors.green[800]!], [Colors.red[800]!]],
+//   activeFgColor: Colors.white,
+//   inactiveBgColor: Colors.grey,
+//   inactiveFgColor: Colors.white,
 
+//   initialLabelIndex: 3,
+//   totalSwitches: 2,
+  
+
+//   onToggle: (index) {
+//     print('switched to: $index');
+//   },
+// ),
 
      Container(
                                       padding: EdgeInsets.only(left: 10,right: 10),

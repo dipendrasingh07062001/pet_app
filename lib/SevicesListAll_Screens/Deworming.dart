@@ -33,16 +33,17 @@ class _DewormingState extends State<Deworming> {
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         itemCount: 2,
+        padding: EdgeInsets.symmetric(vertical: 20),
         itemBuilder: (BuildContext context, int index) {  
         return Padding(
-              padding:  EdgeInsets.only(left: w*0.030,right: w*0.030,top: h*0.015,bottom: h*0.020),
+              padding:  EdgeInsets.only(left: w*0.030,right: w*0.030,bottom: h*0.020),
           child: Container(
             // height: h*0.45,
             width: w*1,
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
             color:Colors.white,
             boxShadow: [
-              BoxShadow(color: DROP_CLR.withOpacity(0.2),blurRadius: 16)
+              BoxShadow(color: DROP_CLR.withOpacity(0.1),blurRadius: 16)
             ]),
             child: Padding(
               padding:  EdgeInsets.only(left: w*0.030,right: w*0.030,top: h*0.015,bottom: h*0.010),
@@ -107,8 +108,8 @@ class _DewormingState extends State<Deworming> {
           
 
                    Container(
-                    height: h*0.08,
-                    width: w*0.5,
+                    height: h*0.062,
+                    width: w*0.4,
                     margin: EdgeInsets.only(bottom: h*0.010),
                     decoration: BoxDecoration(borderRadius: BorderRadius.circular(5),
                     color: WHITE_CLR,
@@ -128,7 +129,7 @@ class _DewormingState extends State<Deworming> {
                    ),
       
       
-                   Divider(thickness: 1,color: GRAY_CLR.withOpacity(0.1),),
+                   Divider(thickness: 2,color: GRAY_CLR.withOpacity(0.1),),
                      SizedBox(height: h*0.010,),
       
                    Row(children: [

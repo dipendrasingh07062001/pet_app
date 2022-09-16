@@ -32,30 +32,32 @@ var w;
       extendBody: true,
       resizeToAvoidBottomInset: true,
       backgroundColor: WHITE70_CLR,
-      floatingActionButton: Padding(
-          padding:  EdgeInsets.only(top: h*0.050,left: w*0.030),
-        child: SizedBox(
-          height:45,width: 45,
-          child: FloatingActionButton(
-          
-            backgroundColor: FADE_GREEN_CLR,
-            onPressed: (){},child: Icon(Icons.arrow_back_ios_new),),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,
-
+       
+     
 
  body: Form(
   key: _formkey,
    child: SingleChildScrollView(
      child: Container(
-      padding: EdgeInsets.only(top: h*0.17,left: w*0.050,right: w*0.050),
+      padding: EdgeInsets.only(top: h*0.1,left: w*0.035,right: w*0.050),
       alignment: Alignment.center,
       height: h*1,
        child: Column(
         
         crossAxisAlignment: CrossAxisAlignment.center, 
         children: [
+          Align(
+            alignment: Alignment.topLeft,
+            child: SizedBox(
+            height:40,width: 40,
+            child: CircleAvatar(
+            
+              backgroundColor: FADE_GREEN_CLR,
+               child: Icon(Icons.arrow_back_ios_new,size: 22,color: WHITE70_CLR,),),
+                  ),
+          ),
+
+          SizedBox(height: h*0.11,),
               SizedBox(
                 height: h*0.2,
                 width: w*0.5,
@@ -70,14 +72,14 @@ var w;
     
              Container(
                           
-                                    height: h*0.07,
-                                    margin: EdgeInsets.only(top: h * 0.040),
+                                    height: h*0.065,
+                                    margin: EdgeInsets.only(top: h * 0.028),
                                 decoration: BoxDecoration(
                             
                                   color: WHITE70_CLR,
                                   borderRadius: BorderRadius.circular(10),
                                   boxShadow: [
-                                    BoxShadow(blurRadius: 14,color: SHADOW_CLR.withOpacity(0.2)),
+                                    BoxShadow(blurRadius: 10,color: SHADOW_CLR.withOpacity(0.1)),
                                     
                                   ],
                                   
@@ -123,7 +125,7 @@ var w;
                                   ),
    
                                   SizedBox(
-                                    height: h*0.040,
+                                    height: h*0.035,
                                   ),
    
                                   DefaultButton(text: "Forgot Password", ontap: (){
@@ -147,8 +149,8 @@ var w;
                                         FontWeight.normal, 15),
             
                                   
-                                          TextButton(
-                                              onPressed: () {
+                                          GestureDetector(
+                                              onTap: () {
                                                 ProviderTutorial().NavigateLogin(context);
                                                 
                                               },

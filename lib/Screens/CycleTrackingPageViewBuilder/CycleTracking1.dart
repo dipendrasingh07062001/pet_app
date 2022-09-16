@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_calendar_widget/flutter_calendar_widget.dart';
 import 'package:pet_app/Colors/COLORS.dart';
+import 'package:pet_app/Screens/CycleTrackingPageViewBuilder/Callender/Callender.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../../UTILS/Utils.dart';
 
@@ -13,6 +14,14 @@ class Cycle_Tracking1 extends StatefulWidget {
 }
 
 class _Cycle_Tracking1State extends State<Cycle_Tracking1> {
+   
+  DateRangePickerController _datePickerController = DateRangePickerController();
+
+  @override
+  initState() {
+    _datePickerController.view = DateRangePickerView.month;
+    super.initState();
+  }
 
   var Date;
 var h;
@@ -31,22 +40,23 @@ var w;
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+
+            SizedBox(height: h*0.050,),
                 styleText("When did your pet’s last\n period start?", DARK_CLR, FontWeight.bold, 20),
   SizedBox(
-    height: h*0.020,
+    height: h*0.030,
   ),
-               Card(
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                 child: FlutterCalendar(
-                  isHeaderDisplayed: true,
-                             selectionMode: CalendarSelectionMode.single,
-                            onDayPressed: (DateTime date) {
-                             date = Date;
-                             print(date);
-                   }
-               ),
-               ),
-
+              
+          Card(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            child: SfDateRangePicker(
+              view: DateRangePickerView.month,
+                          selectionMode: DateRangePickerSelectionMode.multiple,
+              headerHeight: h*0.060,
+            controller: _datePickerController,
+                  ),
+          ),   
+          
     
 
         ],),
@@ -54,3 +64,5 @@ var w;
     );
   }
 }
+
+

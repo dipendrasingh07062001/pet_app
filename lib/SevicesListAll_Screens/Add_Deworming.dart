@@ -76,7 +76,7 @@ var w;
        styleText("Deworming Status", BLACK_CLR, FontWeight.normal, 15),
        
         Container(
-                              height: h*0.065,
+                              height: h*0.06,
                               margin: EdgeInsets.only(top: h*0.010),
                           decoration: BoxDecoration(
                             color: WHITE_CLR,
@@ -113,8 +113,9 @@ var w;
                         ),
      
                         SizedBox(height: h*0.020,),
-                       styleText("Dewormoning Duration", BLACK_CLR, FontWeight.normal, 15),
+                       styleText("Deworming Duration", BLACK_CLR, FontWeight.normal, 15),
 
+SizedBox(height: h*0.020,),
                          Row(
                   mainAxisAlignment: MainAxisAlignment.start,
               
@@ -135,43 +136,55 @@ var w;
                       },
                     ),
                   ),
-                  SizedBox(width: w*0.030,),
-                  Text('Daily'),
+                  SizedBox(width: w*0.010,),
+                  Text('Daily',style: TextStyle(color: GRAY_CLR),),
                 
-                  Radio(
-                    value: 2,
-                    groupValue: _radioSelected,
-                    activeColor:GREEN_CLR,
-                    onChanged: (value) {
-                      setState(() {
-                        _radioSelected = value!;
-                        _radioVal = 'weekly';
-                      });
-                    },
+                SizedBox(width: w*0.040,),
+                  SizedBox(
+                     height: 20,
+                    width: 20,
+                    child: Radio(
+                      value: 2,
+                      groupValue: _radioSelected,
+                      activeColor:GREEN_CLR,
+                      onChanged: (value) {
+                        setState(() {
+                          _radioSelected = value!;
+                          _radioVal = 'weekly';
+                        });
+                      },
+                    ),
                   ),
-                    Text('Weekly'),
+                  SizedBox(width: w*0.010,),
+                    Text('Weekly',style: TextStyle(color: GRAY_CLR),),
 
-                 
-                  Radio(
-                    value: 3,
-                    groupValue: _radioSelected,
-                    activeColor:GREEN_CLR,
-                    onChanged: (value) {
-                      setState(() {
-                        _radioSelected = value!;
-                        _radioVal = 'monthly';
-                      });
-                    },
-                  ), Text('Monthly'),
+                 SizedBox(width: w*0.035,),
+                  SizedBox(
+                     height: 20,
+                    width: 20,
+                    child: Radio(
+                      value: 3,
+                      groupValue: _radioSelected,
+                      activeColor:GREEN_CLR,
+                      onChanged: (value) {
+                        setState(() {
+                          _radioSelected = value!;
+                          _radioVal = 'monthly';
+                        });
+                      },
+                    ),
+
+                  ),
+                  SizedBox(width: w*0.010,) ,Text('Monthly',style: TextStyle(color: GRAY_CLR),),
                 ],
               ),
      
-          SizedBox(height: h*0.010,),
+          SizedBox(height: h*0.015,),
      
                             styleText("Deworming Date", BLACK_CLR, FontWeight.normal, 15),
        
                         Container(
-                              height: h*0.065,
+                              height: h*0.06,
                               padding: EdgeInsets.only(left: w*0.030,right: w*0.030),
                               margin: EdgeInsets.only(top: h*0.010),
                           decoration: BoxDecoration(
@@ -200,10 +213,12 @@ var w;
   
                            SizedBox(height: h*0.020,),
      
-                        styleText("Reminder", BLACK_CLR, FontWeight.normal, 15),
-                         SizedBox(height: h*0.020,),
+                        styleText("Reminder", BLACK_CLR, FontWeight.normal, 17),
+                         SizedBox(height: h*0.015,),
      
                         styleText("Reminder Duration", BLACK_CLR, FontWeight.normal, 15),
+                                         SizedBox(height: h*0.015,),
+
                                       Row(
                   mainAxisAlignment: MainAxisAlignment.start,
               
@@ -224,34 +239,46 @@ var w;
                       },
                     ),
                   ),
-                  SizedBox(width: w*0.030,),
-                  Text('Daily'),
-                
-                  Radio(
-                    value: 2,
-                    groupValue: _radioSelected,
-                    activeColor:GREEN_CLR,
-                    onChanged: (value) {
-                      setState(() {
-                        _radioSelected = value!;
-                        _radioVal = 'weekly';
-                      });
-                    },
-                  ),
-                    Text('Weekly'),
+                  SizedBox(width: w*0.010,),
+                  Text('Daily',style: TextStyle(color: GRAY_CLR),),
+                                 SizedBox(width: w*0.035,),
 
-                 
-                  Radio(
-                    value: 3,
-                    groupValue: _radioSelected,
-                    activeColor:GREEN_CLR,
-                    onChanged: (value) {
-                      setState(() {
-                        _radioSelected = value!;
-                        _radioVal = 'monthly';
-                      });
-                    },
-                  ), Text('Monthly'),
+                  SizedBox(
+                        height: 20,
+                    width: 20,
+                    child: Radio(
+                      value: 2,
+                      groupValue: _radioSelected,
+                      activeColor:GREEN_CLR,
+                      onChanged: (value) {
+                        setState(() {
+                          _radioSelected = value!;
+                          _radioVal = 'weekly';
+                        });
+                      },
+                    ),
+                  ),
+                  SizedBox(width: w*0.010,),
+                    Text('Weekly',style: TextStyle(color: GRAY_CLR),),
+
+                 SizedBox(width: w*0.035,),
+                  SizedBox(
+                        height: 20,
+                    width: 20,
+                    child: Radio(
+                      value: 3,
+                      groupValue: _radioSelected,
+                      activeColor:GREEN_CLR,
+                      onChanged: (value) {
+                        setState(() {
+                          _radioSelected = value!;
+                          _radioVal = 'monthly';
+                        });
+                      },
+                    ),
+                  ), 
+                  SizedBox(width: w*0.010,),
+                  Text('Monthly',style: TextStyle(color: GRAY_CLR),),
                 ],
               ),
               
@@ -333,7 +360,7 @@ var w;
 
                       Align(
                         alignment: Alignment.bottomCenter,
-                        child: DefaultButton(text: "Continue", ontap: (){
+                        child: DefaultButton(text: "Done", ontap: (){
                           Navigator.of(context).pop();
                         }, fontsize: 15, height: h*0.060, width: w*0.8))
      

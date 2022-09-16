@@ -4,6 +4,7 @@ import 'package:pet_app/Screens/Login.dart';
 
 import '../Colors/COLORS.dart';
 import '../UTILS/Utils.dart';
+import 'ChangePassword1.dart';
 import 'Help_1.dart';
 class Setting extends StatefulWidget {
   const Setting({Key? key}) : super(key: key);
@@ -31,10 +32,20 @@ class _SettingState extends State<Setting> {
               onTap: (){
                 Navigate_to(context, Help1());
               },
-              child: ListTile(
-              leading: styleText("About Us", BLACK_CLR, FontWeight.bold, 14),
-              trailing: Icon(Icons.arrow_forward_ios,size: 15,),
+              child: SizedBox(
+                height: 40,
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+ styleText("About Us", BLACK_CLR, FontWeight.bold, 14),
+ Icon(Icons.arrow_forward_ios,size: 15,),
+                    ],
+                  
           ),
+                ),
+              ),
             ),
             Divider(
               thickness: 1,
@@ -42,11 +53,21 @@ class _SettingState extends State<Setting> {
             ),
             GestureDetector(
               onTap: (){
-                Navigate_to(context, ChangePassword());
+                Navigate_to(context, ChangePassword1());
               },
-              child: ListTile(
-                leading: styleText("Change Password", BLACK_CLR, FontWeight.bold, 14),
-                trailing: Icon(Icons.arrow_forward_ios,size: 15,),
+              child: SizedBox(
+                height: 40,
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+ styleText("Change Password", BLACK_CLR, FontWeight.bold, 14),
+ Icon(Icons.arrow_forward_ios,size: 15,),
+                    ],
+                  
+          ),
+                ),
               ),
             ),
             Divider(
@@ -57,9 +78,19 @@ class _SettingState extends State<Setting> {
               onTap: (){
                 // Navigate_to(context, widget);
               },
-              child: ListTile(
-                leading: styleText("Help & Support", BLACK_CLR, FontWeight.bold, 14),
-                trailing: Icon(Icons.arrow_forward_ios,size: 15,),
+              child: SizedBox(
+                height: 40,
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+ styleText("Help & Support", BLACK_CLR, FontWeight.bold, 14),
+ Icon(Icons.arrow_forward_ios,size: 15,),
+                    ],
+                  
+          ),
+                ),
               ),
             ),
             Divider(
@@ -70,9 +101,19 @@ class _SettingState extends State<Setting> {
               onTap: (){
                 Navigate_to(context, Login());
               },
-              child: ListTile(
-                leading: styleText("Logout", BLACK_CLR, FontWeight.bold, 14),
-                trailing: Icon(Icons.arrow_forward_ios,size: 15,),
+              child: SizedBox(
+                height: 40,
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+ styleText("Logout", BLACK_CLR, FontWeight.bold, 14),
+ Icon(Icons.arrow_forward_ios,size: 15,),
+                    ],
+                  
+          ),
+                ),
               ),
             ),
             Divider(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pet_app/Colors/COLORS.dart';
+import 'package:pet_app/Componants/Images&Icons.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 
 import 'My_Pets/My_Pets.dart';
@@ -40,12 +41,15 @@ class _MyDrawerState extends State<MyDrawer> {
                     color: WHITE70_CLR,
                     onPressed: ()=>Navigator.of(context).pop(),),
                 ),
+
+                SizedBox(height: h*0.040,),
                  Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
                    children: [
                      CircleAvatar(backgroundImage: AssetImage("assets/png_image/profile.png"),),
                      SizedBox(
-                      width: w*0.010,
+                      width: w*0.020,
                      ),
       
                      RichText(
@@ -69,9 +73,9 @@ class _MyDrawerState extends State<MyDrawer> {
             Row(
                 children: [
 
-                 SvgPicture.asset("assets/svg_icon/Icon feather-home.svg"),
+                 SvgPicture.asset(HOME_ICON),
                   SizedBox(width: 10,),
-                    styleText("Home", WHITE60_CLR, FontWeight.normal, 15),
+                    styleText(HOME, WHITE60_CLR, FontWeight.normal, 15),
                 ],
                ),
 
@@ -81,9 +85,9 @@ class _MyDrawerState extends State<MyDrawer> {
                   child: Row(
                   children: [
                 
-                   SvgPicture.asset("assets/svg_icon/icon.svg"),
+                   SvgPicture.asset(PET_ICON),
                     SizedBox(width: 10,),
-                      styleText("My Pets", WHITE60_CLR, FontWeight.normal, 15),
+                      styleText(MY_PET, WHITE60_CLR, FontWeight.normal, 15),
                   ],
                                ),
                 ),
@@ -91,7 +95,7 @@ class _MyDrawerState extends State<MyDrawer> {
                 Row(
                 children: [
 
-                 SvgPicture.asset("assets/svg_icon/Icon feather-user.svg"),
+                 SvgPicture.asset(PROFILE_ICON),
                   SizedBox(width: 10,),
                     GestureDetector(
                       onTap: (){
@@ -99,30 +103,30 @@ class _MyDrawerState extends State<MyDrawer> {
                           Navigate_to(context, Profile1());
                         });
                       },
-                      child: styleText("Profile", WHITE60_CLR, FontWeight.normal, 15)),
+                      child: styleText(PROFILE, WHITE60_CLR, FontWeight.normal, 15)),
                 ],
                ),
                 SizedBox(height: h*0.025,),
                 Row(
                 children: [
 
-                 SvgPicture.asset("assets/svg_icon/Icon feather-help-circle.svg"),
+                 SvgPicture.asset(HEALTH_ICON),
                   SizedBox(width: 10,),
-                    styleText("Health & Support", WHITE60_CLR, FontWeight.normal, 15),
+                    styleText(HEALTH_SUPPORT, WHITE60_CLR, FontWeight.normal, 15),
                 ],
                ),
                 SizedBox(height: h*0.025,),
                 Row(
                 children: [
 
-                 SvgPicture.asset("assets/svg_icon/Icon feather-file-minus.svg"),
+                 SvgPicture.asset(DOCT_ICON),
                   SizedBox(width: 10,),
                     GestureDetector(
                       onTap: (){
                         Navigator.of(context).pop();
-                        _UploadDocuments(context);
+                        showdialog(context);
                       },
-                      child: styleText("Upload Document", WHITE60_CLR, FontWeight.normal, 15)),
+                      child: styleText(UPLOAD_DOCUMENT, WHITE60_CLR, FontWeight.normal, 15)),
                 ],
                 )
       
@@ -134,13 +138,13 @@ class _MyDrawerState extends State<MyDrawer> {
                child: Row(
                   children: [
 
-                   SvgPicture.asset("assets/svg_icon/Icon feather-settings(1).svg"),
+                   SvgPicture.asset(SETTING_ICON),
                     SizedBox(width: 10,),
                       GestureDetector(
                         onTap: (){
                           Navigate_to(context, Setting());
                         },
-                        child: styleText("Settings   |  ", WHITE60_CLR, FontWeight.normal, 15)),
+                        child: styleText(SETTING, WHITE60_CLR, FontWeight.normal, 15)),
                            SizedBox(width: 15,),
 
                       GestureDetector(
@@ -148,9 +152,9 @@ class _MyDrawerState extends State<MyDrawer> {
                           // Navigator.of(context).pop();
                           _Logout(context);
                         },
-                        child: styleText("Logout", WHITE60_CLR, FontWeight.normal, 15)),
+                        child: styleText(LOGOUT, WHITE60_CLR, FontWeight.normal, 15)),
 
-                        styleText("Cancel", GREEN_CLR, FontWeight.normal, 17)
+                        styleText(CANCEL, GREEN_CLR, FontWeight.normal, 17)
                   ],
                  ),
              )
@@ -176,89 +180,91 @@ w= MediaQuery.of(context).size.width;
   return showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-          title: Center(
-            child: styleText("Are you sure you want to Logout?", BLACK_CLR, FontWeight.normal, 17),
-          ),
-          content: Container(
-            height: h*0.15,
-            width: w*0.32,
-            child: Column(
-              children: [
+        return Padding(
+          padding: const EdgeInsets.all(15),
+          child: AlertDialog(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            title: Center(
+              child: TutorialText(LOGOUT_TITLE, BLACK_CLR, FontWeight.normal, 17),
+            ),
+            content: Container(
+              height: h*0.12,
+              width: w*0.24,
+              child: Column(
+                children: [
 
-                SizedBox(height: h*0.010,),
+                  SizedBox(height: h*0.010,),
 
-                DefaultButton(text: "Logout", ontap: (){}, fontsize: 17, height: 40, width: 150),
+                  DefaultButton(text: LOGOUT, ontap: (){}, fontsize: 17, height: 40, width: 180),
 
-                SizedBox(height: 20,),
+                  SizedBox(height: 20,),
 
-                GestureDetector(
-                  onTap: ()=>Navigator.of(context).pop(),
-                  child: styleText("Cancel", GREEN_CLR, FontWeight.normal, 17)),
-               
-                    ],
+                  GestureDetector(
+                    onTap: ()=>Navigator.of(context).pop(),
+                    child: styleText(CANCEL, GREEN_CLR, FontWeight.normal, 17)),
+                 
+                      ],
+                    ),
                   ),
-                ),
+                
               
             
-          
+          ),
         );
       });
 }
 
 
 
-
-
-
-
-Future _UploadDocuments(BuildContext context) {
-var h;
+showdialog(context){
+  var h;
 var w;
 
 h= MediaQuery.of(context).size.height;
 w= MediaQuery.of(context).size.width;
-  return showDialog(
-    
+    return showDialog(
       context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          scrollable: true,
-          backgroundColor: WHITE_CLR,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-          title: Center(
-            child: styleText("Upload Document", BLACK_CLR, FontWeight.normal, 17),
+      builder: (context) {
+        return Dialog(
+        backgroundColor: Colors.transparent,
+        insetPadding: EdgeInsets.all(20),
+        child: Container(
+          padding: EdgeInsets.only(top: h*0.030),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
+              color: WHITE_CLR,
           ),
-          content: Container(
-            height: h*0.38,
-            width: w*0.8,
-            child: Column(
-              children: [
+          width: w*1,
+          height: h*0.48,
 
-     
+          child: Column(
+            children: [
+              
 
+            styleText(UPLOAD_DOCUMENT, DARK_CLR, FontWeight.bold, 17),
 
-                Container(
-                  alignment: Alignment.centerLeft,
-                  height: h*0.055,
-                  width: w*0.82,
-                  padding: EdgeInsets.only(left: 5),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: TFFBORDER_CLR)
-                  ),
+         
+              Container(
+                      alignment: Alignment.centerLeft,
+                      height: h*0.055,
+                      width: w*0.82,
+                      margin: EdgeInsets.only(top: h*0.020),
+                      padding: EdgeInsets.only(left: 10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: TFFBORDER_CLR)
+                      ),
 
-                  child: TextFormField(
-                    textAlign: TextAlign.start,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "Document Name",
-                      hintStyle: TextStyle(fontSize: 14)
+                      child: TextFormField(
+                        textAlign: TextAlign.start,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: "Document Name",
+                          hintStyle: TextStyle(fontSize: 14)
+                        ),
+                      ),
+
                     ),
-                  ),
-
-                ),
+         
 
 
                   Container(
@@ -276,12 +282,12 @@ w= MediaQuery.of(context).size.width;
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
 
-                  SvgPicture.asset("assets/svg_icon/Icon feather-upload-cloud.svg"),
+                  SvgPicture.asset(UPLOAD_ICON),
 
                   SizedBox(height: h*0.015,),
                       GestureDetector(
                   onTap: (){},
-                  child: styleText("Upload", GRAY_CLR, FontWeight.normal, 14)),
+                  child: styleText(UPLOAD, GRAY_CLR, FontWeight.normal, 14)),
 
 
                   ],)
@@ -290,20 +296,53 @@ w= MediaQuery.of(context).size.width;
 
                 SizedBox(height: h*0.025,),
 
-                DefaultButton(text: "Submit", ontap: (){}, fontsize: 17, height: 38, width: w*0.45),
+                DefaultButton(text: SUBMIT, ontap: (){}, fontsize: 17, height: h*0.05, width: w*0.5),
 
                 SizedBox(height: h*0.025,),
 
                 GestureDetector(
                   onTap: ()=>Navigator.of(context).pop(),
-                  child: styleText("Cancel", GREEN_CLR, FontWeight.normal, 17)),
+                  child: styleText(CANCEL, GREEN_CLR, FontWeight.normal, 17)),
                
-                    ],
+                       ],
+          ),
                   ),
-                ),
+      
+        
+        );
+      },
+    );
+  }
+
+
+
+// Future _UploadDocuments(BuildContext context) {
+
+//   return showDialog(
+    
+//       context: context,
+//       builder: (BuildContext context) {
+//         return AlertDialog(
+//           scrollable: true,
+//           backgroundColor: WHITE_CLR,
+//           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+//           title: Center(
+//             
+//           ),
+//           content: Container(
+//             height: h*0.38,
+//             width: w*0.8,
+//             child: Column(
+//               children: [
+
+     
+
+
+                
+//                 ),
               
             
           
-        );
-      });
-}
+//         );
+//       });
+// }

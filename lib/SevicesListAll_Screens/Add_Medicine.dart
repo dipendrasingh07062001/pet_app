@@ -69,18 +69,18 @@ var w;
       appBar: DefaultAppBar("Medicine"),
   
    body: Padding(
-     padding:  EdgeInsets.only(left: w*0.030,right: w*0.030,top: h*0.020,bottom: h*0.020),
+     padding:  EdgeInsets.only(left: w*0.030,right: w*0.030,top: h*0.015,bottom: h*0.020),
      child: SingleChildScrollView(
        child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
 
 
-                         styleText("Medicine Name ", BLACK_CLR, FontWeight.normal, 15),
+                         styleText("Medicine Name ", BLACK_CLR, FontWeight.bold, 15),
                           Container(
                                       padding: EdgeInsets.only(left: 10),
                                         alignment: Alignment.center,
-                                        height: h*0.065,
+                                        height: h*0.06,
                                         margin: EdgeInsets.only(top: h * 0.010),
                                     decoration: BoxDecoration(
                                 
@@ -115,7 +115,7 @@ var w;
                                                child: Column(
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                  children: [
-                                                   styleText("Duration", BLACK_CLR, FontWeight.normal, 15),
+                                                   styleText("Duration", BLACK_CLR, FontWeight.bold, 15),
                                                 
        
                                     Container(
@@ -164,7 +164,7 @@ var w;
                                                   child: Column(
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                children: [
-                                                   styleText("Dose/day", BLACK_CLR, FontWeight.normal, 15),
+                                                   styleText("Dose/day", BLACK_CLR, FontWeight.bold, 15),
                                               
        
         Container(
@@ -212,10 +212,10 @@ var w;
      
               
                          SizedBox(height: h*0.020,),
-                            styleText("Course Start Date", BLACK_CLR, FontWeight.normal, 15),
+                            styleText("Course Start Date", BLACK_CLR, FontWeight.bold, 15),
        
                         Container(
-                              height: h*0.065,
+                              height: h*0.06,
                               padding: EdgeInsets.only(left: w*0.030,right: w*0.030),
                               margin: EdgeInsets.only(top: h*0.010),
                           decoration: BoxDecoration(
@@ -243,9 +243,9 @@ var w;
 
                             SizedBox(height: h*0.020,),
                        
-                       styleText("Course end  Date", BLACK_CLR, FontWeight.normal, 15),
+                       styleText("Course end  Date", BLACK_CLR, FontWeight.bold, 15),
                        Container(
-                              height: h*0.065,
+                              height: h*0.06,
                               padding: EdgeInsets.only(left: w*0.030,right: w*0.030),
                               margin: EdgeInsets.only(top: h*0.010),
                           decoration: BoxDecoration(
@@ -274,11 +274,12 @@ var w;
 
     SizedBox(height: h*0.020,),
                        
-                       styleText("Reminder", BLACK_CLR, FontWeight.normal, 15),
+                       styleText("Reminder", BLACK_CLR, FontWeight.bold, 15),
 
                            SizedBox(height: h*0.020,),
                        
-                       styleText("Reminder Duration", BLACK_CLR, FontWeight.normal, 15),
+                       styleText("Reminder Duration", BLACK_CLR, FontWeight.bold, 15),
+                       SizedBox(height: h*0.020,),
                          Row(
                   mainAxisAlignment: MainAxisAlignment.start,
               
@@ -299,20 +300,25 @@ var w;
                       },
                     ),
                   ),
-                  SizedBox(width: w*0.030,),
+                  SizedBox(width: w*0.010,),
                      styleText("Daily", GRAY_CLR, FontWeight.normal, 15),
-                
-                  Radio(
-                    value: 2,
-                    groupValue: _radioSelected,
-                    activeColor:GREEN_CLR,
-                    onChanged: (value) {
-                      setState(() {
-                        _radioSelected = value!;
-                        _radioVal = 'weekly';
-                      });
-                    },
+                SizedBox(width: w*0.030,),
+                  SizedBox(
+                    height: 20,
+                    width: 20,
+                    child: Radio(
+                      value: 2,
+                      groupValue: _radioSelected,
+                      activeColor:GREEN_CLR,
+                      onChanged: (value) {
+                        setState(() {
+                          _radioSelected = value!;
+                          _radioVal = 'weekly';
+                        });
+                      },
+                    ),
                   ),
+                  SizedBox(width: w*0.010,),
                 styleText("Weekly", GRAY_CLR, FontWeight.normal, 15),
 
 
@@ -321,14 +327,14 @@ var w;
               ),
      
       
-     
+     SizedBox(height: h*0.020,),
     
   
               
                       Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        styleText("At Time", BLACK_CLR, FontWeight.normal, 15),
+                        styleText("At Time", BLACK_CLR, FontWeight.bold, 15),
        
         Container(
                             height: h*0.06,
@@ -360,7 +366,7 @@ var w;
                       ],
                           ),
 
-                      SizedBox(height: h*0.040,),
+                      SizedBox(height: h*0.050,),
 
                       Align(
                         alignment: Alignment.bottomCenter,

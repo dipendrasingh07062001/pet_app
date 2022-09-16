@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 import 'package:provider/provider.dart';
@@ -28,17 +29,19 @@ class _GetStartedState extends State<GetStarted> {
         extendBody: true,
           resizeToAvoidBottomInset: true,
           // backgroundColor: WHITE70_CLR,
-          body: Container(
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(
-              "assets/png_image/Group 24@2x.png",
-            ),
-            fit: BoxFit.none,
-          ),
-        ),
-        child: Column(
+          body: Stack(
+            children: [
+              Container(
+                // height: h*1,
+                // width: w*1,
+                decoration: BoxDecoration(
+                  image: DecorationImage(image: AssetImage("assets/png_image/Group 24@2x.png", ), fit: BoxFit.cover, )
+                ),
+                
+                    ),
+              
+           
+       Column(
           children: [
             SizedBox(
               height: h * 0.2,
@@ -104,7 +107,7 @@ class _GetStartedState extends State<GetStarted> {
                   alignment: Alignment.centerRight,
                   child: Container(
                       alignment: Alignment.center,
-                      height: h * 0.075,
+                      height: h * 0.07,
                       width: w * 0.58,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.only(
@@ -119,7 +122,9 @@ class _GetStartedState extends State<GetStarted> {
             })
           ],
         ),
-      )),
+            ]
+      )
+      ),
     );
   }
 }

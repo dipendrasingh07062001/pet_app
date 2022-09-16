@@ -38,125 +38,136 @@ class _TutorialState extends State<Tutorial> {
     h= MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
     return Scaffold(
-       backgroundColor: WHITE70_CLR,
-
-       body: Column(
-      children: [
-                SizedBox(
-                  height: h*0.080,
-                ),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 10),
-                  child: TextButton(onPressed: (){}, child: Text("Skip>>",style: TextStyle(color: NON_DARK_CLR),)),
-                )),
-
-                SizedBox(
-                  height: h*0.060,
-                ),
+       
+       body: Container(
+         alignment: Alignment.center,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+        image: AssetImage(
+          "assets/png_image/Group 24@2x.png",
+        ),
+        fit: BoxFit.cover,
+          ),
+        ),
           
-            Image.asset(
-                  DOG_IMAGE,
-                  height: h * 0.27,
-                ),
+         child: Column(
+         children: [
+                  SizedBox(
+                    height: h*0.080,
+                  ),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: TextButton(onPressed: (){}, child: Text("Skip>>",style: TextStyle(color: NON_DARK_CLR),)),
+                  )),
 
-                SizedBox(
-                  height: h*0.020,
-                )
-                ,
-
-
-           isClick==false? TutorialText(TITLE, DARK_CLR, FontWeight.bold, 25):TutorialText(TITLE, DARK_CLR, FontWeight.bold, 25),
-                SizedBox(
-                  height: h*0.010,
-                ),
-
-          isClick==false? TutorialText(TUTORIAL_SUB_TITLE, DARK_CLR, FontWeight.normal, 18):
-                          TutorialText(TUTORIAL_SUB_TITLE, DARK_CLR, FontWeight.normal, 18),
-
-
-
-
-
-         SizedBox(
-          height: h*0.090,
-         ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-
-
-                  Padding(
-                    padding:  EdgeInsets.only(left: w*0.050),
-                    child: Row(
-                      children: [
-
-                        
-                        Container(
-                          height: 18,
-                          width: 18,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            border: Border.all(color: GREEN_CLR),
-                            color: isClick==false? GREEN_CLR:WHITE_CLR
-                          ),
-                        ),
-
-                        SizedBox(
-                          width: w*0.020,
-                        ),
-
-                         Container(
-                          height: 18,
-                          width: 18,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            border: Border.all(color: GREEN_CLR),
-                            color: isClick==true?GREEN_CLR:WHITE_CLR
-                          ),
-                        ),
-                      ],
-                    ),
+                  SizedBox(
+                    height: h*0.060,
+                  ),
+            
+              Image.asset(
+                    DOG_IMAGE,
+                    height: h * 0.27,
                   ),
 
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        isClick=true;
-                        currentIndex++;
-                        print(currentIndex);
-                    
-                       if(currentIndex>=2){
-                        Navigate_to(context, GetStarted());
-                        }
-                       
-                        
+                  SizedBox(
+                    height: h*0.020,
+                  )
+                  ,
+
+
+             isClick==false? TutorialText(TITLE, DARK_CLR, FontWeight.bold, 25):TutorialText(TITLE, DARK_CLR, FontWeight.bold, 25),
+                  SizedBox(
+                    height: h*0.010,
+                  ),
+
+            isClick==false? TutorialText(TUTORIAL_SUB_TITLE, DARK_CLR, FontWeight.normal, 18):
+                            TutorialText(TUTORIAL_SUB_TITLE, DARK_CLR, FontWeight.normal, 18),
+
+
+
+
+
+           SizedBox(
+            height: h*0.090,
+           ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+
+
+                    Padding(
+                      padding:  EdgeInsets.only(left: w*0.050),
+                      child: Row(
+                        children: [
+
                           
-                      });
-                    
-                         
-                    },
-                    child: Container(
-                        alignment: Alignment.center,
-                        height: h * 0.07,
-                        width: w * 0.5,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(15),
-                              bottomLeft: Radius.circular(15)),
-                          color: GREEN_CLR
-                        ),
-                        child: styleText( isClick==false?NEXT:GET_STARTED
-                        , WHITE70_CLR, FontWeight.normal, 18)),
-                  ),
-                ],
-              )
-            
-            
+                          Container(
+                            height: 18,
+                            width: 18,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              border: Border.all(color: GREEN_CLR),
+                              color: isClick==false? GREEN_CLR:WHITE_CLR
+                            ),
+                          ),
 
-       ]),
+                          SizedBox(
+                            width: w*0.020,
+                          ),
+
+                           Container(
+                            height: 18,
+                            width: 18,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              border: Border.all(color: GREEN_CLR),
+                              color: isClick==true?GREEN_CLR:WHITE_CLR
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          isClick=true;
+                          currentIndex++;
+                          print(currentIndex);
+                      
+                         if(currentIndex>=2){
+                          Navigate_to(context, GetStarted());
+                          }
+                         
+                          
+                            
+                        });
+                      
+                           
+                      },
+                      child: Container(
+                          alignment: Alignment.center,
+                          height: h * 0.07,
+                          width: w * 0.5,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(15),
+                                bottomLeft: Radius.circular(15)),
+                            color: GREEN_CLR
+                          ),
+                          child: styleText( isClick==false?NEXT:GET_STARTED
+                          , WHITE70_CLR, FontWeight.normal, 18)),
+                    ),
+                  ],
+                )
+              
+              
+
+         ]),
+       ),
 
     );
   }

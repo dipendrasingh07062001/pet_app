@@ -35,7 +35,7 @@ var w;
         
                               SizedBox(height: h*0.010,),
         
-                  styleText("Your pet’s period is likely to start on or around 23 August", DARK_CLR, FontWeight.normal, 15),
+                  styleText("Your pet’s period is likely to start on or around 23 August", DARK_CLR, FontWeight.bold, 15),
           SizedBox(
             height: h*0.020,
           ),
@@ -65,7 +65,7 @@ var w;
                               SizedBox(height: h*0.010,),
                                styleText("PERIOD PREDICTION", GREEN_CLR, FontWeight.bold, 15),
            SizedBox(height: h*0.010,),
-                  styleText("Your pet’s period is likely to start on or around 23 August", DARK_CLR, FontWeight.normal, 15),
+                  styleText("Your pet’s period is likely to start on or around 23 August", DARK_CLR, FontWeight.bold, 15),
           SizedBox(
             height: h*0.020,
           ),

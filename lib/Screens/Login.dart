@@ -43,8 +43,9 @@ class _LoginState extends State<Login> {
     return ChangeNotifierProvider<ProviderTutorial>(
       create: (BuildContext context)=>ProviderTutorial(),
       child: Scaffold(
+        backgroundColor: WHITE70_CLR,
         resizeToAvoidBottomInset: true,
-        extendBody: false,
+        extendBody: true,
         body: SingleChildScrollView(
           child: Form(
             key: _formkey,
@@ -53,7 +54,7 @@ class _LoginState extends State<Login> {
               children: [
                 Column(children: [
                   Container(
-                    height: h * 0.6,
+                    height: h * 0.5,
                     width: w * 1,
                     color: GREEN_CLR,
                     child: SvgPicture.asset(
@@ -62,7 +63,7 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                   Container(
-                    height: h * 0.5,
+                    height: h * 0.6,
                     color: WHITE70_CLR,
                   )
                 ]),
@@ -77,7 +78,7 @@ class _LoginState extends State<Login> {
                     Padding(
                       padding: const EdgeInsets.all(15),
                       child: Container(
-                        padding: EdgeInsets.only(top: h * 0.030),
+                        padding: EdgeInsets.only(top: h * 0.028),
                         alignment: Alignment.topCenter,
                         height: h * 0.8,
                         width: w * 1,
@@ -88,22 +89,22 @@ class _LoginState extends State<Login> {
                             color: WHITE70_CLR),
                         child: Padding(
                           padding: EdgeInsets.only(
-                              left: w * 0.030, right: w * 0.030, top: h * 0.010),
+                              left: w * 0.030, right: w * 0.030,),
                           child: Column(
                             children: [
                       
-                              styleText(WELCOME_BACK,
+                              TutorialText(WELCOME_BACK,
                                   BLACK_CLR, FontWeight.bold, 19),
                               Container(
                       
-                                height: h*0.07,
-                                margin: EdgeInsets.only(top: h * 0.035),
+                                height: h*0.06,
+                                margin: EdgeInsets.only(top: h * 0.030),
                             decoration: BoxDecoration(
                         
                               color: WHITE70_CLR,
                               borderRadius: BorderRadius.circular(10),
                               boxShadow: [
-                                BoxShadow(blurRadius: 14,color: SHADOW_CLR.withOpacity(0.2)),
+                                BoxShadow(blurRadius: 14,color: SHADOW_CLR.withOpacity(0.1)),
                                 
                               ],
                               
@@ -133,7 +134,7 @@ class _LoginState extends State<Login> {
                                     decoration: InputDecoration(
                                       errorText: "",
                                       errorStyle: TextStyle(height: 0),
-                                        hintText: "Email address",
+                                        hintText: "Email Address",
                                         hintStyle: TextStyle(
                                             color: GRAY_CLR,
                                             fontSize: 16,
@@ -141,7 +142,7 @@ class _LoginState extends State<Login> {
                                         prefixIcon: Icon(
                                           Icons.email_outlined,
                                           color: GRAY_CLR,
-                                          size: 20,
+                                          size: 22,
                                         ),
                                         border: InputBorder.none)),
                               ),
@@ -155,13 +156,13 @@ class _LoginState extends State<Login> {
                              
 
                               Container(
-                                height: h*0.07,
+                                height: h*0.06,
                                 margin: EdgeInsets.only(top: h * 0.025),
                                 decoration: BoxDecoration(
                                   color: WHITE70_CLR,
                                     borderRadius: BorderRadius.circular(10),
                                     boxShadow: [
-                                      BoxShadow(color: SHADOW_CLR.withOpacity(0.2),blurRadius: 14)
+                                      BoxShadow(color: SHADOW_CLR.withOpacity(0.1),blurRadius: 14)
                                     ]
                                     ),
                                 // color: WHITE_CLR,
@@ -187,7 +188,7 @@ class _LoginState extends State<Login> {
                                  
                                 
                                   obscureText: _passwordVisible,
-                                  textCapitalization: TextCapitalization.none,
+                                  // textCapitalization: TextCapitalization.none,
                                   textAlign: TextAlign.start,
                                   decoration: InputDecoration(
                                     errorText: "",
@@ -200,7 +201,7 @@ class _LoginState extends State<Login> {
                                       prefixIcon: Icon(
                                         Icons.lock_open_outlined,
                                         color: GRAY_CLR,
-                                        size: 20,
+                                        size: 22,
                                       ),
                                       border: InputBorder.none,
                                       suffixIcon: IconButton(
@@ -231,10 +232,7 @@ class _LoginState extends State<Login> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  Icon(
-                                    Icons.key_sharp,
-                                    color: GRAY_CLR,
-                                  ),
+                                 SvgPicture.asset("assets/svg_icon/key.svg",color: GRAY_CLR,),
                                   SizedBox(
                                     width: w * 0.005,
                                   ),
@@ -246,7 +244,7 @@ class _LoginState extends State<Login> {
                                 ],
                               ),
                               SizedBox(
-                                height: h * 0.040,
+                                height: h * 0.030,
                               ),
                               DefaultButton(
                                   text: "Login",
@@ -272,20 +270,50 @@ class _LoginState extends State<Login> {
                               ),
                               styleText("Or Continue with", GREEN_CLR,
                                   FontWeight.normal, 15),
+                                  SizedBox(height: h*0.010,),
                               Row(
+                                // crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Image.asset(GOOGLE_IMAGE),
-                                  Image.asset(APPLE_IMAGE),
-                                  Image.asset(FACEBOOK_IMAGE),
+                              Container(
+                                height: 45,width: 45,alignment: Alignment.center,
+                                  
+                                  decoration: BoxDecoration(
+                                    color: WHITE_CLR,
+                                    borderRadius: BorderRadius.circular(50)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10),
+                                    child: Image.asset("assets/png_icon/google.png",height: 40,),
+                                  )
+                                  
+                                  ),
+
+                                  Container(height: 45,width: 45,alignment: Alignment.center,
+                                  margin: EdgeInsets.only(left: 15,),
+                                  decoration: BoxDecoration(
+                                    color: WHITE_CLR,
+                                    borderRadius: BorderRadius.circular(50)),
+                                  child: Icon(Icons.apple,size: 35,)
+                                  
+                                  ),
+                                
+                                  Container(height: 45,width: 45,alignment: Alignment.center,
+                                  margin: EdgeInsets.only(left: 15,),
+                                  decoration: BoxDecoration(
+                                    color: WHITE_CLR,
+                                    borderRadius: BorderRadius.circular(50)),
+                                  child: Icon(Icons.facebook,size: 35,color: Color.fromARGB(255, 56, 1, 145),)
+                                  
+                                  ),
                                 ],
                               ),
 
 
-
+                               SizedBox(height: h*0.020,),
                               
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   styleText(NOT_MEMBER, GRAY_CLR,
                                       FontWeight.normal, 15),
@@ -293,8 +321,8 @@ class _LoginState extends State<Login> {
                                   Consumer<ProviderTutorial>(
                                     builder: (BuildContext context, value, Widget? child) {
                                       return
-                                        TextButton(
-                                            onPressed: () {
+                                        GestureDetector(
+                                            onTap: () {
                                               // formProvider.globalKey.currentState!.validate();
 
                                               ProviderTutorial().NavigateSinup(context);

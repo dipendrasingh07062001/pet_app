@@ -30,16 +30,17 @@ class _PregnancyState extends State<Pregnancy> {
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         itemCount: 2,
+        padding: EdgeInsets.symmetric(vertical: 20),
         itemBuilder: (BuildContext context, int index) {  
         return Padding(
-              padding:  EdgeInsets.only(left: w*0.030,right: w*0.030,top: h*0.015,bottom: h*0.020),
+              padding:  EdgeInsets.only(left: w*0.030,right: w*0.030,bottom: h*0.020),
           child: Container(
             // height: h*0.45,
             width: w*1,
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
             color:Colors.white,
             boxShadow: [
-              BoxShadow(color: DROP_CLR.withOpacity(0.2),blurRadius: 16)
+              BoxShadow(color: DROP_CLR.withOpacity(0.1),blurRadius: 16)
             ]),
             child: Padding(
               padding:  EdgeInsets.only(left: w*0.030,right: w*0.030,top: h*0.015,bottom: h*0.010),
@@ -107,14 +108,19 @@ class _PregnancyState extends State<Pregnancy> {
                    SizedBox(height: h*0.010,),
       
       
-                   Divider(thickness: 1,color: GRAY_CLR.withOpacity(0.1),),
-                     SizedBox(height: h*0.010,),
-      
+                   Divider(thickness: 2,color: GRAY_CLR.withOpacity(0.1),),
+                     
                    Row(children: [
                  
                  styleText("Reminder", DARK_CLR, FontWeight.bold, 14), 
                  SizedBox(width: w*0.010,),
-                 DefaultButton(text: "6 months", ontap: (){}, fontsize: 11, height: h*0.032, width: w*0.2)
+                 MaterialButton(
+                  height: h*0.028,minWidth: w*0.16,
+                  color: GREEN_CLR,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                  onPressed: (){},child:
+                  styleText("6 Months",WHITE_CLR,FontWeight.normal,11)
+                )
                    ],),
       
       

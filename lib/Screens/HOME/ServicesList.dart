@@ -51,33 +51,37 @@ static   List<String> ImageName =['Cycle Tracking','Medications','Vaccinations',
       shrinkWrap: true,
       scrollDirection: Axis.vertical,
       itemCount: ImageName.length,
-      itemBuilder: (BuildContext context, int index) {  return
+      itemBuilder: (BuildContext context, int index) { 
+         return
        SizedBox(
         height: h*0.12,
         width: w*1,
         child: GestureDetector(
           onTap: ()=> Navigate_to(context,  PageRoute[index]),
-          child: Card(
-            color: WHITE70_CLR,
-            elevation: 1,
-            // shadowColor: GRAY_CLR,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-              
-          child:
-            Row(children: [
-              
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: 
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: Card(
+              color: WHITE70_CLR,
+              elevation: 1,
+              // shadowColor: GRAY_CLR,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                 
-                Image.asset(DetailData[index].ImageUrl),
-              ),
-              SizedBox(width: w*0.050,),
-              
-              
-              styleText(DetailData[index].name, DARK_CLR, FontWeight.bold, 18)
-              
-            ],)
+            child:
+              Row(children: [
+                
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: 
+                  
+                  Image.asset(DetailData[index].ImageUrl),
+                ),
+                SizedBox(width: w*0.035,),
+                
+                
+                styleText(DetailData[index].name, DARK_CLR, FontWeight.bold, 17)
+                
+              ],)
+            ),
           ),
         ),
       );

@@ -57,9 +57,10 @@ var w;
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(height: h*0.050,),
             styleText("How long is the typical cycle?", DARK_CLR.withOpacity(0.8), FontWeight.bold, 20),
             SizedBox(
-              height: h*0.55,
+              height: h*0.5,
               child:ListWheelScrollView.useDelegate( 
 
 itemExtent: 50, 

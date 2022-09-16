@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/parser.dart';
 import 'package:pet_app/Colors/COLORS.dart';
+import 'package:pet_app/Screens/HOME/Home.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 import 'package:provider/provider.dart';
 
@@ -50,7 +51,7 @@ var w;
   
   
             SizedBox(
-              height: h*0.058,
+              height: h*0.05,
             ),
   
          styleText("Hurray!! ", BLACK70_CLR, FontWeight.bold, 19),
@@ -60,7 +61,7 @@ var w;
                                  ),
                             
                           
-                                styleText("You have successfully verfied the \n account", GRAY_CLR,
+                                TutorialText("You have successfully verfied the \n account", GRAY_CLR,
                                     FontWeight.normal, 15),
         
                               SizedBox(
@@ -68,6 +69,7 @@ var w;
                               ),
  
                               DefaultButton(text: "Go to Dashboard", ontap: (){
+                                Navigate_to(context, Home());
                                
                               }, fontsize: 18, height: h*0.060, width: w*1),
  

@@ -68,16 +68,11 @@ var w;
     return Scaffold(
       
        backgroundColor: WHITE70_CLR,
-      appBar: AppBar(centerTitle: true,
-      toolbarHeight: h*0.08,
-      backgroundColor: WHITE70_CLR,
-      elevation: 1,
-      title: styleText( "Pregnancy", DARK_CLR, FontWeight.bold, 17), 
-      ),
+      appBar:DefaultAppBar("Pregnancy"),
       
      
    body: Padding(
-     padding:  EdgeInsets.only(left: w*0.030,right: w*0.030,top: h*0.020,bottom: h*0.050),
+     padding:  EdgeInsets.only(left: w*0.030,right: w*0.030,top: h*0.015,bottom: h*0.010),
      child: SingleChildScrollView(
        child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,6 +81,8 @@ var w;
               
                        styleText("Sexully Active", BLACK_CLR, FontWeight.normal, 15),
 
+
+SizedBox(height: h*0.010,),
                          Row(
                   mainAxisAlignment: MainAxisAlignment.start,
               
@@ -106,31 +103,39 @@ var w;
                       },
                     ),
                   ),
-                  SizedBox(width: w*0.030,),
+                  SizedBox(width: w*0.010,),
                      styleText("Yes", GRAY_CLR, FontWeight.normal, 15),
                 
-                  Radio(
-                    value: 2,
-                    groupValue: _radioSelected,
-                    activeColor:GREEN_CLR,
-                    onChanged: (value) {
-                      setState(() {
-                        _radioSelected = value!;
-                        _radioVal = 'no';
-                      });
-                    },
+                SizedBox(width: w*0.030,),
+                  SizedBox(
+                    height: 20,
+                    width: 20,
+                    child: Radio(
+                      value: 2,
+                      groupValue: _radioSelected,
+                      activeColor:GREEN_CLR,
+                      onChanged: (value) {
+                        setState(() {
+                          _radioSelected = value!;
+                          _radioVal = 'no';
+                        });
+                      },
+                    ),
                   ),
+                  SizedBox(width: w*0.010,),
                 styleText("No", GRAY_CLR, FontWeight.normal, 15),
 
 
                 
                 ],
               ),
+
+              SizedBox(height: h*0.015,),
      
        styleText("No. of past Pregnancy", BLACK_CLR, FontWeight.normal, 15),
        
         Container(
-                              height: h*0.065,
+                              height: h*0.06,
                               margin: EdgeInsets.only(top: h*0.010),
                           decoration: BoxDecoration(
                             color: WHITE_CLR,
@@ -171,7 +176,7 @@ var w;
                           Container(
                                       padding: EdgeInsets.only(left: 10),
                                         alignment: Alignment.center,
-                                        height: h*0.065,
+                                        height: h*0.06,
                                         margin: EdgeInsets.only(top: h * 0.010),
                                     decoration: BoxDecoration(
                                 
@@ -195,8 +200,8 @@ var w;
                                         ),
 
                         SizedBox(height: h*0.020,),
-                       styleText("Nuetered ", BLACK_CLR, FontWeight.normal, 15),
-
+                       styleText("Neutered ", BLACK_CLR, FontWeight.normal, 15),
+                        SizedBox(height: h*0.015,),
 
                          Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -219,21 +224,29 @@ var w;
                       },
                     ),
                   ),
-                  SizedBox(width: w*0.030,),
+                  SizedBox(width: w*0.010,),
                   styleText("Yes", GRAY_CLR, FontWeight.normal, 15),
 
-                
-                  Radio(
-                    value: 2,
-                    groupValue: _radioSelected1,
-                    activeColor:GREEN_CLR,
-                    onChanged: (value) {
-                      setState(() {
-                        _radioSelected1 = value!;
-                        _radioVal1 = 'no';
-                      });
-                    },
+                SizedBox(
+                  width: w*0.030,
+                ),
+                  SizedBox(
+                    height: 20,
+                    width: 20,
+                    child: Radio(
+                      
+                      value: 2,
+                      groupValue: _radioSelected1,
+                      activeColor:GREEN_CLR,
+                      onChanged: (value) {
+                        setState(() {
+                          _radioSelected1 = value!;
+                          _radioVal1 = 'no';
+                        });
+                      },
+                    ),
                   ),
+                  SizedBox(width: w*0.010,),
             styleText("No", GRAY_CLR, FontWeight.normal, 15),
 
 
@@ -248,6 +261,8 @@ var w;
 
       SizedBox(height: h*0.010,),
                        styleText("Reminder Duration ", BLACK_CLR, FontWeight.normal, 15),
+
+                       SizedBox(height: h*0.020,),
                          Row(
                   mainAxisAlignment: MainAxisAlignment.start,
               
@@ -269,32 +284,45 @@ var w;
                       },
                     ),
                   ),
-                  SizedBox(width: w*0.030,),
+                  SizedBox(width: w*0.010,),
                  styleText("6 Months", GRAY_CLR, FontWeight.normal, 15),
                 
-                  Radio(
-                    value: 2,
-                    groupValue: _radioSelected2,
-                    activeColor:GREEN_CLR,
-                    onChanged: (value) {
-                      setState(() {
-                        _radioSelected2 = value!;
-                        _radioVal2= '9months';
-                      });
-                    },
+                SizedBox(width: w*0.030,),
+                  SizedBox(
+                      height: 20,
+                    width: 20,
+                    child: Radio(
+                      value: 2,
+                      groupValue: _radioSelected2,
+                      activeColor:GREEN_CLR,
+                      onChanged: (value) {
+                        setState(() {
+                          _radioSelected2 = value!;
+                          _radioVal2= '9months';
+                        });
+                      },
+                    ),
                   ),
+                  SizedBox(width: w*0.010,),
                        styleText("9Months", GRAY_CLR, FontWeight.normal, 15),
-  Radio(
-                    value: 3,
-                    groupValue: _radioSelected2,
-                    activeColor:GREEN_CLR,
-                    onChanged: (value) {
-                      setState(() {
-                        _radioSelected2 = value!;
-                        _radioVal2 = '12months';
-                      });
-                    },
-                  ),
+                       SizedBox(width: w*0.030,),
+  SizedBox(
+      height: 20,
+                    width: 20,
+    child: Radio(
+                      value: 3,
+                      groupValue: _radioSelected2,
+                      activeColor:GREEN_CLR,
+                      onChanged: (value) {
+                        setState(() {
+                          _radioSelected2 = value!;
+                          _radioVal2 = '12months';
+                        });
+                      },
+                    ),
+
+  ),
+  SizedBox(width: w*0.010,),
                      styleText("12Months", GRAY_CLR, FontWeight.normal, 15),
 
                 
@@ -302,39 +330,8 @@ var w;
                 ],
               ),
      
-    
      
-                            styleText("Deworming Date", BLACK_CLR, FontWeight.normal, 15),
-       
-                        Container(
-                              height: h*0.065,
-                              padding: EdgeInsets.only(left: w*0.030,right: w*0.030),
-                              margin: EdgeInsets.only(top: h*0.010),
-                          decoration: BoxDecoration(
-                            color: WHITE_CLR,
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: BORDER_CLR,width: 1)
-                          ),
-                          child:Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text( _currentdate1==null?"DD-MM-YYYY":"$_currentdate1",style: TextStyle(color: GRAY_CLR,fontSize: 14),),
-                   
-                             GestureDetector(
-                              onTap: (){
-                                setState(() {
-                                  _datechange1(context);
-                                });
-                              },
-                              child: Icon(Icons.calendar_month_sharp,color: GRAY_CLR.withOpacity(0.5),size: 20,)),
-                            
-                              ],
-                          ),
-     
-                            ),
-                       
-  
-                        SizedBox(height: h*0.020,),    
+                        SizedBox(height: h*0.030,),    
               
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -409,11 +406,11 @@ var w;
                         ],
                       ),
 
-                      SizedBox(height: h*0.050,),
+                      SizedBox(height: h*0.070,),
 
                       Align(
                         alignment: Alignment.bottomCenter,
-                        child: DefaultButton(text: "Continue", ontap: (){}, fontsize: 15, height: h*0.060, width: w*0.8))
+                        child: DefaultButton(text: "Done", ontap: (){}, fontsize: 15, height: h*0.060, width: w*0.8))
      
         ]
                           ),

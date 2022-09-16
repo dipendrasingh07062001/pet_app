@@ -6,6 +6,7 @@ import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Screens/HOME/ServicesList.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 
+import '../../Componants/Images&Icons.dart';
 import '../Add_Pets/addPet.dart';
 import '../Add_Pets/addPet1.dart';
 
@@ -28,7 +29,7 @@ class _My_PetsState extends State<My_Pets> {
 
     return Scaffold(
       backgroundColor: WHITE70_CLR,
-      appBar: DefaultAppBar("My Pet"),
+      appBar: DefaultAppBar(MY_PET),
 
 
        floatingActionButton: FloatingActionButton(
@@ -84,23 +85,23 @@ class _My_PetsState extends State<My_Pets> {
                         
                   
                      SizedBox(
-                      height: h*0.040,
+                      height: h*0.042,
                        child: GestureDetector(
                         onTap: ()=>Navigate_to(context, AddPetpage()),
-                        child: CircleAvatar(backgroundColor: FADE_BLUE_CLR,child: Icon(Icons.edit,color: WHITE70_CLR,size: 20,),),),
+                        child: CircleAvatar(backgroundColor: FADE_BLUE_CLR,child: Icon(Icons.edit,color: WHITE70_CLR,size: 18,),),),
                      ),
 
-                SizedBox(width: w*0.010,),
+                SizedBox(width: w*0.005,),
 
                 SizedBox(
-                  height: h*0.040,
+                  height: h*0.042,
                   child: GestureDetector(
                     onTap: (){
                       setState(() {
                         _Delete(context);
                       });
                     },
-              child: CircleAvatar(backgroundColor: FADE_BLUE_CLR,child: Icon(Icons.delete,color: WHITE70_CLR,size: 20,),),
+              child: CircleAvatar(backgroundColor: FADE_BLUE_CLR,child: Icon(Icons.delete,color: WHITE70_CLR,size: 18,),),
               
         ),
                 ),
@@ -115,7 +116,7 @@ class _My_PetsState extends State<My_Pets> {
               )
         ),
 
-        SvgPicture.asset("assets/svg_image/Group 326.svg"),
+        SvgPicture.asset(MY_PET_IMAGE),
            ],
          );
         }
@@ -140,17 +141,17 @@ w= MediaQuery.of(context).size.width;
         return AlertDialog(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           title: Center(
-            child: TutorialText("Are you sure you want to delete this pet?", BLACK_CLR, FontWeight.normal, 17),
+            child: TutorialText(DELETE_PET, BLACK_CLR, FontWeight.normal, 17),
           ),
           content: Container(
-            height: h*0.15,
+            height: h*0.12,
             width: w*0.32,
             child: Column(
               children: [
 
                 SizedBox(height: h*0.010,),
 
-                DefaultButton(text: "Delete", ontap: (){
+                DefaultButton(text: DELETE, ontap: (){
                   Navigator.of(context).pop();
                 }, fontsize: 17, height: 40, width: 150),
 
@@ -158,7 +159,7 @@ w= MediaQuery.of(context).size.width;
 
                 GestureDetector(
                   onTap: ()=>Navigator.of(context).pop(),
-                  child: styleText("Cancel", GREEN_CLR, FontWeight.normal, 17)),
+                  child: styleText(CANCEL, GREEN_CLR, FontWeight.normal, 17)),
                
                     ],
                   ),

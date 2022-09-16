@@ -56,9 +56,10 @@ var w;
         padding:  EdgeInsets.all(h*0.020),
         child: Column(
           children: [
+            SizedBox(height: h*0.050,),
             styleText("How long does your pet’s period usually last?", DARK_CLR.withOpacity(0.8), FontWeight.bold, 20),
             SizedBox(
-              height: h*0.55,
+              height: h*0.5,
               child:ListWheelScrollView.useDelegate( 
 
 

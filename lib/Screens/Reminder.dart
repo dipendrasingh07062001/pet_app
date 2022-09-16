@@ -46,7 +46,7 @@ bool tap = false;
 
     return Scaffold(
       backgroundColor: WHITE70_CLR,
-      appBar: DefaultAppBar("Reminder"),
+      appBar: DefaultAppBar("Reminders"),
 
        floatingActionButton: FloatingActionButton(
         backgroundColor: WHITE70_CLR,
@@ -56,7 +56,7 @@ bool tap = false;
         },child: Icon(Icons.add,size: 40,color: GREEN_CLR,),heroTag: "b1",),
 
       body: Padding(
-        padding:  EdgeInsets.only(left: w*0.020,top: h*0.020),
+        padding:  EdgeInsets.only(left: w*0.030,top: h*0.020),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -64,24 +64,25 @@ bool tap = false;
             styleText("Pinned", DARK_CLR, FontWeight.bold, 19),
             SizedBox(height: h*0.010,),
             SizedBox(
-              height: h*0.22,
+              height: h*0.18,
               child: ListView.builder(
+                // physics: NeverScrollableScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 shrinkWrap: true,
                 itemCount: 2,
                 itemBuilder: (BuildContext context, int index) {  
                 return Padding(
-                      padding:  EdgeInsets.only(left: w*0.030,right: w*0.010,top: h*0.015,bottom: h*0.020),
+                  padding: const EdgeInsets.only(right: 5,bottom: 5),
                   child: Container(
-               
+                       
                     width: w*0.5,
                     decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
                     color:Colors.white,
                     boxShadow: [
-                      BoxShadow(color: DROP_CLR.withOpacity(0.2),blurRadius: 10)
+                      BoxShadow(color: DROP_CLR.withOpacity(0.1),blurRadius: 10)
                     ]),
                     child: Padding(
-                      padding:  EdgeInsets.only(left: w*0.030,right: w*0.030,top: h*0.015,bottom: h*0.010),
+                      padding:  EdgeInsets.only(left: w*0.030,right: w*0.030,top: h*0.015),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -95,7 +96,7 @@ bool tap = false;
                          
                                       styleText("Give medicine to fluffy and take him for the vaccination", GRAY_CLR, FontWeight.bold, 10),
                                     
-                                  SizedBox(height: h*0.020,),
+                                  SizedBox(height: h*0.010,),
 
                                   Row(
                                     children: [
@@ -112,7 +113,7 @@ bool tap = false;
                                         height: h*0.035,
                                         width: w*0.2,
                                         decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
-                                        color: tap==false?GREEN_CLR:FADE_GREEN_CLR
+                                        color: FADE_GREEN_CLR
                                         ),
                                         child: Row(children: [
                                           SvgPicture.asset("assets/svg_icon/Icon metro-pin.svg"),
@@ -130,17 +131,22 @@ bool tap = false;
                                         },
                                          child: Container(
                                                                        
-                                                                           alignment: Alignment.center,
+                                                                          //  alignment: Alignment.center,
                                                                            height: h*0.035,
                                                                            width: w*0.2,
                                                                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
-                                                                           color: tap==true? GREEN_CLR:FADE_GREEN_CLR
+                                                                           color:  GREEN_CLR
                                                                            ),
-                                                                           child: Row(children: [
-                                                                           Icon(Icons.check,color: WHITE70_CLR,),
-                                                                             SizedBox(width: w*0.010,),
-                                                                             styleText("Done", WHITE70_CLR, FontWeight.normal, 12)
-                                                                           ]),
+                                                                           child: Padding(
+                                                                             padding: const EdgeInsets.only(left: 5),
+                                                                             child: Row(
+                                                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                                                              children: [
+                                                                             Icon(Icons.check,color: WHITE70_CLR,size: 18,),
+                                                                               SizedBox(width: w*0.010,),
+                                                                               styleText("Done", WHITE70_CLR, FontWeight.normal, 12)
+                                                                             ]),
+                                                                           ),
                                                                          ),
                                        ),
                                     ],
@@ -154,7 +160,7 @@ bool tap = false;
                       ]      
                     ),
                   ),
-                  )
+                  ),
                 );
                 }
               ),
@@ -175,7 +181,7 @@ styleText("Upcomming", DARK_CLR, FontWeight.bold, 19),
                 itemCount: 3,
                 itemBuilder: (BuildContext context, int index) {  
                 return Padding(
-                      padding:  EdgeInsets.only(left: w*0.030,right: w*0.030,top: h*0.015,bottom: h*0.020),
+                      padding:  EdgeInsets.only(right: w*0.030,top: h*0.005,bottom: h*0.015),
                   child: GestureDetector(
                     onTap: (){
                       setState(() {
@@ -186,9 +192,9 @@ styleText("Upcomming", DARK_CLR, FontWeight.bold, 19),
                                  
                       width: w*0.5,
                       decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
-                      color:TextName.elementAt(index)==Select?FADE_BLUE_CLR.withOpacity(0.5):WHITE70_CLR,
+                      color:TextName.elementAt(index)==Select?FADE_BLUE_CLR.withOpacity(0.12):WHITE_CLR,
                       boxShadow: [
-                        BoxShadow(color: DROP_CLR.withOpacity(0.2),blurRadius: 10)
+                        BoxShadow(color: DROP_CLR.withOpacity(0.1),blurRadius: 10)
                       ]),
                       child: Padding(
                         padding:  EdgeInsets.only(left: w*0.030,right: w*0.030,top: h*0.015,bottom: h*0.010),
@@ -225,7 +231,7 @@ styleText("Upcomming", DARK_CLR, FontWeight.bold, 19),
                                               height: h*0.035,
                                               width: w*0.2,
                                               decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
-                                              color: tap==false?GREEN_CLR:FADE_GREEN_CLR
+                                              color: FADE_GREEN_CLR
                                               ),
                                               child: Row(children: [
                                                 SvgPicture.asset("assets/svg_icon/Icon metro-pin.svg"),
@@ -247,13 +253,16 @@ styleText("Upcomming", DARK_CLR, FontWeight.bold, 19),
                                                                                  height: h*0.035,
                                                                                  width: w*0.2,
                                                                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
-                                                                                 color: tap==true? GREEN_CLR:FADE_GREEN_CLR
+                                                                                 color:  GREEN_CLR
                                                                                  ),
-                                                                                 child: Row(children: [
-                                                                                 Icon(Icons.check,color: WHITE70_CLR,),
-                                                                                   SizedBox(width: w*0.010,),
-                                                                                   styleText("Done", WHITE70_CLR, FontWeight.normal, 12)
-                                                                                 ]),
+                                                                                 child: Padding(
+                                                                                   padding: const EdgeInsets.only(left: 5),
+                                                                                   child: Row(children: [
+                                                                                   Icon(Icons.check,color: WHITE70_CLR,size: 18,),
+                                                                                     SizedBox(width: w*0.010,),
+                                                                                     styleText("Done", WHITE70_CLR, FontWeight.normal, 12)
+                                                                                   ]),
+                                                                                 ),
                                                                                ),
                                              ),
                                           ],
@@ -309,78 +318,81 @@ w= MediaQuery.of(context).size.width;
   return showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-          title: Center(
-            child: styleText("Add Reminder", BLACK_CLR, FontWeight.normal, 17),
-          ),
-          content: Container(
-            height: h*0.2,
-            width: w*0.32,
-            child: Column(
-              children: [
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: AlertDialog(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            title: Center(
+              child: styleText("Add Reminder", BLACK_CLR, FontWeight.bold, 17),
+            ),
+            content: Container(
+              height: h*0.2,
+              width: w*0.32,
+              child: Column(
+                children: [
 
 
  
-        Container(
-                              height: h*0.06,
-                              width: w*0.55,
-                              margin: EdgeInsets.only(top: h*0.010),
-                          decoration: BoxDecoration(
-                            color: WHITE_CLR,
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: BORDER_CLR,width: 1)
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 15,right: 15),
-                            child: DropdownButton<String>(
-                              isExpanded: true,
+          Container(
+                                height: h*0.055,
+                                width: w*0.55,
+                            
+                            decoration: BoxDecoration(
+                              color: WHITE_CLR,
                               borderRadius: BorderRadius.circular(10),
-                               underline: SizedBox() ,
-                              value: day,
-                              onChanged: (String? newValue) {
-                                () => day = newValue!;
-                              },
-                                  
-                              items: SelectDay
-                                  .map<DropdownMenuItem<String>>(
-                                      (String value) =>
-                                      DropdownMenuItem<String>(
-                                      
+                              border: Border.all(color: BORDER_CLR,width: 1)
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 15,right: 15),
+                              child: DropdownButton<String>(
+                                isExpanded: true,
+                                borderRadius: BorderRadius.circular(10),
+                                 underline: SizedBox() ,
+                                value: day,
+                                onChanged: (String? newValue) {
+                                  () => day = newValue!;
+                                },
+                                    
+                                items: SelectDay
+                                    .map<DropdownMenuItem<String>>(
+                                        (String value) =>
+                                        DropdownMenuItem<String>(
+                                        
      
-                                        value: value,
-                                        child: Text(value,style: TextStyle(color: GRAY_CLR,fontSize: 14),),
-                                      ))
-                                  .toList(),
+                                          value: value,
+                                          child: Text(value,style: TextStyle(color: GRAY_CLR,fontSize: 14),),
+                                        ))
+                                    .toList(),
      
-                             
-                              icon: Icon(Icons.keyboard_arrow_down,color: GRAY_CLR.withOpacity(0.5),size: 25,),
-                              iconSize: 25,
-                             
+                               
+                                icon: Icon(Icons.keyboard_arrow_down,color: GRAY_CLR.withOpacity(0.5),size: 25,),
+                                iconSize: 25,
+                               
      
+                              ),
                             ),
                           ),
-                        ),
 
 
-                SizedBox(height: h*0.010,),
+                  SizedBox(height: h*0.025,),
 
-                DefaultButton(text: "Add", ontap: (){
-                  Navigator.of(context).pop(false);
-                }, fontsize: 17, height: 40, width: w*0.55),
+                  DefaultButton(text: "Add", ontap: (){
+                    Navigator.of(context).pop(false);
+                  }, fontsize: 17, height: h*0.055, width: w*0.55),
 
-                SizedBox(height: 20,),
+                  SizedBox(height: 20,),
 
-                GestureDetector(
-                  onTap: ()=>Navigator.of(context).pop(),
-                  child: styleText("Cancel", GREEN_CLR, FontWeight.normal, 17)),
-               
-                    ],
+                  GestureDetector(
+                    onTap: ()=>Navigator.of(context).pop(),
+                    child: styleText("Cancel", GREEN_CLR, FontWeight.normal, 17)),
+                 
+                      ],
+                    ),
                   ),
-                ),
+                
               
             
-          
+          ),
         );
       });
 }

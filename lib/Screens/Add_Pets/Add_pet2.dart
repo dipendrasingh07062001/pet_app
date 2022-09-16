@@ -45,19 +45,19 @@ class _AddPet2State extends State<AddPet2> {
     h =MediaQuery.of(context).size.height;
     w=  MediaQuery.of(context).size.width;
     return Padding(
-      padding:  EdgeInsets.only(left: w*0.050,right: w*0.050,top: h*0.155),
+      padding:  EdgeInsets.only(top: h*0.195),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
       
-          styleText("Fill the Details", DARK_CLR, FontWeight.bold, 19),
+   
       
                                        Container(
                                         padding: EdgeInsets.only(left: 10),
                                           alignment: Alignment.center,
                                           height: h*0.065,
-                                          margin: EdgeInsets.only(top: h * 0.010),
+                                          margin: EdgeInsets.only(top: h * 0.025),
                                       decoration: BoxDecoration(
                                   
                                         color: WHITE_CLR,
@@ -144,7 +144,7 @@ class _AddPet2State extends State<AddPet2> {
                         ),
                       ),
       
-      
+                     SizedBox(height: h*0.020,),
                                           
                       Row(
                        
@@ -163,27 +163,33 @@ class _AddPet2State extends State<AddPet2> {
                             },
                   ),
                           ),
-                          SizedBox(width: w*0.030,),
+                          SizedBox(width: w*0.010,),
 
                   styleText("Male", DARK_CLR, FontWeight.normal, 15),
                     
-                     Radio(
+                         SizedBox(width: w*0.050,),
+                     SizedBox(
+                         width: 20,
+                            height: 20,
+                       child: Radio(
                     
-                     activeColor: GREEN_CLR,
+                       activeColor: GREEN_CLR,
                   
-                      value: "female", 
-                      groupValue: gender, 
-                      onChanged: (value){
-                        setState(() {
-                            gender = value.toString();
-                        });
-                      },
+                        value: "female", 
+                        groupValue: gender, 
+                        onChanged: (value){
+                          setState(() {
+                              gender = value.toString();
+                          });
+                        },
                   ),
+                     ),
+                          SizedBox(width: w*0.010,),
                          styleText("Female", DARK_CLR, FontWeight.normal, 15),
                         ],
                       ),
       
-              
+                   SizedBox(height: h*0.020,),
               
       
                           Container(
@@ -267,7 +273,7 @@ class _AddPet2State extends State<AddPet2> {
       
         Container(
                     alignment: Alignment.center,
-                    height: h*0.16,
+                    height: h*0.145,
                     width: w*1,
                     margin: EdgeInsets.only(top: h*0.020),
                     decoration: BoxDecoration(

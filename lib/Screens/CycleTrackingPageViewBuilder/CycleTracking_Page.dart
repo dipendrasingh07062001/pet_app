@@ -82,7 +82,7 @@ var w;
             Container(
          
               alignment: Alignment.bottomCenter,
-              padding: EdgeInsets.only(bottom: h*0.040),
+              margin: EdgeInsets.only(bottom: h*0.080),
               child:  
       
                  Column(

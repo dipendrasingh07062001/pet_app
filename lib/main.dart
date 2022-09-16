@@ -10,12 +10,13 @@ import 'Screens/Add_Pets/addPet.dart';
 import 'Screens/ChangePassword.dart';
 import 'Screens/CycleTrackingPageViewBuilder/CycleTracking_Page.dart';
 import 'Screens/CycleTrackingPageViewBuilder/CycleTracking_Predication.dart';
+import 'Screens/CycleTrackingPageViewBuilder/Cycle_Tracking6.dart';
 import 'Screens/EnterOTP.dart';
 import 'Screens/ForgotPassword.dart';
 import 'Screens/HOME/Home.dart';
 
 import 'Screens/SuccesFullVerified.dart';
-import 'Screens/Symptoms.dart';
+import 'Screens/CycleTrackingPageViewBuilder/Symptoms.dart';
 import 'Screens/Tutorial.dart';
 import 'SevicesListAll_Screens/Add_Deworming.dart';
 import 'SevicesListAll_Screens/Add_Medicine.dart';
@@ -53,7 +54,7 @@ class MyApp extends StatelessWidget {
          buttonColor: BLACK_CLR,
         primarySwatch: Colors.blue,
       ),
-      home:  CycleTrackingPage(),
+      home:  Splash(),
     
     
     );

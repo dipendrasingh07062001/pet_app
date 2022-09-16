@@ -34,6 +34,7 @@ var w;
      child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        SizedBox(height: h*0.050,),
 
       styleText("Some factors affect your pet’s \ncycle. are your pet currently?", DARK_CLR, FontWeight.bold, 20),
     DefaultRadioButton(text: "Pregnant", groupValue: _prengnant, value: 1, ontap: (value){

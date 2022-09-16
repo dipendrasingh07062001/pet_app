@@ -41,57 +41,52 @@ final List<PetsModal> PetDetails = List.generate(petName.length, (index) => Pets
   h = MediaQuery.of(context).size.height;
   w  = MediaQuery.of(context).size.width;
 
-    return  Column(
-crossAxisAlignment: CrossAxisAlignment.start,
+    return  Stack(
+
    children: [
 
-    SizedBox(height: h*0.15,),
+    
 
-      styleText("Select Type", DARK_CLR, FontWeight.bold, 19),
   
-     SizedBox(
-      
-      height: h*0.75,
-      //alignment: Alignment.topCenter,
-       child: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          mainAxisSpacing: 10,
-          crossAxisSpacing: 10,
-          crossAxisCount: 2,
-          childAspectRatio: 1
-          ),
-         itemCount: petName.length,
-        scrollDirection: Axis.vertical,                            
-           itemBuilder: (BuildContext context, int index) { 
-         return GestureDetector(
-           onTap: (){
-             setState(() {
-               ChangePet = petName.elementAt(index);
-               print("petName "+ChangePet);
-             });
-           },
-           child: Padding(
-             padding: const EdgeInsets.only(left: 5,right: 5),
-             child: Card(
-               color: petName.elementAt(index)==ChangePet?GREEN_CLR:WHITE_CLR,
-               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15),
-               ),
-               child: Column(
-                 mainAxisAlignment: MainAxisAlignment.center,
-                 children: [
-                   SvgPicture.asset(PetDetails[index].ImageUrl,height: h*0.070,color: petName.elementAt(index)==ChangePet?WHITE_CLR:GRAY_CLR,),
-                   SizedBox(height: h*0.020,),
-         
-                   styleText(PetDetails[index].petName, petName.elementAt(index)==ChangePet?WHITE_CLR:GRAY_CLR, FontWeight.normal, 16)
-              
-                 ],
-               )),
-           ),
-         );
-
-        },
+    Padding(
+      padding:  EdgeInsets.only(top: h*0.09),
+      child: GridView.builder(
+      //  physics: NeverScrollableScrollPhysics(),
+       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+         mainAxisSpacing: 10,
+         crossAxisSpacing: 10,
+         crossAxisCount: 2,
+         childAspectRatio: 1
          ),
-     ),
+        itemCount: petName.length,
+       scrollDirection: Axis.vertical,                            
+          itemBuilder: (BuildContext context, int index) { 
+        return GestureDetector(
+          onTap: (){
+            setState(() {
+              ChangePet = petName.elementAt(index);
+              print("petName "+ChangePet);
+            });
+          },
+          child: Card(
+            color: petName.elementAt(index)==ChangePet?GREEN_CLR:WHITE_CLR,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SvgPicture.asset(PetDetails[index].ImageUrl,height: h*0.070,color: petName.elementAt(index)==ChangePet?WHITE_CLR:GRAY_CLR,),
+                SizedBox(height: h*0.020,),
+        
+                styleText(PetDetails[index].petName, petName.elementAt(index)==ChangePet?WHITE_CLR:GRAY_CLR, FontWeight.normal, 16)
+           
+              ],
+            )),
+        );
+
+       },
+        ),
+    ),
 
        
    ],

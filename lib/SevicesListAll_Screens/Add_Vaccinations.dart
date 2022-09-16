@@ -62,9 +62,9 @@ var w;
     return Scaffold(
       
        backgroundColor: WHITE70_CLR,
-      appBar: DefaultAppBar("Add Vaccination"),
+      appBar: DefaultAppBar("Add Vaccinations"),
    body: Padding(
-     padding:  EdgeInsets.only(left: w*0.030,right: w*0.030,top: h*0.020,bottom: h*0.050),
+     padding:  EdgeInsets.only(left: w*0.030,right: w*0.030,top: h*0.020,),
      child: SingleChildScrollView(
        child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,7 +73,7 @@ var w;
        styleText("Vaccination Name", BLACK_CLR, FontWeight.normal, 15),
        
         Container(
-                              height: h*0.065,
+                              height: h*0.06,
                               margin: EdgeInsets.only(top: h*0.010),
                           decoration: BoxDecoration(
                             color: WHITE_CLR,
@@ -114,7 +114,7 @@ var w;
       styleText("Vacccination Status", BLACK_CLR, FontWeight.normal, 15),
        
         Container(
-                              height: h*0.065,
+                              height: h*0.06,
                               margin: EdgeInsets.only(top: h*0.010),
                           decoration: BoxDecoration(
                             color: WHITE_CLR,
@@ -153,7 +153,7 @@ var w;
                        styleText("Vacccination Date", BLACK_CLR, FontWeight.normal, 15),
        
                         Container(
-                              height: h*0.065,
+                              height: h*0.06,
                               padding: EdgeInsets.only(left: w*0.030,right: w*0.030),
                               margin: EdgeInsets.only(top: h*0.010),
                           decoration: BoxDecoration(
@@ -212,7 +212,8 @@ var w;
                            SizedBox(height: h*0.020,),
      
                         styleText("Reminder", BLACK_CLR, FontWeight.normal, 15),
-                           
+
+                     SizedBox(height: h*0.015,)     , 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
               
@@ -233,37 +234,49 @@ var w;
                       },
                     ),
                   ),
-                  SizedBox(width: w*0.030,),
+                  SizedBox(width: w*0.020,),
                   Text('Daily'),
-                
-                  Radio(
-                    value: 2,
-                    groupValue: _radioSelected,
-                    activeColor:GREEN_CLR,
-                    onChanged: (value) {
-                      setState(() {
-                        _radioSelected = value!;
-                        _radioVal = 'weekly';
-                      });
-                    },
+                SizedBox(width: w*0.030,),
+                  SizedBox(
+                      height: 20,
+                    width: 20,
+                    child: Radio(
+                      value: 2,
+                      groupValue: _radioSelected,
+                      activeColor:GREEN_CLR,
+                      onChanged: (value) {
+                        setState(() {
+                          _radioSelected = value!;
+                          _radioVal = 'weekly';
+                        });
+                      },
+                    ),
                   ),
+                  SizedBox(width: w*0.020,),
                     Text('Weekly'),
 
-                 
-                  Radio(
-                    value: 3,
-                    groupValue: _radioSelected,
-                    activeColor:GREEN_CLR,
-                    onChanged: (value) {
-                      setState(() {
-                        _radioSelected = value!;
-                        _radioVal = 'monthly';
-                      });
-                    },
-                  ), Text('Monthly'),
+                 SizedBox(width: w*0.030,),
+                  SizedBox(
+                      height: 20,
+                    width: 20,
+                    child: Radio(
+                      value: 3,
+                      groupValue: _radioSelected,
+                      activeColor:GREEN_CLR,
+                      onChanged: (value) {
+                        setState(() {
+                          _radioSelected = value!;
+                          _radioVal = 'monthly';
+                        });
+                      },
+                    ),
+                  ),
+                  SizedBox(width: w*0.020,),
+                   Text('Monthly'),
                 ],
               ),
      
+     SizedBox(height: h*0.020,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -275,7 +288,7 @@ var w;
                                 styleText("At Date", BLACK_CLR, FontWeight.normal, 15),
        
                                  Container(
-                                    height: h*0.065,
+                                    height: h*0.06,
                                     padding: EdgeInsets.only(left: w*0.030,right: w*0.030),
                                     margin: EdgeInsets.only(top: h*0.010),
                                 decoration: BoxDecoration(
@@ -312,7 +325,7 @@ var w;
                                 styleText("At Time", BLACK_CLR, FontWeight.normal, 15),
        
         Container(
-                                    height: h*0.065,
+                                    height: h*0.06,
                                     padding: EdgeInsets.only(left: w*0.030,right: w*0.030),
                                     margin: EdgeInsets.only(top: h*0.010),
                                 decoration: BoxDecoration(
@@ -343,7 +356,7 @@ var w;
                         ],
                       ),
 
-                      SizedBox(height: h*0.020,),
+                      SizedBox(height: h*0.035,),
 
                       Align(
                         alignment: Alignment.bottomCenter,
