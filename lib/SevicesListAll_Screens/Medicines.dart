@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:pet_app/Colors/COLORS.dart';
+import 'package:pet_app/Componants/Images&Icons.dart';
 import 'package:pet_app/Screens/HOME/ServicesList.dart';
 import 'package:pet_app/SevicesListAll_Screens/Add_Medicine.dart';
 import 'package:pet_app/UTILS/Utils.dart';
@@ -25,7 +26,7 @@ class _MedicinesState extends State<Medicines> {
 
     return Scaffold(
       backgroundColor: WHITE70_CLR,
-      appBar: DefaultAppBar("Medicines"),
+      appBar: DefaultAppBar(MEDICINES),
  floatingActionButton: FloatingActionButton(
         backgroundColor: WHITE70_CLR,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50)),side: BorderSide(color: GREEN_CLR)),
@@ -58,7 +59,7 @@ class _MedicinesState extends State<Medicines> {
                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   
                   children: [
-                  styleText("Medicine Name", BLACK_CLR, FontWeight.bold, 16),
+                  styleText(MEDICINES_NAME, BLACK_CLR, FontWeight.bold, 16),
 
 
 
@@ -102,11 +103,11 @@ SizedBox(width: w*0.01,),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              styleText("Course start Date", GRAY_CLR, FontWeight.normal, 13),
+                              styleText(COURSE_START_DATE, GRAY_CLR, FontWeight.normal, 13),
                                styleText("20-12-2022", BLACK_CLR, FontWeight.normal, 15),
 
                                SizedBox(height: h*0.015,),
-                                styleText("Health of previous litter", GRAY_CLR, FontWeight.normal, 13),
+                                styleText(HEALTH_OF_PREVIOUS, GRAY_CLR, FontWeight.normal, 13),
                                styleText("Good", BLACK_CLR, FontWeight.normal, 15),
                             ],
                           ),
@@ -118,7 +119,7 @@ SizedBox(width: w*0.01,),
                            child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              styleText("Course End Date", GRAY_CLR, FontWeight.normal, 13),
+                              styleText(COURSE_END_DTAE, GRAY_CLR, FontWeight.normal, 13),
                                styleText("20-12-2022", BLACK_CLR, FontWeight.normal, 15),
                             ],
                         ),
@@ -133,14 +134,14 @@ SizedBox(width: w*0.01,),
       
                    Row(children: [
                  
-                 styleText("Reminder", DARK_CLR, FontWeight.bold, 14), 
+                 styleText(REMINDER, DARK_CLR, FontWeight.bold, 14), 
                  SizedBox(width: w*0.010,),
   MaterialButton(
                   height: h*0.028,minWidth: w*0.16,
                   color: GREEN_CLR,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                   onPressed: (){},child:
-                  styleText("Daily",WHITE_CLR,FontWeight.normal,11)
+                  styleText(DAILY,WHITE_CLR,FontWeight.normal,11)
                 )                   ],),
       
       
@@ -159,7 +160,7 @@ Row(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              styleText("Reminder Date", GRAY_CLR, FontWeight.normal, 13),
+                              styleText(REMINDER_DATE, GRAY_CLR, FontWeight.normal, 13),
                                styleText("21st", BLACK_CLR, FontWeight.normal, 15),
                             ],
                           ),
@@ -171,7 +172,7 @@ Row(
                            child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              styleText("Reminder time", GRAY_CLR, FontWeight.normal, 13),
+                              styleText(REMINDER_TIME, GRAY_CLR, FontWeight.normal, 13),
                                styleText("08:00 AM", BLACK_CLR, FontWeight.normal, 15),
                             ],
                         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:page_indicator/page_indicator.dart';
+import 'package:pet_app/Componants/Images&Icons.dart';
 import 'package:pet_app/Screens/Add_Pets/addPet1.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
@@ -43,7 +44,7 @@ class _AddPetpageState extends State<AddPetpage> {
         toolbarHeight: h * 0.08,
         backgroundColor: WHITE70_CLR,
         elevation: 1,
-        title: styleText("Add Pets", DARK_CLR, FontWeight.bold, 17),
+        title: styleText(ADD_PETS, DARK_CLR, FontWeight.bold, 17),
       ),
       extendBodyBehindAppBar: true,
       body: Padding(
@@ -99,7 +100,7 @@ class _AddPetpageState extends State<AddPetpage> {
                           duration: _kDuration, curve: _kCurve);
                     },
                     child: styleText(
-                        mCurrentIndex == 2 ? "Skip and Continue" : "Continue",
+                        mCurrentIndex == 2 ? SKIP_CONTINUE: CONTINUE,
                         mCurrentIndex == 2 ? FADE_GREEN_CLR : WHITE_CLR,
                         FontWeight.normal,
                         15)))

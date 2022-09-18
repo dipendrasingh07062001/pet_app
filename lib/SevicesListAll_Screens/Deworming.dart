@@ -4,6 +4,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:pet_app/Colors/COLORS.dart';
+import 'package:pet_app/Componants/Images&Icons.dart';
 import 'package:pet_app/Screens/HOME/ServicesList.dart';
 import 'package:pet_app/SevicesListAll_Screens/Add_Deworming.dart';
 import 'package:pet_app/UTILS/Utils.dart';
@@ -27,7 +28,7 @@ class _DewormingState extends State<Deworming> {
 
     return Scaffold(
       backgroundColor: WHITE70_CLR,
-      appBar: DefaultAppBar("Deworming"),
+      appBar: DefaultAppBar(DEWORMING),
 
       body: ListView.builder(
         scrollDirection: Axis.vertical,
@@ -52,7 +53,7 @@ class _DewormingState extends State<Deworming> {
                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   
                   children: [
-                  styleText("Deworming", BLACK_CLR, FontWeight.bold, 16),
+                  styleText(DEWORMING, BLACK_CLR, FontWeight.bold, 16),
 
 
 
@@ -83,7 +84,7 @@ class _DewormingState extends State<Deworming> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              styleText("Demorming Status", GRAY_CLR, FontWeight.normal, 13),
+                              styleText(DEWORMING_STATUS, GRAY_CLR, FontWeight.normal, 13),
                                styleText("Done", TEXT_GREEN_CLR, FontWeight.normal, 15),
 
                                SizedBox(height: h*0.015,),
@@ -98,7 +99,7 @@ class _DewormingState extends State<Deworming> {
                            child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              styleText("Next Deworming", GRAY_CLR, FontWeight.normal, 13),
+                              styleText(NEXT_DEWORMING, GRAY_CLR, FontWeight.normal, 13),
                                styleText("Date : 20-12-2022", BLACK_CLR, FontWeight.normal, 15),
                             ],
                         ),
@@ -122,7 +123,7 @@ class _DewormingState extends State<Deworming> {
                       mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              styleText("Deworming Duration", GRAY_CLR, FontWeight.normal, 13),
+                              styleText(DEWORMING_DURATION, GRAY_CLR, FontWeight.normal, 13),
                                styleText("Monthly", BLACK_CLR, FontWeight.normal, 15),
                             ],
                         ),
@@ -134,9 +135,9 @@ class _DewormingState extends State<Deworming> {
       
                    Row(children: [
                  
-                 styleText("Reminder", DARK_CLR, FontWeight.bold, 14), 
+                 styleText(REMINDER, DARK_CLR, FontWeight.bold, 14), 
                  SizedBox(width: w*0.010,),
-                 DefaultButton(text: "Monthly", ontap: (){}, fontsize: 11, height: h*0.032, width: w*0.2)
+                 DefaultButton(text: MONTHLY, ontap: (){}, fontsize: 11, height: h*0.032, width: w*0.2)
                    ],),
       
       
@@ -152,7 +153,7 @@ Row(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              styleText("Reminder Date", GRAY_CLR, FontWeight.normal, 13),
+                              styleText(REMINDER_DATE, GRAY_CLR, FontWeight.normal, 13),
                                styleText("21st", BLACK_CLR, FontWeight.normal, 15),
                             ],
                           ),
@@ -164,7 +165,7 @@ Row(
                            child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              styleText("Reminder time", GRAY_CLR, FontWeight.normal, 13),
+                              styleText(REMINDER_TIME, GRAY_CLR, FontWeight.normal, 13),
                                styleText("08:00 AM", BLACK_CLR, FontWeight.normal, 15),
                             ],
                         ),

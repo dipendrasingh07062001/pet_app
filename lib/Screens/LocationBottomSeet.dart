@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pet_app/Componants/Images&Icons.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 
 import '../Colors/COLORS.dart';
@@ -36,7 +37,7 @@ class _LocationBottomSeetState extends State<LocationBottomSeet> {
                              Align(alignment: Alignment.bottomRight,
                               child: GestureDetector(
                               onTap: ()=>Navigator.of(context).pop(),
-                                child: styleText("Done", GREEN_CLR, FontWeight.bold, 15))),
+                                child: styleText(DONE, GREEN_CLR, FontWeight.bold, 15))),
 
                                    Container(
                                       alignment: Alignment.center,
@@ -107,24 +108,7 @@ class _LocationBottomSeetState extends State<LocationBottomSeet> {
                                       }
                                     ),
                                   ),
-                                      // child: TextFormField(
-                                      //   controller: searchLocationCantroller,
-                                      //   decoration: InputDecoration(
-                                      //     errorText: "",
-                                      //     errorStyle: TextStyle(height: 0),
-                                      //       hintText: "Location",
-                                      //       hintStyle: TextStyle(
-                                      //           color: GRAY_CLR,
-                                      //           fontSize: 14,
-                                      //           fontWeight: FontWeight.normal),
-                                      //       prefixIcon: Icon(
-                                      //         Icons.location_on,
-                                      //         color: GREEN_CLR,
-                                      //         size: 20,
-                                      //       ),
-            
-                                      //       suffixIcon:Icon(Icons.gps_fixed_sharp,size: 17,color: GRAY_CLR,) ,
-                                      //       border: InputBorder.none)),
+                                      
                                     
                                       ),
                                        

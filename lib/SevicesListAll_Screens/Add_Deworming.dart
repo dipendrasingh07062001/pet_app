@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 
 import '../Colors/COLORS.dart';
+import '../Componants/Images&Icons.dart';
 import '../UTILS/Utils.dart';
 
 class Add_Deworming extends StatefulWidget {
@@ -64,7 +65,7 @@ var w;
     return Scaffold(
       
        backgroundColor: WHITE70_CLR,
-      appBar: DefaultAppBar("Deworming"),
+      appBar: DefaultAppBar(DEWORMING),
      
    body: Padding(
      padding:  EdgeInsets.only(left: w*0.030,right: w*0.030,top: h*0.020,bottom: h*0.050),
@@ -73,7 +74,7 @@ var w;
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
      
-       styleText("Deworming Status", BLACK_CLR, FontWeight.normal, 15),
+       styleText(DEWORMING_STATUS, BLACK_CLR, FontWeight.normal, 15),
        
         Container(
                               height: h*0.06,
@@ -113,7 +114,7 @@ var w;
                         ),
      
                         SizedBox(height: h*0.020,),
-                       styleText("Deworming Duration", BLACK_CLR, FontWeight.normal, 15),
+                       styleText(DEWORMING_DURATION, BLACK_CLR, FontWeight.normal, 15),
 
 SizedBox(height: h*0.020,),
                          Row(
@@ -137,7 +138,7 @@ SizedBox(height: h*0.020,),
                     ),
                   ),
                   SizedBox(width: w*0.010,),
-                  Text('Daily',style: TextStyle(color: GRAY_CLR),),
+                  Text(DAILY,style: TextStyle(color: GRAY_CLR),),
                 
                 SizedBox(width: w*0.040,),
                   SizedBox(
@@ -156,7 +157,7 @@ SizedBox(height: h*0.020,),
                     ),
                   ),
                   SizedBox(width: w*0.010,),
-                    Text('Weekly',style: TextStyle(color: GRAY_CLR),),
+                    Text(WEEKLY,style: TextStyle(color: GRAY_CLR),),
 
                  SizedBox(width: w*0.035,),
                   SizedBox(
@@ -175,13 +176,13 @@ SizedBox(height: h*0.020,),
                     ),
 
                   ),
-                  SizedBox(width: w*0.010,) ,Text('Monthly',style: TextStyle(color: GRAY_CLR),),
+                  SizedBox(width: w*0.010,) ,Text(MONTHLY,style: TextStyle(color: GRAY_CLR),),
                 ],
               ),
      
           SizedBox(height: h*0.015,),
      
-                            styleText("Deworming Date", BLACK_CLR, FontWeight.normal, 15),
+                            styleText(DEWORMING_DATE, BLACK_CLR, FontWeight.normal, 15),
        
                         Container(
                               height: h*0.06,
@@ -213,10 +214,10 @@ SizedBox(height: h*0.020,),
   
                            SizedBox(height: h*0.020,),
      
-                        styleText("Reminder", BLACK_CLR, FontWeight.normal, 17),
+                        styleText(REMINDER, BLACK_CLR, FontWeight.normal, 17),
                          SizedBox(height: h*0.015,),
      
-                        styleText("Reminder Duration", BLACK_CLR, FontWeight.normal, 15),
+                        styleText(REMINDER_DURATION, BLACK_CLR, FontWeight.normal, 15),
                                          SizedBox(height: h*0.015,),
 
                                       Row(
@@ -240,7 +241,7 @@ SizedBox(height: h*0.020,),
                     ),
                   ),
                   SizedBox(width: w*0.010,),
-                  Text('Daily',style: TextStyle(color: GRAY_CLR),),
+                  Text(DAILY,style: TextStyle(color: GRAY_CLR),),
                                  SizedBox(width: w*0.035,),
 
                   SizedBox(
@@ -259,7 +260,7 @@ SizedBox(height: h*0.020,),
                     ),
                   ),
                   SizedBox(width: w*0.010,),
-                    Text('Weekly',style: TextStyle(color: GRAY_CLR),),
+                    Text(WEEKLY,style: TextStyle(color: GRAY_CLR),),
 
                  SizedBox(width: w*0.035,),
                   SizedBox(
@@ -278,7 +279,7 @@ SizedBox(height: h*0.020,),
                     ),
                   ), 
                   SizedBox(width: w*0.010,),
-                  Text('Monthly',style: TextStyle(color: GRAY_CLR),),
+                  Text(MONTHLY,style: TextStyle(color: GRAY_CLR),),
                 ],
               ),
               
@@ -290,7 +291,7 @@ SizedBox(height: h*0.020,),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              styleText("At Date", BLACK_CLR, FontWeight.normal, 15),
+                              styleText(AT_DATE, BLACK_CLR, FontWeight.normal, 15),
        
                                Container(
                                   height: h*0.06,
@@ -323,7 +324,7 @@ SizedBox(height: h*0.020,),
                             Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              styleText("At Time", BLACK_CLR, FontWeight.normal, 15),
+                              styleText(AT_TIME, BLACK_CLR, FontWeight.normal, 15),
        
         Container(                    width: w*0.45,
                                   height: h*0.06,
@@ -360,7 +361,7 @@ SizedBox(height: h*0.020,),
 
                       Align(
                         alignment: Alignment.bottomCenter,
-                        child: DefaultButton(text: "Done", ontap: (){
+                        child: DefaultButton(text: DONE, ontap: (){
                           Navigator.of(context).pop();
                         }, fontsize: 15, height: h*0.060, width: w*0.8))
      

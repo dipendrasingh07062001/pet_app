@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pet_app/Componants/Images&Icons.dart';
 import '../Colors/COLORS.dart';
 import '../UTILS/Utils.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -47,7 +48,7 @@ class _Profile1State extends State<Profile1> {
         centerTitle: true,
         backgroundColor: WHITE70_CLR,
         elevation: 1,
-        title: styleText( "Profile", DARK_CLR, FontWeight.bold, 17),
+        title: styleText( PROFILE, DARK_CLR, FontWeight.bold, 17),
       ),
  body: Padding(
    padding:  EdgeInsets.only(left: w*0.05,right: w*0.05),
@@ -84,7 +85,7 @@ class _Profile1State extends State<Profile1> {
                          :
                      // display Image
                      Image.asset(
-                       'assets/png_image/user.png',
+                       DEFAULT_USER_IMAGE,
                        width: 130,
                        height: 130,
                        fit: BoxFit.fill,
@@ -118,7 +119,7 @@ class _Profile1State extends State<Profile1> {
        ),
        Padding(
          padding:  EdgeInsets.only(top: h*0.03),
-         child: styleText("Full Name", BLACK_CLR, FontWeight.normal, 15),
+         child: styleText(NAME, BLACK_CLR, FontWeight.normal, 15),
        ),
        Container(
         padding: EdgeInsets.only(left: 10),
@@ -138,7 +139,7 @@ class _Profile1State extends State<Profile1> {
        ) ,
        Padding(
          padding:  EdgeInsets.only(top: h*0.02),
-         child: styleText("Email Address", BLACK_CLR, FontWeight.normal, 15),
+         child: styleText(EMAIL, BLACK_CLR, FontWeight.normal, 15),
        ),
        Container(
          margin: EdgeInsets.only(top: h*0.010),
@@ -156,7 +157,7 @@ class _Profile1State extends State<Profile1> {
        ),
        Padding(
          padding:  EdgeInsets.only(top: h*0.02),
-         child: styleText("Phone Number", BLACK_CLR, FontWeight.normal, 15),
+         child: styleText(NUMBER, BLACK_CLR, FontWeight.normal, 15),
        ),
        Container(
         padding: EdgeInsets.only(left: 10),
@@ -178,7 +179,7 @@ class _Profile1State extends State<Profile1> {
 SizedBox(height: h*0.070,),
 Align(
   alignment: Alignment.center,
-  child: DefaultButton(text: "Update Profile", ontap: (){}, fontsize: 16, height: h*0.060, width: w*0.8))
+  child: DefaultButton(text: UPDATE_PROFILE, ontap: (){}, fontsize: 16, height: h*0.060, width: w*0.8))
 
 
      ],

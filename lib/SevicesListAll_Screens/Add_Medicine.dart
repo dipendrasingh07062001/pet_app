@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:pet_app/Componants/Images&Icons.dart';
 
 import '../Colors/COLORS.dart';
 import '../UTILS/Utils.dart';
@@ -66,7 +67,7 @@ var w;
     return Scaffold(
       
        backgroundColor: WHITE70_CLR,
-      appBar: DefaultAppBar("Medicine"),
+      appBar: DefaultAppBar(MEDICINES),
   
    body: Padding(
      padding:  EdgeInsets.only(left: w*0.030,right: w*0.030,top: h*0.015,bottom: h*0.020),
@@ -76,7 +77,7 @@ var w;
         children: [
 
 
-                         styleText("Medicine Name ", BLACK_CLR, FontWeight.bold, 15),
+                         styleText(MEDICINES_NAME, BLACK_CLR, FontWeight.bold, 15),
                           Container(
                                       padding: EdgeInsets.only(left: 10),
                                         alignment: Alignment.center,
@@ -115,7 +116,7 @@ var w;
                                                child: Column(
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                  children: [
-                                                   styleText("Duration", BLACK_CLR, FontWeight.bold, 15),
+                                                   styleText(DURATION, BLACK_CLR, FontWeight.bold, 15),
                                                 
        
                                     Container(
@@ -164,7 +165,7 @@ var w;
                                                   child: Column(
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                children: [
-                                                   styleText("Dose/day", BLACK_CLR, FontWeight.bold, 15),
+                                                   styleText(DOSE_DAY, BLACK_CLR, FontWeight.bold, 15),
                                               
        
         Container(
@@ -212,7 +213,7 @@ var w;
      
               
                          SizedBox(height: h*0.020,),
-                            styleText("Course Start Date", BLACK_CLR, FontWeight.bold, 15),
+                            styleText(COURSE_START_DATE, BLACK_CLR, FontWeight.bold, 15),
        
                         Container(
                               height: h*0.06,
@@ -243,7 +244,7 @@ var w;
 
                             SizedBox(height: h*0.020,),
                        
-                       styleText("Course end  Date", BLACK_CLR, FontWeight.bold, 15),
+                       styleText(COURSE_END_DTAE, BLACK_CLR, FontWeight.bold, 15),
                        Container(
                               height: h*0.06,
                               padding: EdgeInsets.only(left: w*0.030,right: w*0.030),
@@ -274,11 +275,11 @@ var w;
 
     SizedBox(height: h*0.020,),
                        
-                       styleText("Reminder", BLACK_CLR, FontWeight.bold, 15),
+                       styleText(REMINDER, BLACK_CLR, FontWeight.bold, 15),
 
                            SizedBox(height: h*0.020,),
                        
-                       styleText("Reminder Duration", BLACK_CLR, FontWeight.bold, 15),
+                       styleText(REMINDER_DURATION, BLACK_CLR, FontWeight.bold, 15),
                        SizedBox(height: h*0.020,),
                          Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -301,7 +302,7 @@ var w;
                     ),
                   ),
                   SizedBox(width: w*0.010,),
-                     styleText("Daily", GRAY_CLR, FontWeight.normal, 15),
+                     styleText(DAILY, GRAY_CLR, FontWeight.normal, 15),
                 SizedBox(width: w*0.030,),
                   SizedBox(
                     height: 20,
@@ -319,7 +320,7 @@ var w;
                     ),
                   ),
                   SizedBox(width: w*0.010,),
-                styleText("Weekly", GRAY_CLR, FontWeight.normal, 15),
+                styleText(WEEKLY, GRAY_CLR, FontWeight.normal, 15),
 
 
                 
@@ -334,7 +335,7 @@ var w;
                       Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        styleText("At Time", BLACK_CLR, FontWeight.bold, 15),
+                        styleText(AT_TIME, BLACK_CLR, FontWeight.bold, 15),
        
         Container(
                             height: h*0.06,
@@ -370,7 +371,7 @@ var w;
 
                       Align(
                         alignment: Alignment.bottomCenter,
-                        child: DefaultButton(text: "Done", ontap: (){
+                        child: DefaultButton(text: DONE, ontap: (){
                           Navigator.of(context).pop();
                         }, fontsize: 15, height: h*0.060, width: w*0.8))
      

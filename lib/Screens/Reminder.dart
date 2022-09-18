@@ -10,6 +10,8 @@ import 'package:pet_app/Screens/HOME/ServicesList.dart';
 import 'package:pet_app/SevicesListAll_Screens/Add_Vaccinations.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 
+import '../Componants/Images&Icons.dart';
+
 class DetailModel{
   final String name;
 
@@ -46,7 +48,7 @@ bool tap = false;
 
     return Scaffold(
       backgroundColor: WHITE70_CLR,
-      appBar: DefaultAppBar("Reminders"),
+      appBar: DefaultAppBar(REMINDERS),
 
        floatingActionButton: FloatingActionButton(
         backgroundColor: WHITE70_CLR,
@@ -61,7 +63,7 @@ bool tap = false;
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
 
-            styleText("Pinned", DARK_CLR, FontWeight.bold, 19),
+            styleText(PINNED, DARK_CLR, FontWeight.bold, 19),
             SizedBox(height: h*0.010,),
             SizedBox(
               height: h*0.18,
@@ -89,12 +91,12 @@ bool tap = false;
   Align(
     alignment: Alignment.topRight,
     child: styleText("10:00 AM", GRAY_CLR, FontWeight.normal, 10)),
-                        styleText("Medicines", BLACK_CLR, FontWeight.bold, 16),
+                        styleText(MEDICINES, BLACK_CLR, FontWeight.bold, 16),
               
                         SizedBox(height: h*0.010,),
               
                          
-                                      styleText("Give medicine to fluffy and take him for the vaccination", GRAY_CLR, FontWeight.bold, 10),
+                                      styleText(GIVE_MEDICINE_TITLE, GRAY_CLR, FontWeight.bold, 10),
                                     
                                   SizedBox(height: h*0.010,),
 
@@ -116,7 +118,7 @@ bool tap = false;
                                         color: FADE_GREEN_CLR
                                         ),
                                         child: Row(children: [
-                                          SvgPicture.asset("assets/svg_icon/Icon metro-pin.svg"),
+                                          SvgPicture.asset(UNPIN_ICON),
                                           SizedBox(width: w*0.010,),
                                           styleText("Unpin", WHITE70_CLR, FontWeight.normal, 12)
                                         ]),
@@ -144,7 +146,7 @@ bool tap = false;
                                                                               children: [
                                                                              Icon(Icons.check,color: WHITE70_CLR,size: 18,),
                                                                                SizedBox(width: w*0.010,),
-                                                                               styleText("Done", WHITE70_CLR, FontWeight.normal, 12)
+                                                                               styleText(DONE, WHITE70_CLR, FontWeight.normal, 12)
                                                                              ]),
                                                                            ),
                                                                          ),
@@ -171,7 +173,7 @@ bool tap = false;
 
 SizedBox(height: h*0.020,),
 
-styleText("Upcomming", DARK_CLR, FontWeight.bold, 19),
+styleText(UPCOMMING, DARK_CLR, FontWeight.bold, 19),
             SizedBox(height: h*0.010,),
             SizedBox(
               height: h*0.5,
@@ -202,7 +204,7 @@ styleText("Upcomming", DARK_CLR, FontWeight.bold, 19),
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                    
-                          styleText("Medicines", BLACK_CLR, FontWeight.bold, 16),
+                          styleText(MEDICINES, BLACK_CLR, FontWeight.bold, 16),
                                 
                           SizedBox(height: h*0.010,),
                                 
@@ -234,9 +236,9 @@ styleText("Upcomming", DARK_CLR, FontWeight.bold, 19),
                                               color: FADE_GREEN_CLR
                                               ),
                                               child: Row(children: [
-                                                SvgPicture.asset("assets/svg_icon/Icon metro-pin.svg"),
+                                                SvgPicture.asset(UNPIN_ICON),
                                                 SizedBox(width: w*0.010,),
-                                                styleText("Unpin", WHITE70_CLR, FontWeight.normal, 12)
+                                                styleText(UNPIN, WHITE70_CLR, FontWeight.normal, 12)
                                               ]),
                                             ),
                                              ),
@@ -260,7 +262,7 @@ styleText("Upcomming", DARK_CLR, FontWeight.bold, 19),
                                                                                    child: Row(children: [
                                                                                    Icon(Icons.check,color: WHITE70_CLR,size: 18,),
                                                                                      SizedBox(width: w*0.010,),
-                                                                                     styleText("Done", WHITE70_CLR, FontWeight.normal, 12)
+                                                                                     styleText(DONE, WHITE70_CLR, FontWeight.normal, 12)
                                                                                    ]),
                                                                                  ),
                                                                                ),
@@ -323,7 +325,7 @@ w= MediaQuery.of(context).size.width;
           child: AlertDialog(
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             title: Center(
-              child: styleText("Add Reminder", BLACK_CLR, FontWeight.bold, 17),
+              child: styleText(ADD_REMINDER, BLACK_CLR, FontWeight.bold, 17),
             ),
             content: Container(
               height: h*0.2,
@@ -376,7 +378,7 @@ w= MediaQuery.of(context).size.width;
 
                   SizedBox(height: h*0.025,),
 
-                  DefaultButton(text: "Add", ontap: (){
+                  DefaultButton(text: ADD, ontap: (){
                     Navigator.of(context).pop(false);
                   }, fontsize: 17, height: h*0.055, width: w*0.55),
 
@@ -384,7 +386,7 @@ w= MediaQuery.of(context).size.width;
 
                   GestureDetector(
                     onTap: ()=>Navigator.of(context).pop(),
-                    child: styleText("Cancel", GREEN_CLR, FontWeight.normal, 17)),
+                    child: styleText(CANCEL, GREEN_CLR, FontWeight.normal, 17)),
                  
                       ],
                     ),

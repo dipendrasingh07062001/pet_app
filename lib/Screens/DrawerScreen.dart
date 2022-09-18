@@ -314,35 +314,3 @@ w= MediaQuery.of(context).size.width;
     );
   }
 
-
-
-// Future _UploadDocuments(BuildContext context) {
-
-//   return showDialog(
-    
-//       context: context,
-//       builder: (BuildContext context) {
-//         return AlertDialog(
-//           scrollable: true,
-//           backgroundColor: WHITE_CLR,
-//           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-//           title: Center(
-//             
-//           ),
-//           content: Container(
-//             height: h*0.38,
-//             width: w*0.8,
-//             child: Column(
-//               children: [
-
-     
-
-
-                
-//                 ),
-              
-            
-          
-//         );
-//       });
-// }

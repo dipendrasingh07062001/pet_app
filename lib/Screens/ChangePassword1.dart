@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/parser.dart';
 import 'package:pet_app/Colors/COLORS.dart';
+import 'package:pet_app/Componants/Images&Icons.dart';
 import 'package:pet_app/Screens/Login.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 import 'package:provider/provider.dart';
@@ -71,14 +72,14 @@ var w;
               SizedBox(
                 height: h*0.25,
                 width: w*0.8,
-                child: SvgPicture.asset('assets/svg_image/Illustration.svg')),
+                child: SvgPicture.asset(CHANGE_PASS_IMAGE)),
     
     
                 SizedBox(
                   height: h*0.040,
                 ),
     
-             styleText("Change Password", BLACK_CLR, FontWeight.bold, 19),
+             styleText(CHANGE_PASSWORD, BLACK_CLR, FontWeight.bold, 19),
 
                   Container(
                                 height: h*0.06,
@@ -97,7 +98,7 @@ var w;
                                   validator: (value){
                                     if(value!.isEmpty){
 
-                                      newPassError ="Please enter old password";
+                                      newPassError =ENTER_OLD_PASS;
                                       setState(() {
                                         
                                       });
@@ -170,7 +171,7 @@ var w;
                                   validator: (value){
                                     if(value!.isEmpty){
 
-                                      passError ="Please enter new  password";
+                                      passError =ENTER_NEW_PASS;
                                       setState(() {
                                         
                                       });
@@ -241,7 +242,7 @@ var w;
                                   validator: (value){
                                     if(value!.isEmpty){
 
-                                      newPassError ="Please enter confirm password";
+                                      newPassError =ENTER_CONFIRM_PASS;
                                       setState(() {
                                         
                                       });
@@ -301,7 +302,7 @@ var w;
 
 
    
-                                  DefaultButton(text: "Submit", ontap: (){
+                                  DefaultButton(text: SUBMIT, ontap: (){
                                     if(_formkey.currentState!.validate()){
                                       passError = "";
                                       newPassError ="";

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import '../../Colors/COLORS.dart';
+import '../../Componants/Images&Icons.dart';
 import '../../UTILS/Utils.dart';
 class AddPet2 extends StatefulWidget {
    AddPet2({super.key});
@@ -165,7 +166,7 @@ class _AddPet2State extends State<AddPet2> {
                           ),
                           SizedBox(width: w*0.010,),
 
-                  styleText("Male", DARK_CLR, FontWeight.normal, 15),
+                  styleText(MALE, DARK_CLR, FontWeight.normal, 15),
                     
                          SizedBox(width: w*0.050,),
                      SizedBox(
@@ -185,7 +186,7 @@ class _AddPet2State extends State<AddPet2> {
                   ),
                      ),
                           SizedBox(width: w*0.010,),
-                         styleText("Female", DARK_CLR, FontWeight.normal, 15),
+                         styleText(FEMALE, DARK_CLR, FontWeight.normal, 15),
                         ],
                       ),
       

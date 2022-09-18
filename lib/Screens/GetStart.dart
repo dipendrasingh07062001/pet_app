@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pet_app/Colors/COLORS.dart';
+import 'package:pet_app/Componants/Images&Icons.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 import 'package:provider/provider.dart';
 import '../Provider/Provider.dart';
@@ -35,7 +36,7 @@ class _GetStartedState extends State<GetStarted> {
                 // height: h*1,
                 // width: w*1,
                 decoration: BoxDecoration(
-                  image: DecorationImage(image: AssetImage("assets/png_image/Group 24@2x.png", ), fit: BoxFit.cover, )
+                  image: DecorationImage(image: AssetImage(BACK_GROUND_IMAGE, ), fit: BoxFit.cover, )
                 ),
                 
                     ),
@@ -57,7 +58,7 @@ class _GetStartedState extends State<GetStarted> {
                       color: GREEN_CLR),
                 ),
                 Image.asset(
-                  'assets/png_image/74004.png',
+                  DOG_IMAGE,
                   height: h * 0.27,
                 )
               ],
@@ -87,7 +88,7 @@ class _GetStartedState extends State<GetStarted> {
                         color: value.isClick==false? FADE_GREEN_CLR : GREEN_CLR,
                       ),
                       child: styleText(
-                          "Sign in", WHITE70_CLR, FontWeight.normal, 20)),
+                          SIGN_IN, WHITE70_CLR, FontWeight.normal, 20)),
                 ),
               );
             }),
@@ -116,7 +117,7 @@ class _GetStartedState extends State<GetStarted> {
                         color:  value.isClick==false? GREEN_CLR:FADE_GREEN_CLR,
                       ),
                       child: styleText(
-                          "Sign up", WHITE70_CLR, FontWeight.normal, 20)),
+                         SIGN_UP, WHITE70_CLR, FontWeight.normal, 20)),
                 ),
               );
             })

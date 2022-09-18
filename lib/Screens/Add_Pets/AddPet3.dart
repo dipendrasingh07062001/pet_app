@@ -54,14 +54,14 @@ class _Addpet3State extends State<Addpet3> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SvgPicture.asset(
-                          "assets/svg_icon/Icon feather-image.svg"),
+                          GALLERY_ICON),
                       SizedBox(
                         height: h * 0.015,
                       ),
                       GestureDetector(
                           onTap: () {},
                           child: styleText(
-                              "Open Gallary", GRAY_CLR, FontWeight.normal, 14)),
+                              OPEN_GALLERY, GRAY_CLR, FontWeight.normal, 14)),
                     ],
                   )),
             ),
@@ -85,14 +85,14 @@ class _Addpet3State extends State<Addpet3> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SvgPicture.asset(
-                          "assets/svg_icon/Icon feather-camera.svg"),
+                         CAMERA_ICON),
                       SizedBox(
                         height: h * 0.015,
                       ),
                       GestureDetector(
                           onTap: () {},
                           child: styleText(
-                              "Open Camera", GRAY_CLR, FontWeight.normal, 14)),
+                             OPEN_CAMERA, GRAY_CLR, FontWeight.normal, 14)),
                     ],
                   )),
             )

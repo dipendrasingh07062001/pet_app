@@ -44,7 +44,7 @@ class _TutorialState extends State<Tutorial> {
         decoration: BoxDecoration(
           image: DecorationImage(
         image: AssetImage(
-          "assets/png_image/Group 24@2x.png",
+        BACK_GROUND_IMAGE,
         ),
         fit: BoxFit.cover,
           ),
@@ -59,7 +59,7 @@ class _TutorialState extends State<Tutorial> {
                   alignment: Alignment.bottomRight,
                   child: Padding(
                     padding: const EdgeInsets.only(right: 10),
-                    child: TextButton(onPressed: (){}, child: Text("Skip>>",style: TextStyle(color: NON_DARK_CLR),)),
+                    child: TextButton(onPressed: (){}, child: Text(SKIP,style: TextStyle(color: NON_DARK_CLR),)),
                   )),
 
                   SizedBox(

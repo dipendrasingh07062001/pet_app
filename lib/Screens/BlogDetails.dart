@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 
+import '../Componants/Images&Icons.dart';
+
 class Blog_Details extends StatefulWidget {
   const Blog_Details({super.key});
 
@@ -14,7 +16,7 @@ class _Blog_DetailsState extends State<Blog_Details> {
   Widget build(BuildContext context) {
     return Scaffold(
      backgroundColor: WHITE70_CLR,
-      appBar: DefaultAppBar("Blog Details"),
+      appBar: DefaultAppBar(Blog_Detail),
 
 
 

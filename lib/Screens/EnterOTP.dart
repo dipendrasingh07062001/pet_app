@@ -7,6 +7,7 @@ import 'package:pet_app/Screens/SuccesFullVerified.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 import 'package:provider/provider.dart';
 
+import '../Componants/Images&Icons.dart';
 import '../Provider/Provider.dart';
 class EnterOTP extends StatefulWidget {
   const EnterOTP({super.key});
@@ -113,20 +114,20 @@ String? otp;
               SizedBox(
                 height: h*0.25,
                 width: w*0.8,
-                child: SvgPicture.asset('assets/svg_image/6325249-ai.svg',)),
+                child: SvgPicture.asset(ENTER_PASS_IMAGE)),
     
     
                 SizedBox(
                   height: h*0.040,
                 ),
     
-             styleText("OTP Verification ", BLACK_CLR, FontWeight.bold, 19),
+             styleText(OTP_VERIFICATION, BLACK_CLR, FontWeight.bold, 19),
              SizedBox(
               height: h*0.010,
              ),
 
 
-             styleText("Enter OTP code sent to your email ", GRAY_CLR,
+             styleText(ENTER_OTP_EMAIL, GRAY_CLR,
                                         FontWeight.normal, 15,),
 
                                         Text("jkdesigner62@gmail.com", style: TextStyle(decoration: TextDecoration.underline,fontSize: 15,color: GREEN_CLR)
@@ -291,16 +292,16 @@ String? otp;
              ),
 
 
-             styleText("Didn't receive the verification OTP? ", GRAY_CLR,
+             styleText(DONT_RECEIVE_OTP, GRAY_CLR,
                                         FontWeight.normal, 15,),
 
-                                      GestureDetector(onTap: (){}, child: Text("Resend again",style: TextStyle(color: GREEN_CLR,fontSize: 15),)),
+                                      GestureDetector(onTap: (){}, child: Text(RESEND,style: TextStyle(color: GREEN_CLR,fontSize: 15),)),
    
                                   SizedBox(
                                     height: h*0.030,
                                   ),
    
-                                  DefaultButton(text: "Verify", ontap: (){
+                                  DefaultButton(text: VERIFY, ontap: (){
                                     if(_formkey.currentState!.validate()){
                                     
                                       Navigate_to(context, ChangePassword());

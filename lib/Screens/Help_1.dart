@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pet_app/Componants/Images&Icons.dart';
 
 import '../Colors/COLORS.dart';
 import '../UTILS/Utils.dart';
@@ -23,7 +24,7 @@ class _Help1State extends State<Help1> {
         centerTitle: true,
         backgroundColor: WHITE70_CLR,
         elevation: 1,
-        title: styleText( "Help & Support", DARK_CLR, FontWeight.bold, 17),
+        title: styleText( HEALTH_SUPPORT, DARK_CLR, FontWeight.bold, 17),
       ),
       body: Padding(
         padding:  EdgeInsets.only(top: h*0.03,left: w*0.04,right: w*0.04),

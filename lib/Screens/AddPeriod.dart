@@ -3,6 +3,7 @@ import 'package:flutter_calendar_widget/flutter_calendar_widget.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 
 import '../Colors/COLORS.dart';
+import '../Componants/Images&Icons.dart';
 
 class Add_Period extends StatefulWidget {
   const Add_Period({super.key});
@@ -22,7 +23,7 @@ var w;
     return Scaffold(
       
        backgroundColor: WHITE70_CLR,
-      appBar: DefaultAppBar("Select Period Days"),
+      appBar: DefaultAppBar(Select_Peroid),
 
       body: Padding(
         padding:  EdgeInsets.all(h*0.020),
@@ -47,7 +48,7 @@ var w;
 
                  SizedBox(height: h*0.040,),
 
-                 DefaultButton(text: "Done", ontap: (){}, fontsize: 15, height: h*0.060, width: w*0.8)
+                 DefaultButton(text: DONE, ontap: (){}, fontsize: 15, height: h*0.060, width: w*0.8)
         ],),
       ),
     );

@@ -113,7 +113,7 @@ class _LoginState extends State<Login> {
                                   controller: _emailCantroller,
                                   validator: (value){
                                     if(value!.isEmpty){
-                                        emailError = "Please enter correct email";
+                                        emailError = ENTER_EMAIL;
                                         setState(() {
                                     
                                         });
@@ -172,7 +172,7 @@ class _LoginState extends State<Login> {
                                   validator: (value){
                                     if(value!.isEmpty){
 
-                                      passError ="Please enter password";
+                                      passError =ENTER_PASSWORD;
                                       setState(() {
                                         
                                       });
@@ -232,7 +232,7 @@ class _LoginState extends State<Login> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                 SvgPicture.asset("assets/svg_icon/key.svg",color: GRAY_CLR,),
+                                 SvgPicture.asset(Passsword_Key,color: GRAY_CLR,),
                                   SizedBox(
                                     width: w * 0.005,
                                   ),
@@ -268,7 +268,7 @@ class _LoginState extends State<Login> {
                               SizedBox(
                                 height: h * 0.015,
                               ),
-                              styleText("Or Continue with", GREEN_CLR,
+                              styleText(Or_Continue, GREEN_CLR,
                                   FontWeight.normal, 15),
                                   SizedBox(height: h*0.010,),
                               Row(
@@ -283,7 +283,7 @@ class _LoginState extends State<Login> {
                                     borderRadius: BorderRadius.circular(50)),
                                   child: Padding(
                                     padding: const EdgeInsets.all(10),
-                                    child: Image.asset("assets/png_icon/google.png",height: 40,),
+                                    child: Image.asset(GOOGLE_ICON,height: 40,),
                                   )
                                   
                                   ),

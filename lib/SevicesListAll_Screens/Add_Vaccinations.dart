@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 
 import '../Colors/COLORS.dart';
+import '../Componants/Images&Icons.dart';
 import '../UTILS/Utils.dart';
 
 class Add_Vaccinations extends StatefulWidget {
@@ -62,7 +63,7 @@ var w;
     return Scaffold(
       
        backgroundColor: WHITE70_CLR,
-      appBar: DefaultAppBar("Add Vaccinations"),
+      appBar: DefaultAppBar(ADD_VACCINATION),
    body: Padding(
      padding:  EdgeInsets.only(left: w*0.030,right: w*0.030,top: h*0.020,),
      child: SingleChildScrollView(
@@ -70,7 +71,7 @@ var w;
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
      
-       styleText("Vaccination Name", BLACK_CLR, FontWeight.normal, 15),
+       styleText(VACCINATION_NAME, BLACK_CLR, FontWeight.normal, 15),
        
         Container(
                               height: h*0.06,
@@ -111,7 +112,7 @@ var w;
      
                         SizedBox(height: h*0.020,),
      
-      styleText("Vacccination Status", BLACK_CLR, FontWeight.normal, 15),
+      styleText(VACCINATION_STATUS, BLACK_CLR, FontWeight.normal, 15),
        
         Container(
                               height: h*0.06,
@@ -150,7 +151,7 @@ var w;
                           ),
                         ),
                         SizedBox(height: h*0.020,),
-                       styleText("Vacccination Date", BLACK_CLR, FontWeight.normal, 15),
+                       styleText(VACCINATION_DATE, BLACK_CLR, FontWeight.normal, 15),
        
                         Container(
                               height: h*0.06,
@@ -180,7 +181,7 @@ var w;
                             ),
                             SizedBox(height: h*0.020,),
      
-                            styleText("Vacccination Certificate", BLACK_CLR, FontWeight.normal, 15),
+                            styleText(VACCINATION_CERTIFICATE, BLACK_CLR, FontWeight.normal, 15),
   
                              Container(
                     alignment: Alignment.center,
@@ -197,12 +198,12 @@ var w;
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
      
-                    SvgPicture.asset("assets/svg_icon/Icon feather-upload-cloud.svg"),
+                    SvgPicture.asset(UPLOAD_ICON),
      
                     SizedBox(height: h*0.015,),
                         GestureDetector(
                     onTap: (){},
-                    child: styleText(" Document Upload", GRAY_CLR, FontWeight.normal, 14)),
+                    child: styleText(UPLOAD_DOCUMENT, GRAY_CLR, FontWeight.normal, 14)),
      
      
                     ],)
@@ -211,7 +212,7 @@ var w;
      
                            SizedBox(height: h*0.020,),
      
-                        styleText("Reminder", BLACK_CLR, FontWeight.normal, 15),
+                        styleText(REMINDER, BLACK_CLR, FontWeight.normal, 15),
 
                      SizedBox(height: h*0.015,)     , 
                 Row(
@@ -235,7 +236,7 @@ var w;
                     ),
                   ),
                   SizedBox(width: w*0.020,),
-                  Text('Daily'),
+                  Text(DAILY,style: TextStyle(color: GRAY_CLR),),
                 SizedBox(width: w*0.030,),
                   SizedBox(
                       height: 20,
@@ -253,7 +254,7 @@ var w;
                     ),
                   ),
                   SizedBox(width: w*0.020,),
-                    Text('Weekly'),
+                   Text(WEEKLY,style: TextStyle(color: GRAY_CLR),),
 
                  SizedBox(width: w*0.030,),
                   SizedBox(
@@ -272,7 +273,7 @@ var w;
                     ),
                   ),
                   SizedBox(width: w*0.020,),
-                   Text('Monthly'),
+                 Text(MONTHLY,style: TextStyle(color: GRAY_CLR),),
                 ],
               ),
      
@@ -285,7 +286,7 @@ var w;
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                styleText("At Date", BLACK_CLR, FontWeight.normal, 15),
+                                styleText(AT_DATE, BLACK_CLR, FontWeight.normal, 15),
        
                                  Container(
                                     height: h*0.06,
@@ -322,7 +323,7 @@ var w;
                               child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                styleText("At Time", BLACK_CLR, FontWeight.normal, 15),
+                                styleText(AT_TIME, BLACK_CLR, FontWeight.normal, 15),
        
         Container(
                                     height: h*0.06,
@@ -360,7 +361,7 @@ var w;
 
                       Align(
                         alignment: Alignment.bottomCenter,
-                        child: DefaultButton(text: "Done", ontap: (){
+                        child: DefaultButton(text: DONE, ontap: (){
                           Navigator.of(context).pop();
                         }, fontsize: 15, height: h*0.060, width: w*0.8))
      

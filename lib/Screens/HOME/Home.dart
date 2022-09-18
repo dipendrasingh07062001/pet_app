@@ -10,6 +10,7 @@ import 'package:pet_app/Screens/Signup.dart';
 import 'package:pet_app/Screens/Tutorial.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 
+import '../../Componants/Images&Icons.dart';
 import '../BlogDetails.dart';
 import '../DrawerScreen.dart';
 import '../LocationBottomSeet.dart';
@@ -70,7 +71,7 @@ class _HomeState extends State<Home> {
           crossAxisAlignment: CrossAxisAlignment.center,
         
           children: [
-          styleText("Location", GRAY_CLR, FontWeight.normal, 12),
+          styleText(LOCATION, GRAY_CLR, FontWeight.normal, 12),
          
           Padding(
             padding:  EdgeInsets.only(left: w*0.1),
@@ -107,7 +108,7 @@ class _HomeState extends State<Home> {
                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10),),
               elevation: 10,
               
-            icon: Image.asset('assets/png_icon/profile.png'),
+            icon: Image.asset(USER_IMAGE),
             iconSize: 40,
             padding: EdgeInsets.all(10),
               itemBuilder: (context) => [
@@ -118,12 +119,12 @@ class _HomeState extends State<Home> {
                       children: [
                         Row( 
                           children: [
-                           Image.asset('assets/png_icon/profile.png'),
+                           Image.asset(USER_IMAGE),
                             SizedBox(
                            
                               width: 10,
                             ),
-                           styleText("Pet Name", BLACK_CLR, FontWeight.normal, 15),
+                           styleText(PET_NAME, BLACK_CLR, FontWeight.normal, 15),
                               
                           ],
 
@@ -142,12 +143,12 @@ class _HomeState extends State<Home> {
                       children: [
                         Row( 
                           children: [
-                           Image.asset('assets/png_icon/profile.png'),
+                           Image.asset(USER_IMAGE),
                             SizedBox(
                            
                               width: 10,
                             ),
-                           styleText("Pet Name", BLACK_CLR, FontWeight.normal, 15),
+                           styleText(PET_NAME, BLACK_CLR, FontWeight.normal, 15),
                               
                           ],
 
@@ -170,7 +171,7 @@ class _HomeState extends State<Home> {
                       color: GREEN_CLR,
                       onPressed: (){
                         Navigate_to(context, AddPetpage());
-                      },child: styleText("Add New Pet", WHITE70_CLR, FontWeight.normal, 13),),
+                      },child: styleText(ADD_PET_NAME, WHITE70_CLR, FontWeight.normal, 13),),
                   ))
                
               ],
@@ -187,7 +188,7 @@ class _HomeState extends State<Home> {
         height: 70,
         child: FloatingActionButton(onPressed: (){
           Navigate_to(context, Reminder());
-        },child: SvgPicture.asset('assets/svg_image/Group 33.svg'),),
+        },child: SvgPicture.asset(NOTIFICATION_ICON),),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
 
@@ -231,17 +232,18 @@ class _HomeState extends State<Home> {
                                               fontSize: 16,
                                               fontWeight: FontWeight.normal),
                                           prefixIcon: 
+
                                             Icon(Icons.search,size: 22,color: GRAY_CLR,),
                                           
           
-                                          suffixIcon:Image.asset('assets/png_icon/filter_filters_funnel_list_navigation_sort_sorting_icon_123212.png') ,
+                                          suffixIcon:Image.asset(FILTTER_ICON) ,
                                           border: InputBorder.none)),
                                   
                                     ),
                                      
                                      SizedBox(height: h*0.020,),
                                     
-                                    styleText("Services", BLACK_CLR, FontWeight.bold, 19),
+                                    styleText(SERVICES, BLACK_CLR, FontWeight.bold, 19),
           
           
                                     SizedBox(
@@ -278,7 +280,7 @@ class _HomeState extends State<Home> {
                                               WHITE70_CLR,
                                               boxShadow: [BoxShadow(color: SHADOW_CLR)]
                                               ),
-                                              child: Image.asset('assets/png_icon/icon.png',color: service.elementAt(index)==services? WHITE70_CLR:GRAY_CLR,),
+                                              child: Image.asset(SERVICES_ICON,color: service.elementAt(index)==services? WHITE70_CLR:GRAY_CLR,),
                                               ),
                                             ),
                                       
@@ -302,7 +304,7 @@ class _HomeState extends State<Home> {
         
 
                                     
-                                    styleText("Explore", BLACK_CLR, FontWeight.bold, 19),
+                                    styleText(EXPLORE, BLACK_CLR, FontWeight.bold, 19),
         
                                         SizedBox(
                                           height: h*0.015,
@@ -325,7 +327,7 @@ class _HomeState extends State<Home> {
                                             decoration: BoxDecoration(
                                               borderRadius: BorderRadius.circular(15),
                                               // color: Colors.red,
-                                              image: DecorationImage(image: AssetImage("assets/png_image/download-1.png",),fit: BoxFit.cover)
+                                              image: DecorationImage(image: AssetImage(DOUNLOAD_ICON,),fit: BoxFit.cover)
                                             ),
                                            
                                             child: Padding(

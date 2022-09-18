@@ -6,6 +6,7 @@ import 'package:pet_app/Screens/EnterOTP.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 import 'package:provider/provider.dart';
 
+import '../Componants/Images&Icons.dart';
 import '../Provider/Provider.dart';
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({super.key});
@@ -61,14 +62,14 @@ var w;
               SizedBox(
                 height: h*0.2,
                 width: w*0.5,
-                child: SvgPicture.asset('assets/svg_image/OBJECTS(1).svg',)),
+                child: SvgPicture.asset(FORGOT_PASS_IMAGE,)),
     
     
                 SizedBox(
                   height: h*0.058,
                 ),
     
-             styleText("Forgot Password", BLACK_CLR, FontWeight.bold, 19),
+             styleText(FORGOT_PASS, BLACK_CLR, FontWeight.bold, 19),
     
              Container(
                           
@@ -88,7 +89,7 @@ var w;
                                   
                                       validator: (value){
                                         if(value!.isEmpty){
-                                            emailError = "Please enter correct email";
+                                            emailError = ENTER_EMAIL;
                                             setState(() {
                                         
                                             });
@@ -128,7 +129,7 @@ var w;
                                     height: h*0.035,
                                   ),
    
-                                  DefaultButton(text: "Forgot Password", ontap: (){
+                                  DefaultButton(text:FORGOT_PASS, ontap: (){
                                     if(_formkey.currentState!.validate()){
                                       emailError = "";
 
@@ -145,7 +146,7 @@ var w;
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    styleText("Already have an account?", GRAY_CLR,
+                                    styleText(ALLREADY_ACCOUNT, GRAY_CLR,
                                         FontWeight.normal, 15),
             
                                   
@@ -156,7 +157,7 @@ var w;
                                               },
                                              
                                               child: styleText(
-                                                  "Login", GREEN_CLR,
+                                                 LOGIN, GREEN_CLR,
                                                   FontWeight.normal, 15))
             
                                       

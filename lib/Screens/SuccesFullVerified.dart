@@ -6,6 +6,7 @@ import 'package:pet_app/Screens/HOME/Home.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 import 'package:provider/provider.dart';
 
+import '../Componants/Images&Icons.dart';
 import '../Provider/Provider.dart';
 class SuccessFullyVerified extends StatefulWidget {
   const SuccessFullyVerified({super.key});
@@ -47,28 +48,28 @@ var w;
           SizedBox(
             height: h*0.2,
             width: w*0.5,
-            child: SvgPicture.asset('assets/svg_image/tik.svg',)),
+            child: SvgPicture.asset(SUCCESSFULLY_IMAGE,)),
   
   
             SizedBox(
               height: h*0.05,
             ),
   
-         styleText("Hurray!! ", BLACK70_CLR, FontWeight.bold, 19),
+         styleText(HURRAY, BLACK70_CLR, FontWeight.bold, 19),
   
         SizedBox(
                                   height: h*0.020,
                                  ),
                             
                           
-                                TutorialText("You have successfully verfied the \n account", GRAY_CLR,
+                                TutorialText(SUCCESSFULLY_TITLE, GRAY_CLR,
                                     FontWeight.normal, 15),
         
                               SizedBox(
                                 height: h*0.040,
                               ),
  
-                              DefaultButton(text: "Go to Dashboard", ontap: (){
+                              DefaultButton(text: GO_TO_DASHBORD, ontap: (){
                                 Navigate_to(context, Home());
                                
                               }, fontsize: 18, height: h*0.060, width: w*1),

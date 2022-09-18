@@ -5,6 +5,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:pet_app/Colors/COLORS.dart';
+import 'package:pet_app/Componants/Images&Icons.dart';
 import 'package:pet_app/Screens/HOME/ServicesList.dart';
 import 'package:pet_app/SevicesListAll_Screens/Add_Vaccinations.dart';
 import 'package:pet_app/UTILS/Utils.dart';
@@ -28,7 +29,7 @@ class _VaccinationsState extends State<Vaccinations> {
 
     return Scaffold(
       backgroundColor: WHITE70_CLR,
-      appBar: DefaultAppBar("Vaccinations"),
+      appBar: DefaultAppBar(VACCINATOIN),
 
        floatingActionButton: FloatingActionButton(
         backgroundColor: WHITE70_CLR,
@@ -59,7 +60,7 @@ class _VaccinationsState extends State<Vaccinations> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
 
-                styleText("Canine Parvovirus", BLACK_CLR, FontWeight.bold, 16),
+                styleText(CANINE, BLACK_CLR, FontWeight.bold, 16),
       
                 SizedBox(height: h*0.005,),
       
@@ -73,7 +74,7 @@ class _VaccinationsState extends State<Vaccinations> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              styleText("Last Vaccinations", GRAY_CLR, FontWeight.normal, 13),
+                              styleText(LAST_VACCINATION, GRAY_CLR, FontWeight.normal, 13),
                                styleText("Date : 20-12-2022", BLACK_CLR, FontWeight.normal, 15),
                             ],
                           ),
@@ -85,7 +86,7 @@ class _VaccinationsState extends State<Vaccinations> {
                            child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              styleText("Next Vaccinations", GRAY_CLR, FontWeight.normal, 13),
+                              styleText(NEXT_VACCINATION, GRAY_CLR, FontWeight.normal, 13),
                                styleText("Date : 20-12-2022", BLACK_CLR, FontWeight.normal, 15),
                             ],
                         ),
@@ -102,7 +103,7 @@ class _VaccinationsState extends State<Vaccinations> {
                    children: [
                        
                        Container(
-                        child: Image.asset('assets/png_image/download-1.png',height: 60,)),
+                        child: Image.asset(CERTIFICATE_IMAGE,height: 60,)),
    
                   Row(crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

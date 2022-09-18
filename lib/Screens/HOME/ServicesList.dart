@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pet_app/Componants/Images&Icons.dart';
 
 import '../../SevicesListAll_Screens/Deworming.dart';
 import '../../SevicesListAll_Screens/Medicines.dart';
@@ -30,7 +31,7 @@ class _ServicesListState extends State<ServicesList> {
 
 
 
-static   List<String> ImageName =['Cycle Tracking','Medications','Vaccinations','Deworming','Pregnancy'];
+static   List<String> ImageName =[CYCLE_TRACKING,MEDICATIONS,VACCINATIONS,DEWORMING,PREGNANCY];
 
  static List url = ['assets/png_image/Group 32.png','assets/png_image/Group 32.png','assets/png_image/Group 32.png','assets/png_image/Group 32.png','assets/png_image/Group 32.png'];
 

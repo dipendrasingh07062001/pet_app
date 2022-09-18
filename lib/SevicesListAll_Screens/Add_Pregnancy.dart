@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 
 import '../Colors/COLORS.dart';
+import '../Componants/Images&Icons.dart';
 import '../UTILS/Utils.dart';
 
 class Add_Pregnancy extends StatefulWidget {
@@ -68,7 +69,7 @@ var w;
     return Scaffold(
       
        backgroundColor: WHITE70_CLR,
-      appBar:DefaultAppBar("Pregnancy"),
+      appBar:DefaultAppBar(PREGNANCY),
       
      
    body: Padding(
@@ -79,7 +80,7 @@ var w;
         children: [
 
               
-                       styleText("Sexully Active", BLACK_CLR, FontWeight.normal, 15),
+                       styleText(SEXUALLY_ACTIVE, BLACK_CLR, FontWeight.normal, 15),
 
 
 SizedBox(height: h*0.010,),
@@ -104,7 +105,7 @@ SizedBox(height: h*0.010,),
                     ),
                   ),
                   SizedBox(width: w*0.010,),
-                     styleText("Yes", GRAY_CLR, FontWeight.normal, 15),
+                     styleText(YES, GRAY_CLR, FontWeight.normal, 15),
                 
                 SizedBox(width: w*0.030,),
                   SizedBox(
@@ -123,7 +124,7 @@ SizedBox(height: h*0.010,),
                     ),
                   ),
                   SizedBox(width: w*0.010,),
-                styleText("No", GRAY_CLR, FontWeight.normal, 15),
+                styleText(NO, GRAY_CLR, FontWeight.normal, 15),
 
 
                 
@@ -132,7 +133,7 @@ SizedBox(height: h*0.010,),
 
               SizedBox(height: h*0.015,),
      
-       styleText("No. of past Pregnancy", BLACK_CLR, FontWeight.normal, 15),
+       styleText(NO_OF_PREGNANCY, BLACK_CLR, FontWeight.normal, 15),
        
         Container(
                               height: h*0.06,
@@ -172,7 +173,7 @@ SizedBox(height: h*0.010,),
                         ),
      
                         SizedBox(height: h*0.020,),
-                       styleText("Health of Previous litter ", BLACK_CLR, FontWeight.normal, 15),
+                       styleText(HEALTH_OF_PREVIOUS, BLACK_CLR, FontWeight.normal, 15),
                           Container(
                                       padding: EdgeInsets.only(left: 10),
                                         alignment: Alignment.center,
@@ -200,7 +201,7 @@ SizedBox(height: h*0.010,),
                                         ),
 
                         SizedBox(height: h*0.020,),
-                       styleText("Neutered ", BLACK_CLR, FontWeight.normal, 15),
+                       styleText(NEUTERED, BLACK_CLR, FontWeight.normal, 15),
                         SizedBox(height: h*0.015,),
 
                          Row(
@@ -225,7 +226,7 @@ SizedBox(height: h*0.010,),
                     ),
                   ),
                   SizedBox(width: w*0.010,),
-                  styleText("Yes", GRAY_CLR, FontWeight.normal, 15),
+                  styleText(YES, GRAY_CLR, FontWeight.normal, 15),
 
                 SizedBox(
                   width: w*0.030,
@@ -247,7 +248,7 @@ SizedBox(height: h*0.010,),
                     ),
                   ),
                   SizedBox(width: w*0.010,),
-            styleText("No", GRAY_CLR, FontWeight.normal, 15),
+            styleText(NO, GRAY_CLR, FontWeight.normal, 15),
 
 
                 
@@ -257,10 +258,10 @@ SizedBox(height: h*0.010,),
 
      
                         SizedBox(height: h*0.010,),
-                       styleText("Reminder ", DARK_CLR, FontWeight.bold, 15),
+                       styleText(REMINDER, DARK_CLR, FontWeight.bold, 15),
 
       SizedBox(height: h*0.010,),
-                       styleText("Reminder Duration ", BLACK_CLR, FontWeight.normal, 15),
+                       styleText(REMINDER_DURATION, BLACK_CLR, FontWeight.normal, 15),
 
                        SizedBox(height: h*0.020,),
                          Row(
@@ -285,7 +286,7 @@ SizedBox(height: h*0.010,),
                     ),
                   ),
                   SizedBox(width: w*0.010,),
-                 styleText("6 Months", GRAY_CLR, FontWeight.normal, 15),
+                 styleText(MONTH1, GRAY_CLR, FontWeight.normal, 15),
                 
                 SizedBox(width: w*0.030,),
                   SizedBox(
@@ -304,7 +305,7 @@ SizedBox(height: h*0.010,),
                     ),
                   ),
                   SizedBox(width: w*0.010,),
-                       styleText("9Months", GRAY_CLR, FontWeight.normal, 15),
+                       styleText(MONTH2, GRAY_CLR, FontWeight.normal, 15),
                        SizedBox(width: w*0.030,),
   SizedBox(
       height: 20,
@@ -323,7 +324,7 @@ SizedBox(height: h*0.010,),
 
   ),
   SizedBox(width: w*0.010,),
-                     styleText("12Months", GRAY_CLR, FontWeight.normal, 15),
+                     styleText(MONTH3, GRAY_CLR, FontWeight.normal, 15),
 
                 
                 
@@ -339,7 +340,7 @@ SizedBox(height: h*0.010,),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              styleText("At Date", BLACK_CLR, FontWeight.normal, 15),
+                              styleText(AT_DATE, BLACK_CLR, FontWeight.normal, 15),
        
                                Container(
                                   height: h*0.06,
@@ -372,7 +373,7 @@ SizedBox(height: h*0.010,),
                             Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              styleText("At Time", BLACK_CLR, FontWeight.normal, 15),
+                              styleText(AT_DATE, BLACK_CLR, FontWeight.normal, 15),
        
         Container(
                                   height: h*0.06,
@@ -410,7 +411,7 @@ SizedBox(height: h*0.010,),
 
                       Align(
                         alignment: Alignment.bottomCenter,
-                        child: DefaultButton(text: "Done", ontap: (){}, fontsize: 15, height: h*0.060, width: w*0.8))
+                        child: DefaultButton(text:DONE, ontap: (){}, fontsize: 15, height: h*0.060, width: w*0.8))
      
         ]
                           ),

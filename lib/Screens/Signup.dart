@@ -5,6 +5,8 @@ import 'package:pet_app/Provider/Provider.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 import 'package:provider/provider.dart';
 
+import '../Componants/Images&Icons.dart';
+
 class Signup extends StatefulWidget {
   const Signup({super.key});
 
@@ -48,7 +50,7 @@ class _SignupState extends State<Signup> {
                     width: w * 1,
                     color: GREEN_CLR,
                     child: SvgPicture.asset(
-                      'assets/svg_image/Group 24.svg',
+                     BACK_GROUND_IMAGE,
                       fit: BoxFit.none,
                     ),
                   ),
@@ -64,12 +66,12 @@ class _SignupState extends State<Signup> {
                         height: h * 0.1,
                       ),
                       Image.asset(
-                        "assets/png_image/Group 1.png",
+                        SIGN_UP_IMAGE,
                       ),
                       SizedBox(
                         height: h * 0.020,
                       ),
-                      styleText("Hello!", WHITE70_CLR, FontWeight.normal, 21),
+                      styleText(HELLO, WHITE70_CLR, FontWeight.normal, 21),
                       Padding(
                         padding: const EdgeInsets.all(15),
                         child: Container(
@@ -87,7 +89,7 @@ class _SignupState extends State<Signup> {
                                 left: w * 0.030, right: w * 0.030),
                             child: Column(
                               children: [
-                                styleText("Create Account", BLACK_CLR,
+                                styleText(CREATE_ACCOUNT, BLACK_CLR,
                                     FontWeight.bold, 19),
                                 Container(
                                   height: h*0.06,
@@ -110,7 +112,7 @@ class _SignupState extends State<Signup> {
 
                                       validator: (value){
                                         if(value!.isEmpty){
-                                          emailError= "Please enter email";
+                                          emailError= ENTER_EMAIL;
                                           return "";
                                         }
                                         else{
@@ -160,7 +162,7 @@ class _SignupState extends State<Signup> {
 
                                     validator: (value){
                                       if(value!.isEmpty){
-                                        passError ="Please enter password";
+                                        passError =ENTER_PASS;
                                         return "";
                                       }
                                       else {
@@ -222,7 +224,7 @@ class _SignupState extends State<Signup> {
 
                                     validator: (value){
                                       if(value!.isEmpty){
-                                        passError1 = "Please enter confirm password";
+                                        passError1 = ENTER_CONFIRM_PASS;
                                         return "";
                                       }
                                       else{
@@ -271,7 +273,7 @@ class _SignupState extends State<Signup> {
                                 Consumer(builder: (BuildContext context, value,
                                     Widget? child) {
                                   return DefaultButton(
-                                      text: "Sign up",
+                                      text: SIGN_UP,
                                       ontap: () {
                                         if(_formkey.currentState!.validate()){
                                             ProviderTutorial()
@@ -287,7 +289,7 @@ class _SignupState extends State<Signup> {
                                 SizedBox(
                                   height: h * 0.010,
                                 ),
-                                styleText("Or Continue with", GREEN_CLR,
+                                styleText(Or_Continue, GREEN_CLR,
                                     FontWeight.normal, 15),
                                     SizedBox(height: h*0.015,),
                               Row(
@@ -302,7 +304,7 @@ class _SignupState extends State<Signup> {
                                     borderRadius: BorderRadius.circular(50)),
                                   child: Padding(
                                     padding: const EdgeInsets.all(10),
-                                    child: Image.asset("assets/png_icon/google.png",height: 40,),
+                                    child: Image.asset(GOOGLE_ICON,height: 40,),
                                   )
                                   
                                   ),
@@ -331,7 +333,7 @@ class _SignupState extends State<Signup> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    styleText("Already have an account? ",
+                                    styleText(ALLREADY_ACCOUNT,
                                         GRAY_CLR, FontWeight.normal, 15),
                                     Consumer<ProviderTutorial>(builder:
                                         (BuildContext context, value,
@@ -339,7 +341,7 @@ class _SignupState extends State<Signup> {
                                       return GestureDetector(
                                           onTap: () => ProviderTutorial()
                                               .NavigateLogin(context),
-                                          child: styleText("Login", GREEN_CLR,
+                                          child: styleText(LOGIN, GREEN_CLR,
                                               FontWeight.normal, 15));
                                     })
                                   ],

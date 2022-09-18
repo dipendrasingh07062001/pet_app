@@ -3,6 +3,7 @@ import 'package:pet_app/Screens/ChangePassword.dart';
 import 'package:pet_app/Screens/Login.dart';
 
 import '../Colors/COLORS.dart';
+import '../Componants/Images&Icons.dart';
 import '../UTILS/Utils.dart';
 import 'ChangePassword1.dart';
 import 'Help_1.dart';
@@ -23,7 +24,7 @@ class _SettingState extends State<Setting> {
 
     return Scaffold(
       backgroundColor: WHITE70_CLR,
-      appBar: DefaultAppBar("Setting"),
+      appBar: DefaultAppBar(SETTING1),
       body: Padding(
         padding: const EdgeInsets.only(top: 8.0),
         child: Column(
@@ -39,7 +40,7 @@ class _SettingState extends State<Setting> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
- styleText("About Us", BLACK_CLR, FontWeight.bold, 14),
+ styleText(ABOUT_US, BLACK_CLR, FontWeight.bold, 14),
  Icon(Icons.arrow_forward_ios,size: 15,),
                     ],
                   
@@ -62,7 +63,7 @@ class _SettingState extends State<Setting> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
- styleText("Change Password", BLACK_CLR, FontWeight.bold, 14),
+ styleText(CHANGE_PASSWORD, BLACK_CLR, FontWeight.bold, 14),
  Icon(Icons.arrow_forward_ios,size: 15,),
                     ],
                   
@@ -85,7 +86,7 @@ class _SettingState extends State<Setting> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
- styleText("Help & Support", BLACK_CLR, FontWeight.bold, 14),
+ styleText(HELP_SUPPORT, BLACK_CLR, FontWeight.bold, 14),
  Icon(Icons.arrow_forward_ios,size: 15,),
                     ],
                   
@@ -108,7 +109,7 @@ class _SettingState extends State<Setting> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
- styleText("Logout", BLACK_CLR, FontWeight.bold, 14),
+ styleText(LOGOUT, BLACK_CLR, FontWeight.bold, 14),
  Icon(Icons.arrow_forward_ios,size: 15,),
                     ],
                   
