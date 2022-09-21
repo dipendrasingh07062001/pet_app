@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:pet_app/Provider/Provider.dart';
+import 'package:pet_app/Screens/Add_Pets/AddPet3.dart';
+import 'package:provider/provider.dart';
 import '../../Colors/COLORS.dart';
 import '../../Componants/Images&Icons.dart';
 import '../../UTILS/Utils.dart';
@@ -17,7 +20,7 @@ class _AddPet2State extends State<AddPet2> {
   var h;
   var w;
 
-  String gender ="male";
+ 
 
     String dropdounvalue = 'BREED';
   final items = ['BREED', 'RABIT', 'CAT', 'DOG', 'CAT!'];
@@ -40,6 +43,9 @@ class _AddPet2State extends State<AddPet2> {
   }
   @override
   Widget build(BuildContext context) {
+
+
+    final UpadteValue = Provider.of<ProviderTutorial>(context,listen: false);
     
   String _joningdate=DateFormat.yMMMd().format(_currentdate1);
 
@@ -155,18 +161,14 @@ class _AddPet2State extends State<AddPet2> {
                             height: 20,
                             child: Radio(
                             activeColor: GREEN_CLR,
-                            value: "male", 
-                            groupValue: gender, 
-                            onChanged: (value){
-                              setState(() {
-                                  gender = value.toString(); 
-                              });
-                            },
-                  ),
+                            value: 1, 
+                            groupValue: UpadteValue.gender, 
+                            onChanged: UpadteValue.OnValueChange
+                                          ),
                           ),
                           SizedBox(width: w*0.010,),
 
-                  styleText(MALE, DARK_CLR, FontWeight.normal, 15),
+                  styleText(MALE, GRAY_CLR, FontWeight.normal, 15),
                     
                          SizedBox(width: w*0.050,),
                      SizedBox(
@@ -175,24 +177,18 @@ class _AddPet2State extends State<AddPet2> {
                        child: Radio(
                     
                        activeColor: GREEN_CLR,
-                  
-                        value: "female", 
-                        groupValue: gender, 
-                        onChanged: (value){
-                          setState(() {
-                              gender = value.toString();
-                          });
-                        },
-                  ),
-                     ),
+                        value: 2, 
+                        groupValue: UpadteValue.gender, 
+                        onChanged: UpadteValue.OnValueChange
+                        
+                           ),
+                           ),
                           SizedBox(width: w*0.010,),
-                         styleText(FEMALE, DARK_CLR, FontWeight.normal, 15),
+                         styleText(FEMALE, GRAY_CLR, FontWeight.normal, 15),
                         ],
                       ),
       
                    SizedBox(height: h*0.020,),
-              
-      
                           Container(
                             height: h*0.065,
                          
@@ -214,8 +210,6 @@ class _AddPet2State extends State<AddPet2> {
                                 .map<DropdownMenuItem<String>>(
                                     (String value) =>
                                     DropdownMenuItem<String>(
-                                    
-      
                                       value: value,
                                       child: Text(value,style: TextStyle(color: GRAY_CLR,fontSize: 14),),
                                     ))
@@ -235,9 +229,6 @@ class _AddPet2State extends State<AddPet2> {
                           ),
                         ),
                       ),
-      
-      
-                         
                                     Container(
                             height: h*0.065,
                             margin: EdgeInsets.only(top: h*0.020),
@@ -252,26 +243,16 @@ class _AddPet2State extends State<AddPet2> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text("$_currentdate1",style: TextStyle(color: GRAY_CLR,fontSize: 14),),
-                                 
                                
-      
-                           
                             GestureDetector(
                               onTap: (){
                                 _datechange1(context);
                               },
-                              child: Icon(Icons.calendar_month,color: GRAY_CLR.withOpacity(0.5),size: 18,))]
-                           
-                           
+                              child: Icon(Icons.calendar_month,color: GRAY_CLR.withOpacity(0.5),size: 18,))] 
       
                           ),
                         ),
                       ),
-      
-                          
-                                          
-      
-      
         Container(
                     alignment: Alignment.center,
                     height: h*0.145,
@@ -287,12 +268,12 @@ class _AddPet2State extends State<AddPet2> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
       
-                    SvgPicture.asset("assets/svg_icon/Icon feather-upload-cloud.svg"),
+                    SvgPicture.asset(UPLOAD_ICON),
       
                     SizedBox(height: h*0.015,),
                         GestureDetector(
                     onTap: (){},
-                    child: styleText(" Document Upload", GRAY_CLR, FontWeight.normal, 14)),
+                    child: styleText(UPLOAD_DOCUMENT, GRAY_CLR, FontWeight.normal, 14)),
       
       
                     ],)
@@ -305,8 +286,4 @@ class _AddPet2State extends State<AddPet2> {
     );
   }
 
-
-
 }
-
-

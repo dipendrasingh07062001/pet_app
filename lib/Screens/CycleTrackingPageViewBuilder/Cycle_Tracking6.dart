@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar_widget/flutter_calendar_widget.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Screens/AddPeriod.dart';
 import 'package:pet_app/Screens/CycleTrackingPageViewBuilder/CycleTracking_Predication.dart';
@@ -23,6 +24,16 @@ final List day = ["S","M","T","W","F","S","T"];
 final List image = ['assets/svg_image/icon1.svg','assets/svg_image/icon1.svg','assets/svg_image/icon1.svg','assets/svg_image/icon1.svg','assets/svg_image/icon1.svg','assets/svg_image/icon1.svg','assets/svg_image/icon1.svg',];
 
 int index=0;
+
+
+ int selectedIndex = 0;
+  DateTime now = DateTime.now();
+  late DateTime lastDayOfMonth;
+  @override
+  void initState() {
+    super.initState();
+    lastDayOfMonth = DateTime(now.year, now.month + 1, 0);
+  }
 
 var Date;
   @override
@@ -65,65 +76,98 @@ var Date;
           child: SingleChildScrollView(
             child: Column(
           
+          
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
 
-                SizedBox(
-                height: h*0.020,),
+                SizedBox(height: 20,),
 
                 Align(
-                  alignment: Alignment.topCenter,
-                  child: TutorialText("25,August,2022", DARK_CLR, FontWeight.bold, 18)),
-          
-                     Container(
-                      margin: EdgeInsets.only(top: 10),
-                      height: 1,color: GRAY_CLR.withOpacity(0.5),),
-                      
-                       
-                        SizedBox(height: 10,),
-                         SizedBox(height: 150,
-                        child:
-                        ListView.builder(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          itemCount: image.length,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (BuildContext context, int index) {  return
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                             Container(
-                                alignment: Alignment.center,
-                                height: 30,width: 30,
-                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),
-                                color: GREEN_CLR
-                                ),
-                                child: Text(day[index].toString(),style: TextStyle(color:WHITE70_CLR,fontSize: 16,fontWeight: FontWeight.bold ),),
-                               ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 15,right: 15,top: 20),
-                              child: SvgPicture.asset(image[index].toString(),height: 50,),
+                  alignment: Alignment.center,
+                  child: TutorialText("Today, 25 August", BLACK_CLR, FontWeight.bold, 19)),
+                  SizedBox(height: 10,),
+        
+               SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            physics: const ClampingScrollPhysics(),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(
+                lastDayOfMonth.day,
+                (index) {
+                  final currentDate =
+                      lastDayOfMonth.add(Duration(days: index + 1));
+                  final dayName = DateFormat('E').format(currentDate);
+                  return GestureDetector(
+                    onTap: () => setState(
+                      () {
+                        selectedIndex = index;
+                      },
+                    ),
+                    child: Column(
+                      // mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        
+
+                        SizedBox(height: 8,),
+                        Container(
+                          height: 30.0,
+                          width: 30.0,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: selectedIndex == index
+                                ? GREEN_CLR
+                                : Colors.transparent,
+                            borderRadius: BorderRadius.circular(44.0),
+                          ),
+                          child: Text(
+                            dayName.substring(0, 1),
+                            style: TextStyle(
+                              fontSize: 15.0,
+                              color: selectedIndex == index
+                                  ? WHITE_CLR
+                                  : GRAY_CLR,
+                              fontWeight: FontWeight.bold,
                             ),
-                          ],
-                        );
-                        }
-                        )
-                         ),
+                          ),
+                        ),
+
+                        SizedBox(height: 8,),
+                        Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 10),
+                              child: SvgPicture.asset("assets/svg_image/icon1.svg",
+                              height:selectedIndex == index ?65:50,
+                              color: selectedIndex == index
+                              ? GREEN_CLR
+                              : GREEN_CLR.withOpacity(0.8)
+                              ),
+                            ),
+               ],
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+
           
+
+          SizedBox(height: h*0.020,),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
           
                 
-                styleText("Cycle Log", DARK_CLR, FontWeight.bold, 18),
-                styleText("Option", GREEN_CLR, FontWeight.bold, 14),
+                styleText("Cycle Log", DARK_CLR, FontWeight.normal, 18),
+                styleText("Option", GREEN_CLR, FontWeight.normal, 14),
               ],),
           
           
           
           
               SizedBox(height: h*0.005,),
-           styleText("MENSTRUATION", FADE_GREEN_CLR, FontWeight.bold, 13),
+           styleText("MENSTRUATION", FADE_GREEN_CLR, FontWeight.normal, 13),
           
               Container(
                 alignment: Alignment.centerLeft,
@@ -141,7 +185,7 @@ var Date;
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                      styleText("Period", BLACK_CLR, FontWeight.bold, 15),
+                      styleText("Period", BLACK_CLR, FontWeight.normal, 15),
                        Icon(Icons.add,size: 20,color: GRAY_CLR,)
                 
                       ],
@@ -151,7 +195,7 @@ var Date;
                 )
                 ),
                   SizedBox(height: h*0.025,),
-           styleText("OTHER DATA", FADE_GREEN_CLR, FontWeight.bold, 13),
+           styleText("OTHER DATA", FADE_GREEN_CLR, FontWeight.normal, 13),
           
               Container(
                 alignment: Alignment.centerLeft,
@@ -171,7 +215,7 @@ var Date;
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                      styleText("Symptoms", BLACK_CLR, FontWeight.bold, 15),
+                      styleText("Symptoms", BLACK_CLR, FontWeight.normal, 15),
                        Icon(Icons.add,size: 20,color: GRAY_CLR,)
                   
                       ],
@@ -185,7 +229,7 @@ var Date;
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                      styleText("Spotting", BLACK_CLR, FontWeight.bold, 15),
+                      styleText("Spotting", BLACK_CLR, FontWeight.normal, 15),
                        Icon(Icons.add,size: 20,color: GRAY_CLR,)
                   
                       ],
@@ -207,20 +251,20 @@ var Date;
                 children: [
           
                 
-                styleText(" Predictions", DARK_CLR, FontWeight.bold, 18),
+                styleText(" Predictions", DARK_CLR, FontWeight.normal, 18),
 
                 GestureDetector(
                   onTap: ()=>Navigate_to(context, CycleTracking_Predication()),
-                  child: styleText("Show All", GREEN_CLR, FontWeight.bold, 14)),
+                  child: styleText("Show All", GREEN_CLR, FontWeight.normal, 14)),
               ],),
           
           
           
           
               SizedBox(height: h*0.005,),
-           styleText("PERIOD PREDICTION", FADE_GREEN_CLR, FontWeight.bold, 13),
+           styleText("PERIOD PREDICTION", FADE_GREEN_CLR, FontWeight.normal, 13),
            SizedBox(height: h*0.010,),
-            styleText("Your pet’s period is likely to start on or around 23 August", DARK_CLR, FontWeight.bold, 15),
+            styleText("Your pet’s period is likely to start on or around 23 August", DARK_CLR, FontWeight.normal, 15),
           
             SizedBox(height: h*0.020,),
           
@@ -249,7 +293,7 @@ var Date;
 
                    SizedBox(height: h*0.020,),
                                     
-                                    styleText("Cycle Tracking Blogs", BLACK_CLR, FontWeight.bold, 19),
+                                    styleText("Cycle Tracking Blogs", BLACK_CLR, FontWeight.normal, 19),
         
                                         SizedBox(
                                           height: h*0.015,

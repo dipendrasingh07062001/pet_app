@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:page_indicator/page_indicator.dart';
 import 'package:pet_app/Componants/Images&Icons.dart';
+import 'package:pet_app/Provider/ServiceListProvider.dart';
 import 'package:pet_app/Screens/Add_Pets/addPet1.dart';
+import 'package:provider/provider.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 import '../../Colors/COLORS.dart';
@@ -12,108 +14,118 @@ import 'Add_pet2.dart';
 class AddPetpage extends StatefulWidget {
   const AddPetpage({Key? key}) : super(key: key);
 
-  @override
+ 
   State<AddPetpage> createState() => _AddPetpageState();
 }
 
 class _AddPetpageState extends State<AddPetpage> {
-  int index = 0;
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  
+   PageController _controller = new PageController();
 
-  final List text = ["Select Type", "Fill the Details", "Upload Pictures"];
-
-  int mCurrentIndex = -1;
-  List<Widget> pages = [AddPets(), AddPet2(), Addpet3()];
-  PageController _controller = new PageController();
-  static const _kDuration = const Duration(milliseconds: 300);
+  static const _kDuration = const Duration(milliseconds: 200);
   static const _kCurve = Curves.ease;
 
-  var currentIndex = -1;
+
+get Cantroller =>_controller;
+
   var h;
   var w;
+
+  
 
   @override
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
-    return Scaffold(
-      backgroundColor: WHITE70_CLR,
-      appBar: AppBar(
-        centerTitle: true,
-        toolbarHeight: h * 0.08,
+    return Consumer<addPetProvider>(
+      
+      builder: (BuildContext context, value, Widget? child) {  
+      return Scaffold(
         backgroundColor: WHITE70_CLR,
-        elevation: 1,
-        title: styleText(ADD_PETS, DARK_CLR, FontWeight.bold, 17),
-      ),
-      extendBodyBehindAppBar: true,
-      body: Padding(
-        padding:
-            EdgeInsets.only(top: h * 0.020, left: w * 0.050, right: w * 0.050),
-        child: Stack(
-          children: [
-            PageView.builder(
-              // physics: NeverScrollableScrollPhysics(),
-              controller: _controller,
-              onPageChanged: _onPageViewChange,
-              itemBuilder: (context, position) {
-                return pages[position];
-              },
-              itemCount: 3,
-            ),
-            Container(
-                margin: EdgeInsets.only(top: h * 0.165),
-                child: styleText(text[index], DARK_CLR, FontWeight.bold, 19)),
-            Container(
-              padding: EdgeInsets.all(1),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: GREEN_CLR, width: 1.5)),
-              margin: EdgeInsets.only(top: h * 0.130),
-              child: StepProgressIndicator(
-                direction: Axis.horizontal,
-                selectedSize: 12,
-                totalSteps: 3,
-                currentStep: 1,
-                size: 10,
-                selectedColor: GREEN_CLR,
-                unselectedColor: WHITE70_CLR,
-                roundedEdges: Radius.circular(20),
+        appBar: DefaultAppBar(ADD_PETS),
+        extendBodyBehindAppBar: true,
+        resizeToAvoidBottomInset: false,
+        body: Padding(
+          padding:
+              EdgeInsets.only(top: h * 0.020, left: w * 0.050, right: w * 0.050),
+          child: Stack(
+            children: [
+              PageView.builder(
+                // physics: NeverScrollableScrollPhysics(),
+                controller: _controller,
+                onPageChanged: value.OnChangedPage,
+                itemBuilder: (context, position) {
+                  return value.pages[position];
+                  //  vapages[position];
+                
+                },
+                itemCount: value.pages.length,
               ),
-            ),
-            Container(
-                padding: EdgeInsets.only(bottom: 35),
-                alignment: Alignment.bottomCenter,
-                child: MaterialButton(
-                    elevation: 0,
-                    minWidth: mCurrentIndex == 2 ? w * 0.7 : w * 0.55,
-                    height: h * 0.057,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        side: mCurrentIndex == 2
-                            ? BorderSide(color: GREEN_CLR)
-                            : BorderSide(color: Colors.transparent)),
-                    color: mCurrentIndex == 2 ? WHITE_CLR : GREEN_CLR,
-                    onPressed: () {
-                      print(mCurrentIndex);
-                      _controller.nextPage(
-                          duration: _kDuration, curve: _kCurve);
-                    },
-                    child: styleText(
-                        mCurrentIndex == 2 ? SKIP_CONTINUE: CONTINUE,
-                        mCurrentIndex == 2 ? FADE_GREEN_CLR : WHITE_CLR,
-                        FontWeight.normal,
-                        15)))
-          ],
+              Container(
+                  margin: EdgeInsets.only(top: h * 0.165),
+                  child: styleText(value.text[value.CurrentIndex], DARK_CLR, FontWeight.bold, 19)),
+              Container(
+                padding: EdgeInsets.all(1),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: GREEN_CLR, width: 1.5)),
+                margin: EdgeInsets.only(top: h * 0.130),
+                child: StepProgressIndicator(
+                  direction: Axis.horizontal,
+                  selectedSize: 12,
+                  totalSteps: value.text.length,
+                  currentStep: value.CurrentIndex+1,
+                  size: 10,
+                  selectedColor: GREEN_CLR,
+                  unselectedColor: WHITE70_CLR,
+                  roundedEdges: Radius.circular(20),
+                ),
+              ),
+              Container(
+                  padding: EdgeInsets.only(bottom: 35),
+                  alignment: Alignment.bottomCenter,
+                  child: MaterialButton(
+                      elevation: 0,
+                      minWidth: w*0.55,
+                      // minWidth:value.mCurrentIndex == 2 ? w * 0.7 : w * 0.55,
+                      height: h * 0.057,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          side:value.CurrentIndex == 2
+                              ? BorderSide(color: GREEN_CLR)
+                              : BorderSide(color: Colors.transparent)),
+                      color: value.CurrentIndex == 2 ? WHITE_CLR : GREEN_CLR,
+                      onPressed: ()   {
+
+                           value.CurrentIndex;
+                                             
+                        _controller.nextPage(
+                            duration: _kDuration, curve: _kCurve);
+                          
+                              print(value.CurrentIndex);   
+                      
+                      },    
+                      child:
+                      
+                       Consumer<addPetProvider>(
+                         builder: (BuildContext context, value, Widget? child) {  
+                    return styleText(
+                           value.CurrentIndex==2 ? SKIP_CONTINUE: CONTINUE,
+                           value.CurrentIndex==2?GRAY_CLR:WHITE_CLR,
+                            FontWeight.normal,
+                            15);
+                         }
+                       )
+                          ))
+            ],
+          ),
         ),
-      ),
+      );
+      }
     );
   }
 
-  _onPageViewChange(int page) {
-    setState(() {
-      mCurrentIndex = page;
-      // print(mCurrentIndex);
-    });
-  }
+ 
 }
+

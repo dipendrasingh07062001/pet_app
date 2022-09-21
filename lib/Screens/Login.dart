@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Componants/Images&Icons.dart';
-import 'package:pet_app/Provider/LoginProvider.dart';
 import 'package:pet_app/Provider/Provider.dart';
 import 'package:pet_app/Screens/HOME/Home.dart';
 import 'package:pet_app/UTILS/Utils.dart';
@@ -38,11 +37,9 @@ class _LoginState extends State<Login> {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
 
-    // final formProvider = Provider.of<LoginProvider>(context);
+   
 
-    return ChangeNotifierProvider<ProviderTutorial>(
-      create: (BuildContext context)=>ProviderTutorial(),
-      child: Scaffold(
+    return  Scaffold(
         backgroundColor: WHITE70_CLR,
         resizeToAvoidBottomInset: true,
         extendBody: true,
@@ -123,10 +120,6 @@ class _LoginState extends State<Login> {
                                     }
                                   },
 
-
-                                  // validator: (value){
-                                  // formProvider.validEmail(value);
-                                  // },
                                   
                                     textCapitalization: TextCapitalization.none,
                                     textAlign: TextAlign.start,
@@ -182,10 +175,7 @@ class _LoginState extends State<Login> {
                                       passError="";
                                     }
                                   },
-                                  //  validator: (value){
-                                  //   formProvider.validPassword(value);
-                                  //  },
-                                 
+                                
                                 
                                   obscureText: _passwordVisible,
                                   // textCapitalization: TextCapitalization.none,
@@ -236,35 +226,43 @@ class _LoginState extends State<Login> {
                                   SizedBox(
                                     width: w * 0.005,
                                   ),
-                                  GestureDetector(
-                                    onTap: ()=>Navigate_to(context, ForgotPassword()),
-                                    child: styleText(FORGOT_PASSWORD, NON_DARK_CLR,
-                                        FontWeight.normal, 15),
+                                  Consumer<ProviderTutorial>(
+                                    builder: (BuildContext context, value, Widget? child) {  
+                                  return GestureDetector(
+                                      onTap: (){
+                                        value.NavigateForgotPassword(context);
+                                      },
+                                      child: styleText(FORGOT_PASSWORD, NON_DARK_CLR,
+                                          FontWeight.normal, 15),
+                                    );
+                                    }
                                   )
                                 ],
                               ),
                               SizedBox(
                                 height: h * 0.030,
                               ),
-                              DefaultButton(
-                                  text: "Login",
-                                  ontap: () {
-                                
-                                   if(_formkey.currentState!.validate()){
-                                     emailError="";
-                                    passError="";
-                                    
-                                    setState(() {
-                                      
-                                    });
-                                   Navigate_to(context, Home());
-                                   }
+                              Consumer<ProviderTutorial>(
+                                builder: (BuildContext context, value, Widget? child) {  
+                                return DefaultButton(
+                                    text: "Login",
+                                    ontap: () {
                                   
-          
-                                  },
-                                  fontsize: 16,
-                                  height: h * 0.060,
-                                  width: w * 1),
+                                     if(_formkey.currentState!.validate()){
+                                       emailError="";
+                                      passError="";
+                                      
+                                 
+                                      ProviderTutorial().NavigateHome(context);
+                                     }
+                                    
+                                        
+                                    },
+                                    fontsize: 16,
+                                    height: h * 0.060,
+                                    width: w * 1);
+                                }
+                              ),
                               SizedBox(
                                 height: h * 0.015,
                               ),
@@ -323,7 +321,6 @@ class _LoginState extends State<Login> {
                                       return
                                         GestureDetector(
                                             onTap: () {
-                                              // formProvider.globalKey.currentState!.validate();
 
                                               ProviderTutorial().NavigateSinup(context);
                                               
@@ -348,7 +345,7 @@ class _LoginState extends State<Login> {
             ),
           ),
         ),
-      ),
+      
     );
   }
 }

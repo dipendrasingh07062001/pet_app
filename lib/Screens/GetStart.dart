@@ -100,7 +100,6 @@ class _GetStartedState extends State<GetStarted> {
               return GestureDetector(
                 onTap: () {
                   ProviderTutorial().NavigateSinup(context);
-               
                   value.change();
                 
                 },

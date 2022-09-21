@@ -77,7 +77,7 @@ var w;
         children: [
 
 
-                         styleText(MEDICINES_NAME, BLACK_CLR, FontWeight.bold, 15),
+                         styleText(MEDICINES_NAME, BLACK_CLR, FontWeight.normal, 15),
                           Container(
                                       padding: EdgeInsets.only(left: 10),
                                         alignment: Alignment.center,
@@ -116,7 +116,7 @@ var w;
                                                child: Column(
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                  children: [
-                                                   styleText(DURATION, BLACK_CLR, FontWeight.bold, 15),
+                                                   styleText(DURATION, BLACK_CLR, FontWeight.normal, 15),
                                                 
        
                                     Container(
@@ -165,7 +165,7 @@ var w;
                                                   child: Column(
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                children: [
-                                                   styleText(DOSE_DAY, BLACK_CLR, FontWeight.bold, 15),
+                                                   styleText(DOSE_DAY, BLACK_CLR, FontWeight.normal, 15),
                                               
        
         Container(
@@ -213,7 +213,7 @@ var w;
      
               
                          SizedBox(height: h*0.020,),
-                            styleText(COURSE_START_DATE, BLACK_CLR, FontWeight.bold, 15),
+                            styleText(COURSE_START_DATE, BLACK_CLR, FontWeight.normal, 15),
        
                         Container(
                               height: h*0.06,
@@ -244,7 +244,7 @@ var w;
 
                             SizedBox(height: h*0.020,),
                        
-                       styleText(COURSE_END_DTAE, BLACK_CLR, FontWeight.bold, 15),
+                       styleText(COURSE_END_DTAE, BLACK_CLR, FontWeight.normal, 15),
                        Container(
                               height: h*0.06,
                               padding: EdgeInsets.only(left: w*0.030,right: w*0.030),
@@ -275,11 +275,11 @@ var w;
 
     SizedBox(height: h*0.020,),
                        
-                       styleText(REMINDER, BLACK_CLR, FontWeight.bold, 15),
+                       styleText(REMINDER, BLACK_CLR, FontWeight.normal, 15),
 
                            SizedBox(height: h*0.020,),
                        
-                       styleText(REMINDER_DURATION, BLACK_CLR, FontWeight.bold, 15),
+                       styleText(REMINDER_DURATION, BLACK_CLR, FontWeight.normal, 15),
                        SizedBox(height: h*0.020,),
                          Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -335,7 +335,7 @@ var w;
                       Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        styleText(AT_TIME, BLACK_CLR, FontWeight.bold, 15),
+                        styleText(AT_TIME, BLACK_CLR, FontWeight.normal, 15),
        
         Container(
                             height: h*0.06,

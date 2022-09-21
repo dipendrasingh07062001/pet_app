@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pet_app/Screens/Add_Pets/AddPet3.dart';
+import 'package:pet_app/Screens/GetStart.dart';
+import '../Screens/ForgotPassword.dart';
+import '../Screens/HOME/Home.dart';
 import '../Screens/Login.dart';
 import '../Screens/Signup.dart';
 import '../UTILS/Utils.dart';
@@ -7,6 +11,12 @@ import '../UTILS/Utils.dart';
 class ProviderTutorial extends ChangeNotifier {
     bool isClick= false;
 
+
+
+changePage(){
+  isClick =true;
+  notifyListeners();
+}
 
 
  change(){
@@ -25,72 +35,52 @@ class ProviderTutorial extends ChangeNotifier {
     notifyListeners();
   }
 
+  NavigateHome(BuildContext context){
+    Navigate_to(context, Home());
+    notifyListeners();
+
+  }
+
+  NavigateForgotPassword(BuildContext context){
+
+    Navigate_to(context, ForgotPassword());
+    notifyListeners();
+  }
 
 
-// // for validation
-
-// ValidationItem _email = ValidationItem(null!, null!);
-// ValidationItem _password = ValidationItem(null!, null!);
-
-
-
-// ValidationItem get Email => _email;
-// ValidationItem get Password => _password;
+  NavigateGetStarted(BuildContext context){
+    isClick =true;
+    Navigate_to(context,GetStarted());
+    notifyListeners();
+  }
 
 
-// bool isValid(){
-//  if(_email==null && _password== null){
-//   return true;
+ int gender = 1;
+  OnValueChange( int? index){
 
-//  }else{
-//   return false;
-//  }
+   gender = index?? gender ;
+   notifyListeners();
 
-// }
-
-
-
-// void ValidEmail(value){
-//   if(_email.value.isEmpty){
-
-//       _email=ValidationItem(value, "Please enter Email");
-
-//   }else{
-//     _email = ValidationItem(value, value);
-//   }
-
-//   notifyListeners();
-// }
+  }
 
 
 
-// void ValidPassword(value){
-//   if(_password.value.isEmpty){
-
-//       _password=ValidationItem(value, "Please enter Password");
-
-//   }else{
-//     _password = ValidationItem(value, value);
-//   }
-
-//   notifyListeners();
-// }
 
 
+TextEditingController searchLocationCantroller = TextEditingController();
+   
+  BottomSeetProvider(String search){
 
-// void IsLogin(){
-//   print("Email : ${Email.value},  Password : ${Password.value}");
+   searchLocationCantroller == search;
+print(searchLocationCantroller);
+notifyListeners();
+  }
 
-
-// }
 
 }
 
 
 
-// class ValidationItem{
-//   final String value;
-//   final String error;
-//   ValidationItem(this.value,this.error);
 
-// }
+
+

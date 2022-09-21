@@ -38,6 +38,7 @@ const GOOGLE_ICON = "assets/png_icon/google.png";
 const UNPIN_ICON = "assets/svg_icon/Icon metro-pin.svg";
 const CAMERA_ICON = "assets/svg_icon/Icon feather-camera.svg";
 const GALLERY_ICON = "assets/svg_icon/Icon feather-image.svg";
+const DRAWER_ICON = 'assets/png_icon/Icon ionic-ios-menu.png';
 
 
 

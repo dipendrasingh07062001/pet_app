@@ -1,38 +1,18 @@
 
 import 'package:flutter/material.dart';
 import 'package:pet_app/Colors/COLORS.dart';
-import 'package:pet_app/Provider/LoginProvider.dart';
 import 'package:pet_app/Provider/Provider.dart';
+import 'package:pet_app/Screens/HOME/Home.dart';
 import 'package:pet_app/Screens/Splash.dart';
 import 'package:provider/provider.dart';
+import 'Provider/ServiceListProvider.dart';
+import 'Testing.dart';
 
-import 'Screens/Add_Pets/addPet.dart';
-import 'Screens/ChangePassword.dart';
-import 'Screens/CycleTrackingPageViewBuilder/CycleTracking_Page.dart';
-import 'Screens/CycleTrackingPageViewBuilder/CycleTracking_Predication.dart';
-import 'Screens/CycleTrackingPageViewBuilder/Cycle_Tracking6.dart';
-import 'Screens/EnterOTP.dart';
-import 'Screens/ForgotPassword.dart';
-import 'Screens/HOME/Home.dart';
-
-import 'Screens/SuccesFullVerified.dart';
-import 'Screens/CycleTrackingPageViewBuilder/Symptoms.dart';
-import 'Screens/Tutorial.dart';
-import 'SevicesListAll_Screens/Add_Deworming.dart';
-import 'SevicesListAll_Screens/Add_Medicine.dart';
-import 'SevicesListAll_Screens/Add_Pregnancy.dart';
-import 'SevicesListAll_Screens/Add_Vaccinations.dart';
-import 'Screens/CycleTrackingPageViewBuilder/Cycle_Tracking4.dart';
 
 void main() {
   runApp( MyApp(),
     );
-    
-    //  MultiProvider(
-    // providers: [
-    // Provider<ProviderTutorial>(create: ( context)=>ProviderTutorial(),),
-    // // Provider<LoginProvider>(create: (context)=>LoginProvider()),
-    // ],child:
+
 }
 
 class MyApp extends StatelessWidget {
@@ -42,22 +22,33 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return
-     MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Pet App',
-      theme: ThemeData(
-        appBarTheme:AppBarTheme( iconTheme: IconThemeData(
-    color: BLACK_CLR
-  ),) ,
-         iconTheme: Theme.of(context).iconTheme,
-        fontFamily: "Poppins",
-         buttonColor: BLACK_CLR,
-        primarySwatch: Colors.blue,
-      ),
-      home:  Splash(),
-    
-    
-    );
+     MultiProvider(
+       providers: [
+        ChangeNotifierProvider<ProviderTutorial>(create: (context)=>ProviderTutorial()),
+        ChangeNotifierProvider<ServicesListProvider>(create: (context)=>ServicesListProvider()),
+        ChangeNotifierProvider<ServiceHealthProvider>(create:(context)=>ServiceHealthProvider()),
+        ChangeNotifierProvider<BlogDetailProvider>(create:  (context)=>BlogDetailProvider()),
+        ChangeNotifierProvider<addPetProvider>(create: (context)=>addPetProvider()),
+        ChangeNotifierProvider<CycleTrackingProvider>(create: (context)=>CycleTrackingProvider())
+
+       ],
+       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Pet App',
+        theme: ThemeData(
+          appBarTheme:AppBarTheme( iconTheme: IconThemeData(
+         color: BLACK_CLR
+       ),) ,
+           iconTheme: Theme.of(context).iconTheme,
+          fontFamily: "Poppins",
+           buttonColor: BLACK_CLR,
+          primarySwatch: Colors.blue,
+        ),
+        home:  Splash(),
+         
+         
+         ),
+     );
   }
        
   }

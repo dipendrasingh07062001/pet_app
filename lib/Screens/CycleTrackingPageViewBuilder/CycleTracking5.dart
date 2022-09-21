@@ -1,6 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:toggle_switch/toggle_switch.dart';
-
+import 'package:flutter_switch/flutter_switch.dart';
 import '../../Colors/COLORS.dart';
 import '../../UTILS/Utils.dart';
 
@@ -99,42 +99,35 @@ var w;
 
                                             styleText("Period Predictions", GREEN_CLR, FontWeight.normal, 15),
 
-                                             Transform.scale(  
-                                             
-            scale: 1,  
-            child: Switch(  
-              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              onChanged: toggleSwitch,  
-              value: isSwitched,  
-              activeColor: WHITE_CLR,  
-              activeTrackColor: GREEN_CLR,  
-              inactiveThumbColor:WHITE_CLR  ,
-              inactiveTrackColor: GRAY_CLR.withOpacity(0.5)  
-            )  
-          ),  
-                                            
+          
+
+          FlutterSwitch(
+           width: 40.0,
+            height: 16.0,
+            activeColor: GREEN_CLR,
+            inactiveColor: GRAY_CLR.withOpacity(0.3),
+            valueFontSize: 0.0,
+            toggleSize: 20.0,
+            value: isSwitched,
+            
+            borderRadius: 40.0,
+         padding: 1,
+           
+            onToggle: (val) {
+              setState(() {
+                isSwitched = val;
+              });
+            },
+          ),
+
+    
+                             
                     
                                            
                                           ]
                                         )
     ),
-// ToggleSwitch(
-//   minWidth: 35.0,
-//   minHeight: 25,
-//   cornerRadius: 50.0,
-//   activeBgColors: [[Colors.green[800]!], [Colors.red[800]!]],
-//   activeFgColor: Colors.white,
-//   inactiveBgColor: Colors.grey,
-//   inactiveFgColor: Colors.white,
 
-//   initialLabelIndex: 3,
-//   totalSwitches: 2,
-  
-
-//   onToggle: (index) {
-//     print('switched to: $index');
-//   },
-// ),
 
      Container(
                                       padding: EdgeInsets.only(left: 10,right: 10),
@@ -155,19 +148,25 @@ var w;
 
                                             styleText("Period Notification", GREEN_CLR, FontWeight.normal, 15),
 
-                                             Transform.scale(  
-                                             
-            scale: 1,  
-            child: Switch(  
-              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              onChanged: toggleSwitch2,  
-              value: isSwitched1,  
-              activeColor: WHITE_CLR,  
-              activeTrackColor: GREEN_CLR,  
-              inactiveThumbColor:WHITE_CLR  ,
-              inactiveTrackColor: GRAY_CLR.withOpacity(0.5)  
-            )  
-          ),  
+                                           FlutterSwitch(
+            width: 40.0,
+            height: 16.0,
+            activeColor: GREEN_CLR,
+            inactiveColor: GRAY_CLR.withOpacity(0.3),
+            valueFontSize: 0.0,
+            toggleSize: 20.0,
+            value: isSwitched1,
+            
+            borderRadius: 40.0,
+         padding: 1,
+           
+            onToggle: (val) {
+              setState(() {
+                isSwitched1 = val;
+              });
+            },
+          ),
+ 
                                             
                     
                                            

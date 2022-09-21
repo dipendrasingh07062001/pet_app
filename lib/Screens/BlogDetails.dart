@@ -31,10 +31,6 @@ body: SingleChildScrollView(
   SizedBox(height: 10,),
     Image.asset("assets/png_image/company-pic-3.png"),
   
-  
-  
-  
-  
     Padding(
       padding: const EdgeInsets.only(left: 15,right: 15),
       child: Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
@@ -44,18 +40,12 @@ body: SingleChildScrollView(
   
     SizedBox(height: 5,),
   
-     
-  
      Padding(
   padding: const EdgeInsets.only(left: 15,right: 15),
          child: styleText("Health . 12 August 2022", GRAY_CLR, FontWeight.normal, 14),
      ),
   
-  
-  
      SizedBox(height: 10,),
-  
-  
   
       Padding(
           padding: const EdgeInsets.only(left: 15,right: 15),

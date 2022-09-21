@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Componants/Images&Icons.dart';
+import 'package:pet_app/Screens/Login.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 
 import 'My_Pets/My_Pets.dart';
@@ -23,6 +24,7 @@ class _MyDrawerState extends State<MyDrawer> {
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
+    
     return Drawer(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topRight: Radius.circular(20),bottomRight: Radius.circular(20))),
       backgroundColor: GREEN_CLR,
@@ -195,7 +197,10 @@ w= MediaQuery.of(context).size.width;
 
                   SizedBox(height: h*0.010,),
 
-                  DefaultButton(text: LOGOUT, ontap: (){}, fontsize: 17, height: 40, width: 180),
+                  DefaultButton(text: LOGOUT, ontap: (){
+
+                    Navigate_to(context, Login());
+                  }, fontsize: 17, height: 40, width: 180),
 
                   SizedBox(height: 20,),
 
@@ -286,7 +291,9 @@ w= MediaQuery.of(context).size.width;
 
                   SizedBox(height: h*0.015,),
                       GestureDetector(
-                  onTap: (){},
+                  onTap: (){
+                    
+                  },
                   child: styleText(UPLOAD, GRAY_CLR, FontWeight.normal, 14)),
 
 
@@ -296,7 +303,9 @@ w= MediaQuery.of(context).size.width;
 
                 SizedBox(height: h*0.025,),
 
-                DefaultButton(text: SUBMIT, ontap: (){}, fontsize: 17, height: h*0.05, width: w*0.5),
+                DefaultButton(text: SUBMIT, ontap: (){
+                  Navigator.of(context).pop();
+                }, fontsize: 17, height: h*0.05, width: w*0.5),
 
                 SizedBox(height: h*0.025,),
 

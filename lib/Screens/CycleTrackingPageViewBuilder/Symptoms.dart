@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_app/Colors/COLORS.dart';
+import 'package:pet_app/Componants/Images&Icons.dart';
 import 'package:pet_app/Screens/Add_Pets/AddPet3.dart';
 
 import '../../UTILS/Utils.dart';
@@ -74,8 +75,10 @@ class _SymptomsState extends State<Symptoms> {
             height: h * 0.020,
           ),
           DefaultButton(
-              text: "Done",
-              ontap: () {},
+              text: DONE,
+              ontap: () {
+                Navigator.of(context).pop();
+              },
               fontsize: 15,
               height: h * 0.055,
               width: w * 0.8),
@@ -270,38 +273,7 @@ class _symptomslstState extends State<symptomslst> {
               thickness: 1,
               color: GRAY_CLR.withOpacity(0.3),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.only(left: 10, right: 10,top: 5),
-            //   child: Row(
-            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //       children: [
-            //         styleText(
-            //             "Abdominal Cramps", DARK_CLR, FontWeight.normal, 14),
-            //         SizedBox(
-            //             height: 20,
-            //             width: 20,
-            //             child: Radio(
-            //               value: 5,
-            //               groupValue: _radioSelected,
-            //               activeColor: GREEN_CLR,
-            //               onChanged: (value) {
-            //                 setState((){
-            //                   _radioSelected = value!;
-            //                 _radioVal = 'five';
-            //                 });
-                            
-            //               },
-            //             ))
-            //       ]),
-            // ),
-            // SizedBox(
-            //   height: h * 0.010,
-            // ),
-            // Divider(
-            //   thickness: 1,
-            //   color: GRAY_CLR.withOpacity(0.3),
-            // ),
-
+            
             
           ],
         ),

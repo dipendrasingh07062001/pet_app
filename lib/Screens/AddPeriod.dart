@@ -48,7 +48,9 @@ var w;
 
                  SizedBox(height: h*0.040,),
 
-                 DefaultButton(text: DONE, ontap: (){}, fontsize: 15, height: h*0.060, width: w*0.8)
+                 DefaultButton(text: DONE, ontap: (){
+                  Navigator.of(context).pop();
+                 }, fontsize: 15, height: h*0.060, width: w*0.8)
         ],),
       ),
     );
