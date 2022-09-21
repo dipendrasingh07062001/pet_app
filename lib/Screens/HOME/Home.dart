@@ -225,11 +225,10 @@ class _HomeState extends State<Home> {
                                               color: GRAY_CLR,
                                               fontSize: 16,
                                               fontWeight: FontWeight.normal),
-                                          prefixIcon: 
-
-                                            Icon(Icons.search,size: 22,color: GRAY_CLR,),
-                                          
-          
+                                          prefixIcon: Padding(
+                                            padding: const EdgeInsets.all(15),
+                                            child: Image.asset(SEARCH_ICON,color: GRAY_CLR,),
+                                          ),
                                           suffixIcon:Image.asset(FILTTER_ICON) ,
                                           border: InputBorder.none)),
                                   

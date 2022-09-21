@@ -39,36 +39,13 @@ const UNPIN_ICON = "assets/svg_icon/Icon metro-pin.svg";
 const CAMERA_ICON = "assets/svg_icon/Icon feather-camera.svg";
 const GALLERY_ICON = "assets/svg_icon/Icon feather-image.svg";
 const DRAWER_ICON = 'assets/png_icon/Icon ionic-ios-menu.png';
+const SEARCH_ICON = "assets/png_icon/search-icon.png";
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Text
-
+//  All Text
 
 const  TITLE = "Ready to make a new friend?";
 const TUTORIAL_SUB_TITLE = "Lorem Ipsum is simply dummy \n text of the printing and \n typesetting industry.";
