@@ -136,7 +136,6 @@ class _AddPet2State extends State<AddPet2> {
                                     (String value) =>
                                     DropdownMenuItem<String>(
                                     
-      
                                       value: value,
                                       child: Text(value,style: TextStyle(color: GRAY_CLR,fontSize: 14),),
                                     ))
@@ -253,7 +252,7 @@ class _AddPet2State extends State<AddPet2> {
                           ),
                         ),
                       ),
-        Container(
+                   Container(
                     alignment: Alignment.center,
                     height: h*0.145,
                     width: w*1,

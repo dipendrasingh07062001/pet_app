@@ -47,6 +47,7 @@ dependencies:
   carousel_slider: ^4.1.1
   syncfusion_flutter_datepicker: ^20.2.49
   flutter_switch: ^0.3.2
+  coverflow: ^2.0.3
 
 
 

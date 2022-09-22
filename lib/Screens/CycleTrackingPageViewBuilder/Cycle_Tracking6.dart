@@ -3,6 +3,7 @@ import 'package:flutter_calendar_widget/flutter_calendar_widget.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:pet_app/Colors/COLORS.dart';
+import 'package:pet_app/Componants/Images&Icons.dart';
 import 'package:pet_app/Screens/AddPeriod.dart';
 import 'package:pet_app/Screens/CycleTrackingPageViewBuilder/CycleTracking_Predication.dart';
 import 'package:pet_app/Screens/CycleTrackingPageViewBuilder/Symptoms.dart';
@@ -135,7 +136,7 @@ var Date;
                         SizedBox(height: 8,),
                         Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 10),
-                              child: SvgPicture.asset("assets/svg_image/icon1.svg",
+                              child: SvgPicture.asset(CYCLE_TRACKING_IMAGE,
                               height:selectedIndex == index ?65:50,
                               color: selectedIndex == index
                               ? GREEN_CLR
@@ -150,24 +151,18 @@ var Date;
             ),
           ),
 
-          
-
           SizedBox(height: h*0.020,),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-          
                 
-                styleText("Cycle Log", DARK_CLR, FontWeight.normal, 18),
-                styleText("Option", GREEN_CLR, FontWeight.normal, 14),
+                styleText(CYCLE_LOG, DARK_CLR, FontWeight.normal, 18),
+                styleText(OPTION, GREEN_CLR, FontWeight.normal, 14),
               ],),
-          
-          
-          
-          
+       
               SizedBox(height: h*0.005,),
-           styleText("MENSTRUATION", FADE_GREEN_CLR, FontWeight.normal, 13),
+           styleText(MENSTRUATION, FADE_GREEN_CLR, FontWeight.normal, 13),
           
               Container(
                 alignment: Alignment.centerLeft,
@@ -185,7 +180,7 @@ var Date;
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                      styleText("Period", BLACK_CLR, FontWeight.normal, 15),
+                      styleText(PERIOD, BLACK_CLR, FontWeight.normal, 15),
                        Icon(Icons.add,size: 20,color: GRAY_CLR,)
                 
                       ],
@@ -195,7 +190,7 @@ var Date;
                 )
                 ),
                   SizedBox(height: h*0.025,),
-           styleText("OTHER DATA", FADE_GREEN_CLR, FontWeight.normal, 13),
+           styleText(OTHER_DATA, FADE_GREEN_CLR, FontWeight.normal, 13),
           
               Container(
                 alignment: Alignment.centerLeft,
@@ -215,7 +210,7 @@ var Date;
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                      styleText("Symptoms", BLACK_CLR, FontWeight.normal, 15),
+                      styleText(SYMPTOMAS, BLACK_CLR, FontWeight.normal, 15),
                        Icon(Icons.add,size: 20,color: GRAY_CLR,)
                   
                       ],
@@ -229,7 +224,7 @@ var Date;
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                      styleText("Spotting", BLACK_CLR, FontWeight.normal, 15),
+                      styleText(SPPOTING, BLACK_CLR, FontWeight.normal, 15),
                        Icon(Icons.add,size: 20,color: GRAY_CLR,)
                   
                       ],
@@ -251,18 +246,15 @@ var Date;
                 children: [
           
                 
-                styleText(" Predictions", DARK_CLR, FontWeight.normal, 18),
+                styleText(PREDICTION, DARK_CLR, FontWeight.normal, 18),
 
                 GestureDetector(
                   onTap: ()=>Navigate_to(context, CycleTracking_Predication()),
-                  child: styleText("Show All", GREEN_CLR, FontWeight.normal, 14)),
+                  child: styleText(SHOW_ALL, GREEN_CLR, FontWeight.normal, 14)),
               ],),
-          
-          
-          
-          
+       
               SizedBox(height: h*0.005,),
-           styleText("PERIOD PREDICTION", FADE_GREEN_CLR, FontWeight.normal, 13),
+           styleText(PERIOD_PREDICTION, FADE_GREEN_CLR, FontWeight.normal, 13),
            SizedBox(height: h*0.010,),
             styleText("Your pet’s period is likely to start on or around 23 August", DARK_CLR, FontWeight.normal, 15),
           
@@ -289,11 +281,9 @@ var Date;
 
                 //  Text("$Date"),
 
-
-
                    SizedBox(height: h*0.020,),
                                     
-                                    styleText("Cycle Tracking Blogs", BLACK_CLR, FontWeight.normal, 19),
+                                    styleText(CYCLE_TRACKING_BLOG, BLACK_CLR, FontWeight.normal, 19),
         
                                         SizedBox(
                                           height: h*0.015,
@@ -314,7 +304,7 @@ var Date;
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(15),
                                             // color: Colors.red,
-                                            image: DecorationImage(image: AssetImage("assets/png_image/download-1.png",),fit: BoxFit.cover)
+                                            image: DecorationImage(image: AssetImage(DOUNLOAD_ICON,),fit: BoxFit.cover)
                                           ),
                                          
                                           child: GestureDetector(
@@ -350,8 +340,7 @@ var Date;
                                                       ),
                                                                                  
                                                       SizedBox(height: h*0.005,),
-                                              
-                                                                                 
+                                                                 
                                                       styleText("Lorem Ipsum is simply dummy text of....", DARK_CLR, FontWeight.bold, 12,)
                                                   ]),
                                                 ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pet_app/Screens/BlogDetails.dart';
 
 
 // Images
@@ -22,6 +21,7 @@ const CERTIFICATE_IMAGE= 'assets/png_image/download-1.png';
 const USER_IMAGE = 'assets/png_icon/profile.png';
 const NOTIFICATION_ICON = 'assets/svg_image/Group 33.svg';
 const FILTTER_ICON = 'assets/png_icon/filter_filters_funnel_list_navigation_sort_sorting_icon_123212.png';
+const CYCLE_TRACKING_IMAGE = "assets/svg_image/icon1.svg";
 
 
 const DOUNLOAD_ICON = "assets/png_image/download-1.png";
@@ -164,6 +164,17 @@ const PET_NAME = "Pet Name";
 const ADD_PET_NAME = "Add New Pet";
 const SERVICES = "Services";
 const EXPLORE = "Explore";
+const CYCLE_LOG = "Cycle Log";
+const OPTION = "Option";
+const MENSTRUATION  = "MENSTRUATION";
+const OTHER_DATA = "OTHER DATA";
+const PERIOD = "Period";
+const SPPOTING = "Sppoting";
+const SYMPTOMAS= "Symptoms";
+const PREDICTION = "Predictions";
+const PERIOD_PREDICTION = " Peroid Predictions";
+const SHOW_ALL = "Show All";
+const CYCLE_TRACKING_BLOG = "Cycle Tracking Blogs";
 
  
 

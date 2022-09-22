@@ -37,23 +37,18 @@ var w;
     return Consumer<CycleTrackingProvider>(
       builder: (BuildContext context, value, Widget? child) {  
      return Scaffold(
-
          backgroundColor: WHITE70_CLR,
         appBar: DefaultAppBar("Cycle Tracking"),
-
-        extendBodyBehindAppBar: true,
-       
+        extendBodyBehindAppBar: true, 
         body: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-
               Container(
                 height: h*0.7,
                 margin: EdgeInsets.only(top: h*0.125),
                   child: PageView.builder(
                     allowImplicitScrolling: true,
-                 
                     physics: NeverScrollableScrollPhysics(),
                     controller: _controller,
                     onPageChanged: value.OnChangedPage,
@@ -63,11 +58,9 @@ var w;
                     itemCount: value.pages.length,
                   )),
               Container(
-           
                 alignment: Alignment.bottomCenter,
                 margin: EdgeInsets.only(bottom: h*0.080),
                 child:  
-        
                    Column(
                      children: [
                        MaterialButton(
@@ -75,16 +68,11 @@ var w;
                         minWidth:  w*0.75,
                         height: h*0.057,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10),
-                        
-                        
                         ),
                         
                         color:
                          GREEN_CLR,
                         onPressed: (){
-                         
-
-                        
                              print(value.currentIndex);
                                value.currentIndex;
                                 _controller.nextPage(
@@ -95,11 +83,9 @@ var w;
                                     }
                         },
                         child:styleText( NEXT,WHITE_CLR, FontWeight.normal, 15)),
-        
                         SizedBox(height: h*0.020,),
-        
                          GestureDetector(onTap: (){
-            
+
           }, child: styleText("Skip", GREEN_CLR, FontWeight.normal, 15)),
                      ],
                    ),

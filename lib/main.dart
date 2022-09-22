@@ -6,6 +6,7 @@ import 'package:pet_app/Screens/HOME/Home.dart';
 import 'package:pet_app/Screens/Splash.dart';
 import 'package:provider/provider.dart';
 import 'Provider/ServiceListProvider.dart';
+import 'Screens/CycleTrackingPageViewBuilder/CycleTracking_Page.dart';
 import 'Testing.dart';
 
 
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
            buttonColor: BLACK_CLR,
           primarySwatch: Colors.blue,
         ),
-        home:  Splash(),
+        home:  MyHomePAge(),
          
          
          ),
