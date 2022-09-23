@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar_widget/flutter_calendar_widget.dart';
 import 'package:flutter_svg/svg.dart';
@@ -7,6 +9,7 @@ import 'package:pet_app/Componants/Images&Icons.dart';
 import 'package:pet_app/Screens/AddPeriod.dart';
 import 'package:pet_app/Screens/CycleTrackingPageViewBuilder/CycleTracking_Predication.dart';
 import 'package:pet_app/Screens/CycleTrackingPageViewBuilder/Symptoms.dart';
+import 'package:pet_app/Screens/HOME/BlogDetailList.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 
 class Cycle_Tracking6 extends StatefulWidget {
@@ -80,23 +83,27 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
                 child: TutorialText("Today, ${selected} August", BLACK_CLR,
                     FontWeight.bold, 15)),
 
-            Align(
-              alignment: Alignment.center,
-              child: Container(
+            Stack(children: [
+              Container(
                 margin: EdgeInsets.only(top: 10),
-                height: 1.2,
                 width: w * 1,
-                color: GRAY_CLR.withOpacity(0.3),
+                decoration: BoxDecoration(
+                    border:
+                        Border(top: BorderSide(color: GREEN_CLR, width: 2))),
               ),
-            ),
-            Align(
-              alignment: Alignment.center,
-              child: Image.asset(
-                DROP_ICON,
-                height: 30,
-                color: GREEN_CLR,
-              ),
-            ),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 7),
+                  child: Image.asset(
+                    DROP_ICON,
+                    height: 30,
+                    color: GREEN_CLR,
+                    // color: GREEN_CLR,
+                  ),
+                ),
+              )
+            ]),
+
             Container(
               alignment: Alignment.bottomCenter,
               height: h * 0.12,
@@ -178,7 +185,7 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                styleText(CYCLE_LOG, DARK_CLR, FontWeight.normal, 18),
+                styleText(CYCLE_LOG, DARK_CLR, FontWeight.bold, 18),
                 styleText(OPTION, GREEN_CLR, FontWeight.normal, 14),
               ],
             ),
@@ -186,7 +193,7 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
             SizedBox(
               height: h * 0.005,
             ),
-            styleText(MENSTRUATION, FADE_GREEN_CLR, FontWeight.normal, 13),
+            styleText(MENSTRUATION, FADE_GREEN_CLR, FontWeight.bold, 13),
 
             Container(
                 alignment: Alignment.centerLeft,
@@ -215,7 +222,7 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
             SizedBox(
               height: h * 0.025,
             ),
-            styleText(OTHER_DATA, FADE_GREEN_CLR, FontWeight.normal, 13),
+            styleText(OTHER_DATA, FADE_GREEN_CLR, FontWeight.bold, 13),
 
             Container(
               alignment: Alignment.centerLeft,
@@ -276,31 +283,34 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
               color: GRAY_CLR.withOpacity(0.4),
               thickness: 1,
             ),
+            SizedBox(
+              height: h * 0.010,
+            ),
 
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                styleText(PREDICTION, DARK_CLR, FontWeight.normal, 18),
+                styleText(PREDICTION, DARK_CLR, FontWeight.bold, 18),
                 GestureDetector(
                     onTap: () =>
                         Navigate_to(context, CycleTracking_Predication()),
                     child:
-                        styleText(SHOW_ALL, GREEN_CLR, FontWeight.normal, 14)),
+                        styleText(SHOW_ALL, GREEN_CLR, FontWeight.normal, 13)),
               ],
             ),
 
             SizedBox(
               height: h * 0.005,
             ),
-            styleText(PERIOD_PREDICTION, FADE_GREEN_CLR, FontWeight.normal, 13),
+            styleText(PERIOD_PREDICTION, FADE_GREEN_CLR, FontWeight.bold, 13),
             SizedBox(
               height: h * 0.010,
             ),
             styleText(
                 "Your pet’s period is likely to start on or around 23 August",
                 DARK_CLR,
-                FontWeight.normal,
+                FontWeight.bold,
                 15),
 
             SizedBox(
@@ -332,88 +342,18 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
               height: h * 0.020,
             ),
 
-            styleText(CYCLE_TRACKING_BLOG, BLACK_CLR, FontWeight.normal, 19),
+            styleText(CYCLE_TRACKING_BLOG, BLACK_CLR, FontWeight.bold, 19),
 
             SizedBox(
               height: h * 0.015,
             ),
 
             SizedBox(
-              height: h * 0.25,
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 3,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      padding: EdgeInsets.all(8),
-                      height: h * 0.25,
-                      alignment: Alignment.bottomCenter,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          // color: Colors.red,
-                          image: DecorationImage(
-                              image: AssetImage(
-                                DOUNLOAD_ICON,
-                              ),
-                              fit: BoxFit.cover)),
-                      child: GestureDetector(
-                        onTap: () {},
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 8),
-                          child: SizedBox(
-                            height: h * 0.095,
-                            width: w * 0.42,
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: Column(
-                                  // crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      height: h * 0.005,
-                                    ),
-                                    RichText(
-                                      textScaleFactor: 1,
-                                      text: TextSpan(
-                                        children: <InlineSpan>[
-                                          TextSpan(
-                                              text: 'Heatlth ',
-                                              style: TextStyle(
-                                                color: GRAY_CLR,
-                                                fontSize: 10,
-                                              )),
-                                          WidgetSpan(
-                                              alignment:
-                                                  PlaceholderAlignment.top,
-                                              baseline: TextBaseline.alphabetic,
-                                              child: SizedBox(
-                                                width: w * 0.1,
-                                              )),
-                                          TextSpan(
-                                              text: '18 August 2022 ',
-                                              style: TextStyle(
-                                                  color: GRAY_CLR,
-                                                  fontSize: 10)),
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: h * 0.005,
-                                    ),
-                                    styleText(
-                                      "Lorem Ipsum is simply dummy text of....",
-                                      DARK_CLR,
-                                      FontWeight.bold,
-                                      12,
-                                    )
-                                  ]),
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  }),
-            ),
+                height: h * 0.25,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: BlogDetailsList(),
+                )),
 
             SizedBox(
               height: h * 0.050,

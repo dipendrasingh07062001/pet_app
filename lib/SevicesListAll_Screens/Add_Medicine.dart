@@ -83,7 +83,7 @@ class _Add_MedicineState extends State<Add_Medicine> {
                       errorStyle: TextStyle(height: 0),
                       hintText: "2",
                       hintStyle: TextStyle(
-                          color: GRAY_CLR,
+                          color: PLACE_H_CLR,
                           fontSize: 14,
                           fontWeight: FontWeight.normal),
                       border: InputBorder.none)),
@@ -108,7 +108,8 @@ class _Add_MedicineState extends State<Add_Medicine> {
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(color: BORDER_CLR, width: 1)),
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 15, right: 15),
+                          padding:
+                              const EdgeInsets.only(left: 15, right: 5, top: 3),
                           child: DropdownButton<String>(
                             isExpanded: true,
                             borderRadius: BorderRadius.circular(10),
@@ -122,7 +123,7 @@ class _Add_MedicineState extends State<Add_Medicine> {
                                       child: Text(
                                         value,
                                         style: TextStyle(
-                                            color: GRAY_CLR, fontSize: 14),
+                                            color: PLACE_H_CLR, fontSize: 14),
                                       ),
                                     )).toList(),
                             icon: Image.asset(
@@ -151,7 +152,8 @@ class _Add_MedicineState extends State<Add_Medicine> {
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(color: BORDER_CLR, width: 1)),
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 15, right: 15),
+                          padding:
+                              const EdgeInsets.only(left: 15, right: 5, top: 3),
                           child: DropdownButton<String>(
                             isExpanded: true,
                             borderRadius: BorderRadius.circular(10),
@@ -165,7 +167,7 @@ class _Add_MedicineState extends State<Add_Medicine> {
                                       child: Text(
                                         value,
                                         style: TextStyle(
-                                            color: GRAY_CLR, fontSize: 14),
+                                            color: PLACE_H_CLR, fontSize: 14),
                                       ),
                                     )).toList(),
                             icon: Image.asset(
@@ -249,7 +251,7 @@ class _Add_MedicineState extends State<Add_Medicine> {
               ),
             ),
             SizedBox(
-              height: h * 0.020,
+              height: h * 0.028,
             ),
             styleText(REMINDER, BLACK_CLR, FontWeight.normal, 15),
             SizedBox(
@@ -282,7 +284,7 @@ class _Add_MedicineState extends State<Add_Medicine> {
                 ),
                 styleText(DAILY, GRAY_CLR, FontWeight.normal, 15),
                 SizedBox(
-                  width: w * 0.030,
+                  width: w * 0.12,
                 ),
                 SizedBox(
                   height: 20,

@@ -98,7 +98,7 @@ class _Add_PregnancyState extends State<Add_Pregnancy> {
                 ),
                 styleText(YES, GRAY_CLR, FontWeight.normal, 15),
                 SizedBox(
-                  width: w * 0.030,
+                  width: w * 0.1,
                 ),
                 SizedBox(
                   height: 20,
@@ -133,7 +133,7 @@ class _Add_PregnancyState extends State<Add_Pregnancy> {
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(color: BORDER_CLR, width: 1)),
               child: Padding(
-                padding: const EdgeInsets.only(left: 15, right: 15),
+                padding: const EdgeInsets.only(left: 15, right: 5),
                 child: DropdownButton<String>(
                   isExpanded: true,
                   borderRadius: BorderRadius.circular(10),
@@ -212,7 +212,7 @@ class _Add_PregnancyState extends State<Add_Pregnancy> {
                 ),
                 styleText(YES, GRAY_CLR, FontWeight.normal, 15),
                 SizedBox(
-                  width: w * 0.030,
+                  width: w * 0.1,
                 ),
                 SizedBox(
                   height: 20,
@@ -236,11 +236,11 @@ class _Add_PregnancyState extends State<Add_Pregnancy> {
               ],
             ),
             SizedBox(
-              height: h * 0.010,
+              height: h * 0.030,
             ),
             styleText(REMINDER, DARK_CLR, FontWeight.bold, 15),
             SizedBox(
-              height: h * 0.010,
+              height: h * 0.020,
             ),
             styleText(REMINDER_DURATION, BLACK_CLR, FontWeight.normal, 15),
             SizedBox(
@@ -269,7 +269,7 @@ class _Add_PregnancyState extends State<Add_Pregnancy> {
                 ),
                 styleText(MONTH1, GRAY_CLR, FontWeight.normal, 15),
                 SizedBox(
-                  width: w * 0.030,
+                  width: w * 0.08,
                 ),
                 SizedBox(
                   height: 20,
@@ -291,7 +291,7 @@ class _Add_PregnancyState extends State<Add_Pregnancy> {
                 ),
                 styleText(MONTH2, GRAY_CLR, FontWeight.normal, 15),
                 SizedBox(
-                  width: w * 0.030,
+                  width: w * 0.08,
                 ),
                 SizedBox(
                   height: 20,

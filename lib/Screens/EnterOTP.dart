@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 
 import '../Componants/Images&Icons.dart';
 import '../Provider/Provider.dart';
+
 class EnterOTP extends StatefulWidget {
   const EnterOTP({super.key});
 
@@ -17,15 +18,12 @@ class EnterOTP extends StatefulWidget {
 }
 
 class _EnterOTPState extends State<EnterOTP> {
+  final _formkey = GlobalKey<FormState>();
 
-  final _formkey =GlobalKey<FormState>();
+  var h;
+  var w;
 
-var h;
-var w;
-
-
-
-String? otp;
+  String? otp;
 
   TextEditingController first = new TextEditingController();
   TextEditingController second = new TextEditingController();
@@ -73,260 +71,275 @@ String? otp;
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
     return Scaffold(
       extendBody: true,
       resizeToAvoidBottomInset: true,
       backgroundColor: WHITE70_CLR,
-   
-
- body: Form(
-  key: _formkey,
-   child: SingleChildScrollView(
-     child: Container(
-      padding: EdgeInsets.only(top: h*0.1,left: w*0.035,right: w*0.035),
-      alignment: Alignment.center,
-      height: h*1,
-       child: Column(
-        
-        crossAxisAlignment: CrossAxisAlignment.center, 
-        children: [
-
-
-
-            Align(
-            alignment: Alignment.topLeft,
-            child: SizedBox(
-            height:40,width: 40,
-            child: CircleAvatar(
-            
-              backgroundColor: FADE_GREEN_CLR,
-               child: Icon(Icons.arrow_back_ios_new,size: 22,color: WHITE70_CLR,),),
+      body: Form(
+        key: _formkey,
+        child: SingleChildScrollView(
+          child: Container(
+              padding: EdgeInsets.only(
+                  top: h * 0.1, left: w * 0.035, right: w * 0.035),
+              alignment: Alignment.center,
+              height: h * 1,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: SizedBox(
+                      height: 35,
+                      width: 35,
+                      child: CircleAvatar(
+                        backgroundColor: FADE_GREEN_CLR,
+                        child: Icon(
+                          Icons.arrow_back_ios_new,
+                          size: 18,
+                          color: WHITE70_CLR,
+                        ),
+                      ),
+                    ),
                   ),
-          ),
+                  SizedBox(
+                    height: h * 0.020,
+                  ),
+                  SizedBox(
+                      height: h * 0.25,
+                      width: w * 0.8,
+                      child: SvgPicture.asset(ENTER_PASS_IMAGE)),
+                  SizedBox(
+                    height: h * 0.040,
+                  ),
+                  styleText(OTP_VERIFICATION, BLACK_CLR, FontWeight.bold, 19),
+                  SizedBox(
+                    height: h * 0.010,
+                  ),
+                  styleText(
+                    ENTER_OTP_EMAIL,
+                    GRAY_CLR,
+                    FontWeight.normal,
+                    15,
+                  ),
+                  Text("jkdesigner62@gmail.com",
+                      style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          fontSize: 15,
+                          color: GREEN_CLR)),
+                  SizedBox(
+                    height: h * 0.030,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(0),
+                            alignment: Alignment.center,
+                            height: 60,
+                            width: 60,
+                            decoration: BoxDecoration(
+                                color: GREEN_CLR,
+                                borderRadius: BorderRadius.circular(8)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.5),
+                              child: TextFormField(
+                                controller: first,
+                                focusNode: pin1FocusNode,
+                                // autofocus: true,
+                                // obscureText: false,
+                                maxLength: 1,
+                                textAlign: TextAlign.center,
+                                style:
+                                    TextStyle(fontSize: 24, color: WHITE70_CLR),
+                                keyboardType: TextInputType.number,
 
-          SizedBox(height: h*0.020,),
-              SizedBox(
-                height: h*0.25,
-                width: w*0.8,
-                child: SvgPicture.asset(ENTER_PASS_IMAGE)),
-    
-    
-                SizedBox(
-                  height: h*0.040,
-                ),
-    
-             styleText(OTP_VERIFICATION, BLACK_CLR, FontWeight.bold, 19),
-             SizedBox(
-              height: h*0.010,
-             ),
+                                decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    counterText: "",
+                                    filled: true,
+                                    fillColor: GREEN_CLR,
+                                    counterStyle: TextStyle(height: 0)),
+                                onChanged: (value) {
+                                  nextField(value, pin2FocusNode);
+                                  //previousField(value, pin2FocusNode);
+                                },
+                              ),
+                            ),
+                          ),
+                          Container(
+                            height: 60,
+                            width: 60,
+                            decoration: BoxDecoration(
+                                color: GREEN_CLR,
+                                borderRadius: BorderRadius.circular(8)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.5),
+                              child: TextFormField(
+                                  maxLength: 1,
+                                  controller: second,
+                                  focusNode: pin2FocusNode,
+                                  obscureText: false,
+                                  style: TextStyle(
+                                      fontSize: 24, color: Colors.white),
+                                  keyboardType: TextInputType.number,
+                                  textAlign: TextAlign.center,
+                                  decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      counterText: "",
+                                      filled: true,
+                                      focusColor: GREEN_CLR,
+                                      fillColor: GREEN_CLR,
+                                      counterStyle: TextStyle(height: 0)),
+                                  onChanged: (value) {
+                                    // nextField(value, pin3FocusNode);
 
+                                    if (value.toString().length == 0 &&
+                                        tap2 == 0) {
+                                      print("Print1");
 
-             styleText(ENTER_OTP_EMAIL, GRAY_CLR,
-                                        FontWeight.normal, 15,),
-
-                                        Text("jkdesigner62@gmail.com", style: TextStyle(decoration: TextDecoration.underline,fontSize: 15,color: GREEN_CLR)
-                                        ),
-    
-            
-
-
-   SizedBox(height: h*0.030,),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child:
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Container(
-            height: 60,
-            width: 60,
-            child: TextFormField(
-              controller: first,
-              focusNode: pin1FocusNode,
-              autofocus: true,
-              obscureText: false,
-              maxLength: 1,
-              
-              style: TextStyle(fontSize: 24, color:WHITE70_CLR),
-              keyboardType: TextInputType.number,
-              textAlign: TextAlign.center,
-             decoration:    InputDecoration( 
-                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8)),
-  counterText: "",
-  filled: true,
-  focusColor: GREEN_CLR,
-  fillColor: GREEN_CLR,
-  focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-  counterStyle: TextStyle(height: 0)),
-              onChanged: (value) {
-
-                nextField(value, pin2FocusNode);
-                //previousField(value, pin2FocusNode);
-              },
-            ),
-          ),
-
-          Container(
-          height: 60,
-            width: 60,
-            child: TextFormField(
-              maxLength: 1,
-                controller: second,
-                focusNode: pin2FocusNode,
-                obscureText: false,
-                style: TextStyle(fontSize: 24, color: Colors.white),
-                keyboardType: TextInputType.number,
-                textAlign: TextAlign.center,
-                decoration:    InputDecoration( 
-                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8)),
-  counterText: "",
-  filled: true,
-  focusColor: GREEN_CLR,
-  fillColor: GREEN_CLR,
-  focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-  counterStyle: TextStyle(height: 0)),
-                onChanged: (value) {
-                 // nextField(value, pin3FocusNode);
-
-                   if (value.toString().length == 0 && tap2 == 0) {
-                     print("Print1");
-
-                          tap2 = 1;
-                        }
-                        if (value.toString().length > 0) {
-                           print("Print2");
-                          FocusScope.of(context).requestFocus(pin3FocusNode);
-                        }
-                        if (value.toString().length == 0 && tap2 == 1) {
-                           print("Print3");
-                          FocusScope.of(context).requestFocus(pin1FocusNode);
-                        }
-                  
-                }),
-          ),
-          SizedBox(
-          height: 60,
-            width: 60,
-            child: TextFormField(
-              maxLength: 1,
-                controller: third,
-                focusNode: pin3FocusNode,
-                obscureText: false,
-                style: TextStyle(fontSize: 24, color: Colors.white),
-                keyboardType: TextInputType.number,
-                textAlign: TextAlign.center,
-                decoration:    InputDecoration( 
-                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8)),
-  counterText: "",
-  filled: true,
-  focusColor: GREEN_CLR,
-  fillColor: GREEN_CLR,
-  focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-  counterStyle: TextStyle(height: 0)),
-                onChanged: (value) {
-                  //nextField(value, pin4FocusNode);
-                   if (value.toString().length == 0 && tap3 == 0) {
-                          tap3 = 1;
-                        }
-                        if (value.toString().length > 0) {
-                          FocusScope.of(context).requestFocus(pin4FocusNode);
-                        }
-                        if (value.toString().length == 0 && tap3 == 1) {
-                          FocusScope.of(context).requestFocus(pin2FocusNode);
-                        }
-                  
-                }),
-          ),
-          Container(
-            alignment: Alignment.center,
-           height: 60,
-            width: 60,
-            child: TextFormField(
-              maxLength: 1,
-              controller: fourth,
-              focusNode: pin4FocusNode,
-              obscureText: false,
-              style: TextStyle(fontSize: 24, color: Colors.white),
-              keyboardType: TextInputType.number,
-              textAlign: TextAlign.center,
-              decoration:   InputDecoration( 
-                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8)),
-  counterText: "",
-  filled: true,
-  focusColor: GREEN_CLR,
-  fillColor: GREEN_CLR,
-  focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8),),
-  counterStyle: TextStyle(height: 0)),
-              onChanged: (value) {
-                // if (value.length == 1) {
-                //   pin4FocusNode.unfocus();
-
-                     if (value.toString().length == 0 && tap3 == 0) {
-                          tap3 = 1;
-                        }
-                        if (value.toString().length > 0) {
-                          FocusScope.of(context).unfocus();
-                        }
-                        if (value.toString().length == 0 && tap3 == 1) {
-                          FocusScope.of(context).requestFocus(pin3FocusNode);
-                        }
-                  
-              },
-            ),
-          ),
-        ]),
-      ),
-     
-     
-
-                                    SizedBox(
-              height: h*0.030,
-             ),
-
-
-             styleText(DONT_RECEIVE_OTP, GRAY_CLR,
-                                        FontWeight.normal, 15,),
-
-                                      GestureDetector(onTap: (){}, child: Text(RESEND,style: TextStyle(color: GREEN_CLR,fontSize: 15),)),
-   
-                                  SizedBox(
-                                    height: h*0.030,
-                                  ),
-   
-                                  DefaultButton(text: VERIFY, ontap: (){
-                                    if(_formkey.currentState!.validate()){
-                                    
-                                      Navigate_to(context, ChangePassword());
+                                      tap2 = 1;
                                     }
-                                  }, fontsize: 18, height: h*0.060, width: w*1),
-   
-   
-                                     
-                                    
-                                  ],
-                                )
-   
-   
-                                 
-    
-       
-     ),
-   ),
- ),
+                                    if (value.toString().length > 0) {
+                                      print("Print2");
+                                      FocusScope.of(context)
+                                          .requestFocus(pin3FocusNode);
+                                    }
+                                    if (value.toString().length == 0 &&
+                                        tap2 == 1) {
+                                      print("Print3");
+                                      FocusScope.of(context)
+                                          .requestFocus(pin1FocusNode);
+                                    }
+                                  }),
+                            ),
+                          ),
+                          Container(
+                            height: 60,
+                            width: 60,
+                            decoration: BoxDecoration(
+                                color: GREEN_CLR,
+                                borderRadius: BorderRadius.circular(8)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.5),
+                              child: TextFormField(
+                                  maxLength: 1,
+                                  controller: third,
+                                  focusNode: pin3FocusNode,
+                                  obscureText: false,
+                                  style: TextStyle(
+                                      fontSize: 24, color: Colors.white),
+                                  keyboardType: TextInputType.number,
+                                  textAlign: TextAlign.center,
+                                  decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      counterText: "",
+                                      filled: true,
+                                      focusColor: GREEN_CLR,
+                                      fillColor: GREEN_CLR,
+                                      counterStyle: TextStyle(height: 0)),
+                                  onChanged: (value) {
+                                    //nextField(value, pin4FocusNode);
+                                    if (value.toString().length == 0 &&
+                                        tap3 == 0) {
+                                      tap3 = 1;
+                                    }
+                                    if (value.toString().length > 0) {
+                                      FocusScope.of(context)
+                                          .requestFocus(pin4FocusNode);
+                                    }
+                                    if (value.toString().length == 0 &&
+                                        tap3 == 1) {
+                                      FocusScope.of(context)
+                                          .requestFocus(pin2FocusNode);
+                                    }
+                                  }),
+                            ),
+                          ),
+                          Container(
+                            alignment: Alignment.center,
+                            height: 60,
+                            width: 60,
+                            decoration: BoxDecoration(
+                                color: GREEN_CLR,
+                                borderRadius: BorderRadius.circular(8)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.5),
+                              child: TextFormField(
+                                maxLength: 1,
+                                controller: fourth,
+                                focusNode: pin4FocusNode,
+                                obscureText: false,
+                                style: TextStyle(
+                                    fontSize: 24, color: Colors.white),
+                                keyboardType: TextInputType.number,
+                                // textAlign: TextAlign.center,
+                                decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    counterText: "",
+                                    filled: true,
+                                    focusColor: GREEN_CLR,
+                                    fillColor: GREEN_CLR,
+                                    counterStyle: TextStyle(height: 0)),
+                                onChanged: (value) {
+                                  // if (value.length == 1) {
+                                  //   pin4FocusNode.unfocus();
+
+                                  if (value.toString().length == 0 &&
+                                      tap3 == 0) {
+                                    tap3 = 1;
+                                  }
+                                  if (value.toString().length > 0) {
+                                    FocusScope.of(context).unfocus();
+                                  }
+                                  if (value.toString().length == 0 &&
+                                      tap3 == 1) {
+                                    FocusScope.of(context)
+                                        .requestFocus(pin3FocusNode);
+                                  }
+                                },
+                              ),
+                            ),
+                          ),
+                        ]),
+                  ),
+                  SizedBox(
+                    height: h * 0.030,
+                  ),
+                  styleText(
+                    DONT_RECEIVE_OTP,
+                    GRAY_CLR,
+                    FontWeight.normal,
+                    15,
+                  ),
+                  GestureDetector(
+                      onTap: () {},
+                      child: Text(
+                        RESEND,
+                        style: TextStyle(color: GREEN_CLR, fontSize: 15),
+                      )),
+                  SizedBox(
+                    height: h * 0.030,
+                  ),
+                  DefaultButton(
+                      text: VERIFY,
+                      ontap: () {
+                        if (_formkey.currentState!.validate()) {
+                          Navigate_to(context, ChangePassword());
+                        }
+                      },
+                      fontsize: 18,
+                      height: h * 0.060,
+                      width: w * 0.85),
+                ],
+              )),
+        ),
+      ),
     );
   }
 }
-
-
-
-
-
-

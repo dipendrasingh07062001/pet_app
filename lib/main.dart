@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Provider/Provider.dart';
-import 'package:pet_app/Screens/HOME/Home.dart';
 import 'package:pet_app/Screens/Splash.dart';
 import 'package:provider/provider.dart';
 import 'Provider/ServiceListProvider.dart';
-import 'Screens/CycleTrackingPageViewBuilder/CycleTracking_Page.dart';
-import 'Testing.dart';
 
 void main() {
   runApp(

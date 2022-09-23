@@ -15,7 +15,6 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
-
   final _formkey = GlobalKey<FormState>();
 
   var h;
@@ -27,7 +26,7 @@ class _SignupState extends State<Signup> {
   String emailError = "";
   String passError = "";
   String passError1 = "";
- 
+
   @override
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
@@ -36,6 +35,7 @@ class _SignupState extends State<Signup> {
     return ChangeNotifierProvider(
       create: (BuildContext context) => ProviderTutorial(),
       child: Scaffold(
+        backgroundColor: GREEN_CLR,
         resizeToAvoidBottomInset: true,
         extendBody: false,
         body: SingleChildScrollView(
@@ -45,17 +45,13 @@ class _SignupState extends State<Signup> {
               alignment: Alignment.center,
               children: [
                 Column(children: [
+                  Image.asset(BACK_GROUND_IMAGE,
+                      height: h * 0.47,
+                      width: w * 1,
+                      color: WHITE70_CLR,
+                      fit: BoxFit.cover),
                   Container(
-                    height: h * 0.55,
-                    width: w * 1,
-                    color: GREEN_CLR,
-                    child: SvgPicture.asset(
-                     BACK_GROUND_IMAGE,
-                      fit: BoxFit.none,
-                    ),
-                  ),
-                  Container(
-                    height: h * 0.55,
+                    height: h * 0.6,
                     color: WHITE70_CLR,
                   )
                 ]),
@@ -92,38 +88,34 @@ class _SignupState extends State<Signup> {
                                 styleText(CREATE_ACCOUNT, BLACK_CLR,
                                     FontWeight.bold, 19),
                                 Container(
-                                  height: h*0.06,
+                                  height: h * 0.06,
                                   margin: EdgeInsets.only(top: h * 0.030),
                                   decoration: BoxDecoration(
-                                    color: WHITE70_CLR,
+                                      color: WHITE70_CLR,
                                       borderRadius: BorderRadius.circular(10),
                                       boxShadow: [
-                                        BoxShadow(blurRadius: 14,color: SHADOW_CLR.withOpacity(0.1))
-                                      ]
-                                    
-                                      ),
+                                        BoxShadow(
+                                            blurRadius: 14,
+                                            color: SHADOW_CLR.withOpacity(0.1))
+                                      ]),
                                   // color: WHITE_CLR,
-                                  
+
                                   child: TextFormField(
                                       textCapitalization:
                                           TextCapitalization.none,
                                       textAlign: TextAlign.start,
-
-
-                                      validator: (value){
-                                        if(value!.isEmpty){
-                                          emailError= ENTER_EMAIL;
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          emailError = ENTER_EMAIL;
                                           return "";
-                                        }
-                                        else{
-                                          emailError= "";
+                                        } else {
+                                          emailError = "";
                                         }
                                       },
                                       decoration: InputDecoration(
-                                        errorText: "",
-                                        
-                                              errorStyle: TextStyle(height: 0),                                  
-                                            hintText: "Email address",
+                                          errorText: "",
+                                          errorStyle: TextStyle(height: 0),
+                                          hintText: "Email address",
                                           hintStyle: TextStyle(
                                               color: GRAY_CLR,
                                               fontSize: 16,
@@ -135,39 +127,36 @@ class _SignupState extends State<Signup> {
                                           ),
                                           border: InputBorder.none)),
                                 ),
-
-
                                 Visibility(
-                                  visible: emailError!="",
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(emailError,style: TextStyle(color: Colors.red,fontSize: 12),))),
-
-
+                                    visible: emailError != "",
+                                    child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          emailError,
+                                          style: TextStyle(
+                                              color: Colors.red, fontSize: 12),
+                                        ))),
                                 Container(
-                                  height: h*0.06,
+                                  height: h * 0.06,
                                   margin: EdgeInsets.only(top: h * 0.020),
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
-                                       color: WHITE70_CLR,
-                                       boxShadow: [BoxShadow(color: SHADOW_CLR.
-                                       withOpacity(0.1),blurRadius: 14)]
-                                     ),
-                                  
-                                  
+                                      color: WHITE70_CLR,
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color: SHADOW_CLR.withOpacity(0.1),
+                                            blurRadius: 14)
+                                      ]),
                                   child: TextFormField(
                                     obscureText: _passwordVisible,
                                     textCapitalization: TextCapitalization.none,
                                     textAlign: TextAlign.start,
-
-                                    validator: (value){
-                                      if(value!.isEmpty){
-                                        passError =ENTER_PASS;
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        passError = ENTER_PASS;
                                         return "";
-                                      }
-                                      else {
-                                        passError ="";
-
+                                      } else {
+                                        passError = "";
                                       }
                                     },
                                     decoration: InputDecoration(
@@ -199,41 +188,42 @@ class _SignupState extends State<Signup> {
                                         )),
                                   ),
                                 ),
-
-                               Visibility(
-                                  visible: passError!="",
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(passError,style: TextStyle(color: Colors.red,fontSize: 12),))),
-
-
+                                Visibility(
+                                    visible: passError != "",
+                                    child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          passError,
+                                          style: TextStyle(
+                                              color: Colors.red, fontSize: 12),
+                                        ))),
                                 Container(
-                                  height: h*0.06,
+                                  height: h * 0.06,
                                   margin: EdgeInsets.only(top: h * 0.020),
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      boxShadow: [BoxShadow(color: SHADOW_CLR.withOpacity(0.1),blurRadius: 14)],
-                                       color: WHITE70_CLR,
-                                      ),
-                                 
-                                
+                                    borderRadius: BorderRadius.circular(10),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: SHADOW_CLR.withOpacity(0.1),
+                                          blurRadius: 14)
+                                    ],
+                                    color: WHITE70_CLR,
+                                  ),
                                   child: TextFormField(
                                     obscureText: _passwordVisible1,
                                     textCapitalization: TextCapitalization.none,
                                     textAlign: TextAlign.start,
-
-                                    validator: (value){
-                                      if(value!.isEmpty){
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
                                         passError1 = ENTER_CONFIRM_PASS;
                                         return "";
-                                      }
-                                      else{
-                                        passError1 ="";
+                                      } else {
+                                        passError1 = "";
                                       }
                                     },
                                     decoration: InputDecoration(
-                                      errorStyle: TextStyle(height: 0),
-                                      errorText: "",
+                                        errorStyle: TextStyle(height: 0),
+                                        errorText: "",
                                         hintText: " Confirm Password",
                                         hintStyle: TextStyle(
                                             color: GRAY_CLR,
@@ -260,13 +250,15 @@ class _SignupState extends State<Signup> {
                                         )),
                                   ),
                                 ),
-
-                                 Visibility(
-                                  visible: passError1!="",
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(passError1,style: TextStyle(color: Colors.red,fontSize: 12),))),
-
+                                Visibility(
+                                    visible: passError1 != "",
+                                    child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          passError1,
+                                          style: TextStyle(
+                                              color: Colors.red, fontSize: 12),
+                                        ))),
                                 SizedBox(
                                   height: h * 0.040,
                                 ),
@@ -275,13 +267,11 @@ class _SignupState extends State<Signup> {
                                   return DefaultButton(
                                       text: SIGN_UP,
                                       ontap: () {
-                                        if(_formkey.currentState!.validate()){
-                                            ProviderTutorial()
-                                          .NavigateLogin(context);
-
+                                        if (_formkey.currentState!.validate()) {
+                                          ProviderTutorial()
+                                              .NavigateLogin(context);
                                         }
                                       },
-                                     
                                       fontsize: 16,
                                       height: h * 0.062,
                                       width: w * 1);
@@ -291,50 +281,69 @@ class _SignupState extends State<Signup> {
                                 ),
                                 styleText(Or_Continue, GREEN_CLR,
                                     FontWeight.normal, 15),
-                                    SizedBox(height: h*0.015,),
-                              Row(
-                                // crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                              Container(
-                                height: 45,width: 45,alignment: Alignment.center,
-                                  
-                                  decoration: BoxDecoration(
-                                    color: WHITE_CLR,
-                                    borderRadius: BorderRadius.circular(50)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(10),
-                                    child: Image.asset(GOOGLE_ICON,height: 40,),
-                                  )
-                                  
-                                  ),
-
-                                  Container(height: 45,width: 45,alignment: Alignment.center,
-                                  margin: EdgeInsets.only(left: 15,),
-                                  decoration: BoxDecoration(
-                                    color: WHITE_CLR,
-                                    borderRadius: BorderRadius.circular(50)),
-                                  child: Icon(Icons.apple,size: 35,)
-                                  
-                                  ),
-                                
-                                  Container(height: 45,width: 45,alignment: Alignment.center,
-                                  margin: EdgeInsets.only(left: 15,),
-                                  decoration: BoxDecoration(
-                                    color: WHITE_CLR,
-                                    borderRadius: BorderRadius.circular(50)),
-                                  child: Icon(Icons.facebook,size: 35,color: Color.fromARGB(255, 56, 1, 145),)
-                                  
-                                  ),
-                                ],
-                              ),
-
-                                SizedBox(height: h*0.015,),
+                                SizedBox(
+                                  height: h * 0.015,
+                                ),
+                                Row(
+                                  // crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                        height: 45,
+                                        width: 45,
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                            color: WHITE_CLR,
+                                            borderRadius:
+                                                BorderRadius.circular(50)),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(10),
+                                          child: Image.asset(
+                                            GOOGLE_ICON,
+                                            height: 40,
+                                          ),
+                                        )),
+                                    Container(
+                                        height: 45,
+                                        width: 45,
+                                        alignment: Alignment.center,
+                                        margin: EdgeInsets.only(
+                                          left: 15,
+                                        ),
+                                        decoration: BoxDecoration(
+                                            color: WHITE_CLR,
+                                            borderRadius:
+                                                BorderRadius.circular(50)),
+                                        child: Icon(
+                                          Icons.apple,
+                                          size: 35,
+                                        )),
+                                    Container(
+                                        height: 45,
+                                        width: 45,
+                                        alignment: Alignment.center,
+                                        margin: EdgeInsets.only(
+                                          left: 15,
+                                        ),
+                                        decoration: BoxDecoration(
+                                            color: WHITE_CLR,
+                                            borderRadius:
+                                                BorderRadius.circular(50)),
+                                        child: Image.asset(
+                                          'assets/png_icon/fb_icon_325x325.png',
+                                          height: 30,
+                                        )
+                                        ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: h * 0.015,
+                                ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    styleText(ALLREADY_ACCOUNT,
-                                        GRAY_CLR, FontWeight.normal, 15),
+                                    styleText(ALLREADY_ACCOUNT, GRAY_CLR,
+                                        FontWeight.normal, 15),
                                     Consumer<ProviderTutorial>(builder:
                                         (BuildContext context, value,
                                             Widget? child) {
