@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:page_indicator/page_indicator.dart';
 import 'package:pet_app/Componants/Images&Icons.dart';
 import 'package:pet_app/Provider/ServiceListProvider.dart';
-import 'package:pet_app/Screens/Add_Pets/addPet1.dart';
 import 'package:provider/provider.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
-
 import '../../Colors/COLORS.dart';
 import '../../UTILS/Utils.dart';
-import 'AddPet3.dart';
-import 'Add_pet2.dart';
 
 class AddPetpage extends StatefulWidget {
   const AddPetpage({Key? key}) : super(key: key);
@@ -36,7 +31,22 @@ class _AddPetpageState extends State<AddPetpage> {
         builder: (BuildContext context, value, Widget? child) {
       return Scaffold(
         backgroundColor: WHITE70_CLR,
-        appBar: DefaultAppBar(ADD_PETS),
+        appBar: AppBar(
+          leading: BackButton(
+            onPressed: () {
+              if (value.CurrentIndex == 1 || value.CurrentIndex == 2) {
+                value.CurrentIndex = 0;
+              }
+              Navigator.of(context).pop();
+              print(value.CurrentIndex);
+            },
+          ),
+          centerTitle: true,
+          toolbarHeight: 65,
+          backgroundColor: WHITE70_CLR,
+          elevation: 1,
+          title: styleText(ADD_PETS, DARK_CLR, FontWeight.bold, 16),
+        ),
         extendBodyBehindAppBar: true,
         resizeToAvoidBottomInset: false,
         body: Padding(
@@ -45,7 +55,7 @@ class _AddPetpageState extends State<AddPetpage> {
           child: Stack(
             children: [
               PageView.builder(
-                // physics: NeverScrollableScrollPhysics(),
+                physics: NeverScrollableScrollPhysics(),
                 controller: _controller,
                 onPageChanged: value.OnChangedPage,
                 itemBuilder: (context, position) {
@@ -67,7 +77,7 @@ class _AddPetpageState extends State<AddPetpage> {
                 child: StepProgressIndicator(
                   direction: Axis.horizontal,
                   selectedSize: 12,
-                  totalSteps: value.text.length,
+                  totalSteps: value.pages.length,
                   currentStep: value.CurrentIndex + 1,
                   size: 10,
                   selectedColor: GREEN_CLR,

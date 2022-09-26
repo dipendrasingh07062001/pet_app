@@ -147,20 +147,22 @@ class _HomeState extends State<Home> {
                 ),
               ),
               PopupMenuItem(
+                  enabled: true,
                   child: Padding(
-                padding: const EdgeInsets.only(left: 15),
-                child: MaterialButton(
-                  height: 30,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(40)),
-                  color: GREEN_CLR,
-                  onPressed: () {
-                    Navigate_to(context, AddPetpage());
-                  },
-                  child: styleText(
-                      ADD_PET_NAME, WHITE70_CLR, FontWeight.normal, 13),
-                ),
-              ))
+                    padding: const EdgeInsets.only(left: 15),
+                    child: MaterialButton(
+                      height: 30,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(40)),
+                      color: GREEN_CLR,
+                      onPressed: () {
+                        Navigate_to(context, AddPetpage());
+                        Navigator.of(context).pop;
+                      },
+                      child: styleText(
+                          ADD_PET_NAME, WHITE70_CLR, FontWeight.normal, 13),
+                    ),
+                  ))
             ],
           ),
         ],

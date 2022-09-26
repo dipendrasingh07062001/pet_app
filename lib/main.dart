@@ -4,6 +4,8 @@ import 'package:pet_app/Provider/Provider.dart';
 import 'package:pet_app/Screens/Splash.dart';
 import 'package:provider/provider.dart';
 import 'Provider/ServiceListProvider.dart';
+import 'Screens/CycleTrackingPageViewBuilder/Cycle_Tracking6.dart';
+import 'Screens/Splash.dart';
 
 void main() {
   runApp(

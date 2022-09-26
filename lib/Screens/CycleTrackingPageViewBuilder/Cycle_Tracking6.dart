@@ -1,6 +1,6 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_calendar_widget/flutter_calendar_widget.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
@@ -23,18 +23,22 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
   var h;
   var w;
 
-  double itemWidth = 60.0;
+  double itemWidth = 55;
   int selected = 0;
+
   DateTime now = DateTime.now();
   late DateTime lastDayOfMonth;
+
+  List list = [];
   @override
   void initState() {
     super.initState();
     lastDayOfMonth = DateTime(2025, 12, 0);
+
+    list = List.generate(lastDayOfMonth.day, (x) => false);
   }
 
-  FixedExtentScrollController _scrollController =
-      FixedExtentScrollController(initialItem: 200);
+  FixedExtentScrollController _scrollController = FixedExtentScrollController();
   var Date;
   @override
   Widget build(BuildContext context) {
@@ -50,7 +54,7 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
         title: styleText(CYCLE_TRACKING, DARK_CLR, FontWeight.bold, 16),
         actions: [
           Padding(
-            padding: const EdgeInsets.all(18),
+            padding: EdgeInsets.all(18),
             child: MaterialButton(
                 height: 35,
                 shape: RoundedRectangleBorder(
@@ -93,13 +97,10 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
               ),
               Center(
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 7),
-                  child: Image.asset(
-                    DROP_ICON,
-                    height: 30,
-                    color: GREEN_CLR,
-                    // color: GREEN_CLR,
-                  ),
+                  padding: EdgeInsets.only(top: 6),
+                  child: Image.asset(DROP_ICON, height: 30, color: GREEN_CLR
+                      // color: GREEN_CLR,
+                      ),
                 ),
               )
             ]),
@@ -107,65 +108,95 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
             Container(
               alignment: Alignment.bottomCenter,
               height: h * 0.12,
-              child: RotatedBox(
-                  quarterTurns: 5,
-                  child: ListWheelScrollView(
-                    clipBehavior: Clip.antiAlias,
-                    renderChildrenOutsideViewport: false,
-                    onSelectedItemChanged: (x) {
-                      setState(() {
-                        selected = x;
-                      });
-                      print(selected);
-                    },
-                    controller: _scrollController,
-                    children: List.generate(
-                      lastDayOfMonth.day,
-                      (x) {
-                        final currentDate =
-                            lastDayOfMonth.add(Duration(days: x + 1));
-                        final dayName = DateFormat('E').format(currentDate);
-                        return Row(
-                          children: [
-                            Container(
-                              height: 28.0,
-                              width: 28.0,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                color: x == selected
-                                    ? GREEN_CLR
-                                    : Colors.transparent,
-                                borderRadius: BorderRadius.circular(100.0),
-                              ),
-                              child: Transform.rotate(
-                                angle: -70.7,
-                                child: Text(
-                                  dayName.substring(0, 1),
-                                  style: TextStyle(
-                                    fontSize: 15.0,
-                                    color: x == selected ? WHITE_CLR : GRAY_CLR,
-                                    fontWeight: FontWeight.w900,
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    list[selected] = !list[selected];
+                    print(list);
+                  });
+                },
+                child: RotatedBox(
+                    quarterTurns: 5,
+                    child: ListWheelScrollView(
+                      useMagnifier: false,
+                      physics: FixedExtentScrollPhysics(),
+                      diameterRatio: 1.5,
+                      perspective: 0.0000000001,
+                      clipBehavior: Clip.hardEdge,
+                      onSelectedItemChanged: (x) {
+                        setState(() {
+                          selected = x;
+                          print(x);
+                        });
+                        // print(selected);
+                      },
+                      itemExtent: itemWidth,
+                      controller: _scrollController,
+                      children: List.generate(
+                        lastDayOfMonth.day,
+                        (x) {
+                          final currentDate =
+                              lastDayOfMonth.add(Duration(days: x + 1));
+                          final dayName = DateFormat('E').format(currentDate);
+                          return Row(
+                            children: [
+                              Container(
+                                height: 28.0,
+                                width: 28.0,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  color: x == selected
+                                      ? GREEN_CLR
+                                      : Colors.transparent,
+                                  borderRadius: BorderRadius.circular(100.0),
+                                ),
+                                child: Transform.rotate(
+                                  angle: -70.7,
+                                  child: Text(
+                                    dayName.substring(0, 1),
+                                    style: TextStyle(
+                                      fontSize: 15.0,
+                                      color:
+                                          x == selected ? WHITE_CLR : GRAY_CLR,
+                                      fontWeight: FontWeight.w900,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Transform.rotate(
-                              angle: -80.1,
-                              child: SvgPicture.asset(CYCLE_TRACKING_IMAGE,
-                                  height: x == selected ? 50 : 40,
-                                  color: x == selected
-                                      ? GREEN_CLR
-                                      : GREEN_CLR.withOpacity(0.8)),
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                    itemExtent: itemWidth,
-                  )),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Stack(
+                                children: [
+                                  Transform.rotate(
+                                    angle: -80.1,
+                                    child: SvgPicture.asset(
+                                        CYCLE_TRACKING_IMAGE,
+                                        height: x == selected ? 55 : 40,
+                                        color: x == selected
+                                            ? GREEN_CLR
+                                            : GREEN_CLR.withOpacity(0.6)),
+                                  ),
+                                  Container(
+                                      height: 15,
+                                      width: 15,
+                                      margin: EdgeInsets.only(
+                                          left: selected == x ? 7 : 4,
+                                          top: selected == x ? 20 : 15),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          color: list[x]
+                                              ? Colors.red
+                                              : Colors.transparent))
+                                ],
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                    )),
+              ),
             ),
 
             Align(
@@ -307,6 +338,7 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
             SizedBox(
               height: h * 0.010,
             ),
+
             styleText(
                 "Your pet’s period is likely to start on or around 23 August",
                 DARK_CLR,
