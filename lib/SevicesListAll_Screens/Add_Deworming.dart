@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:pet_app/Provider/Provider.dart';
+import 'package:provider/provider.dart';
 
 import '../Colors/COLORS.dart';
 import '../Componants/Images&Icons.dart';
@@ -59,6 +61,9 @@ class _Add_DewormingState extends State<Add_Deworming> {
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
+
+    final Updatevalue = Provider.of<ProviderTutorial>(context, listen: true);
+
     return Scaffold(
       backgroundColor: WHITE70_CLR,
       appBar: DefaultAppBar(DEWORMING),
@@ -119,16 +124,10 @@ class _Add_DewormingState extends State<Add_Deworming> {
                   height: 20,
                   width: 20,
                   child: Radio(
-                    value: 1,
-                    groupValue: _radioSelected,
-                    activeColor: GREEN_CLR,
-                    onChanged: (value) {
-                      setState(() {
-                        _radioSelected = value!;
-                        _radioVal = 'dilay';
-                      });
-                    },
-                  ),
+                      value: 1,
+                      groupValue: Updatevalue.gender,
+                      activeColor: GREEN_CLR,
+                      onChanged: Updatevalue.OnValueChange),
                 ),
                 SizedBox(
                   width: w * 0.010,
@@ -144,16 +143,10 @@ class _Add_DewormingState extends State<Add_Deworming> {
                   height: 20,
                   width: 20,
                   child: Radio(
-                    value: 2,
-                    groupValue: _radioSelected,
-                    activeColor: GREEN_CLR,
-                    onChanged: (value) {
-                      setState(() {
-                        _radioSelected = value!;
-                        _radioVal = 'weekly';
-                      });
-                    },
-                  ),
+                      value: 2,
+                      groupValue: Updatevalue.gender,
+                      activeColor: GREEN_CLR,
+                      onChanged: Updatevalue.OnValueChange),
                 ),
                 SizedBox(
                   width: w * 0.010,
@@ -169,16 +162,10 @@ class _Add_DewormingState extends State<Add_Deworming> {
                   height: 20,
                   width: 20,
                   child: Radio(
-                    value: 3,
-                    groupValue: _radioSelected,
-                    activeColor: GREEN_CLR,
-                    onChanged: (value) {
-                      setState(() {
-                        _radioSelected = value!;
-                        _radioVal = 'monthly';
-                      });
-                    },
-                  ),
+                      value: 3,
+                      groupValue: Updatevalue.gender,
+                      activeColor: GREEN_CLR,
+                      onChanged: Updatevalue.OnValueChange),
                 ),
                 SizedBox(
                   width: w * 0.010,
@@ -240,16 +227,10 @@ class _Add_DewormingState extends State<Add_Deworming> {
                   height: 20,
                   width: 20,
                   child: Radio(
-                    value: 1,
-                    groupValue: _radioSelected,
-                    activeColor: GREEN_CLR,
-                    onChanged: (value) {
-                      setState(() {
-                        _radioSelected = value!;
-                        _radioVal = 'dilay';
-                      });
-                    },
-                  ),
+                      value: 1,
+                      groupValue: Updatevalue.gender,
+                      activeColor: GREEN_CLR,
+                      onChanged: Updatevalue.OnValueChange),
                 ),
                 SizedBox(
                   width: w * 0.010,
@@ -271,7 +252,7 @@ class _Add_DewormingState extends State<Add_Deworming> {
                     onChanged: (value) {
                       setState(() {
                         _radioSelected = value!;
-                        _radioVal = 'weekly';
+                        _radioVal = 'weekly1';
                       });
                     },
                   ),
@@ -296,7 +277,7 @@ class _Add_DewormingState extends State<Add_Deworming> {
                     onChanged: (value) {
                       setState(() {
                         _radioSelected = value!;
-                        _radioVal = 'monthly';
+                        _radioVal = 'monthly1';
                       });
                     },
                   ),

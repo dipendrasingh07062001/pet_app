@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_calendar_widget/flutter_calendar_widget.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
@@ -182,7 +181,7 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
                                       width: 15,
                                       margin: EdgeInsets.only(
                                           left: selected == x ? 7 : 4,
-                                          top: selected == x ? 20 : 15),
+                                          top: selected == x ? 20 : 12),
                                       decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(20),
@@ -348,7 +347,6 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
             SizedBox(
               height: h * 0.020,
             ),
-
             Card(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10)),

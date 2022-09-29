@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_app/Colors/COLORS.dart';
+import 'package:pet_app/Prefrence.dart';
 import 'package:pet_app/Provider/Provider.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 import 'package:provider/provider.dart';
 
+import '../Api/SignupApi.dart';
 import '../Componants/Images&Icons.dart';
+import 'OTP_Verify.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -17,8 +20,20 @@ class Signup extends StatefulWidget {
 class _SignupState extends State<Signup> {
   final _formkey = GlobalKey<FormState>();
 
+  TextEditingController _emailCantroller = TextEditingController();
+  TextEditingController _passCantroller = TextEditingController();
+  TextEditingController _confirmPassCantroller = TextEditingController();
+
+  final verifyemail = Preference.Pref.getString('email');
+
   var h;
   var w;
+
+  bool validate = false;
+
+  valid() {
+    validate = !validate;
+  }
 
   bool _passwordVisible = false;
   bool _passwordVisible1 = false;
@@ -101,6 +116,7 @@ class _SignupState extends State<Signup> {
                                   // color: WHITE_CLR,
 
                                   child: TextFormField(
+                                      controller: _emailCantroller,
                                       textCapitalization:
                                           TextCapitalization.none,
                                       textAlign: TextAlign.start,
@@ -148,6 +164,7 @@ class _SignupState extends State<Signup> {
                                             blurRadius: 14)
                                       ]),
                                   child: TextFormField(
+                                    controller: _passCantroller,
                                     obscureText: _passwordVisible,
                                     textCapitalization: TextCapitalization.none,
                                     textAlign: TextAlign.start,
@@ -210,12 +227,23 @@ class _SignupState extends State<Signup> {
                                     color: WHITE70_CLR,
                                   ),
                                   child: TextFormField(
+                                    controller: _confirmPassCantroller,
                                     obscureText: _passwordVisible1,
                                     textCapitalization: TextCapitalization.none,
                                     textAlign: TextAlign.start,
                                     validator: (value) {
                                       if (value!.isEmpty) {
                                         passError1 = ENTER_CONFIRM_PASS;
+
+                                        return "";
+                                      } else if (_passCantroller.text !=
+                                          _confirmPassCantroller.text) {
+                                        valid();
+
+                                        passError1 =
+                                            "Confirm Password doesn't match!";
+
+                                        print(validate);
                                         return "";
                                       } else {
                                         passError1 = "";
@@ -224,7 +252,7 @@ class _SignupState extends State<Signup> {
                                     decoration: InputDecoration(
                                         errorStyle: TextStyle(height: 0),
                                         errorText: "",
-                                        hintText: " Confirm Password",
+                                        hintText: "Confirm Password",
                                         hintStyle: TextStyle(
                                             color: GRAY_CLR,
                                             fontSize: 16,
@@ -268,8 +296,26 @@ class _SignupState extends State<Signup> {
                                       text: SIGN_UP,
                                       ontap: () {
                                         if (_formkey.currentState!.validate()) {
-                                          ProviderTutorial()
-                                              .NavigateLogin(context);
+                                          Sinup(
+                                                  _emailCantroller.text
+                                                      .toString(),
+                                                  _passCantroller.text
+                                                      .toString(),
+                                                  _confirmPassCantroller.text
+                                                      .toString())
+                                              .then((value) {
+                                            _emailCantroller.clear();
+                                            _passCantroller.clear();
+                                            _confirmPassCantroller.clear();
+                                            Navigate_to(context, OPT_VERIFY());
+                                          }).catchError((e) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(SnackBar(
+                                                    backgroundColor: GREEN_CLR,
+                                                    content:
+                                                        Text(e.toString())));
+                                            print(e.toString());
+                                          });
                                         }
                                       },
                                       fontsize: 16,
@@ -332,8 +378,7 @@ class _SignupState extends State<Signup> {
                                         child: Image.asset(
                                           'assets/png_icon/fb_icon_325x325.png',
                                           height: 30,
-                                        )
-                                        ),
+                                        )),
                                   ],
                                 ),
                                 SizedBox(

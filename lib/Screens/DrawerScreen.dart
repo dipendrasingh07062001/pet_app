@@ -4,7 +4,7 @@ import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Componants/Images&Icons.dart';
 import 'package:pet_app/Screens/Login.dart';
 import 'package:pet_app/UTILS/Utils.dart';
-
+import '../Prefrence.dart';
 import 'My_Pets/My_Pets.dart';
 import 'Profile.dart';
 import 'Setting.dart';
@@ -17,8 +17,15 @@ class MyDrawer extends StatefulWidget {
 }
 
 class _MyDrawerState extends State<MyDrawer> {
+  final getEmail = Preference.Pref.getString('email').toString();
+  final getuserName = Preference.Pref.getString('name').toString();
+  final getuserImage = Preference.Pref.getString('image').toString();
+
+  final deleteUser = Preference.Pref.clear();
+
   var h;
   var w;
+
   @override
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
@@ -50,21 +57,24 @@ class _MyDrawerState extends State<MyDrawer> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     CircleAvatar(
-                      backgroundImage:
-                          AssetImage("assets/png_image/profile.png"),
-                    ),
+                        backgroundImage: NetworkImage(getuserImage.toString())
+                        // AssetImage("assets/png_image/profile.png"),
+                        ),
                     SizedBox(
                       width: w * 0.020,
                     ),
-                    RichText(
-                      text: TextSpan(
-                          text: "Michael Jordan \n",
-                          style: TextStyle(color: WHITE60_CLR, fontSize: 17),
-                          children: [
-                            TextSpan(
-                                text: "Bhimsingh123@gamil.com",
-                                style: TextStyle(fontSize: 15))
-                          ]),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          getuserName.toString() ?? "Bhimsingh Saini",
+                          style: TextStyle(color: WHITE60_CLR, fontSize: 12),
+                        ),
+                        Text(
+                          getEmail.toString() ?? "bhimsingh@gmail.com",
+                          style: TextStyle(color: WHITE60_CLR, fontSize: 12),
+                        )
+                      ],
                     ),
                   ],
                 ),
@@ -211,7 +221,11 @@ Future<void> _Logout(BuildContext context) {
                   DefaultButton(
                       text: LOGOUT,
                       ontap: () {
-                        Navigate_to(context, Login());
+                        Preference.Pref.clear().then((value) {
+                          Navigate_PushRemove(context, Login());
+
+                          print(value.toString());
+                        });
                       },
                       fontsize: 17,
                       height: 40,

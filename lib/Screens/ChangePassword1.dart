@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/parser.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Componants/Images&Icons.dart';
-import 'package:pet_app/Screens/Login.dart';
 import 'package:pet_app/UTILS/Utils.dart';
-import 'package:provider/provider.dart';
-
-import '../Provider/Provider.dart';
+import '../Api/ChangePasswordApi.dart';
+import '../Prefrence.dart';
 
 class ChangePassword1 extends StatefulWidget {
   const ChangePassword1({super.key});
@@ -19,15 +16,17 @@ class ChangePassword1 extends StatefulWidget {
 class _ChangePassword1State extends State<ChangePassword1> {
   final _formkey = GlobalKey<FormState>();
 
+  TextEditingController _oldPasswordCantroller = TextEditingController();
   TextEditingController _newPasswordCantrolller = TextEditingController();
-
-  TextEditingController _creatPasswordCantrolller = TextEditingController();
+  TextEditingController _confirmPasswordCantrolller = TextEditingController();
 
   String passError = "";
   String newPassError = "";
+  String ConfirmPassError = "";
 
   bool _passwordVisible = false;
   bool _passwordVisible1 = false;
+  bool _passwordVisible2 = false;
   var h;
   var w;
 
@@ -98,7 +97,7 @@ class _ChangePassword1State extends State<ChangePassword1> {
                         // color: WHITE_CLR,
 
                         child: TextFormField(
-                          controller: _creatPasswordCantrolller,
+                          controller: _oldPasswordCantroller,
                           validator: (value) {
                             if (value!.isEmpty) {
                               newPassError = ENTER_OLD_PASS;
@@ -108,11 +107,7 @@ class _ChangePassword1State extends State<ChangePassword1> {
                               newPassError = "";
                             }
                           },
-                          //  validator: (value){
-                          //   formProvider.validPassword(value);
-                          //  },
-
-                          obscureText: _passwordVisible1,
+                          obscureText: _passwordVisible,
                           textCapitalization: TextCapitalization.none,
                           textAlign: TextAlign.start,
                           decoration: InputDecoration(
@@ -131,13 +126,13 @@ class _ChangePassword1State extends State<ChangePassword1> {
                               border: InputBorder.none,
                               suffixIcon: IconButton(
                                 icon: Icon(
-                                    _passwordVisible1
+                                    _passwordVisible
                                         ? Icons.visibility
                                         : Icons.visibility_off,
                                     color: GRAY_CLR),
                                 onPressed: () {
                                   setState(() {
-                                    _passwordVisible1 = !_passwordVisible1;
+                                    _passwordVisible = !_passwordVisible;
                                   });
                                 },
                               )),
@@ -177,7 +172,7 @@ class _ChangePassword1State extends State<ChangePassword1> {
                               passError = "";
                             }
                           },
-                          obscureText: _passwordVisible,
+                          obscureText: _passwordVisible1,
                           textCapitalization: TextCapitalization.none,
                           textAlign: TextAlign.start,
                           decoration: InputDecoration(
@@ -196,13 +191,13 @@ class _ChangePassword1State extends State<ChangePassword1> {
                               border: InputBorder.none,
                               suffixIcon: IconButton(
                                 icon: Icon(
-                                    _passwordVisible
+                                    _passwordVisible1
                                         ? Icons.visibility
                                         : Icons.visibility_off,
                                     color: GRAY_CLR),
                                 onPressed: () {
                                   setState(() {
-                                    _passwordVisible = !_passwordVisible;
+                                    _passwordVisible1 = !_passwordVisible1;
                                   });
                                 },
                               )),
@@ -232,21 +227,21 @@ class _ChangePassword1State extends State<ChangePassword1> {
                         // color: WHITE_CLR,
 
                         child: TextFormField(
-                          controller: _creatPasswordCantrolller,
+                          controller: _confirmPasswordCantrolller,
                           validator: (value) {
                             if (value!.isEmpty) {
-                              newPassError = ENTER_CONFIRM_PASS;
+                              ConfirmPassError = ENTER_CONFIRM_PASS;
                               setState(() {});
                               return "";
+                            } else if (_confirmPasswordCantrolller !=
+                                _newPasswordCantrolller) {
+                              ConfirmPassError =
+                                  ENTER_CONFIRM_PASS_DOES_NOT_MATCH;
                             } else {
-                              newPassError = "";
+                              ConfirmPassError = "";
                             }
                           },
-                          //  validator: (value){
-                          //   formProvider.validPassword(value);
-                          //  },
-
-                          obscureText: _passwordVisible1,
+                          obscureText: _passwordVisible2,
                           textCapitalization: TextCapitalization.none,
                           textAlign: TextAlign.start,
                           decoration: InputDecoration(
@@ -265,13 +260,13 @@ class _ChangePassword1State extends State<ChangePassword1> {
                               border: InputBorder.none,
                               suffixIcon: IconButton(
                                 icon: Icon(
-                                    _passwordVisible1
+                                    _passwordVisible2
                                         ? Icons.visibility
                                         : Icons.visibility_off,
                                     color: GRAY_CLR),
                                 onPressed: () {
                                   setState(() {
-                                    _passwordVisible1 = !_passwordVisible1;
+                                    _passwordVisible2 = !_passwordVisible2;
                                   });
                                 },
                               )),
@@ -280,9 +275,9 @@ class _ChangePassword1State extends State<ChangePassword1> {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Visibility(
-                            visible: newPassError != "",
+                            visible: ConfirmPassError != "",
                             child: Text(
-                              newPassError,
+                              ConfirmPassError,
                               style: TextStyle(color: Colors.red, fontSize: 12),
                               textAlign: TextAlign.start,
                             )),
@@ -297,7 +292,22 @@ class _ChangePassword1State extends State<ChangePassword1> {
                               passError = "";
                               newPassError = "";
 
-                              Navigate_to(context, Login());
+                              ChangePasswordApi(
+                                      _oldPasswordCantroller.text.toString(),
+                                      _confirmPasswordCantrolller.text
+                                          .toString())
+                                  .then((value) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        backgroundColor: GREEN_CLR,
+                                        content: Text(
+                                            changepasswordmsg.toString())));
+                              }).catchError((e) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        backgroundColor: GREEN_CLR,
+                                        content: Text(e.toString())));
+                              });
                             }
                           },
                           fontsize: 18,

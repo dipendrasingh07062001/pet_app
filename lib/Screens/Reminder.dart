@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pet_app/Colors/COLORS.dart';
@@ -288,7 +286,7 @@ class _ReminderState extends State<Reminder> {
                                                 },
                                                 child: Container(
                                                   alignment: Alignment.center,
-                                                  height: 25,
+                                                  height: 22,
                                                   width: w * 0.2,
                                                   decoration: BoxDecoration(
                                                       borderRadius:

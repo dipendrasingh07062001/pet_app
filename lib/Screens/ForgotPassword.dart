@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/parser.dart';
 import 'package:pet_app/Colors/COLORS.dart';
+import 'package:pet_app/Prefrence.dart';
 import 'package:pet_app/Screens/EnterOTP.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 import 'package:provider/provider.dart';
 
+import '../Api/ForgotPasswordApi.dart';
 import '../Componants/Images&Icons.dart';
 import '../Provider/Provider.dart';
 
@@ -18,6 +20,8 @@ class ForgotPassword extends StatefulWidget {
 
 class _ForgotPasswordState extends State<ForgotPassword> {
   final _formkey = GlobalKey<FormState>();
+
+  TextEditingController _emailCantroller = TextEditingController();
 
   String emailError = "";
   var h;
@@ -87,6 +91,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         ],
                       ),
                       child: TextFormField(
+                          controller: _emailCantroller,
                           validator: (value) {
                             if (value!.isEmpty) {
                               emailError = ENTER_EMAIL;
@@ -132,7 +137,16 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           if (_formkey.currentState!.validate()) {
                             emailError = "";
 
-                            Navigate_to(context, EnterOTP());
+                            ForgotPasswordApi(_emailCantroller.text.toString())
+                                .then((value) {
+                              _emailCantroller.clear();
+                              Navigate_to(context, EnterOTP());
+                            }).catchError((e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      backgroundColor: GREEN_CLR,
+                                      content: Text(e.toString())));
+                            });
                           }
                         },
                         fontsize: 18,

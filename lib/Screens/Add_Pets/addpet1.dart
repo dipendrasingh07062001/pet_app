@@ -33,7 +33,7 @@ class _AddPetsState extends State<AddPets> {
   final List<PetsModal> PetDetails = List.generate(petName.length,
       (index) => PetsModal('${petName[index]}', '${url[index]}'));
 
-  String ChangePet = "Dog";
+  String ChangePet = "";
 
   var h;
   var w;

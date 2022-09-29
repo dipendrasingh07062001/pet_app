@@ -48,6 +48,8 @@ dependencies:
   syncfusion_flutter_datepicker: ^20.2.49
   flutter_switch: ^0.3.2
   coverflow: ^2.0.3
+  shared_preferences: ^2.0.15
+  http: ^0.13.5
 
 
 

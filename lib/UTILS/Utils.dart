@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 
-
 //Default Button
 class DefaultButton extends StatelessWidget {
   final String text;
@@ -13,7 +12,7 @@ class DefaultButton extends StatelessWidget {
   const DefaultButton({
     Key? key,
     required this.text,
-        required this.ontap,
+    required this.ontap,
     required this.fontsize,
     required this.height,
     required this.width,
@@ -34,39 +33,44 @@ class DefaultButton extends StatelessWidget {
               style: TextStyle(
                 color: WHITE70_CLR,
                 fontSize: fontsize,
-        
-
               ))),
     );
   }
 }
 
-
-
-
-
 //Default Navigator
-Navigate_to( BuildContext context, Widget widget)
-{
-return Navigator.push(context, MaterialPageRoute(builder: (ctx)=>widget));
+Navigate_to(BuildContext context, Widget widget) {
+  return Navigator.push(context, MaterialPageRoute(builder: (ctx) => widget));
 }
 
+Navigate_replace(BuildContext context, Widget widget) {
+  return Navigator.pushReplacement(
+      context, MaterialPageRoute(builder: (ctx) => widget));
+}
 
+Navigate_PushRemove(BuildContext context, Widget widget) {
+  return Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (context) => widget),
+      (Route<dynamic> route) => false);
+}
 
-AppBar DefaultAppBar(
-  String _text
-){
-  return  AppBar(centerTitle: true,
-      toolbarHeight: 65,
-      backgroundColor: WHITE70_CLR,
-      elevation: 1,
-      title: styleText( _text, DARK_CLR, FontWeight.bold, 17), 
-      );
+AppBar DefaultAppBar(String _text) {
+  return AppBar(
+    centerTitle: true,
+    toolbarHeight: 65,
+    backgroundColor: WHITE70_CLR,
+    elevation: 1,
+    title: styleText(_text, DARK_CLR, FontWeight.bold, 17),
+  );
 }
 
 //DefultText
 Text styleText(
-    String _value, Color _color, FontWeight _weight, double _fontSize,) {
+  String _value,
+  Color _color,
+  FontWeight _weight,
+  double _fontSize,
+) {
   return Text(
     _value,
     style: TextStyle(color: _color, fontWeight: _weight, fontSize: _fontSize),
@@ -74,11 +78,12 @@ Text styleText(
   );
 }
 
-
-
-
 Text TutorialText(
-    String _value, Color _color, FontWeight _weight, double _fontSize,) {
+  String _value,
+  Color _color,
+  FontWeight _weight,
+  double _fontSize,
+) {
   return Text(
     _value,
     style: TextStyle(color: _color, fontWeight: _weight, fontSize: _fontSize),
@@ -86,67 +91,57 @@ Text TutorialText(
   );
 }
 
+class DefaultRadioButton extends StatelessWidget {
+  final String text;
+  final int groupValue;
+  final int value;
 
-  class DefaultRadioButton extends StatelessWidget{
-
-
-final String text;
-final int groupValue;
-final int value;
-
- 
   final Function(int?) ontap;
 
   const DefaultRadioButton({
     Key? key,
     required this.text,
-     required this.groupValue,
-     required this.value,
-     
-        required this.ontap,
-    
+    required this.groupValue,
+    required this.value,
+    required this.ontap,
   }) : super(key: key);
-  
- 
+
   @override
   Widget build(BuildContext context) {
-    return   Container(
-                                      padding: EdgeInsets.only(left: 10,right: 10),
-                                        alignment: Alignment.center,
-                                        height: 50,
-                                        margin: EdgeInsets.only(top: 20),
-                                    decoration: BoxDecoration(
-                                
-                                      color: WHITE_CLR,
-                                      borderRadius: BorderRadius.circular(10),
-                                     border: Border.all(color: BORDER_CLR,width: 1)
-                                      
-                                    ),
-                                        child:    Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-
-
-                                            styleText(text, GREEN_CLR, FontWeight.normal, 15),
-                                            SizedBox(
-                    height: 20,
-                    width: 20,
-                    child: Radio(
-                      value: value,
-                      groupValue: groupValue,
-                      activeColor:GREEN_CLR,
-                      onChanged: ontap,
-                    )
-                                            )
-                                          ]
-                                        )
-    );
-    
-                  
+    return Container(
+        padding: EdgeInsets.only(left: 10, right: 10),
+        alignment: Alignment.center,
+        height: 50,
+        margin: EdgeInsets.only(top: 20),
+        decoration: BoxDecoration(
+            color: WHITE_CLR,
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: BORDER_CLR, width: 1)),
+        child:
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          styleText(text, GREEN_CLR, FontWeight.normal, 15),
+          SizedBox(
+              height: 20,
+              width: 20,
+              child: Radio(
+                value: value,
+                groupValue: groupValue,
+                activeColor: GREEN_CLR,
+                onChanged: ontap,
+              ))
+        ]));
   }
 
-  
- 
-  
- 
+  ScaffoldFeatureController<SnackBar, SnackBarClosedReason> snkbar(
+    BuildContext context,
+    String txt,
+  ) {
+    return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(
+        txt,
+        style: TextStyle(color: WHITE_CLR),
+      ),
+      backgroundColor: GREEN_CLR,
+    ));
+  }
 }

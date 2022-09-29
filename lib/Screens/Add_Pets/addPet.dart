@@ -98,18 +98,26 @@ class _AddPetpageState extends State<AddPetpage> {
                           side: value.CurrentIndex == 2
                               ? BorderSide(color: GREEN_CLR)
                               : BorderSide(color: Colors.transparent)),
-                      color: value.CurrentIndex == 2 ? WHITE_CLR : GREEN_CLR,
+                      color: value.CurrentIndex == 2
+                          ? (value.SelectImage == null ? WHITE_CLR : GREEN_CLR)
+                          : GREEN_CLR,
                       onPressed: () {
                         value.CurrentIndex;
-
                         _controller.nextPage(
                             duration: _kDuration, curve: _kCurve);
-
                         print(value.CurrentIndex);
                       },
                       child: styleText(
-                          value.CurrentIndex == 2 ? SKIP_CONTINUE : CONTINUE,
-                          value.CurrentIndex == 2 ? GREEN_CLR : WHITE_CLR,
+                          value.CurrentIndex == 2
+                              ? (value.SelectImage == null
+                                  ? SKIP_CONTINUE
+                                  : FINISH)
+                              : CONTINUE,
+                          value.CurrentIndex == 2
+                              ? (value.SelectImage == null
+                                  ? GREEN_CLR
+                                  : WHITE_CLR)
+                              : WHITE_CLR,
                           FontWeight.normal,
                           15)))
             ],

@@ -16,7 +16,8 @@ class AddPet2 extends StatefulWidget {
 }
 
 class _AddPet2State extends State<AddPet2> {
-  TextEditingController searchLocationCantroller = TextEditingController();
+  TextEditingController Cantroller1 = TextEditingController();
+  TextEditingController Cantroller2 = TextEditingController();
 
   var h;
   var w;
@@ -43,7 +44,7 @@ class _AddPet2State extends State<AddPet2> {
 
   @override
   Widget build(BuildContext context) {
-    final UpadteValue = Provider.of<ProviderTutorial>(context, listen: false);
+    final UpadteValue = Provider.of<ProviderTutorial>(context, listen: true);
 
     String _joningdate = DateFormat.yMMMd().format(_currentdate1);
 
@@ -65,7 +66,7 @@ class _AddPet2State extends State<AddPet2> {
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(color: BORDER_CLR, width: 1)),
               child: TextFormField(
-                  controller: searchLocationCantroller,
+                  controller: Cantroller1,
                   decoration: InputDecoration(
                       errorText: "",
                       errorStyle: TextStyle(height: 0),
@@ -86,7 +87,7 @@ class _AddPet2State extends State<AddPet2> {
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(color: BORDER_CLR, width: 1)),
               child: TextFormField(
-                  controller: searchLocationCantroller,
+                  controller: Cantroller2,
                   decoration: InputDecoration(
                       errorText: "",
                       errorStyle: TextStyle(height: 0),

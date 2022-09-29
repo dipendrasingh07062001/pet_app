@@ -1,28 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/parser.dart';
+import 'package:pet_app/Api/ApiBaseUrl.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Screens/Login.dart';
 import 'package:pet_app/Screens/SuccesFullVerified.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 import 'package:provider/provider.dart';
 
+import '../Api/Reset_PasswordApi.dart';
 import '../Componants/Images&Icons.dart';
+import '../Prefrence.dart';
 import '../Provider/Provider.dart';
 
-class ChangePassword extends StatefulWidget {
-  const ChangePassword({super.key});
+class ResetPassword extends StatefulWidget {
+  const ResetPassword({super.key});
 
   @override
-  State<ChangePassword> createState() => _ChangePasswordState();
+  State<ResetPassword> createState() => _ResetPasswordState();
 }
 
-class _ChangePasswordState extends State<ChangePassword> {
+class _ResetPasswordState extends State<ResetPassword> {
   final _formkey = GlobalKey<FormState>();
 
   TextEditingController _newPasswordCantrolller = TextEditingController();
 
-  TextEditingController _creatPasswordCantrolller = TextEditingController();
+  TextEditingController _ConfirmPasswordCantrolller = TextEditingController();
+  final getEmail = Preference.Pref.getString('email');
 
   String passError = "";
   String newPassError = "";
@@ -83,7 +87,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                     SizedBox(
                       height: h * 0.040,
                     ),
-                    styleText(CHANGE_PASSWORD, BLACK_CLR, FontWeight.bold, 19),
+                    styleText(RESET_PASWORD, BLACK_CLR, FontWeight.bold, 19),
                     Container(
                       height: h * 0.06,
                       margin: EdgeInsets.only(top: h * 0.025),
@@ -163,20 +167,20 @@ class _ChangePasswordState extends State<ChangePassword> {
                       // color: WHITE_CLR,
 
                       child: TextFormField(
-                        controller: _creatPasswordCantrolller,
+                        controller: _ConfirmPasswordCantrolller,
                         validator: (value) {
                           if (value!.isEmpty) {
                             newPassError = ENTER_CONFIRM_PASS;
                             setState(() {});
                             return "";
+                          } else if (_ConfirmPasswordCantrolller !=
+                              _newPasswordCantrolller) {
+                            newPassError = ENTER_CONFIRM_PASS_DOES_NOT_MATCH;
+                            setState(() {});
                           } else {
                             newPassError = "";
                           }
                         },
-                        //  validator: (value){
-                        //   formProvider.validPassword(value);
-                        //  },
-
                         obscureText: _passwordVisible1,
                         textCapitalization: TextCapitalization.none,
                         textAlign: TextAlign.start,
@@ -228,7 +232,21 @@ class _ChangePasswordState extends State<ChangePassword> {
                             passError = "";
                             newPassError = "";
 
-                            Navigate_to(context, SuccessFullyVerified());
+                            Reset_PasswordApi(
+                              getEmail.toString(),
+                              _newPasswordCantrolller.text.toString(),
+                            ).then((value) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      backgroundColor: GREEN_CLR,
+                                      content: Text(resetmsg.toString())));
+                              Navigate_to(context, SuccessFullyVerified());
+                            }).catchError((e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      backgroundColor: GREEN_CLR,
+                                      content: Text(e.toString())));
+                            });
                           }
                         },
                         fontsize: 18,

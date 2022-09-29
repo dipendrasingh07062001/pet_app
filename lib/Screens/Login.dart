@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pet_app/Api/LoginApi.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Componants/Images&Icons.dart';
 import 'package:pet_app/Provider/Provider.dart';
 import 'package:pet_app/Screens/HOME/Home.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 import 'package:provider/provider.dart';
-import 'ForgotPassword.dart';
-import 'Signup.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -18,6 +17,7 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final _formkey = GlobalKey<FormState>();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   TextEditingController _emailCantroller = TextEditingController();
   TextEditingController _passwordCantrolller = TextEditingController();
@@ -231,19 +231,40 @@ class _LoginState extends State<Login> {
                             ),
                             Consumer<ProviderTutorial>(builder:
                                 (BuildContext context, value, Widget? child) {
-                              return DefaultButton(
-                                  text: "Login",
-                                  ontap: () {
-                                    if (_formkey.currentState!.validate()) {
-                                      emailError = "";
-                                      passError = "";
+                              return value.isloding == true
+                                  ? CircularProgressIndicator()
+                                  : DefaultButton(
+                                      text: "Login",
+                                      ontap: () async {
+                                        if (_formkey.currentState!.validate()) {
+                                          emailError = "";
+                                          passError = "";
 
-                                      ProviderTutorial().NavigateHome(context);
-                                    }
-                                  },
-                                  fontsize: 16,
-                                  height: h * 0.060,
-                                  width: w * 1);
+                                          value.isloding = true;
+                                          await LoginApi(
+                                                  _emailCantroller.text
+                                                      .toString(),
+                                                  _passwordCantrolller.text
+                                                      .toString())
+                                              .then((value) {
+                                            _emailCantroller.clear();
+                                            _passwordCantrolller.clear();
+                                            Navigate_replace(context, Home());
+                                          }).catchError((e) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(SnackBar(
+                                                    backgroundColor: GREEN_CLR,
+                                                    content:
+                                                        Text(e.toString())));
+                                            print(e.toString());
+                                          });
+
+                                          value.isloding = false;
+                                        }
+                                      },
+                                      fontsize: 16,
+                                      height: h * 0.060,
+                                      width: w * 1);
                             }),
                             SizedBox(
                               height: h * 0.015,

@@ -7,80 +7,62 @@ import '../Screens/Login.dart';
 import '../Screens/Signup.dart';
 import '../UTILS/Utils.dart';
 
-
 class ProviderTutorial extends ChangeNotifier {
-    bool isClick= false;
+  bool isClick = false;
 
+  bool isloding = false;
 
+  changePage() {
+    isClick = true;
 
-changePage(){
-  isClick =true;
-  notifyListeners();
-}
+    notifyListeners();
+  }
 
-
- change(){
-  isClick=!isClick;
-  notifyListeners();
- }
+  change() {
+    isClick = !isClick;
+    isloding = !isloding;
+    notifyListeners();
+  }
 
   NavigateLogin(BuildContext context) {
     Navigate_to(context, Login());
-    isClick=true;
+    isClick = true;
     notifyListeners();
   }
+
   NavigateSinup(BuildContext context) {
     Navigate_to(context, Signup());
-    isClick=false;
+    isClick = false;
     notifyListeners();
   }
 
-  NavigateHome(BuildContext context){
+  NavigateHome(BuildContext context) {
     Navigate_to(context, Home());
     notifyListeners();
-
   }
 
-  NavigateForgotPassword(BuildContext context){
-
+  NavigateForgotPassword(BuildContext context) {
     Navigate_to(context, ForgotPassword());
     notifyListeners();
   }
 
-
-  NavigateGetStarted(BuildContext context){
-    isClick =true;
-    Navigate_to(context,GetStarted());
+  NavigateGetStarted(BuildContext context) {
+    isClick = true;
+    Navigate_to(context, GetStarted());
     notifyListeners();
   }
 
-
- int gender = 1;
-  OnValueChange( int? index){
-
-   gender = index?? gender ;
-   notifyListeners();
-
+  int gender = 1;
+  OnValueChange(int? index) {
+    gender = index ?? gender;
+    notifyListeners();
   }
 
+  TextEditingController searchLocationCantroller = TextEditingController();
 
-
-
-
-TextEditingController searchLocationCantroller = TextEditingController();
-   
-  BottomSeetProvider(String search){
-
-   searchLocationCantroller == search;
-print(searchLocationCantroller);
-notifyListeners();
+  BottomSeetProvider(String search) {
+    searchLocationCantroller == search;
+    print(searchLocationCantroller);
+    notifyListeners();
   }
-
-
 }
-
-
-
-
-
-
