@@ -7,6 +7,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'ApiBaseUrl.dart';
 
 var loginmsg;
+var Userid;
+var userImage;
+var Email;
+var userName;
 
 Future LoginApi(
   String email,
@@ -30,11 +34,16 @@ Future LoginApi(
       Preference.Pref.setString('email', value['data']['email'].toString());
       Preference.Pref.setString('name', value['data']['name'].toString());
       Preference.Pref.setString('status', value['data']['status'].toString());
+      Preference.Pref.setBool("isFirstTimeUser", true) ?? true;
 
       final getid = Preference.Pref.getInt('id');
 
+      Userid = Preference.Pref.getInt('id').toString();
+      userName = Preference.Pref.getString('name').toString();
+      userImage = Preference.Pref.getString('image');
+      Email = Preference.Pref.getString('email');
       print("Image ==== " + value['data']['image']);
-      print('User Id : ' + value['data']['id'].toString());
+      print('User Id : ' + Userid.toString());
 
       return value;
     } else {

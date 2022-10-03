@@ -1,29 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pet_app/Api/LoginApi.dart';
-import 'package:pet_app/Api/OTP_VERIFY_API.dart';
+import 'package:pet_app/Api/ForgotPasswordApi.dart';
+import 'package:pet_app/Api/resend_OTP_ForgotPass.dart';
 import 'package:pet_app/Colors/COLORS.dart';
-import 'package:pet_app/Prefrence.dart';
-import 'package:pet_app/Screens/Login.dart';
 import 'package:pet_app/UTILS/Utils.dart';
-import '../Api/SignupApi.dart';
+import '../Api/forgotPass_otp_verify_Api.dart';
 import '../Componants/Images&Icons.dart';
+import '../Prefrence.dart';
+import 'ResetPassword.dart';
 
-class OPT_VERIFY extends StatefulWidget {
-  const OPT_VERIFY({super.key});
+class ForgotPassword_OTP_Verify extends StatefulWidget {
+  const ForgotPassword_OTP_Verify({super.key});
 
   @override
-  State<OPT_VERIFY> createState() => _OPT_VERIFYState();
+  State<ForgotPassword_OTP_Verify> createState() =>
+      _ForgotPassword_OTP_VerifyState();
 }
 
-class _OPT_VERIFYState extends State<OPT_VERIFY> {
+class _ForgotPassword_OTP_VerifyState extends State<ForgotPassword_OTP_Verify> {
   final _formkey = GlobalKey<FormState>();
 
-  final getEmail = Preference.Pref.getString('email');
-  final getPassord = Preference.Pref.getString('password');
-  final getConPassord = Preference.Pref.getString('password');
-
-  var data;
+  // final getEmail = Preference.Pref.getString('email').toString();
 
   var h;
   var w;
@@ -48,11 +45,6 @@ class _OPT_VERIFYState extends State<OPT_VERIFY> {
 
   @override
   void initState() {
-    Otp_verify(getEmail, otp).then((value) {
-      value = data;
-      print(data);
-    });
-
     super.initState();
     pin1FocusNode = FocusNode();
     pin2FocusNode = FocusNode();
@@ -85,7 +77,6 @@ class _OPT_VERIFYState extends State<OPT_VERIFY> {
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
-
     return Scaffold(
       extendBody: true,
       resizeToAvoidBottomInset: true,
@@ -101,17 +92,22 @@ class _OPT_VERIFYState extends State<OPT_VERIFY> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: SizedBox(
-                      height: 35,
-                      width: 35,
-                      child: CircleAvatar(
-                        backgroundColor: FADE_GREEN_CLR,
-                        child: Icon(
-                          Icons.arrow_back_ios_new,
-                          size: 18,
-                          color: WHITE70_CLR,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: SizedBox(
+                        height: 35,
+                        width: 35,
+                        child: CircleAvatar(
+                          backgroundColor: FADE_GREEN_CLR,
+                          child: Icon(
+                            Icons.arrow_back_ios_new,
+                            size: 18,
+                            color: WHITE70_CLR,
+                          ),
                         ),
                       ),
                     ),
@@ -136,7 +132,7 @@ class _OPT_VERIFYState extends State<OPT_VERIFY> {
                     FontWeight.normal,
                     15,
                   ),
-                  Text(getEmail.toString(),
+                  Text(resendotpemail.toString(),
                       style: TextStyle(
                           decoration: TextDecoration.underline,
                           fontSize: 15,
@@ -329,21 +325,21 @@ class _OPT_VERIFYState extends State<OPT_VERIFY> {
                     15,
                   ),
                   GestureDetector(
-                      // onTap: () {
-                      //   Sinup(getPassord.toString(), getConPassord.toString())
-                      //       .then((value) {
-                      //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      //         backgroundColor: GREEN_CLR,
-                      //         content: Text(Sinupmsg.toString())));
-                      //     print("=====" + value.toString());
-                      //   }).catchError((e) {
-                      //     print("=====" + e.toString());
-                      //   });
-                      // },
+                      onTap: () {
+                        Resend_OTP_ForgotPassword().then((value) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              backgroundColor: GREEN_CLR,
+                              content: Text(resendOTPmsg.toString())));
+                        }).catchError((e) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              backgroundColor: GREEN_CLR,
+                              content: Text(e.toString())));
+                        });
+                      },
                       child: Text(
-                    RESEND,
-                    style: TextStyle(color: GREEN_CLR, fontSize: 15),
-                  )),
+                        RESEND,
+                        style: TextStyle(color: GREEN_CLR, fontSize: 15),
+                      )),
                   SizedBox(
                     height: h * 0.030,
                   ),
@@ -351,19 +347,16 @@ class _OPT_VERIFYState extends State<OPT_VERIFY> {
                       text: VERIFY,
                       ontap: () {
                         if (_formkey.currentState!.validate()) {
-                          Otp_verify(
-                                  getEmail.toString(),
-                                  (first.text.toString() +
-                                      second.text.toString() +
-                                      third.text.toString() +
-                                      fourth.text.toString()))
+                          ForgotPass_OTP_VERIFY((first.text.toString() +
+                                  second.text.toString() +
+                                  third.text.toString() +
+                                  fourth.text.toString()))
                               .then((value) {
                             first.clear();
-                            second.clear();
-                            third.clear();
-                            fourth.clear();
-
-                            Navigate_to(context, Login());
+                            first.clear();
+                            first.clear();
+                            first.clear();
+                            Navigate_to(context, ResetPassword());
                           }).catchError((e) {
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                 backgroundColor: GREEN_CLR,

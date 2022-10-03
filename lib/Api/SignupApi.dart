@@ -7,6 +7,7 @@ import 'package:pet_app/Api/ApiBaseUrl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 var Sinupmsg;
+var signupEmail;
 
 Future Sinup(String email, password, confirmPassword) async {
   var response = await http.post(Uri.parse(Base_URL + SIGNUP), body: {
@@ -17,13 +18,13 @@ Future Sinup(String email, password, confirmPassword) async {
   if (response.statusCode == 200) {
     var data = jsonDecode(response.body);
 
-    Preference.Pref.setString('email', email).toString();
-
     print("data" + data.toString());
 
     if (data["status"] == true) {
       print(data["message"]);
       print(response.body);
+      Preference.Pref.setString('email', email).toString();
+      signupEmail = Preference.Pref.getString('email').toString();
       return data;
     } else {
       Sinupmsg = data['message'];

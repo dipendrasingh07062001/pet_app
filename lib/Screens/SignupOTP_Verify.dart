@@ -1,30 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/parser.dart';
 import 'package:pet_app/Api/LoginApi.dart';
+import 'package:pet_app/Api/OTP_VERIFY_API.dart';
+import 'package:pet_app/Api/ResendOTP_Signup.dart';
 import 'package:pet_app/Colors/COLORS.dart';
-import 'package:pet_app/Screens/SuccesFullVerified.dart';
+import 'package:pet_app/Prefrence.dart';
+import 'package:pet_app/Screens/Login.dart';
 import 'package:pet_app/UTILS/Utils.dart';
-import 'package:provider/provider.dart';
-
-import '../Api/OTP_VERIFY_API.dart';
-import '../Api/forgotPass_otp_verify_Api.dart';
+import '../Api/SignupApi.dart';
 import '../Componants/Images&Icons.dart';
-import '../Prefrence.dart';
-import '../Provider/Provider.dart';
-import 'ResetPassword.dart';
 
-class EnterOTP extends StatefulWidget {
-  const EnterOTP({super.key});
+class Signup_OTP_Verify extends StatefulWidget {
+  const Signup_OTP_Verify({super.key});
 
   @override
-  State<EnterOTP> createState() => _EnterOTPState();
+  State<Signup_OTP_Verify> createState() => _Signup_OTP_VerifyState();
 }
 
-class _EnterOTPState extends State<EnterOTP> {
+class _Signup_OTP_VerifyState extends State<Signup_OTP_Verify> {
   final _formkey = GlobalKey<FormState>();
 
-  final getEmail = Preference.Pref.getString('email').toString();
+  var data;
 
   var h;
   var w;
@@ -49,6 +45,11 @@ class _EnterOTPState extends State<EnterOTP> {
 
   @override
   void initState() {
+    // Otp_verify(getEmail, otp).then((value) {
+    //   value = data;
+    //   print(data);
+    // });
+
     super.initState();
     pin1FocusNode = FocusNode();
     pin2FocusNode = FocusNode();
@@ -81,6 +82,7 @@ class _EnterOTPState extends State<EnterOTP> {
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
+
     return Scaffold(
       extendBody: true,
       resizeToAvoidBottomInset: true,
@@ -136,7 +138,7 @@ class _EnterOTPState extends State<EnterOTP> {
                     FontWeight.normal,
                     15,
                   ),
-                  Text(getEmail.toString(),
+                  Text(signupEmail.toString(),
                       style: TextStyle(
                           decoration: TextDecoration.underline,
                           fontSize: 15,
@@ -329,7 +331,18 @@ class _EnterOTPState extends State<EnterOTP> {
                     15,
                   ),
                   GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Resend_OTP_Signup().then((value) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              backgroundColor: GREEN_CLR,
+                              content: Text(resendsignupOTPmsg.toString())));
+                          print("=====" + value.toString());
+                        }).catchError((e) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              backgroundColor: GREEN_CLR,
+                              content: Text(e.toString())));
+                        });
+                      },
                       child: Text(
                         RESEND,
                         style: TextStyle(color: GREEN_CLR, fontSize: 15),
@@ -341,16 +354,17 @@ class _EnterOTPState extends State<EnterOTP> {
                       text: VERIFY,
                       ontap: () {
                         if (_formkey.currentState!.validate()) {
-                          ForgotPass_OTP_VERIFY((first.text.toString() +
+                          Otp_verify((first.text.toString() +
                                   second.text.toString() +
                                   third.text.toString() +
                                   fourth.text.toString()))
                               .then((value) {
                             first.clear();
-                            first.clear();
-                            first.clear();
-                            first.clear();
-                            Navigate_to(context, ResetPassword());
+                            second.clear();
+                            third.clear();
+                            fourth.clear();
+
+                            Navigate_to(context, Login());
                           }).catchError((e) {
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                 backgroundColor: GREEN_CLR,

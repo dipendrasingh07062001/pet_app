@@ -1,13 +1,14 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Prefrence.dart';
+import 'package:pet_app/Screens/HOME/Home.dart';
+import 'package:pet_app/Screens/Login.dart';
 import 'package:pet_app/Screens/Tutorial.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../Api/LoginApi.dart';
 import '../Componants/Images&Icons.dart';
 import '../UTILS/Utils.dart';
-import 'HOME/Home.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -24,18 +25,9 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     super.initState();
-    // _checkIfLoggedIn();
-    Timer(Duration(milliseconds: 3000),
-        () => Navigate_to(context, userExist ? Home() : Tutorial()));
-  }
-
-  void _checkIfLoggedIn() async {
-    final userId = Preference.Pref.getInt('id').toString();
-    if (userId != null) {
-      setState(() {
-        userExist = true;
-      });
-    }
+    getLoginStatus();
+    // Timer(Duration(milliseconds: 3000),
+    //     () => Navigate_replace(context, userExist ? Home() : Tutorial()));
   }
 
   @override
@@ -49,5 +41,23 @@ class _SplashState extends State<Splash> {
         child: Image.asset(SPLASH_LOGO),
       ),
     );
+  }
+
+  getLoginStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final id = Preference.Pref.getInt("id").toString();
+    var firstTime = true;
+    firstTime = prefs.getBool("isFirstTimeUser") ?? true;
+    print("id :" + id.toString() + "^");
+
+    Future.delayed(Duration(seconds: 2), () {
+      id.toString() == "" || id.toString() == "null" || id.toString() == ''
+          ? firstTime != "null"
+              ? firstTime
+                  ? Navigate_replace(context, Tutorial())
+                  : Navigate_replace(context, Login())
+              : Navigate_replace(context, Home())
+          : Navigate_replace(context, Home());
+    });
   }
 }

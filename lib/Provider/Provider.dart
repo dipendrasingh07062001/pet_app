@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pet_app/Screens/Add_Pets/AddPet3.dart';
 import 'package:pet_app/Screens/GetStart.dart';
 import '../Screens/ForgotPassword.dart';
 import '../Screens/HOME/Home.dart';
@@ -25,7 +24,7 @@ class ProviderTutorial extends ChangeNotifier {
   }
 
   NavigateLogin(BuildContext context) {
-    Navigate_to(context, Login());
+    Navigate_replace(context, Login());
     isClick = true;
     notifyListeners();
   }
@@ -37,7 +36,7 @@ class ProviderTutorial extends ChangeNotifier {
   }
 
   NavigateHome(BuildContext context) {
-    Navigate_to(context, Home());
+    Navigate_replace(context, Home());
     notifyListeners();
   }
 
@@ -48,7 +47,7 @@ class ProviderTutorial extends ChangeNotifier {
 
   NavigateGetStarted(BuildContext context) {
     isClick = true;
-    Navigate_to(context, GetStarted());
+    Navigate_replace(context, GetStarted());
     notifyListeners();
   }
 

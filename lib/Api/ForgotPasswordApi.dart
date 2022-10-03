@@ -5,6 +5,7 @@ import 'package:pet_app/Api/ApiBaseUrl.dart';
 import 'package:pet_app/Prefrence.dart';
 
 var forgotmsg;
+var resendotpemail;
 Future ForgotPasswordApi(String email) async {
   var response = await http.post(Uri.parse(Base_URL + FORGOT_PASSWORD_SENDOTP),
       body: {'email': email});
@@ -18,6 +19,8 @@ Future ForgotPasswordApi(String email) async {
       print(response.body);
 
       Preference.Pref.setString('email', email).toString();
+
+      resendotpemail = Preference.Pref.getString('email').toString();
 
       return data;
     } else {

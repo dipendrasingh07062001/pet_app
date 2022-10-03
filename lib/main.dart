@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pet_app/Colors/COLORS.dart';
@@ -7,8 +8,7 @@ import 'package:pet_app/Screens/Splash.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Provider/ServiceListProvider.dart';
-import 'Screens/ChangePassword1.dart';
-import 'Screens/Login.dart';
+import 'Testing1/Testin2.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,11 +46,24 @@ class MyApp extends StatelessWidget {
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Pet App',
+            // theme: ThemeData(
+            //   pageTransitionsTheme: PageTransitionsTheme(
+            //     builders: {
+            //       TargetPlatform.android: SharedAxisPageTransitionsBuilder(
+            //         transitionType: SharedAxisTransitionType.vertical,
+            //       ),
+            //       TargetPlatform.iOS: SharedAxisPageTransitionsBuilder(
+            //         transitionType: SharedAxisTransitionType.vertical,
+            //       ),
+            //     },
+            //   ),
+            // ),
+
             theme: ThemeData(
               appBarTheme: AppBarTheme(
                 iconTheme: IconThemeData(color: BLACK_CLR),
                 color: Colors.deepPurpleAccent,
-                foregroundColor: Colors.red,
+                foregroundColor: Colors.transparent,
                 systemOverlayStyle: SystemUiOverlayStyle(
                   statusBarColor: Colors.transparent,
                   statusBarIconBrightness: Brightness.dark,

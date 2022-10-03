@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/parser.dart';
 import 'package:pet_app/Colors/COLORS.dart';
-import 'package:pet_app/Prefrence.dart';
-import 'package:pet_app/Screens/EnterOTP.dart';
+import 'package:pet_app/Screens/ForgotPassOTP_Verify.dart';
 import 'package:pet_app/UTILS/Utils.dart';
-import 'package:provider/provider.dart';
-
 import '../Api/ForgotPasswordApi.dart';
 import '../Componants/Images&Icons.dart';
 import '../Provider/Provider.dart';
@@ -46,17 +42,22 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               children: [
                 Padding(
                   padding: EdgeInsets.only(top: h * 0.1, left: w * 0.035),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: SizedBox(
-                      height: 35,
-                      width: 35,
-                      child: CircleAvatar(
-                        backgroundColor: FADE_GREEN_CLR,
-                        child: Icon(
-                          Icons.arrow_back_ios_new,
-                          size: 18,
-                          color: WHITE70_CLR,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: SizedBox(
+                        height: 35,
+                        width: 35,
+                        child: CircleAvatar(
+                          backgroundColor: FADE_GREEN_CLR,
+                          child: Icon(
+                            Icons.arrow_back_ios_new,
+                            size: 18,
+                            color: WHITE70_CLR,
+                          ),
                         ),
                       ),
                     ),
@@ -140,7 +141,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             ForgotPasswordApi(_emailCantroller.text.toString())
                                 .then((value) {
                               _emailCantroller.clear();
-                              Navigate_to(context, EnterOTP());
+                              Navigate_to(context, ForgotPassword_OTP_Verify());
                             }).catchError((e) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(

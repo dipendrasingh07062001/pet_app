@@ -8,3 +8,5 @@ final FORGOT_PASSWORD_SENDOTP = "forgot_password_sendotp";
 final FORGOT_VERIFY_OTP = "forgot_verifyOtp";
 final RESET_PASSWORD = "resetPassword";
 final Change_Password = "changepassword";
+final Forgot_Resend_otp = "resend_otp";
+final Signup_Resend_otp = "resend_otp_signup";

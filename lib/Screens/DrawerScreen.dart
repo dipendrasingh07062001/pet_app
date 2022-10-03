@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:pet_app/Api/LoginApi.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Componants/Images&Icons.dart';
 import 'package:pet_app/Screens/Login.dart';
@@ -17,10 +18,6 @@ class MyDrawer extends StatefulWidget {
 }
 
 class _MyDrawerState extends State<MyDrawer> {
-  final getEmail = Preference.Pref.getString('email').toString();
-  final getuserName = Preference.Pref.getString('name').toString();
-  final getuserImage = Preference.Pref.getString('image').toString();
-
   final deleteUser = Preference.Pref.clear();
 
   var h;
@@ -57,7 +54,7 @@ class _MyDrawerState extends State<MyDrawer> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     CircleAvatar(
-                        backgroundImage: NetworkImage(getuserImage.toString())
+                        backgroundImage: NetworkImage(userImage.toString())
                         // AssetImage("assets/png_image/profile.png"),
                         ),
                     SizedBox(
@@ -67,11 +64,11 @@ class _MyDrawerState extends State<MyDrawer> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          getuserName.toString() ?? "Bhimsingh Saini",
+                          userName.toString() ?? "Bhimsingh Saini",
                           style: TextStyle(color: WHITE60_CLR, fontSize: 12),
                         ),
                         Text(
-                          getEmail.toString() ?? "bhimsingh@gmail.com",
+                          Email ?? "bhimsingh@gmail.com",
                           style: TextStyle(color: WHITE60_CLR, fontSize: 12),
                         )
                       ],

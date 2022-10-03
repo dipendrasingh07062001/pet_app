@@ -1,15 +1,16 @@
 import 'dart:convert';
-
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:pet_app/Api/ApiBaseUrl.dart';
+import 'package:pet_app/Api/LoginApi.dart';
 import 'package:pet_app/Prefrence.dart';
 
 var changepasswordmsg;
+
 Future ChangePasswordApi(String oldpassword, String newPassword) async {
-  final userId = Preference.Pref.getInt('id').toString();
+  // final userId = Preference.Pref.getInt('id').toString();
+
   var response = await http.post(Uri.parse(Base_URL + Change_Password), body: {
-    'user_id': userId,
+    'user_id': Userid.toString(),
     'oldpassword': oldpassword,
     'newpassword': newPassword
   });
@@ -23,6 +24,9 @@ Future ChangePasswordApi(String oldpassword, String newPassword) async {
       print(data["message"]);
       print(response.body);
       changepasswordmsg = data['message'];
+
+      print("Id   : " + data['data']['id'].toString());
+
       return data;
     } else {
       return Future.error(data["message"]);
