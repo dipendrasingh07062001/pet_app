@@ -1,9 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:pet_app/Componants/Images&Icons.dart';
-import 'package:pet_app/Provider/ServiceListProvider.dart';
+import 'package:pet_app/Screens/Add_Pets/Add_pet2.dart';
+import 'package:pet_app/Screens/My_Pets/My_Pets.dart';
 import 'package:provider/provider.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
+import '../../Api/Services.dart';
 import '../../Colors/COLORS.dart';
+import '../../Provider/ServiceListProvider.dart';
 import '../../UTILS/Utils.dart';
 
 class AddPetpage extends StatefulWidget {
@@ -13,12 +18,12 @@ class AddPetpage extends StatefulWidget {
 }
 
 class _AddPetpageState extends State<AddPetpage> {
-  PageController _controller = new PageController();
+  PageController controller = PageController();
 
-  static const _kDuration = const Duration(milliseconds: 200);
+  static const _kDuration = Duration(milliseconds: 200);
   static const _kCurve = Curves.ease;
 
-  get Cantroller => _controller;
+  get cantroller => controller;
 
   var h;
   var w;
@@ -27,18 +32,18 @@ class _AddPetpageState extends State<AddPetpage> {
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
-    return Consumer<addPetProvider>(
+    return Consumer<AddPetProvider>(
         builder: (BuildContext context, value, Widget? child) {
       return Scaffold(
         backgroundColor: WHITE70_CLR,
         appBar: AppBar(
           leading: BackButton(
             onPressed: () {
-              if (value.CurrentIndex == 1 || value.CurrentIndex == 2) {
-                value.CurrentIndex = 0;
+              if (value.currentIndex == 1 || value.currentIndex == 2) {
+                value.currentIndex = 0;
               }
               Navigator.of(context).pop();
-              print(value.CurrentIndex);
+              print(value.currentIndex);
             },
           ),
           centerTitle: true,
@@ -55,21 +60,20 @@ class _AddPetpageState extends State<AddPetpage> {
           child: Stack(
             children: [
               PageView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                controller: _controller,
-                onPageChanged: value.OnChangedPage,
+                physics: const NeverScrollableScrollPhysics(),
+                controller: controller,
+                onPageChanged: value.onChangedPage,
                 itemBuilder: (context, position) {
                   return value.pages[position];
-                  //  vapages[position];
                 },
                 itemCount: value.pages.length,
               ),
               Container(
                   margin: EdgeInsets.only(top: h * 0.165),
-                  child: styleText(value.text[value.CurrentIndex], DARK_CLR,
+                  child: styleText(value.text[value.currentIndex], DARK_CLR,
                       FontWeight.bold, 19)),
               Container(
-                padding: EdgeInsets.all(1),
+                padding: const EdgeInsets.all(1),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(color: GREEN_CLR, width: 1.5)),
@@ -78,43 +82,89 @@ class _AddPetpageState extends State<AddPetpage> {
                   direction: Axis.horizontal,
                   selectedSize: 12,
                   totalSteps: value.pages.length,
-                  currentStep: value.CurrentIndex + 1,
+                  currentStep: value.currentIndex + 1,
                   size: 10,
                   selectedColor: GREEN_CLR,
                   unselectedColor: WHITE70_CLR,
-                  roundedEdges: Radius.circular(20),
+                  roundedEdges: const Radius.circular(20),
                 ),
               ),
               Container(
-                  padding: EdgeInsets.only(bottom: 35),
+                  padding: const EdgeInsets.only(bottom: 35),
                   alignment: Alignment.bottomCenter,
                   child: MaterialButton(
                       elevation: 0,
                       minWidth: w * 0.55,
-                      // minWidth:value.mCurrentIndex == 2 ? w * 0.7 : w * 0.55,
                       height: h * 0.057,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
-                          side: value.CurrentIndex == 2
-                              ? BorderSide(color: GREEN_CLR)
-                              : BorderSide(color: Colors.transparent)),
-                      color: value.CurrentIndex == 2
-                          ? (value.SelectImage == null ? WHITE_CLR : GREEN_CLR)
+                          side: value.currentIndex == 2
+                              ? const BorderSide(color: GREEN_CLR)
+                              : const BorderSide(color: Colors.transparent)),
+                      color: value.currentIndex == 2
+                          ? (value.selectImage == null ? WHITE_CLR : GREEN_CLR)
                           : GREEN_CLR,
                       onPressed: () {
-                        value.CurrentIndex;
-                        _controller.nextPage(
+                        value.addPetModel.type = value.addPetModel.type;
+                        value.addPetModel.name = value.nameCan.text.toString();
+                        value.addPetModel.parentName =
+                            value.parentNmaeCan.text.toString();
+                        value.addPetModel.breed = selectBreed;
+                        value.addPetModel.dob = value.selectAtdate.toString();
+                        value.addPetModel.weight =
+                            value.weightDropdoun.toString();
+                        value.addPetModel.gender = value.gender.toString();
+                        // value.addPetModel.addPetIamge =
+                        //     File(value.SelectImage!.path
+
+                        print(value.addPetModel.type.toString());
+                        print(value.addPetModel.name.toString());
+                        print(value.addPetModel.parentName.toString());
+                        print(value.addPetModel.breed.toString());
+                        print(value.addPetModel.gender.toString());
+                        print(value.addPetModel.dob.toString());
+                        print(value.addPetModel.weight.toString());
+                        value.currentIndex;
+                        controller.nextPage(
                             duration: _kDuration, curve: _kCurve);
-                        print(value.CurrentIndex);
+
+                        // print(value.CurrentIndex);
+
+                        value.currentIndex == 2
+                            ? addPetApi(
+                                    value.addPetModel.type.toString(),
+                                    value.addPetModel.name.toString(),
+                                    value.addPetModel.parentName.toString(),
+                                    value.addPetModel.breed.toString(),
+                                    value.addPetModel.gender.toString(),
+                                    value.addPetModel.weight.toString(),
+                                    value.addPetModel.dob.toString(),
+                                    value.selectImage!.path,
+                                    value.selectImage!.path)
+                                .then((value) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        backgroundColor: GREEN_CLR,
+                                        content: Text(addpetmsg.toString())));
+
+                                Navigate_replace(context, const My_Pets());
+                              }).catchError((e) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        backgroundColor: GREEN_CLR,
+                                        content: Text(e.toString())));
+                                print(e.toString());
+                              })
+                            : Container();
                       },
                       child: styleText(
-                          value.CurrentIndex == 2
-                              ? (value.SelectImage == null
+                          value.currentIndex == 2
+                              ? (value.selectImage == null
                                   ? SKIP_CONTINUE
                                   : FINISH)
                               : CONTINUE,
-                          value.CurrentIndex == 2
-                              ? (value.SelectImage == null
+                          value.currentIndex == 2
+                              ? (value.selectImage == null
                                   ? GREEN_CLR
                                   : WHITE_CLR)
                               : WHITE_CLR,

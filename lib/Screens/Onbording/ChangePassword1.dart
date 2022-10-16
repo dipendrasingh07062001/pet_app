@@ -3,8 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Componants/Images&Icons.dart';
 import 'package:pet_app/UTILS/Utils.dart';
-import '../Api/ChangePasswordApi.dart';
-import '../Prefrence.dart';
+
+import '../../Api/Services.dart';
 
 class ChangePassword1 extends StatefulWidget {
   const ChangePassword1({super.key});
@@ -16,13 +16,13 @@ class ChangePassword1 extends StatefulWidget {
 class _ChangePassword1State extends State<ChangePassword1> {
   final _formkey = GlobalKey<FormState>();
 
-  TextEditingController _oldPasswordCantroller = TextEditingController();
-  TextEditingController _newPasswordCantrolller = TextEditingController();
-  TextEditingController _confirmPasswordCantrolller = TextEditingController();
+  TextEditingController oldPasswordCantroller = TextEditingController();
+  TextEditingController newPasswordCantrolller = TextEditingController();
+  TextEditingController confirmPasswordCantrolller = TextEditingController();
 
   String passError = "";
   String newPassError = "";
-  String ConfirmPassError = "";
+  String confirmPassError = "";
 
   bool _passwordVisible = false;
   bool _passwordVisible1 = false;
@@ -53,7 +53,7 @@ class _ChangePassword1State extends State<ChangePassword1> {
                       onTap: () {
                         Navigator.of(context).pop();
                       },
-                      child: Align(
+                      child: const Align(
                         alignment: Alignment.topLeft,
                         child: SizedBox(
                           height: 40,
@@ -97,7 +97,7 @@ class _ChangePassword1State extends State<ChangePassword1> {
                         // color: WHITE_CLR,
 
                         child: TextFormField(
-                          controller: _oldPasswordCantroller,
+                          controller: oldPasswordCantroller,
                           validator: (value) {
                             if (value!.isEmpty) {
                               newPassError = ENTER_OLD_PASS;
@@ -114,11 +114,11 @@ class _ChangePassword1State extends State<ChangePassword1> {
                               errorText: "",
                               errorStyle: TextStyle(height: 0),
                               hintText: "Old Password",
-                              hintStyle: TextStyle(
+                              hintStyle: const TextStyle(
                                   color: GRAY_CLR,
                                   fontSize: 16,
                                   fontWeight: FontWeight.normal),
-                              prefixIcon: Icon(
+                              prefixIcon: const Icon(
                                 Icons.lock_open_outlined,
                                 color: GRAY_CLR,
                                 size: 20,
@@ -162,7 +162,7 @@ class _ChangePassword1State extends State<ChangePassword1> {
                         // color: WHITE_CLR,
 
                         child: TextFormField(
-                          controller: _newPasswordCantrolller,
+                          controller: newPasswordCantrolller,
                           validator: (value) {
                             if (value!.isEmpty) {
                               passError = ENTER_NEW_PASS;
@@ -179,11 +179,11 @@ class _ChangePassword1State extends State<ChangePassword1> {
                               errorText: "",
                               errorStyle: TextStyle(height: 0),
                               hintText: "New Password",
-                              hintStyle: TextStyle(
+                              hintStyle: const TextStyle(
                                   color: GRAY_CLR,
                                   fontSize: 16,
                                   fontWeight: FontWeight.normal),
-                              prefixIcon: Icon(
+                              prefixIcon: const Icon(
                                 Icons.lock_open_outlined,
                                 color: GRAY_CLR,
                                 size: 20,
@@ -227,18 +227,18 @@ class _ChangePassword1State extends State<ChangePassword1> {
                         // color: WHITE_CLR,
 
                         child: TextFormField(
-                          controller: _confirmPasswordCantrolller,
+                          controller: confirmPasswordCantrolller,
                           validator: (value) {
                             if (value!.isEmpty) {
-                              ConfirmPassError = ENTER_CONFIRM_PASS;
+                              confirmPassError = ENTER_CONFIRM_PASS;
                               setState(() {});
                               return "";
-                            } else if (_confirmPasswordCantrolller !=
-                                _newPasswordCantrolller) {
-                              ConfirmPassError =
+                            } else if (confirmPasswordCantrolller !=
+                                newPasswordCantrolller) {
+                              confirmPassError =
                                   ENTER_CONFIRM_PASS_DOES_NOT_MATCH;
                             } else {
-                              ConfirmPassError = "";
+                              confirmPassError = "";
                             }
                           },
                           obscureText: _passwordVisible2,
@@ -248,11 +248,11 @@ class _ChangePassword1State extends State<ChangePassword1> {
                               errorText: "",
                               errorStyle: TextStyle(height: 0),
                               hintText: "Confirm Password",
-                              hintStyle: TextStyle(
+                              hintStyle: const TextStyle(
                                   color: GRAY_CLR,
                                   fontSize: 16,
                                   fontWeight: FontWeight.normal),
-                              prefixIcon: Icon(
+                              prefixIcon: const Icon(
                                 Icons.lock_open_outlined,
                                 color: GRAY_CLR,
                                 size: 20,
@@ -275,10 +275,11 @@ class _ChangePassword1State extends State<ChangePassword1> {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Visibility(
-                            visible: ConfirmPassError != "",
+                            visible: confirmPassError != "",
                             child: Text(
-                              ConfirmPassError,
-                              style: TextStyle(color: Colors.red, fontSize: 12),
+                              confirmPassError,
+                              style: const TextStyle(
+                                  color: Colors.red, fontSize: 12),
                               textAlign: TextAlign.start,
                             )),
                       ),
@@ -293,8 +294,8 @@ class _ChangePassword1State extends State<ChangePassword1> {
                               newPassError = "";
 
                               ChangePasswordApi(
-                                      _oldPasswordCantroller.text.toString(),
-                                      _confirmPasswordCantrolller.text
+                                      oldPasswordCantroller.text.toString(),
+                                      confirmPasswordCantrolller.text
                                           .toString())
                                   .then((value) {
                                 ScaffoldMessenger.of(context).showSnackBar(

@@ -1,36 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pet_app/Api/ForgotPasswordApi.dart';
-import 'package:pet_app/Api/resend_OTP_ForgotPass.dart';
 import 'package:pet_app/Colors/COLORS.dart';
+import 'package:pet_app/Screens/SuccesFullVerified.dart';
 import 'package:pet_app/UTILS/Utils.dart';
-import '../Api/forgotPass_otp_verify_Api.dart';
-import '../Componants/Images&Icons.dart';
-import '../Prefrence.dart';
-import 'ResetPassword.dart';
+import '../../Api/Services.dart';
+import '../../Componants/Images&Icons.dart';
 
-class ForgotPassword_OTP_Verify extends StatefulWidget {
-  const ForgotPassword_OTP_Verify({super.key});
+class Signup_OTP_Verify extends StatefulWidget {
+  const Signup_OTP_Verify({super.key});
 
   @override
-  State<ForgotPassword_OTP_Verify> createState() =>
-      _ForgotPassword_OTP_VerifyState();
+  State<Signup_OTP_Verify> createState() => _Signup_OTP_VerifyState();
 }
 
-class _ForgotPassword_OTP_VerifyState extends State<ForgotPassword_OTP_Verify> {
+class _Signup_OTP_VerifyState extends State<Signup_OTP_Verify> {
   final _formkey = GlobalKey<FormState>();
 
-  // final getEmail = Preference.Pref.getString('email').toString();
+  var data;
 
   var h;
   var w;
 
   String? otp;
 
-  TextEditingController first = new TextEditingController();
-  TextEditingController second = new TextEditingController();
-  TextEditingController third = new TextEditingController();
-  TextEditingController fourth = new TextEditingController();
+  TextEditingController first = TextEditingController();
+  TextEditingController second = TextEditingController();
+  TextEditingController third = TextEditingController();
+  TextEditingController fourth = TextEditingController();
   bool isloading = false;
 
   var tap = 0;
@@ -77,6 +73,7 @@ class _ForgotPassword_OTP_VerifyState extends State<ForgotPassword_OTP_Verify> {
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
+
     return Scaffold(
       extendBody: true,
       resizeToAvoidBottomInset: true,
@@ -96,7 +93,7 @@ class _ForgotPassword_OTP_VerifyState extends State<ForgotPassword_OTP_Verify> {
                     onTap: () {
                       Navigator.of(context).pop();
                     },
-                    child: Align(
+                    child: const Align(
                       alignment: Alignment.topLeft,
                       child: SizedBox(
                         height: 35,
@@ -132,8 +129,8 @@ class _ForgotPassword_OTP_VerifyState extends State<ForgotPassword_OTP_Verify> {
                     FontWeight.normal,
                     15,
                   ),
-                  Text(resendotpemail.toString(),
-                      style: TextStyle(
+                  Text(signupEmail.toString(),
+                      style: const TextStyle(
                           decoration: TextDecoration.underline,
                           fontSize: 15,
                           color: GREEN_CLR)),
@@ -146,7 +143,7 @@ class _ForgotPassword_OTP_VerifyState extends State<ForgotPassword_OTP_Verify> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                            padding: EdgeInsets.all(0),
+                            padding: const EdgeInsets.all(0),
                             alignment: Alignment.center,
                             height: 60,
                             width: 60,
@@ -166,7 +163,7 @@ class _ForgotPassword_OTP_VerifyState extends State<ForgotPassword_OTP_Verify> {
                                     TextStyle(fontSize: 24, color: WHITE70_CLR),
                                 keyboardType: TextInputType.number,
 
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                     border: InputBorder.none,
                                     counterText: "",
                                     filled: true,
@@ -192,11 +189,11 @@ class _ForgotPassword_OTP_VerifyState extends State<ForgotPassword_OTP_Verify> {
                                   controller: second,
                                   focusNode: pin2FocusNode,
                                   obscureText: false,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 24, color: Colors.white),
                                   keyboardType: TextInputType.number,
                                   textAlign: TextAlign.center,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                       border: InputBorder.none,
                                       counterText: "",
                                       filled: true,
@@ -239,11 +236,11 @@ class _ForgotPassword_OTP_VerifyState extends State<ForgotPassword_OTP_Verify> {
                                   controller: third,
                                   focusNode: pin3FocusNode,
                                   obscureText: false,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 24, color: Colors.white),
                                   keyboardType: TextInputType.number,
                                   textAlign: TextAlign.center,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                       border: InputBorder.none,
                                       counterText: "",
                                       filled: true,
@@ -282,11 +279,11 @@ class _ForgotPassword_OTP_VerifyState extends State<ForgotPassword_OTP_Verify> {
                                 controller: fourth,
                                 focusNode: pin4FocusNode,
                                 obscureText: false,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 24, color: Colors.white),
                                 keyboardType: TextInputType.number,
                                 // textAlign: TextAlign.center,
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                     border: InputBorder.none,
                                     counterText: "",
                                     filled: true,
@@ -326,17 +323,18 @@ class _ForgotPassword_OTP_VerifyState extends State<ForgotPassword_OTP_Verify> {
                   ),
                   GestureDetector(
                       onTap: () {
-                        Resend_OTP_ForgotPassword().then((value) {
+                        Resend_OTP_Signup().then((value) {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               backgroundColor: GREEN_CLR,
-                              content: Text(resendOTPmsg.toString())));
+                              content: Text(resendsignupOTPmsg.toString())));
+                          print("=====" + value.toString());
                         }).catchError((e) {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               backgroundColor: GREEN_CLR,
                               content: Text(e.toString())));
                         });
                       },
-                      child: Text(
+                      child: const Text(
                         RESEND,
                         style: TextStyle(color: GREEN_CLR, fontSize: 15),
                       )),
@@ -347,16 +345,17 @@ class _ForgotPassword_OTP_VerifyState extends State<ForgotPassword_OTP_Verify> {
                       text: VERIFY,
                       ontap: () {
                         if (_formkey.currentState!.validate()) {
-                          ForgotPass_OTP_VERIFY((first.text.toString() +
+                          Otp_verify((first.text.toString() +
                                   second.text.toString() +
                                   third.text.toString() +
                                   fourth.text.toString()))
                               .then((value) {
                             first.clear();
-                            first.clear();
-                            first.clear();
-                            first.clear();
-                            Navigate_to(context, ResetPassword());
+                            second.clear();
+                            third.clear();
+                            fourth.clear();
+
+                            Navigate_to(context, const SuccessFullyVerified());
                           }).catchError((e) {
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                 backgroundColor: GREEN_CLR,

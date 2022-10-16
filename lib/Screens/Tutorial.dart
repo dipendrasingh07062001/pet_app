@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Componants/Images&Icons.dart';
 import 'package:pet_app/Provider/Provider.dart';
-import 'package:pet_app/Screens/GetStart.dart';
-import 'package:pet_app/Screens/Login.dart';
+import 'package:pet_app/Screens/Onbording/Login.dart';
 import 'package:pet_app/UTILS/Utils.dart';
-import 'package:pet_app/main.dart';
 import 'package:provider/provider.dart';
 
 class Tutorial extends StatefulWidget {

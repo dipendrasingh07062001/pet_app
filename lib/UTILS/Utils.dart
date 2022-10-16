@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 
+import '../Api/Services.dart';
+import '../Componants/Images&Icons.dart';
+
 //Default Button
 class DefaultButton extends StatelessWidget {
   final String text;
@@ -54,39 +57,39 @@ Navigate_PushRemove(BuildContext context, Widget widget) {
       (Route<dynamic> route) => false);
 }
 
-AppBar DefaultAppBar(String _text) {
+AppBar DefaultAppBar(String text) {
   return AppBar(
     centerTitle: true,
     toolbarHeight: 65,
     backgroundColor: WHITE70_CLR,
     elevation: 1,
-    title: styleText(_text, DARK_CLR, FontWeight.bold, 17),
+    title: styleText(text, DARK_CLR, FontWeight.bold, 17),
   );
 }
 
 //DefultText
 Text styleText(
-  String _value,
-  Color _color,
-  FontWeight _weight,
-  double _fontSize,
+  String value,
+  Color color,
+  FontWeight weight,
+  double fontSize,
 ) {
   return Text(
-    _value,
-    style: TextStyle(color: _color, fontWeight: _weight, fontSize: _fontSize),
+    value,
+    style: TextStyle(color: color, fontWeight: weight, fontSize: fontSize),
     textAlign: TextAlign.start,
   );
 }
 
 Text TutorialText(
-  String _value,
-  Color _color,
-  FontWeight _weight,
-  double _fontSize,
+  String value,
+  Color color,
+  FontWeight weight,
+  double fontSize,
 ) {
   return Text(
-    _value,
-    style: TextStyle(color: _color, fontWeight: _weight, fontSize: _fontSize),
+    value,
+    style: TextStyle(color: color, fontWeight: weight, fontSize: fontSize),
     textAlign: TextAlign.center,
   );
 }
@@ -98,7 +101,7 @@ class DefaultRadioButton extends StatelessWidget {
 
   final Function(int?) ontap;
 
-  const DefaultRadioButton({
+  DefaultRadioButton({
     Key? key,
     required this.text,
     required this.groupValue,
@@ -109,10 +112,10 @@ class DefaultRadioButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.only(left: 10, right: 10),
+        padding: const EdgeInsets.only(left: 10, right: 10),
         alignment: Alignment.center,
         height: 50,
-        margin: EdgeInsets.only(top: 20),
+        margin: const EdgeInsets.only(top: 20),
         decoration: BoxDecoration(
             color: WHITE_CLR,
             borderRadius: BorderRadius.circular(10),
@@ -132,6 +135,24 @@ class DefaultRadioButton extends StatelessWidget {
         ]));
   }
 
+  ////date picker /// select dob
+  DateTime? birthDate;
+  Future datePicker(BuildContext context, String? selectdate) async {
+    final datePick = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(1900),
+        lastDate: DateTime(2100));
+    if (datePick != null && datePick != birthDate) {
+      birthDate = datePick;
+      selectdate =
+          "${birthDate!.day}-${birthDate!.month}-${birthDate!.year}"; // 08/14/2019
+
+    }
+  }
+
+  //// Snacbar
+
   ScaffoldFeatureController<SnackBar, SnackBarClosedReason> snkbar(
     BuildContext context,
     String txt,
@@ -139,9 +160,55 @@ class DefaultRadioButton extends StatelessWidget {
     return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(
         txt,
-        style: TextStyle(color: WHITE_CLR),
+        style: const TextStyle(color: WHITE_CLR),
       ),
       backgroundColor: GREEN_CLR,
     ));
   }
+}
+
+//// Delete Dilodg
+
+Future deleteDialog(BuildContext context, Function() onTap, String text) {
+  var h;
+  var w;
+
+  return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        h = MediaQuery.of(context).size.height;
+        w = MediaQuery.of(context).size.width;
+        return Padding(
+          padding: const EdgeInsets.only(left: 15, right: 15),
+          child: AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            title: Center(
+              child: TutorialText(text, BLACK_CLR, FontWeight.normal, 17),
+            ),
+            content: SizedBox(
+              height: h * 0.13,
+              width: w * 0.18,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: h * 0.010,
+                  ),
+                  DefaultButton(
+                      text: DELETE,
+                      ontap: onTap,
+                      fontsize: 17,
+                      height: 40,
+                      width: 200),
+                  const SizedBox(height: 18),
+                  InkWell(
+                      onTap: () => Navigator.of(context).pop(),
+                      child:
+                          styleText(CANCEL, GREEN_CLR, FontWeight.normal, 17)),
+                ],
+              ),
+            ),
+          ),
+        );
+      });
 }

@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/parser.dart';
 import 'package:pet_app/Colors/COLORS.dart';
-import 'package:pet_app/Screens/HOME/Home.dart';
-import 'package:pet_app/Screens/Login.dart';
+import 'package:pet_app/Screens/Onbording/Login.dart';
 import 'package:pet_app/UTILS/Utils.dart';
-import 'package:provider/provider.dart';
-
 import '../Componants/Images&Icons.dart';
-import '../Provider/Provider.dart';
 
 class SuccessFullyVerified extends StatefulWidget {
   const SuccessFullyVerified({super.key});

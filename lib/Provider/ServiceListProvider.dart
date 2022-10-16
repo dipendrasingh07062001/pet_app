@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pet_app/Screens/Add_Pets/AddPet3.dart';
-import 'package:pet_app/Screens/HOME/ServicesList.dart';
 import 'package:pet_app/SevicesListAll_Screens/Medicines.dart';
 import 'package:pet_app/SevicesListAll_Screens/Pregnancy.dart';
 import 'package:pet_app/SevicesListAll_Screens/Vactionations.dart';
 import 'package:pet_app/UTILS/Utils.dart';
-import '../../Componants/Images&Icons.dart';
+import '../Api/Models/ServiceListModel.dart';
+import '../Api/Models/addPetModel.dart';
+import '../Api/Services.dart';
 import '../Screens/Add_Pets/Add_pet2.dart';
 import '../Screens/Add_Pets/addPet1.dart';
-import '../Screens/BlogDetails.dart';
 import '../Screens/CycleTrackingPageViewBuilder/CycleTracking_Page.dart';
 import '../SevicesListAll_Screens/Deworming.dart';
 import 'package:pet_app/Screens/CycleTrackingPageViewBuilder/CycleTracking1.dart';
@@ -18,23 +18,10 @@ import 'package:pet_app/Screens/CycleTrackingPageViewBuilder/CycleTracking5.dart
 import 'package:pet_app/Screens/CycleTrackingPageViewBuilder/Cycle_Tracking4.dart';
 import 'package:pet_app/Screens/CycleTrackingPageViewBuilder/WheelList_CycleTracking2.dart';
 
-class ServicesListProvider extends ChangeNotifier {
-  static List<String> ImageName = [
-    CYCLE_TRACKING,
-    MEDICATIONS,
-    VACCINATIONS,
-    DEWORMING,
-    PREGNANCY
-  ];
+////ServiceHelthProvider
 
-  static List url = [
-    'assets/png_image/Group 32.png',
-    'assets/png_image/Group 32.png',
-    'assets/png_image/Group 32.png',
-    'assets/png_image/Group 32.png',
-    'assets/png_image/Group 32.png'
-  ];
-
+class ServiceHealthProvider extends ChangeNotifier {
+  // List Service = ["Health", "Vets", "Gromming", "Trainig", "illness"];
   static List<Widget> PageRoute = [
     CycleTrackingPage(),
     Medicines(),
@@ -42,62 +29,103 @@ class ServicesListProvider extends ChangeNotifier {
     Deworming(),
     Pregnancy()
   ];
+  ServiceModel servicelistmodel = ServiceModel();
+  bool loading = false;
+  int currentindex = 0;
 
-  final List<DetailModel> DetailData = List.generate(ImageName.length,
-      (index) => DetailModel('${ImageName[index]}', '${url[index]}'));
-  get detaildata => DetailData;
+  getServicelistdata(BuildContext context) async {
+    loading = true;
+    servicelistmodel = await servicelistApi();
+    loading = false;
+    notifyListeners();
+  }
 
-  OnClickedList(BuildContext context, int index) {
+  onClickedList(BuildContext context, int index) {
     Navigate_to(context, PageRoute[index]);
     notifyListeners();
   }
-}
 
-////ServiceHelthProvider
-
-class ServiceHealthProvider extends ChangeNotifier {
-  List Service = ["Health", "Vets", "Gromming", "Trainig", "illness"];
-
-  int currenindex = 0;
-
-  get data => Service;
+  // get data => Service;
   OnTap(int index) {
-    currenindex = index;
-    notifyListeners();
-  }
-}
-
-//// BlogDetailListProvider
-
-class BlogDetailProvider extends ChangeNotifier {
-  OnClicked(BuildContext context) {
-    Navigate_to(context, Blog_Details());
+    currentindex = index;
     notifyListeners();
   }
 }
 
 ////AddPet PageViewProvider
 
-class addPetProvider extends ChangeNotifier {
+class AddPetProvider extends ChangeNotifier {
+  AddPetModel addPetModel = AddPetModel();
+
+  TextEditingController nameCan = TextEditingController();
+  TextEditingController parentNmaeCan = TextEditingController();
+  String selectedpet = "";
+
+  String weightDropdoun = 'Weight';
+  final weightItems = ['Weight', '10', '20', '30', '40', '50', '60'];
   List text = ["Select Type", "Fill the Details", "Upload Pictures"];
-  List<Widget> pages = [AddPets(), AddPet2(), Addpet3()];
+  List<Widget> pages = [const AddPets(), const AddPet2(), const Addpet3()];
 
-  int CurrentIndex = 0;
+  int currentIndex = 0;
 
-  OnChangedPage(int value) {
-    CurrentIndex = value;
+  onChangedPage(int value) {
+    currentIndex = value;
     notifyListeners();
   }
 
+  String gender = 'male';
+  onValueChange(String? index) {
+    gender = index ?? gender;
+    notifyListeners();
+  }
+
+  String day = 'daily';
+  dayChangevalue(String? index) {
+    day = index ?? day;
+    notifyListeners();
+  }
+
+////select date
+
+  // DateTime currentdate1 = DateTime.now();
+  // Future datechange1(BuildContext context) async {
+  //   final DateTime? datechange1 = await showDatePicker(
+  //       context: context,
+  //       initialDate: currentdate1,
+  //       firstDate: DateTime(2001),
+  //       lastDate: currentdate1);
+  //   if (datechange1 != null) {
+  //     currentdate1 = datechange1;
+  //   }
+
+  //   notifyListeners();
+  // }
+
+  String? selectAtdate;
+  DateTime? birthDate;
+  Future<void> datePicker(context, String selectAtdate) async {
+    final datePick = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(1900),
+        lastDate: DateTime(2100));
+    if (datePick != null && datePick != birthDate) {
+      birthDate = datePick;
+      selectAtdate =
+          "${birthDate!.day}-${birthDate!.month}-${birthDate!.year}"; // 08/14/2019
+
+    }
+    notifyListeners();
+  }
   ////Clickedd photo providder
 
-  PickedFile? SelectImage = null;
+  PickedFile? selectImage = null;
 
   Opengallery(BuildContext context) async {
     final GalleryImage = await ImagePicker().getImage(
       source: ImageSource.gallery,
     );
-    SelectImage = GalleryImage!;
+    selectImage = GalleryImage!;
     notifyListeners();
   }
 
@@ -105,18 +133,18 @@ class addPetProvider extends ChangeNotifier {
     final CameraImage = await ImagePicker().getImage(
       source: ImageSource.camera,
     );
-    SelectImage = CameraImage;
+    selectImage = CameraImage;
     notifyListeners();
   }
 }
 
 class CycleTrackingProvider extends ChangeNotifier {
   List<Widget> pages = [
-    Cycle_Tracking1(),
-    CycleTracking2(),
-    CycleTracking3(),
-    Cycle_Tracking(),
-    CycleTracking5(),
+    const Cycle_Tracking1(),
+    const CycleTracking2(),
+    const CycleTracking3(),
+    const Cycle_Tracking(),
+    const CycleTracking5(),
   ];
   var currentIndex = 0;
   OnChangedPage(int index) {

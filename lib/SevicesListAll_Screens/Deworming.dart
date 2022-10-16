@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-
-import 'dart:developer';
-
-import 'package:flutter/material.dart';
+import 'package:pet_app/Api/Models/My_pet_model.dart';
+import 'package:pet_app/Api/Services.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Componants/Images&Icons.dart';
-import 'package:pet_app/Screens/HOME/ServicesList.dart';
+import 'package:pet_app/Screens/Add_Pets/AddPet3.dart';
 import 'package:pet_app/SevicesListAll_Screens/Add_Deworming.dart';
 import 'package:pet_app/UTILS/Utils.dart';
+
+import '../Api/Models/getDewormingModel.dart';
+import '../Api/Prefrence.dart';
 
 class Deworming extends StatefulWidget {
   const Deworming({super.key});
@@ -17,6 +18,22 @@ class Deworming extends StatefulWidget {
 }
 
 class _DewormingState extends State<Deworming> {
+  GetDewomingModel result = GetDewomingModel();
+  MyPetModel result1 = MyPetModel();
+
+  final petid = Preference.Pref.getInt('id');
+
+  @override
+  void initState() {
+    super.initState();
+    getDewormingListApi(petid).then((value) {
+      setState(() {
+        result = value;
+        print(result.toString());
+      });
+    });
+  }
+
   var h;
   var w;
   @override
@@ -65,7 +82,7 @@ class _DewormingState extends State<Deworming> {
                                 Navigate_to(context, Add_Deworming());
                               });
                             },
-                            child: CircleAvatar(
+                            child: const CircleAvatar(
                               backgroundColor: FADE_BLUE_CLR,
                               child: Icon(
                                 Icons.edit,

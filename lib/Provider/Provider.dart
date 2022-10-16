@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pet_app/Screens/GetStart.dart';
-import '../Screens/ForgotPassword.dart';
 import '../Screens/HOME/Home.dart';
-import '../Screens/Login.dart';
-import '../Screens/Signup.dart';
+import '../Screens/Onbording/ForgotPassword.dart';
+import '../Screens/Onbording/Login.dart';
+import '../Screens/Onbording/Signup.dart';
 import '../UTILS/Utils.dart';
 
 class ProviderTutorial extends ChangeNotifier {
@@ -62,6 +62,24 @@ class ProviderTutorial extends ChangeNotifier {
   BottomSeetProvider(String search) {
     searchLocationCantroller == search;
     print(searchLocationCantroller);
+    notifyListeners();
+  }
+
+////// select date
+  String? selectAtdate;
+  DateTime? birthDate;
+  Future<void> datePicker(context) async {
+    final datePick = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(1900),
+        lastDate: DateTime(2100));
+    if (datePick != null && datePick != birthDate) {
+      birthDate = datePick;
+      selectAtdate =
+          "${birthDate!.day}-${birthDate!.month}-${birthDate!.year}"; // 08/14/2019
+
+    }
     notifyListeners();
   }
 }

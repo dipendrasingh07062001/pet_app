@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pet_app/Api/Services.dart';
 import 'package:pet_app/Colors/COLORS.dart';
-import 'package:pet_app/Screens/ForgotPassOTP_Verify.dart';
+import 'package:pet_app/Componants/Images&Icons.dart';
+import 'package:pet_app/Screens/Onbording/ForgotPassOTP_Verify.dart';
 import 'package:pet_app/UTILS/Utils.dart';
-import '../Api/ForgotPasswordApi.dart';
-import '../Componants/Images&Icons.dart';
-import '../Provider/Provider.dart';
+import '../../Provider/Provider.dart';
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({super.key});
@@ -17,7 +17,7 @@ class ForgotPassword extends StatefulWidget {
 class _ForgotPasswordState extends State<ForgotPassword> {
   final _formkey = GlobalKey<FormState>();
 
-  TextEditingController _emailCantroller = TextEditingController();
+  TextEditingController emailCantroller = TextEditingController();
 
   String emailError = "";
   var h;
@@ -46,7 +46,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     onTap: () {
                       Navigator.of(context).pop();
                     },
-                    child: Align(
+                    child: const Align(
                       alignment: Alignment.topLeft,
                       child: SizedBox(
                         height: 35,
@@ -92,7 +92,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         ],
                       ),
                       child: TextFormField(
-                          controller: _emailCantroller,
+                          controller: emailCantroller,
                           validator: (value) {
                             if (value!.isEmpty) {
                               emailError = ENTER_EMAIL;
@@ -104,7 +104,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           },
                           textCapitalization: TextCapitalization.none,
                           textAlign: TextAlign.start,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               errorText: "",
                               errorStyle: TextStyle(height: 0),
                               hintText: "Email address",
@@ -138,9 +138,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           if (_formkey.currentState!.validate()) {
                             emailError = "";
 
-                            ForgotPasswordApi(_emailCantroller.text.toString())
+                            ForgotPasswordApi(emailCantroller.text.toString())
                                 .then((value) {
-                              _emailCantroller.clear();
+                              emailCantroller.clear();
                               Navigate_to(context, ForgotPassword_OTP_Verify());
                             }).catchError((e) {
                               ScaffoldMessenger.of(context).showSnackBar(

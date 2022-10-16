@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:pet_app/Api/LoginApi.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Componants/Images&Icons.dart';
-import 'package:pet_app/Screens/Login.dart';
+import 'package:pet_app/Screens/Onbording/Login.dart';
 import 'package:pet_app/UTILS/Utils.dart';
-import '../Prefrence.dart';
+import '../Api/Prefrence.dart';
 import 'My_Pets/My_Pets.dart';
 import 'Profile.dart';
 import 'Setting.dart';
@@ -19,6 +18,23 @@ class MyDrawer extends StatefulWidget {
 
 class _MyDrawerState extends State<MyDrawer> {
   final deleteUser = Preference.Pref.clear();
+
+  var Name;
+  var Email;
+  var Image;
+
+  @override
+  void initState() {
+    super.initState();
+
+    Name = Preference.Pref.getString('name');
+    Image = Preference.Pref.getString('image');
+    Email = Preference.Pref.getString('email');
+
+    print('====' + Name.toString());
+    print('===' + Image.toString());
+    print('===' + Email.toString());
+  }
 
   var h;
   var w;
@@ -54,9 +70,12 @@ class _MyDrawerState extends State<MyDrawer> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     CircleAvatar(
-                        backgroundImage: NetworkImage(userImage.toString())
-                        // AssetImage("assets/png_image/profile.png"),
-                        ),
+                      backgroundImage:
+                          //  NetworkImage(
+                          //   Image.toString(),
+
+                          AssetImage("assets/png_image/profile.png"),
+                    ),
                     SizedBox(
                       width: w * 0.020,
                     ),
@@ -64,11 +83,15 @@ class _MyDrawerState extends State<MyDrawer> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          userName.toString() ?? "Bhimsingh Saini",
+                          Name.toString() == "null"
+                              ? "Bhimsingh Saini(Guest)"
+                              : Name.toString(),
                           style: TextStyle(color: WHITE60_CLR, fontSize: 12),
                         ),
                         Text(
-                          Email ?? "bhimsingh@gmail.com",
+                          Email.toString() == "null"
+                              ? "bhim@gmail.com(Guest)"
+                              : Email.toString(),
                           style: TextStyle(color: WHITE60_CLR, fontSize: 12),
                         )
                       ],
@@ -91,7 +114,10 @@ class _MyDrawerState extends State<MyDrawer> {
                   height: h * 0.025,
                 ),
                 GestureDetector(
-                  onTap: () => Navigate_to(context, My_Pets()),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    Navigate_to(context, My_Pets());
+                  },
                   child: Row(
                     children: [
                       SvgPicture.asset(PET_ICON),
@@ -113,9 +139,8 @@ class _MyDrawerState extends State<MyDrawer> {
                     ),
                     GestureDetector(
                         onTap: () {
-                          setState(() {
-                            Navigate_to(context, Profile1());
-                          });
+                          Navigator.of(context).pop();
+                          Navigate_to(context, Profile1());
                         },
                         child: styleText(
                             PROFILE, WHITE60_CLR, FontWeight.normal, 15)),
@@ -164,6 +189,7 @@ class _MyDrawerState extends State<MyDrawer> {
                   ),
                   GestureDetector(
                       onTap: () {
+                        Navigator.of(context).pop();
                         Navigate_to(context, Setting());
                       },
                       child: styleText(
@@ -227,8 +253,8 @@ Future<void> _Logout(BuildContext context) {
                       fontsize: 17,
                       height: 40,
                       width: 300),
-                  SizedBox(
-                    height: 20,
+                  const SizedBox(
+                    height: 18,
                   ),
                   GestureDetector(
                       onTap: () => Navigator.of(context).pop(),

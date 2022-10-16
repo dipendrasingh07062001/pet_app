@@ -1,9 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:intl/intl.dart';
-
+import 'package:pet_app/Api/Models/v_model.dart';
+import 'package:pet_app/Api/Services.dart';
+import 'package:pet_app/SevicesListAll_Screens/Vactionations.dart';
+import 'package:provider/provider.dart';
 import '../Colors/COLORS.dart';
 import '../Componants/Images&Icons.dart';
+import '../Provider/ServiceListProvider.dart';
 import '../UTILS/Utils.dart';
 
 class Add_Vaccinations extends StatefulWidget {
@@ -14,47 +19,76 @@ class Add_Vaccinations extends StatefulWidget {
 }
 
 class _Add_VaccinationsState extends State<Add_Vaccinations> {
-  String dropdounvalue = '---Slelect Vaccinations---';
-  final items = ['---Slelect Vaccinations---', 'RABIT', 'CAT', 'DOG', 'CAT!'];
+  // String dropdounvalue = '---Slelect Vaccinations---';
+  // final items = ['---Slelect Vaccinations---', 'RABIT', 'CAT', 'DOG', 'CAT!'];
+  //List <dynamic> items = [];
+
+  VModel vmodel = VModel();
+  @override
+  void initState() {
+    super.initState();
+    vmodel.name = "---Slelect Vaccinations---";
+    vaccinationList.clear();
+    vaccinationList.add(vmodel);
+    getVaccinationApi().whenComplete(() {
+      setState(() {});
+    });
+  }
 
   String selectStatus = '---Slelect Status---';
-  final SelectStstusitems = [
+  final selectStatusitems = [
     '---Slelect Status---',
     'RABIT',
     'CAT',
     'DOG',
-    'CAT!'
   ];
 
-  DateTime _currentdate1 = DateTime.now();
-  Future<Null> _datechange1(BuildContext context) async {
-    final DateTime? _datechange1 = await showDatePicker(
-        context: context,
-        keyboardType: TextInputType.numberWithOptions(),
-        initialDate: _currentdate1,
-        firstDate: DateTime(2001),
-        lastDate: _currentdate1);
-    if (_datechange1 != null) {
-      setState(() {
-        _currentdate1 = _datechange1;
-      });
-    }
-  }
+  String? selectedTime;
 
-  String? _selectedTime;
-
-  Future<void> _show() async {
+  Future<void> selectTime() async {
     final TimeOfDay? result =
         await showTimePicker(context: context, initialTime: TimeOfDay.now());
     if (result != null) {
       setState(() {
-        _selectedTime = result.format(context);
+        selectedTime = result.format(context);
       });
     }
   }
 
-  int _radioSelected = 1;
-  String? _radioVal;
+  String? selectdate;
+  String? selectAtdate;
+  DateTime? birthDate;
+
+  Future<void> datePicker() async {
+    final datePick = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(1900),
+        lastDate: DateTime(2100));
+    if (datePick != null && datePick != birthDate) {
+      setState(() {
+        birthDate = datePick;
+        selectdate =
+            "${birthDate!.day}-${birthDate!.month}-${birthDate!.year}"; // 08/14/2019
+      });
+    }
+  }
+
+  DateTime? birthDate1;
+  Future<void> datePicker1() async {
+    final datePick = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(1900),
+        lastDate: DateTime(2100));
+    if (datePick != null && datePick != birthDate1) {
+      setState(() {
+        birthDate1 = datePick;
+        selectAtdate =
+            "${birthDate1!.day}-${birthDate1!.month}-${birthDate1!.year}"; // 08/14/2019
+      });
+    }
+  }
 
   var h;
   var w;
@@ -84,23 +118,30 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
                   border: Border.all(color: BORDER_CLR, width: 1)),
               child: Padding(
                 padding: const EdgeInsets.only(left: 15, right: 5),
-                child: DropdownButton<String>(
+                child: DropdownButton<VModel?>(
                   isExpanded: true,
                   borderRadius: BorderRadius.circular(10),
-                  underline: SizedBox(),
-                  value: dropdounvalue,
-                  onChanged: (String? newValue) =>
-                      setState(() => dropdounvalue = newValue!),
-                  items: items
-                      .map<DropdownMenuItem<String>>((String value) =>
-                          DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(
-                              value,
-                              style: TextStyle(color: GRAY_CLR, fontSize: 14),
-                            ),
-                          ))
-                      .toList(),
+                  underline: const SizedBox(),
+                  value: vmodel,
+                  onChanged: (newValue) {
+                    vmodel = newValue!;
+                    setState(() {});
+
+                    print("id......" + vmodel.id.toString());
+                  },
+                  items:
+                      //  vaccinationList.map((e) => e).toList()
+                      vaccinationList
+                          .map<DropdownMenuItem<VModel>>(
+                              (VModel value) => DropdownMenuItem<VModel>(
+                                    value: value,
+                                    child: Text(
+                                      value.name.toString(),
+                                      style: const TextStyle(
+                                          color: GRAY_CLR, fontSize: 14),
+                                    ),
+                                  ))
+                          .toList(),
                   icon: Icon(
                     Icons.keyboard_arrow_down_sharp,
                     color: GRAY_CLR.withOpacity(0.5),
@@ -126,18 +167,21 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
                 child: DropdownButton<String>(
                   isExpanded: true,
                   borderRadius: BorderRadius.circular(10),
-                  underline: SizedBox(),
+                  underline: const SizedBox(),
                   value: selectStatus,
                   onChanged: (String? newValue) =>
-                      setState(() => dropdounvalue = newValue!),
-                  items: SelectStstusitems.map<DropdownMenuItem<String>>(
-                      (String value) => DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(
-                              value,
-                              style: TextStyle(color: GRAY_CLR, fontSize: 14),
-                            ),
-                          )).toList(),
+                      setState(() => selectStatus = newValue!),
+                  items: selectStatusitems
+                      .map<DropdownMenuItem<String>>(
+                          (String value) => DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                  value,
+                                  style: const TextStyle(
+                                      color: GRAY_CLR, fontSize: 14),
+                                ),
+                              ))
+                      .toList(),
                   icon: Icon(
                     Icons.keyboard_arrow_down_sharp,
                     color: GRAY_CLR.withOpacity(0.5),
@@ -163,14 +207,12 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    _currentdate1 == null ? "DD-MM-YYYY" : "$_currentdate1",
-                    style: TextStyle(color: GRAY_CLR, fontSize: 14),
+                    selectdate == null ? "Selectdate" : "$selectdate",
+                    style: const TextStyle(color: GRAY_CLR, fontSize: 14),
                   ),
                   GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _datechange1(context);
-                        });
+                      onTap: () async {
+                        datePicker();
                       },
                       child: Icon(
                         Icons.calendar_month_sharp,
@@ -185,28 +227,52 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
             ),
             styleText(
                 VACCINATION_CERTIFICATE, BLACK_CLR, FontWeight.normal, 15),
-            Container(
-                alignment: Alignment.center,
-                height: h * 0.15,
-                width: w * 1,
-                margin: EdgeInsets.only(top: h * 0.010),
-                decoration: BoxDecoration(
-                    color: WHITE70_CLR,
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: TFFBORDER_CLR)),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(UPLOAD_ICON),
-                    SizedBox(
-                      height: h * 0.015,
-                    ),
-                    GestureDetector(
-                        onTap: () {},
-                        child: styleText(
-                            UPLOAD_DOCUMENT, GRAY_CLR, FontWeight.normal, 14)),
-                  ],
-                )),
+            Consumer<AddPetProvider>(
+              builder: (BuildContext context, value, Widget? child) {
+                return Container(
+                    alignment: Alignment.center,
+                    height: h * 0.15,
+                    width: w * 1,
+                    margin: EdgeInsets.only(top: h * 0.010),
+                    decoration: BoxDecoration(
+                        color: WHITE70_CLR,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: TFFBORDER_CLR)),
+                    child: value.selectImage == null
+                        ? GestureDetector(
+                            onTap: () {
+                              value.Opengallery(context);
+                            },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset(UPLOAD_ICON),
+                                SizedBox(
+                                  height: h * 0.015,
+                                ),
+                                styleText(UPLOAD_DOCUMENT, GRAY_CLR,
+                                    FontWeight.normal, 14)
+                              ],
+                            ),
+                          )
+                        : GestureDetector(
+                            onTap: () {
+                              value.Opengallery(context);
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(5),
+                              child: Image.file(
+                                File(
+                                  value.selectImage!.path,
+                                ),
+                                fit: BoxFit.fill,
+                                // height: 100,
+                                width: w * 1,
+                              ),
+                            ),
+                          ));
+              },
+            ),
             SizedBox(
               height: h * 0.025,
             ),
@@ -214,83 +280,68 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
             SizedBox(
               height: h * 0.015,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 20,
-                  width: 20,
-                  child: Radio(
-                    value: 1,
-                    groupValue: _radioSelected,
-                    activeColor: GREEN_CLR,
-                    onChanged: (value) {
-                      setState(() {
-                        _radioSelected = value!;
-                        _radioVal = 'dilay';
-                      });
-                    },
+            Consumer<AddPetProvider>(
+                builder: (BuildContext context, value, Widget? child) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 20,
+                    width: 20,
+                    child: Radio(
+                        value: 'daily',
+                        groupValue: value.day,
+                        activeColor: GREEN_CLR,
+                        onChanged: value.dayChangevalue),
                   ),
-                ),
-                SizedBox(
-                  width: w * 0.020,
-                ),
-                Text(
-                  DAILY,
-                  style: TextStyle(color: GRAY_CLR),
-                ),
-                SizedBox(
-                  width: w * 0.1,
-                ),
-                SizedBox(
-                  height: 20,
-                  width: 20,
-                  child: Radio(
-                    value: 2,
-                    groupValue: _radioSelected,
-                    activeColor: GREEN_CLR,
-                    onChanged: (value) {
-                      setState(() {
-                        _radioSelected = value!;
-                        _radioVal = 'weekly';
-                      });
-                    },
+                  SizedBox(
+                    width: w * 0.020,
                   ),
-                ),
-                SizedBox(
-                  width: w * 0.020,
-                ),
-                Text(
-                  WEEKLY,
-                  style: TextStyle(color: GRAY_CLR),
-                ),
-                SizedBox(
-                  width: w * 0.1,
-                ),
-                SizedBox(
-                  height: 20,
-                  width: 20,
-                  child: Radio(
-                    value: 3,
-                    groupValue: _radioSelected,
-                    activeColor: GREEN_CLR,
-                    onChanged: (value) {
-                      setState(() {
-                        _radioSelected = value!;
-                        _radioVal = 'monthly';
-                      });
-                    },
+                  const Text(
+                    DAILY,
+                    style: TextStyle(color: GRAY_CLR),
                   ),
-                ),
-                SizedBox(
-                  width: w * 0.020,
-                ),
-                Text(
-                  MONTHLY,
-                  style: TextStyle(color: GRAY_CLR),
-                ),
-              ],
-            ),
+                  SizedBox(
+                    width: w * 0.1,
+                  ),
+                  SizedBox(
+                    height: 20,
+                    width: 20,
+                    child: Radio(
+                        value: 'weekly',
+                        groupValue: value.day,
+                        activeColor: GREEN_CLR,
+                        onChanged: value.dayChangevalue),
+                  ),
+                  SizedBox(
+                    width: w * 0.020,
+                  ),
+                  const Text(
+                    WEEKLY,
+                    style: TextStyle(color: GRAY_CLR),
+                  ),
+                  SizedBox(
+                    width: w * 0.1,
+                  ),
+                  SizedBox(
+                    height: 20,
+                    width: 20,
+                    child: Radio(
+                        value: 'monthly',
+                        groupValue: value.day,
+                        activeColor: GREEN_CLR,
+                        onChanged: value.dayChangevalue),
+                  ),
+                  SizedBox(
+                    width: w * 0.020,
+                  ),
+                  const Text(
+                    MONTHLY,
+                    style: TextStyle(color: GRAY_CLR),
+                  ),
+                ],
+              );
+            }),
             SizedBox(
               height: h * 0.030,
             ),
@@ -316,11 +367,16 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "12/12/1245",
-                              style: TextStyle(color: GRAY_CLR, fontSize: 14),
+                              selectAtdate == null
+                                  ? "Selectdate"
+                                  : "$selectAtdate",
+                              style: const TextStyle(
+                                  color: GRAY_CLR, fontSize: 14),
                             ),
                             GestureDetector(
-                                onTap: () async {},
+                                onTap: () async {
+                                  datePicker1();
+                                },
                                 child: Icon(
                                   Icons.calendar_month_sharp,
                                   color: GRAY_CLR.withOpacity(0.5),
@@ -351,15 +407,16 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              _selectedTime != null
-                                  ? _selectedTime!
-                                  : '00:8 AM',
-                              style: TextStyle(color: GRAY_CLR, fontSize: 14),
+                              selectedTime == null
+                                  ? "SelectTime"
+                                  : selectedTime.toString(),
+                              style: const TextStyle(
+                                  color: GRAY_CLR, fontSize: 14),
                             ),
                             GestureDetector(
                                 onTap: () {
                                   setState(() {
-                                    _show();
+                                    selectTime();
                                   });
                                 },
                                 child: Icon(
@@ -378,16 +435,49 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
             SizedBox(
               height: h * 0.035,
             ),
-            Align(
-                alignment: Alignment.bottomCenter,
-                child: DefaultButton(
-                    text: DONE,
-                    ontap: () {
-                      Navigator.of(context).pop();
-                    },
-                    fontsize: 15,
-                    height: h * 0.060,
-                    width: w * 0.8))
+            Consumer<AddPetProvider>(
+                builder: (BuildContext context, value, Widget? child) {
+              return Align(
+                  alignment: Alignment.bottomCenter,
+                  child: DefaultButton(
+                      text: DONE,
+                      ontap: () {
+                        addVaccinationApi(
+                                vmodel.name.toString(),
+                                selectStatus.toString(),
+                                selectdate.toString(),
+                                value.selectImage!.path,
+                                value.day.toString(),
+                                selectedTime.toString(),
+                                selectAtdate.toString())
+                            .then((value) {
+                          // print(value.day.toString());
+                          // print(vmodel.id.toString());
+                          // print(selectdate.toString());
+                          // print(selectStatus.toString());
+                          // print(selectedTime.toString());
+                          // print(selectAtdate.toString());
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              backgroundColor: GREEN_CLR,
+                              content: Text(addVaccinationmsg.toString())));
+                          print(addVaccinationmsg.toString());
+                          setState(() {});
+                          Navigate_to(context, const Vaccinations());
+                        }).catchError((e) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              backgroundColor: GREEN_CLR,
+                              content: Text(e.toString())));
+
+                          print(e.toString());
+                        });
+                      },
+                      fontsize: 15,
+                      height: h * 0.060,
+                      width: w * 0.8));
+            }),
+            SizedBox(
+              height: h * 0.035,
+            ),
           ]),
         ),
       ),

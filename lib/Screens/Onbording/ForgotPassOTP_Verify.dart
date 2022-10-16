@@ -1,36 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pet_app/Api/LoginApi.dart';
-import 'package:pet_app/Api/OTP_VERIFY_API.dart';
-import 'package:pet_app/Api/ResendOTP_Signup.dart';
 import 'package:pet_app/Colors/COLORS.dart';
-import 'package:pet_app/Prefrence.dart';
-import 'package:pet_app/Screens/Login.dart';
 import 'package:pet_app/UTILS/Utils.dart';
-import '../Api/SignupApi.dart';
-import '../Componants/Images&Icons.dart';
+import '../../Api/Services.dart';
+import '../../Componants/Images&Icons.dart';
+import 'ResetPassword.dart';
 
-class Signup_OTP_Verify extends StatefulWidget {
-  const Signup_OTP_Verify({super.key});
+class ForgotPassword_OTP_Verify extends StatefulWidget {
+  const ForgotPassword_OTP_Verify({super.key});
 
   @override
-  State<Signup_OTP_Verify> createState() => _Signup_OTP_VerifyState();
+  State<ForgotPassword_OTP_Verify> createState() =>
+      _ForgotPassword_OTP_VerifyState();
 }
 
-class _Signup_OTP_VerifyState extends State<Signup_OTP_Verify> {
+class _ForgotPassword_OTP_VerifyState extends State<ForgotPassword_OTP_Verify> {
   final _formkey = GlobalKey<FormState>();
 
-  var data;
+  // final getEmail = Preference.Pref.getString('email').toString();
 
   var h;
   var w;
 
   String? otp;
 
-  TextEditingController first = new TextEditingController();
-  TextEditingController second = new TextEditingController();
-  TextEditingController third = new TextEditingController();
-  TextEditingController fourth = new TextEditingController();
+  TextEditingController first = TextEditingController();
+  TextEditingController second = TextEditingController();
+  TextEditingController third = TextEditingController();
+  TextEditingController fourth = TextEditingController();
   bool isloading = false;
 
   var tap = 0;
@@ -45,11 +42,6 @@ class _Signup_OTP_VerifyState extends State<Signup_OTP_Verify> {
 
   @override
   void initState() {
-    // Otp_verify(getEmail, otp).then((value) {
-    //   value = data;
-    //   print(data);
-    // });
-
     super.initState();
     pin1FocusNode = FocusNode();
     pin2FocusNode = FocusNode();
@@ -82,7 +74,6 @@ class _Signup_OTP_VerifyState extends State<Signup_OTP_Verify> {
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
-
     return Scaffold(
       extendBody: true,
       resizeToAvoidBottomInset: true,
@@ -138,7 +129,7 @@ class _Signup_OTP_VerifyState extends State<Signup_OTP_Verify> {
                     FontWeight.normal,
                     15,
                   ),
-                  Text(signupEmail.toString(),
+                  Text(resendotpemail.toString(),
                       style: TextStyle(
                           decoration: TextDecoration.underline,
                           fontSize: 15,
@@ -332,11 +323,14 @@ class _Signup_OTP_VerifyState extends State<Signup_OTP_Verify> {
                   ),
                   GestureDetector(
                       onTap: () {
-                        Resend_OTP_Signup().then((value) {
+                        Resend_OTP_ForgotPassword().then((value) {
+                          first.clear();
+                          first.clear();
+                          first.clear();
+                          first.clear();
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               backgroundColor: GREEN_CLR,
-                              content: Text(resendsignupOTPmsg.toString())));
-                          print("=====" + value.toString());
+                              content: Text(resendOTPmsg.toString())));
                         }).catchError((e) {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               backgroundColor: GREEN_CLR,
@@ -354,17 +348,16 @@ class _Signup_OTP_VerifyState extends State<Signup_OTP_Verify> {
                       text: VERIFY,
                       ontap: () {
                         if (_formkey.currentState!.validate()) {
-                          Otp_verify((first.text.toString() +
+                          ForgotPass_OTP_VERIFY((first.text.toString() +
                                   second.text.toString() +
                                   third.text.toString() +
                                   fourth.text.toString()))
                               .then((value) {
                             first.clear();
-                            second.clear();
-                            third.clear();
-                            fourth.clear();
-
-                            Navigate_to(context, Login());
+                            first.clear();
+                            first.clear();
+                            first.clear();
+                            Navigate_to(context, ResetPassword());
                           }).catchError((e) {
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                 backgroundColor: GREEN_CLR,

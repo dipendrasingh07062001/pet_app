@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pet_app/Api/LoginApi.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Componants/Images&Icons.dart';
 import 'package:pet_app/Provider/Provider.dart';
 import 'package:pet_app/Screens/HOME/Home.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 import 'package:provider/provider.dart';
+
+import '../../Api/Services.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -19,8 +20,8 @@ class _LoginState extends State<Login> {
   final _formkey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  TextEditingController _emailCantroller = TextEditingController();
-  TextEditingController _passwordCantrolller = TextEditingController();
+  TextEditingController emailCantroller = TextEditingController();
+  TextEditingController passwordCantrolller = TextEditingController();
 
   String emailError = "";
   String passError = "";
@@ -37,8 +38,8 @@ class _LoginState extends State<Login> {
 
     return Scaffold(
       backgroundColor: GREEN_CLR,
-      resizeToAvoidBottomInset: true,
-      extendBody: true,
+      resizeToAvoidBottomInset: false,
+      extendBody: false,
       body: SingleChildScrollView(
         child: Form(
           key: _formkey,
@@ -69,7 +70,7 @@ class _LoginState extends State<Login> {
                       alignment: Alignment.topCenter,
                       height: h * 0.8,
                       width: w * 1,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(24),
                               topRight: Radius.circular(24)),
@@ -96,7 +97,7 @@ class _LoginState extends State<Login> {
                                 ],
                               ),
                               child: TextFormField(
-                                  controller: _emailCantroller,
+                                  controller: emailCantroller,
                                   validator: (value) {
                                     if (value!.isEmpty) {
                                       emailError = ENTER_EMAIL;
@@ -108,7 +109,7 @@ class _LoginState extends State<Login> {
                                   },
                                   textCapitalization: TextCapitalization.none,
                                   textAlign: TextAlign.start,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                       errorText: "",
                                       errorStyle: TextStyle(height: 0),
                                       hintText: "Email Address",
@@ -129,7 +130,7 @@ class _LoginState extends State<Login> {
                                   visible: emailError != "",
                                   child: Text(
                                     emailError,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Colors.red, fontSize: 12),
                                     textAlign: TextAlign.start,
                                   )),
@@ -148,7 +149,7 @@ class _LoginState extends State<Login> {
                               // color: WHITE_CLR,
 
                               child: TextFormField(
-                                controller: _passwordCantrolller,
+                                controller: passwordCantrolller,
                                 validator: (value) {
                                   if (value!.isEmpty) {
                                     passError = ENTER_PASSWORD;
@@ -166,11 +167,11 @@ class _LoginState extends State<Login> {
                                     errorText: "",
                                     errorStyle: TextStyle(height: 0),
                                     hintText: "Password",
-                                    hintStyle: TextStyle(
+                                    hintStyle: const TextStyle(
                                         color: GRAY_CLR,
                                         fontSize: 16,
                                         fontWeight: FontWeight.normal),
-                                    prefixIcon: Icon(
+                                    prefixIcon: const Icon(
                                       Icons.lock_open_outlined,
                                       color: GRAY_CLR,
                                       size: 22,
@@ -196,7 +197,7 @@ class _LoginState extends State<Login> {
                                   visible: passError != "",
                                   child: Text(
                                     passError,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Colors.red, fontSize: 12),
                                   )),
                             ),
@@ -232,7 +233,7 @@ class _LoginState extends State<Login> {
                             Consumer<ProviderTutorial>(builder:
                                 (BuildContext context, value, Widget? child) {
                               return value.isloding == true
-                                  ? CircularProgressIndicator()
+                                  ? const CircularProgressIndicator()
                                   : DefaultButton(
                                       text: "Login",
                                       ontap: () async {
@@ -242,13 +243,13 @@ class _LoginState extends State<Login> {
 
                                           value.isloding = true;
                                           await LoginApi(
-                                                  _emailCantroller.text
+                                                  emailCantroller.text
                                                       .toString(),
-                                                  _passwordCantrolller.text
+                                                  passwordCantrolller.text
                                                       .toString())
                                               .then((value) {
-                                            _emailCantroller.clear();
-                                            _passwordCantrolller.clear();
+                                            emailCantroller.clear();
+                                            passwordCantrolller.clear();
                                             Navigate_replace(context, Home());
                                           }).catchError((e) {
                                             ScaffoldMessenger.of(context)
@@ -297,14 +298,14 @@ class _LoginState extends State<Login> {
                                     height: 45,
                                     width: 45,
                                     alignment: Alignment.center,
-                                    margin: EdgeInsets.only(
+                                    margin: const EdgeInsets.only(
                                       left: 15,
                                     ),
                                     decoration: BoxDecoration(
                                         color: WHITE_CLR,
                                         borderRadius:
                                             BorderRadius.circular(50)),
-                                    child: Icon(
+                                    child: const Icon(
                                       Icons.apple,
                                       size: 35,
                                     )),
@@ -312,7 +313,7 @@ class _LoginState extends State<Login> {
                                     height: 45,
                                     width: 45,
                                     alignment: Alignment.center,
-                                    margin: EdgeInsets.only(
+                                    margin: const EdgeInsets.only(
                                       left: 15,
                                     ),
                                     decoration: BoxDecoration(

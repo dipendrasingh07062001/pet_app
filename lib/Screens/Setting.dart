@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:pet_app/Screens/Login.dart';
-
+import 'package:pet_app/Screens/Onbording/ChangePassword1.dart';
+import 'package:pet_app/Screens/Onbording/Login.dart';
+import '../Api/Prefrence.dart';
 import '../Colors/COLORS.dart';
 import '../Componants/Images&Icons.dart';
-import '../Prefrence.dart';
 import '../UTILS/Utils.dart';
-import 'ChangePassword1.dart';
 import 'Help_1.dart';
 
 class Setting extends StatefulWidget {
@@ -68,7 +67,7 @@ class _SettingState extends State<Setting> {
                       children: [
                         styleText(
                             CHANGE_PASSWORD, BLACK_CLR, FontWeight.bold, 14),
-                        Icon(
+                        const Icon(
                           Icons.arrow_forward_ios,
                           size: 15,
                         ),
@@ -93,7 +92,7 @@ class _SettingState extends State<Setting> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         styleText(HELP_SUPPORT, BLACK_CLR, FontWeight.bold, 14),
-                        Icon(
+                        const Icon(
                           Icons.arrow_forward_ios,
                           size: 15,
                         ),

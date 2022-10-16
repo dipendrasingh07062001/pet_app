@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:pet_app/Api/Prefrence.dart';
 import 'package:pet_app/Colors/COLORS.dart';
-import 'package:pet_app/Prefrence.dart';
 import 'package:pet_app/Provider/Provider.dart';
-import 'package:pet_app/Screens/SignupOTP_Verify.dart';
+import 'package:pet_app/Screens/Onbording/SignupOTP_Verify.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 import 'package:provider/provider.dart';
-import '../Api/SignupApi.dart';
-import '../Componants/Images&Icons.dart';
+import '../../Api/Services.dart';
+import '../../Componants/Images&Icons.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -18,9 +18,9 @@ class Signup extends StatefulWidget {
 class _SignupState extends State<Signup> {
   final _formkey = GlobalKey<FormState>();
 
-  TextEditingController _emailCantroller = TextEditingController();
-  TextEditingController _passCantroller = TextEditingController();
-  TextEditingController _confirmPassCantroller = TextEditingController();
+  TextEditingController emailCantroller = TextEditingController();
+  TextEditingController passCantroller = TextEditingController();
+  TextEditingController confirmPassCantroller = TextEditingController();
 
   final verifyemail = Preference.Pref.getString('email');
 
@@ -88,7 +88,7 @@ class _SignupState extends State<Signup> {
                           alignment: Alignment.topCenter,
                           height: h * 0.78,
                           width: w * 1,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(24),
                                   topRight: Radius.circular(24)),
@@ -114,7 +114,7 @@ class _SignupState extends State<Signup> {
                                   // color: WHITE_CLR,
 
                                   child: TextFormField(
-                                      controller: _emailCantroller,
+                                      controller: emailCantroller,
                                       textCapitalization:
                                           TextCapitalization.none,
                                       textAlign: TextAlign.start,
@@ -126,7 +126,7 @@ class _SignupState extends State<Signup> {
                                           emailError = "";
                                         }
                                       },
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                           errorText: "",
                                           errorStyle: TextStyle(height: 0),
                                           hintText: "Email address",
@@ -147,7 +147,7 @@ class _SignupState extends State<Signup> {
                                         alignment: Alignment.centerLeft,
                                         child: Text(
                                           emailError,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               color: Colors.red, fontSize: 12),
                                         ))),
                                 Container(
@@ -162,7 +162,7 @@ class _SignupState extends State<Signup> {
                                             blurRadius: 14)
                                       ]),
                                   child: TextFormField(
-                                    controller: _passCantroller,
+                                    controller: passCantroller,
                                     obscureText: _passwordVisible,
                                     textCapitalization: TextCapitalization.none,
                                     textAlign: TextAlign.start,
@@ -178,11 +178,11 @@ class _SignupState extends State<Signup> {
                                         hintText: "Password",
                                         errorStyle: TextStyle(height: 0),
                                         errorText: "",
-                                        hintStyle: TextStyle(
+                                        hintStyle: const TextStyle(
                                             color: GRAY_CLR,
                                             fontSize: 16,
                                             fontWeight: FontWeight.normal),
-                                        prefixIcon: Icon(
+                                        prefixIcon: const Icon(
                                           Icons.lock_open_outlined,
                                           color: GRAY_CLR,
                                           size: 20,
@@ -209,7 +209,7 @@ class _SignupState extends State<Signup> {
                                         alignment: Alignment.centerLeft,
                                         child: Text(
                                           passError,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               color: Colors.red, fontSize: 12),
                                         ))),
                                 Container(
@@ -225,7 +225,7 @@ class _SignupState extends State<Signup> {
                                     color: WHITE70_CLR,
                                   ),
                                   child: TextFormField(
-                                    controller: _confirmPassCantroller,
+                                    controller: confirmPassCantroller,
                                     obscureText: _passwordVisible1,
                                     textCapitalization: TextCapitalization.none,
                                     textAlign: TextAlign.start,
@@ -234,8 +234,8 @@ class _SignupState extends State<Signup> {
                                         passError1 = ENTER_CONFIRM_PASS;
 
                                         return "";
-                                      } else if (_passCantroller.text !=
-                                          _confirmPassCantroller.text) {
+                                      } else if (passCantroller.text !=
+                                          confirmPassCantroller.text) {
                                         valid();
 
                                         passError1 =
@@ -251,11 +251,11 @@ class _SignupState extends State<Signup> {
                                         errorStyle: TextStyle(height: 0),
                                         errorText: "",
                                         hintText: "Confirm Password",
-                                        hintStyle: TextStyle(
+                                        hintStyle: const TextStyle(
                                             color: GRAY_CLR,
                                             fontSize: 16,
                                             fontWeight: FontWeight.normal),
-                                        prefixIcon: Icon(
+                                        prefixIcon: const Icon(
                                           Icons.lock_open_outlined,
                                           color: GRAY_CLR,
                                           size: 20,
@@ -282,7 +282,7 @@ class _SignupState extends State<Signup> {
                                         alignment: Alignment.centerLeft,
                                         child: Text(
                                           passError1,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               color: Colors.red, fontSize: 12),
                                         ))),
                                 SizedBox(
@@ -295,16 +295,16 @@ class _SignupState extends State<Signup> {
                                       ontap: () {
                                         if (_formkey.currentState!.validate()) {
                                           Sinup(
-                                                  _emailCantroller.text
+                                                  emailCantroller.text
                                                       .toString(),
-                                                  _passCantroller.text
+                                                  passCantroller.text
                                                       .toString(),
-                                                  _confirmPassCantroller.text
+                                                  confirmPassCantroller.text
                                                       .toString())
                                               .then((value) {
-                                            _emailCantroller.clear();
-                                            _passCantroller.clear();
-                                            _confirmPassCantroller.clear();
+                                            emailCantroller.clear();
+                                            passCantroller.clear();
+                                            confirmPassCantroller.clear();
                                             Navigate_to(
                                                 context, Signup_OTP_Verify());
                                           }).catchError((e) {
@@ -352,14 +352,14 @@ class _SignupState extends State<Signup> {
                                         height: 45,
                                         width: 45,
                                         alignment: Alignment.center,
-                                        margin: EdgeInsets.only(
+                                        margin: const EdgeInsets.only(
                                           left: 15,
                                         ),
                                         decoration: BoxDecoration(
                                             color: WHITE_CLR,
                                             borderRadius:
                                                 BorderRadius.circular(50)),
-                                        child: Icon(
+                                        child: const Icon(
                                           Icons.apple,
                                           size: 35,
                                         )),
@@ -367,7 +367,7 @@ class _SignupState extends State<Signup> {
                                         height: 45,
                                         width: 45,
                                         alignment: Alignment.center,
-                                        margin: EdgeInsets.only(
+                                        margin: const EdgeInsets.only(
                                           left: 15,
                                         ),
                                         decoration: BoxDecoration(

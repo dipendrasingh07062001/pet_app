@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_app/Colors/COLORS.dart';
+import 'package:provider/provider.dart';
 
+import '../../Provider/ServiceListProvider.dart';
 import '../../UTILS/Utils.dart';
 
 class PetsModal {
@@ -12,6 +14,8 @@ class PetsModal {
     this.ImageUrl,
   );
 }
+
+var type;
 
 class AddPets extends StatefulWidget {
   const AddPets({super.key});
@@ -33,8 +37,6 @@ class _AddPetsState extends State<AddPets> {
   final List<PetsModal> PetDetails = List.generate(petName.length,
       (index) => PetsModal('${petName[index]}', '${url[index]}'));
 
-  String ChangePet = "";
-
   var h;
   var w;
   @override
@@ -44,58 +46,67 @@ class _AddPetsState extends State<AddPets> {
 
     return Stack(
       children: [
-        Padding(
-          padding: EdgeInsets.only(top: h * 0.09),
-          child: GridView.builder(
-            //  physics: NeverScrollableScrollPhysics(),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                mainAxisSpacing: 15,
-                crossAxisSpacing: 15,
-                crossAxisCount: 2,
-                childAspectRatio: 1),
-            itemCount: petName.length,
-            scrollDirection: Axis.vertical,
-            itemBuilder: (BuildContext context, int index) {
-              return GestureDetector(
-                onTap: () {
-                  setState(() {
-                    ChangePet = petName.elementAt(index);
-                    print("petName " + ChangePet);
-                  });
-                },
-                child: Card(
-                    color: petName.elementAt(index) == ChangePet
-                        ? GREEN_CLR
-                        : WHITE_CLR,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset(
-                          PetDetails[index].ImageUrl,
-                          height: h * 0.070,
-                          color: petName.elementAt(index) == ChangePet
-                              ? WHITE_CLR
-                              : GRAY_CLR,
-                        ),
-                        SizedBox(
-                          height: h * 0.020,
-                        ),
-                        styleText(
-                            PetDetails[index].petName,
-                            petName.elementAt(index) == ChangePet
+        Consumer<AddPetProvider>(
+            builder: (BuildContext context, value, Widget? child) {
+          return Padding(
+            padding: EdgeInsets.only(top: h * 0.09),
+            child: GridView.builder(
+              //  physics: NeverScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  mainAxisSpacing: 15,
+                  crossAxisSpacing: 15,
+                  crossAxisCount: 2,
+                  childAspectRatio: 1),
+              itemCount: petName.length,
+              scrollDirection: Axis.vertical,
+              itemBuilder: (BuildContext context, int index) {
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      value.selectedpet = petName.elementAt(index);
+                      value.addPetModel.type = petName.elementAt(index);
+
+                      type = value.addPetModel.type;
+                      print("==" + type);
+                      print('===' + value.addPetModel.type.toString());
+
+                      // print("petName " + value.selectedpet);
+                    });
+                  },
+                  child: Card(
+                      color: petName.elementAt(index) == value.selectedpet
+                          ? GREEN_CLR
+                          : WHITE_CLR,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset(
+                            PetDetails[index].ImageUrl,
+                            height: h * 0.070,
+                            color: petName.elementAt(index) == value.selectedpet
                                 ? WHITE_CLR
                                 : GRAY_CLR,
-                            FontWeight.normal,
-                            16)
-                      ],
-                    )),
-              );
-            },
-          ),
-        ),
+                          ),
+                          SizedBox(
+                            height: h * 0.020,
+                          ),
+                          styleText(
+                              PetDetails[index].petName,
+                              petName.elementAt(index) == value.selectedpet
+                                  ? WHITE_CLR
+                                  : GRAY_CLR,
+                              FontWeight.normal,
+                              16)
+                        ],
+                      )),
+                );
+              },
+            ),
+          );
+        }),
       ],
     );
   }

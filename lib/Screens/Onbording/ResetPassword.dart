@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/parser.dart';
-import 'package:pet_app/Api/ApiBaseUrl.dart';
+import 'package:pet_app/Api/Prefrence.dart';
 import 'package:pet_app/Colors/COLORS.dart';
-import 'package:pet_app/Screens/Login.dart';
+import 'package:pet_app/Screens/Onbording/Login.dart';
 import 'package:pet_app/Screens/SuccesFullVerified.dart';
 import 'package:pet_app/UTILS/Utils.dart';
-import 'package:provider/provider.dart';
-
-import '../Api/Reset_PasswordApi.dart';
-import '../Componants/Images&Icons.dart';
-import '../Prefrence.dart';
-import '../Provider/Provider.dart';
+import '../../Api/Services.dart';
+import '../../Componants/Images&Icons.dart';
 
 class ResetPassword extends StatefulWidget {
   const ResetPassword({super.key});
@@ -23,9 +18,9 @@ class ResetPassword extends StatefulWidget {
 class _ResetPasswordState extends State<ResetPassword> {
   final _formkey = GlobalKey<FormState>();
 
-  TextEditingController _newPasswordCantrolller = TextEditingController();
+  TextEditingController newPasswordCantrolller = TextEditingController();
 
-  TextEditingController _ConfirmPasswordCantrolller = TextEditingController();
+  TextEditingController confirmPasswordCantrolller = TextEditingController();
   final getEmail = Preference.Pref.getString('email');
 
   String passError = "";
@@ -59,7 +54,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                     onTap: () {
                       Navigator.of(context).pop();
                     },
-                    child: Align(
+                    child: const Align(
                       alignment: Alignment.topLeft,
                       child: SizedBox(
                         height: 35,
@@ -102,7 +97,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                       // color: WHITE_CLR,
 
                       child: TextFormField(
-                        controller: _newPasswordCantrolller,
+                        controller: newPasswordCantrolller,
                         validator: (value) {
                           if (value!.isEmpty) {
                             passError = ENTER_NEW_PASS;
@@ -119,11 +114,11 @@ class _ResetPasswordState extends State<ResetPassword> {
                             errorText: "",
                             errorStyle: TextStyle(height: 0),
                             hintText: "New Password",
-                            hintStyle: TextStyle(
+                            hintStyle: const TextStyle(
                                 color: GRAY_CLR,
                                 fontSize: 16,
                                 fontWeight: FontWeight.normal),
-                            prefixIcon: Icon(
+                            prefixIcon: const Icon(
                               Icons.lock_open_outlined,
                               color: GRAY_CLR,
                               size: 20,
@@ -149,7 +144,8 @@ class _ResetPasswordState extends State<ResetPassword> {
                           visible: passError != "",
                           child: Text(
                             passError,
-                            style: TextStyle(color: Colors.red, fontSize: 12),
+                            style: const TextStyle(
+                                color: Colors.red, fontSize: 12),
                             textAlign: TextAlign.start,
                           )),
                     ),
@@ -167,14 +163,14 @@ class _ResetPasswordState extends State<ResetPassword> {
                       // color: WHITE_CLR,
 
                       child: TextFormField(
-                        controller: _ConfirmPasswordCantrolller,
+                        controller: confirmPasswordCantrolller,
                         validator: (value) {
                           if (value!.isEmpty) {
                             newPassError = ENTER_CONFIRM_PASS;
                             setState(() {});
                             return "";
-                          } else if (_ConfirmPasswordCantrolller !=
-                              _newPasswordCantrolller) {
+                          } else if (confirmPasswordCantrolller !=
+                              newPasswordCantrolller) {
                             newPassError = ENTER_CONFIRM_PASS_DOES_NOT_MATCH;
                             setState(() {});
                           } else {
@@ -188,11 +184,11 @@ class _ResetPasswordState extends State<ResetPassword> {
                             errorText: "",
                             errorStyle: TextStyle(height: 0),
                             hintText: "Confirm Password",
-                            hintStyle: TextStyle(
+                            hintStyle: const TextStyle(
                                 color: GRAY_CLR,
                                 fontSize: 16,
                                 fontWeight: FontWeight.normal),
-                            prefixIcon: Icon(
+                            prefixIcon: const Icon(
                               Icons.lock_open_outlined,
                               color: GRAY_CLR,
                               size: 20,
@@ -218,7 +214,8 @@ class _ResetPasswordState extends State<ResetPassword> {
                           visible: newPassError != "",
                           child: Text(
                             newPassError,
-                            style: TextStyle(color: Colors.red, fontSize: 12),
+                            style: const TextStyle(
+                                color: Colors.red, fontSize: 12),
                             textAlign: TextAlign.start,
                           )),
                     ),
@@ -234,13 +231,13 @@ class _ResetPasswordState extends State<ResetPassword> {
 
                             Reset_PasswordApi(
                               getEmail.toString(),
-                              _newPasswordCantrolller.text.toString(),
+                              newPasswordCantrolller.text.toString(),
                             ).then((value) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                       backgroundColor: GREEN_CLR,
                                       content: Text(resetmsg.toString())));
-                              Navigate_to(context, SuccessFullyVerified());
+                              Navigate_to(context, const Login());
                             }).catchError((e) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
