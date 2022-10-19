@@ -169,7 +169,11 @@ class _HomeState extends State<Home> {
                           borderRadius: BorderRadius.circular(40)),
                       color: GREEN_CLR,
                       onPressed: () {
-                        Navigate_to(context, const AddPetpage());
+                        Navigate_to(
+                            context,
+                            AddPetpage(
+                              isEdit: false,
+                            ));
                         Navigator.of(context).pop;
                       },
                       child: styleText(

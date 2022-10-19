@@ -45,14 +45,17 @@ class _My_PetsState extends State<My_Pets> {
             borderRadius: BorderRadius.all(Radius.circular(50)),
             side: BorderSide(color: GREEN_CLR)),
         onPressed: () {
-          Navigate_to(context, const AddPetpage());
+          Navigate_to(
+              context,
+              AddPetpage(
+                isEdit: false,
+              ));
         },
-        child: Icon(
+        child: const Icon(
           Icons.add,
           size: 40,
           color: GREEN_CLR,
         ),
-        heroTag: "b1",
       ),
       body: result.mypetdata == null
           ? const Center(child: CircularProgressIndicator())
@@ -133,7 +136,12 @@ class _My_PetsState extends State<My_Pets> {
                                                   child: GestureDetector(
                                                     onTap: () => Navigate_to(
                                                         context,
-                                                        const AddPetpage()),
+                                                        AddPetpage(
+                                                          isEdit: true,
+                                                          addPetModel:
+                                                              result.mypetdata![
+                                                                  index],
+                                                        )),
                                                     child: const CircleAvatar(
                                                       backgroundColor:
                                                           FADE_BLUE_CLR,

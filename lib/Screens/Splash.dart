@@ -19,23 +19,23 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
   var userExist = false;
   var h;
   var w;
-  late final AnimationController _controller = AnimationController(
-    duration: const Duration(seconds: 2),
-    vsync: this,
-  )..repeat(reverse: true);
-  late final Animation<Offset> _offsetAnimation = Tween<Offset>(
-    begin: Offset.zero,
-    end: const Offset(1.5, 0.0),
-  ).animate(CurvedAnimation(
-    parent: _controller,
-    curve: Curves.elasticIn,
-  ));
+  // late final AnimationController _controller = AnimationController(
+  //   duration: const Duration(seconds: 2),
+  //   vsync: this,
+  // )..repeat(reverse: true);
+  // late final Animation<Offset> _offsetAnimation = Tween<Offset>(
+  //   begin: Offset.zero,
+  //   end: const Offset(1.5, 0.0),
+  // ).animate(CurvedAnimation(
+  //   parent: _controller,
+  //   curve: Curves.elasticIn,
+  // ));
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _controller.dispose();
+  //   super.dispose();
+  // }
 
   @override
   void initState() {
@@ -55,15 +55,9 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     return Scaffold(
         backgroundColor: WHITE70_CLR,
         body: Center(
-          child: FadeTransition(
-            opacity: _controller,
-            child: SlideTransition(
-              position: _offsetAnimation,
-              child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Image.asset(SPLASH_LOGO),
-              ),
-            ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Image.asset(SPLASH_LOGO),
           ),
         ));
   }
@@ -79,7 +73,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
 
     Future.delayed(const Duration(seconds: 2), () {
       id.toString() == "" || id.toString() == "null" || id == ''
-          ? Navigate_PushRemove(context, Login())
+          ? Navigate_PushRemove(context, const Login())
           : Navigate_PushRemove(context, Home());
     });
   }

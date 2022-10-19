@@ -14,8 +14,6 @@ class Tutorial extends StatefulWidget {
 }
 
 class _TutorialState extends State<Tutorial> {
-  // bool isClick = false;
-
   int currentIndex = 0;
 
   var h;
@@ -30,7 +28,7 @@ class _TutorialState extends State<Tutorial> {
       return Scaffold(
         body: Container(
           alignment: Alignment.center,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage(
                 BACK_GROUND_IMAGE,
@@ -48,9 +46,9 @@ class _TutorialState extends State<Tutorial> {
                   padding: const EdgeInsets.only(right: 10),
                   child: TextButton(
                       onPressed: () {
-                        Navigate_to(context, Login());
+                        Navigate_to(context, const Login());
                       },
-                      child: Text(
+                      child: const Text(
                         SKIP,
                         style: TextStyle(color: NON_DARK_CLR),
                       )),
@@ -128,7 +126,7 @@ class _TutorialState extends State<Tutorial> {
                         alignment: Alignment.center,
                         height: h * 0.07,
                         width: w * 0.5,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(15),
                                 bottomLeft: Radius.circular(15)),

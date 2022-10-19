@@ -212,3 +212,17 @@ Future deleteDialog(BuildContext context, Function() onTap, String text) {
         );
       });
 }
+
+//// hide keybord while on tap
+///
+///
+
+var currentFocus;
+
+unfocus(BuildContext context) {
+  currentFocus = FocusScope.of(context);
+
+  if (!currentFocus.hasPrimaryFocus) {
+    currentFocus.unfocus();
+  }
+}

@@ -10,4 +10,6 @@ class AddPetModel {
   String? dob;
   File? uploadDocumnt;
   File? addPetIamge;
+  String? editimage;
+  String? editdoc;
 }

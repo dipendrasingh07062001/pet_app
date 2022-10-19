@@ -19,10 +19,6 @@ class Add_Vaccinations extends StatefulWidget {
 }
 
 class _Add_VaccinationsState extends State<Add_Vaccinations> {
-  // String dropdounvalue = '---Slelect Vaccinations---';
-  // final items = ['---Slelect Vaccinations---', 'RABIT', 'CAT', 'DOG', 'CAT!'];
-  //List <dynamic> items = [];
-
   VModel vmodel = VModel();
   @override
   void initState() {
@@ -258,6 +254,9 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
                         : GestureDetector(
                             onTap: () {
                               value.Opengallery(context);
+                              print(
+                                "hhhhhhhh" + value.selectImage!.path,
+                              );
                             },
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(5),
@@ -446,7 +445,9 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
                                 vmodel.name.toString(),
                                 selectStatus.toString(),
                                 selectdate.toString(),
-                                value.selectImage!.path,
+                                File(
+                                  value.selectImage!.path,
+                                ),
                                 value.day.toString(),
                                 selectedTime.toString(),
                                 selectAtdate.toString())

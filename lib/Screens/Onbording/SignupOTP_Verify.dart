@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:loading_overlay_pro/animations/bouncing_line.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Screens/SuccesFullVerified.dart';
 import 'package:pet_app/UTILS/Utils.dart';
+import 'package:pet_app/main.dart';
 import '../../Api/Services.dart';
 import '../../Componants/Images&Icons.dart';
 
@@ -76,7 +78,7 @@ class _Signup_OTP_VerifyState extends State<Signup_OTP_Verify> {
 
     return Scaffold(
       extendBody: true,
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       backgroundColor: WHITE70_CLR,
       body: Form(
         key: _formkey,
@@ -159,8 +161,8 @@ class _Signup_OTP_VerifyState extends State<Signup_OTP_Verify> {
                                 // obscureText: false,
                                 maxLength: 1,
                                 textAlign: TextAlign.center,
-                                style:
-                                    TextStyle(fontSize: 24, color: WHITE70_CLR),
+                                style: const TextStyle(
+                                    fontSize: 24, color: WHITE70_CLR),
                                 keyboardType: TextInputType.number,
 
                                 decoration: const InputDecoration(
@@ -321,51 +323,114 @@ class _Signup_OTP_VerifyState extends State<Signup_OTP_Verify> {
                     FontWeight.normal,
                     15,
                   ),
-                  GestureDetector(
-                      onTap: () {
-                        Resend_OTP_Signup().then((value) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              backgroundColor: GREEN_CLR,
-                              content: Text(resendsignupOTPmsg.toString())));
-                          print("=====" + value.toString());
-                        }).catchError((e) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              backgroundColor: GREEN_CLR,
-                              content: Text(e.toString())));
-                        });
-                      },
-                      child: const Text(
-                        RESEND,
-                        style: TextStyle(color: GREEN_CLR, fontSize: 15),
-                      )),
+                  resendotpsinuploading
+                      ? const LoadingBouncingLine.circle(
+                          backgroundColor: GREEN_CLR,
+                          size: 45.0,
+                          duration: Duration(seconds: 2),
+                          borderColor: GREEN_CLR)
+                      : GestureDetector(
+                          onTap: () async {
+                            setState(() {
+                              resendotpsinuploading = true;
+                            });
+                            await Resend_OTP_Signup().then((value) {
+                              first.clear();
+                              second.clear();
+                              third.clear();
+                              fourth.clear();
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      backgroundColor: GREEN_CLR,
+                                      content:
+                                          Text(resendsignupOTPmsg.toString())));
+                              setState(() {
+                                resendotploading = false;
+                              });
+                            }).catchError((e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      backgroundColor: GREEN_CLR,
+                                      content: Text(e.toString())));
+                              setState(() {
+                                resendotpsinuploading = false;
+                              });
+                            });
+                            setState(() {
+                              resendotpsinuploading = false;
+                            });
+                          },
+                          child: const Text(
+                            RESEND,
+                            style: TextStyle(color: GREEN_CLR, fontSize: 15),
+                          )),
                   SizedBox(
                     height: h * 0.030,
                   ),
-                  DefaultButton(
-                      text: VERIFY,
-                      ontap: () {
-                        if (_formkey.currentState!.validate()) {
-                          Otp_verify((first.text.toString() +
-                                  second.text.toString() +
-                                  third.text.toString() +
-                                  fourth.text.toString()))
-                              .then((value) {
-                            first.clear();
-                            second.clear();
-                            third.clear();
-                            fourth.clear();
+                  isLoadingOtp
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                          color: GREEN_CLR,
+                        ))
+                      : DefaultButton(
+                          text: VERIFY,
+                          ontap: () async {
+                            unfocus(context);
+                            if (_formkey.currentState!.validate()) {
+                              if (first.text == "" ||
+                                  second.text == "" ||
+                                  third.text == "" ||
+                                  fourth.text == "") {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        backgroundColor: GREEN_CLR,
+                                        content: Text("Please enter OTP")));
+                              } else {
+                                setState(() {
+                                  isLoadingOtp = true;
+                                });
+                                await otpVerifySinup((first.text.toString() +
+                                        second.text.toString() +
+                                        third.text.toString() +
+                                        fourth.text.toString()))
+                                    .then((value) {
+                                  first.clear();
+                                  second.clear();
+                                  third.clear();
+                                  fourth.clear();
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          backgroundColor: GREEN_CLR,
+                                          content: Text(
+                                              "You have successfully verified the account"
+                                                  .toString())));
 
-                            Navigate_to(context, const SuccessFullyVerified());
-                          }).catchError((e) {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                backgroundColor: GREEN_CLR,
-                                content: Text(e.toString())));
-                          });
-                        }
-                      },
-                      fontsize: 18,
-                      height: h * 0.060,
-                      width: w * 0.85),
+                                  Navigate_replace(
+                                      context, const SuccessFullyVerified());
+
+                                  setState(() {
+                                    isLoadingOtp = false;
+                                  });
+                                }).catchError((e) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          backgroundColor: GREEN_CLR,
+                                          content: Text(e.toString())));
+
+                                  setState(() {
+                                    isLoadingOtp = false;
+                                  });
+                                });
+
+                                setState(() {
+                                  isLoadingOtp = false;
+                                });
+                              }
+                            }
+                          },
+                          fontsize: 18,
+                          height: h * 0.060,
+                          width: w * 0.85),
                 ],
               )),
         ),

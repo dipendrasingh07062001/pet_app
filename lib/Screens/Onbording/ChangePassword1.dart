@@ -1,8 +1,10 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Componants/Images&Icons.dart';
 import 'package:pet_app/UTILS/Utils.dart';
+import 'package:pet_app/main.dart';
 
 import '../../Api/Services.dart';
 
@@ -24,9 +26,9 @@ class _ChangePassword1State extends State<ChangePassword1> {
   String newPassError = "";
   String confirmPassError = "";
 
-  bool _passwordVisible = false;
-  bool _passwordVisible1 = false;
-  bool _passwordVisible2 = false;
+  bool _passwordVisible = true;
+  bool _passwordVisible1 = true;
+  bool _passwordVisible2 = true;
   var h;
   var w;
 
@@ -36,7 +38,7 @@ class _ChangePassword1State extends State<ChangePassword1> {
     w = MediaQuery.of(context).size.width;
     return Scaffold(
       extendBody: true,
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       backgroundColor: WHITE70_CLR,
       body: Form(
         key: _formkey,
@@ -112,7 +114,7 @@ class _ChangePassword1State extends State<ChangePassword1> {
                           textAlign: TextAlign.start,
                           decoration: InputDecoration(
                               errorText: "",
-                              errorStyle: TextStyle(height: 0),
+                              errorStyle: const TextStyle(height: 0),
                               hintText: "Old Password",
                               hintStyle: const TextStyle(
                                   color: GRAY_CLR,
@@ -127,8 +129,8 @@ class _ChangePassword1State extends State<ChangePassword1> {
                               suffixIcon: IconButton(
                                 icon: Icon(
                                     _passwordVisible
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
                                     color: GRAY_CLR),
                                 onPressed: () {
                                   setState(() {
@@ -144,7 +146,8 @@ class _ChangePassword1State extends State<ChangePassword1> {
                             visible: newPassError != "",
                             child: Text(
                               newPassError,
-                              style: TextStyle(color: Colors.red, fontSize: 12),
+                              style: const TextStyle(
+                                  color: Colors.red, fontSize: 12),
                               textAlign: TextAlign.start,
                             )),
                       ),
@@ -168,6 +171,9 @@ class _ChangePassword1State extends State<ChangePassword1> {
                               passError = ENTER_NEW_PASS;
                               setState(() {});
                               return "";
+                            } else if (value.length < 6) {
+                              passError = "Enter password minimum 6 charactor";
+                              setState(() {});
                             } else {
                               passError = "";
                             }
@@ -177,7 +183,7 @@ class _ChangePassword1State extends State<ChangePassword1> {
                           textAlign: TextAlign.start,
                           decoration: InputDecoration(
                               errorText: "",
-                              errorStyle: TextStyle(height: 0),
+                              errorStyle: const TextStyle(height: 0),
                               hintText: "New Password",
                               hintStyle: const TextStyle(
                                   color: GRAY_CLR,
@@ -192,8 +198,8 @@ class _ChangePassword1State extends State<ChangePassword1> {
                               suffixIcon: IconButton(
                                 icon: Icon(
                                     _passwordVisible1
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
                                     color: GRAY_CLR),
                                 onPressed: () {
                                   setState(() {
@@ -209,7 +215,8 @@ class _ChangePassword1State extends State<ChangePassword1> {
                             visible: passError != "",
                             child: Text(
                               passError,
-                              style: TextStyle(color: Colors.red, fontSize: 12),
+                              style: const TextStyle(
+                                  color: Colors.red, fontSize: 12),
                               textAlign: TextAlign.start,
                             )),
                       ),
@@ -237,8 +244,10 @@ class _ChangePassword1State extends State<ChangePassword1> {
                                 newPasswordCantrolller) {
                               confirmPassError =
                                   ENTER_CONFIRM_PASS_DOES_NOT_MATCH;
+                              setState(() {});
                             } else {
                               confirmPassError = "";
+                              setState(() {});
                             }
                           },
                           obscureText: _passwordVisible2,
@@ -246,7 +255,7 @@ class _ChangePassword1State extends State<ChangePassword1> {
                           textAlign: TextAlign.start,
                           decoration: InputDecoration(
                               errorText: "",
-                              errorStyle: TextStyle(height: 0),
+                              errorStyle: const TextStyle(height: 0),
                               hintText: "Confirm Password",
                               hintStyle: const TextStyle(
                                   color: GRAY_CLR,
@@ -261,8 +270,8 @@ class _ChangePassword1State extends State<ChangePassword1> {
                               suffixIcon: IconButton(
                                 icon: Icon(
                                     _passwordVisible2
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
                                     color: GRAY_CLR),
                                 onPressed: () {
                                   setState(() {
@@ -286,34 +295,50 @@ class _ChangePassword1State extends State<ChangePassword1> {
                       SizedBox(
                         height: h * 0.040,
                       ),
-                      DefaultButton(
-                          text: SUBMIT,
-                          ontap: () {
-                            if (_formkey.currentState!.validate()) {
-                              passError = "";
-                              newPassError = "";
+                      isLoading == true
+                          ? const Center(
+                              child: CircularProgressIndicator(
+                              color: GREEN_CLR,
+                            ))
+                          : DefaultButton(
+                              text: SUBMIT,
+                              ontap: () async {
+                                unfocus(context);
 
-                              ChangePasswordApi(
-                                      oldPasswordCantroller.text.toString(),
-                                      confirmPasswordCantrolller.text
-                                          .toString())
-                                  .then((value) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                        backgroundColor: GREEN_CLR,
-                                        content: Text(
-                                            changepasswordmsg.toString())));
-                              }).catchError((e) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                        backgroundColor: GREEN_CLR,
-                                        content: Text(e.toString())));
-                              });
-                            }
-                          },
-                          fontsize: 18,
-                          height: h * 0.060,
-                          width: w * 1),
+                                if (_formkey.currentState!.validate()) {
+                                  passError = "";
+                                  newPassError = "";
+                                  setState(() {
+                                    isLoading = true;
+                                  });
+
+                                  await ChangePasswordApi(
+                                          oldPasswordCantroller.text.toString(),
+                                          confirmPasswordCantrolller.text
+                                              .toString())
+                                      .then((value) {
+                                    FocusManager.instance.primaryFocus
+                                        ?.unfocus();
+
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            backgroundColor: GREEN_CLR,
+                                            content: Text(
+                                                changepasswordmsg.toString())));
+                                  }).catchError((e) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            backgroundColor: GREEN_CLR,
+                                            content: Text(e.toString())));
+                                  });
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+                                }
+                              },
+                              fontsize: 18,
+                              height: h * 0.060,
+                              width: w * 1),
                     ]),
                   ),
                 ]),

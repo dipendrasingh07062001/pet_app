@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_app/Api/Prefrence.dart';
 import 'package:pet_app/Colors/COLORS.dart';
+import 'package:pet_app/Screens/Onbording/ForgotPassword.dart';
 import 'package:pet_app/Screens/Onbording/Login.dart';
-import 'package:pet_app/Screens/SuccesFullVerified.dart';
 import 'package:pet_app/UTILS/Utils.dart';
+import 'package:pet_app/main.dart';
 import '../../Api/Services.dart';
 import '../../Componants/Images&Icons.dart';
 
@@ -26,8 +27,8 @@ class _ResetPasswordState extends State<ResetPassword> {
   String passError = "";
   String newPassError = "";
 
-  bool _passwordVisible = false;
-  bool _passwordVisible1 = false;
+  bool _passwordVisible = true;
+  bool _passwordVisible1 = true;
   var h;
   var w;
 
@@ -37,7 +38,7 @@ class _ResetPasswordState extends State<ResetPassword> {
     w = MediaQuery.of(context).size.width;
     return Scaffold(
       extendBody: true,
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       backgroundColor: WHITE70_CLR,
       body: Form(
         key: _formkey,
@@ -52,7 +53,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                   padding: EdgeInsets.only(top: h * 0.1, left: w * 0.035),
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pop();
+                      Navigate_PushRemove(context, const ForgotPassword());
                     },
                     child: const Align(
                       alignment: Alignment.topLeft,
@@ -103,6 +104,9 @@ class _ResetPasswordState extends State<ResetPassword> {
                             passError = ENTER_NEW_PASS;
                             setState(() {});
                             return "";
+                          } else if (value.length < 6) {
+                            passError = "Please enter at least 6 character";
+                            setState(() {});
                           } else {
                             passError = "";
                           }
@@ -112,7 +116,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                         textAlign: TextAlign.start,
                         decoration: InputDecoration(
                             errorText: "",
-                            errorStyle: TextStyle(height: 0),
+                            errorStyle: const TextStyle(height: 0),
                             hintText: "New Password",
                             hintStyle: const TextStyle(
                                 color: GRAY_CLR,
@@ -127,8 +131,8 @@ class _ResetPasswordState extends State<ResetPassword> {
                             suffixIcon: IconButton(
                               icon: Icon(
                                   _passwordVisible
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
                                   color: GRAY_CLR),
                               onPressed: () {
                                 setState(() {
@@ -169,10 +173,11 @@ class _ResetPasswordState extends State<ResetPassword> {
                             newPassError = ENTER_CONFIRM_PASS;
                             setState(() {});
                             return "";
-                          } else if (confirmPasswordCantrolller !=
-                              newPasswordCantrolller) {
-                            newPassError = ENTER_CONFIRM_PASS_DOES_NOT_MATCH;
+                          } else if (newPasswordCantrolller.text !=
+                              confirmPasswordCantrolller.text) {
+                            newPassError = "Confirm Password doesn't match";
                             setState(() {});
+                            return "";
                           } else {
                             newPassError = "";
                           }
@@ -182,7 +187,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                         textAlign: TextAlign.start,
                         decoration: InputDecoration(
                             errorText: "",
-                            errorStyle: TextStyle(height: 0),
+                            errorStyle: const TextStyle(height: 0),
                             hintText: "Confirm Password",
                             hintStyle: const TextStyle(
                                 color: GRAY_CLR,
@@ -197,8 +202,8 @@ class _ResetPasswordState extends State<ResetPassword> {
                             suffixIcon: IconButton(
                               icon: Icon(
                                   _passwordVisible1
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
                                   color: GRAY_CLR),
                               onPressed: () {
                                 setState(() {
@@ -222,33 +227,45 @@ class _ResetPasswordState extends State<ResetPassword> {
                     SizedBox(
                       height: h * 0.040,
                     ),
-                    DefaultButton(
-                        text: SUBMIT,
-                        ontap: () {
-                          if (_formkey.currentState!.validate()) {
-                            passError = "";
-                            newPassError = "";
+                    isLoading == true
+                        ? const CircularProgressIndicator(
+                            color: GREEN_CLR,
+                          )
+                        : DefaultButton(
+                            text: SUBMIT,
+                            ontap: () async {
+                              unfocus(context);
 
-                            Reset_PasswordApi(
-                              getEmail.toString(),
-                              newPasswordCantrolller.text.toString(),
-                            ).then((value) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      backgroundColor: GREEN_CLR,
-                                      content: Text(resetmsg.toString())));
-                              Navigate_to(context, const Login());
-                            }).catchError((e) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      backgroundColor: GREEN_CLR,
-                                      content: Text(e.toString())));
-                            });
-                          }
-                        },
-                        fontsize: 18,
-                        height: h * 0.060,
-                        width: w * 1),
+                              if (_formkey.currentState!.validate()) {
+                                passError = "";
+                                newPassError = "";
+                                setState(() {
+                                  isLoading = true;
+                                });
+                                await Reset_PasswordApi(
+                                  getEmail.toString(),
+                                  newPasswordCantrolller.text.toString(),
+                                ).then((value) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          backgroundColor: GREEN_CLR,
+                                          content: Text(
+                                              "You have successfully changed your password")));
+                                  Navigate_PushRemove(context, const Login());
+                                }).catchError((e) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          backgroundColor: GREEN_CLR,
+                                          content: Text(e.toString())));
+                                });
+                                setState(() {
+                                  isLoading = false;
+                                });
+                              }
+                            },
+                            fontsize: 18,
+                            height: h * 0.060,
+                            width: w * 1),
                   ]),
                 ),
               ],

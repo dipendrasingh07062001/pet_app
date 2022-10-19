@@ -146,7 +146,7 @@ class _VaccinationsState extends State<Vaccinations> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   ClipRRect(
-                                    borderRadius: BorderRadius.circular(8),
+                                    borderRadius: BorderRadius.circular(6),
                                     child: Image.network(
                                       result.vaccinationModeldata![index]
                                           .vaccinationcertificate
@@ -154,7 +154,9 @@ class _VaccinationsState extends State<Vaccinations> {
                                       errorBuilder:
                                           (context, error, stackTrace) =>
                                               Container(),
-                                      height: 60,
+                                      height: h * 0.075,
+                                      width: w * 0.27,
+                                      fit: BoxFit.fill,
                                     ),
                                   ),
                                   Row(

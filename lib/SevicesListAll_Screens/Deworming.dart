@@ -6,7 +6,6 @@ import 'package:pet_app/Componants/Images&Icons.dart';
 import 'package:pet_app/Screens/Add_Pets/AddPet3.dart';
 import 'package:pet_app/SevicesListAll_Screens/Add_Deworming.dart';
 import 'package:pet_app/UTILS/Utils.dart';
-
 import '../Api/Models/getDewormingModel.dart';
 import '../Api/Prefrence.dart';
 
@@ -19,17 +18,16 @@ class Deworming extends StatefulWidget {
 
 class _DewormingState extends State<Deworming> {
   GetDewomingModel result = GetDewomingModel();
-  MyPetModel result1 = MyPetModel();
-
-  final petid = Preference.Pref.getInt('id');
+  // final petid = Preference.Pref.getString('id');
 
   @override
   void initState() {
     super.initState();
-    getDewormingListApi(petid).then((value) {
+    getDewormingListApi(result.getdewormingdata![index].petId.toString())
+        .then((value) {
       setState(() {
         result = value;
-        print(result.toString());
+        print("=====" + result.toString());
       });
     });
   }
@@ -79,7 +77,7 @@ class _DewormingState extends State<Deworming> {
                           child: GestureDetector(
                             onTap: () {
                               setState(() {
-                                Navigate_to(context, Add_Deworming());
+                                Navigate_to(context, const Add_Deworming());
                               });
                             },
                             child: const CircleAvatar(

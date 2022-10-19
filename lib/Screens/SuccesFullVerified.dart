@@ -25,7 +25,7 @@ class _SuccessFullyVerifiedState extends State<SuccessFullyVerified> {
     w = MediaQuery.of(context).size.width;
     return Scaffold(
       extendBody: true,
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       backgroundColor: WHITE70_CLR,
       body: Container(
         padding:
@@ -56,7 +56,7 @@ class _SuccessFullyVerifiedState extends State<SuccessFullyVerified> {
               DefaultButton(
                   text: GO_TO_LOGIN,
                   ontap: () {
-                    Navigate_replace(context, Login());
+                    Navigate_PushRemove(context, const Login());
                   },
                   fontsize: 18,
                   height: h * 0.060,

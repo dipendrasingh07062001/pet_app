@@ -15,8 +15,8 @@ class GetDewomingModel {
 }
 
 class GetDewormingModelList {
-  int? id;
-  int? petId;
+  String? id;
+  String? petId;
   String? dewormingStatus;
   String? dewormingDuration;
   String? dewormingDate;

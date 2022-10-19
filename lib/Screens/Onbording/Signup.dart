@@ -1,9 +1,11 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:pet_app/Api/Prefrence.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Provider/Provider.dart';
+import 'package:pet_app/Screens/Onbording/Login.dart';
 import 'package:pet_app/Screens/Onbording/SignupOTP_Verify.dart';
 import 'package:pet_app/UTILS/Utils.dart';
+import 'package:pet_app/main.dart';
 import 'package:provider/provider.dart';
 import '../../Api/Services.dart';
 import '../../Componants/Images&Icons.dart';
@@ -22,23 +24,16 @@ class _SignupState extends State<Signup> {
   TextEditingController passCantroller = TextEditingController();
   TextEditingController confirmPassCantroller = TextEditingController();
 
-  final verifyemail = Preference.Pref.getString('email');
-
   var h;
   var w;
 
-  bool validate = false;
-
-  valid() {
-    validate = !validate;
-  }
-
-  bool _passwordVisible = false;
-  bool _passwordVisible1 = false;
+  bool _passwordVisible = true;
+  bool _passwordVisible1 = true;
 
   String emailError = "";
   String passError = "";
   String passError1 = "";
+  bool isEmail(String input) => EmailValidator.validate(input);
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +44,7 @@ class _SignupState extends State<Signup> {
       create: (BuildContext context) => ProviderTutorial(),
       child: Scaffold(
         backgroundColor: GREEN_CLR,
-        resizeToAvoidBottomInset: true,
+        resizeToAvoidBottomInset: false,
         extendBody: false,
         body: SingleChildScrollView(
           child: Form(
@@ -114,16 +109,22 @@ class _SignupState extends State<Signup> {
                                   // color: WHITE_CLR,
 
                                   child: TextFormField(
+                                      // autovalidateMode: AutovalidateMode.always,
                                       controller: emailCantroller,
                                       textCapitalization:
                                           TextCapitalization.none,
                                       textAlign: TextAlign.start,
                                       validator: (value) {
                                         if (value!.isEmpty) {
-                                          emailError = ENTER_EMAIL;
-                                          return "";
+                                          emailError = "Please enter email";
+                                          // setState(() {});
+                                        } else if (!isEmail(value)) {
+                                          emailError =
+                                              "Please enter a valid email";
+                                          // setState(() {});
                                         } else {
                                           emailError = "";
+                                          // setState(() {});
                                         }
                                       },
                                       decoration: const InputDecoration(
@@ -169,14 +170,20 @@ class _SignupState extends State<Signup> {
                                     validator: (value) {
                                       if (value!.isEmpty) {
                                         passError = ENTER_PASS;
+                                        setState(() {});
+                                      } else if (value.length < 6) {
+                                        passError =
+                                            "Please enter at least 6 character";
+                                        setState(() {});
                                         return "";
                                       } else {
                                         passError = "";
+                                        setState(() {});
                                       }
                                     },
                                     decoration: InputDecoration(
                                         hintText: "Password",
-                                        errorStyle: TextStyle(height: 0),
+                                        errorStyle: const TextStyle(height: 0),
                                         errorText: "",
                                         hintStyle: const TextStyle(
                                             color: GRAY_CLR,
@@ -191,8 +198,8 @@ class _SignupState extends State<Signup> {
                                         suffixIcon: IconButton(
                                           icon: Icon(
                                               _passwordVisible
-                                                  ? Icons.visibility
-                                                  : Icons.visibility_off,
+                                                  ? Icons.visibility_off
+                                                  : Icons.visibility,
                                               color: GRAY_CLR),
                                           onPressed: () {
                                             setState(() {
@@ -232,23 +239,20 @@ class _SignupState extends State<Signup> {
                                     validator: (value) {
                                       if (value!.isEmpty) {
                                         passError1 = ENTER_CONFIRM_PASS;
-
+                                        setState(() {});
                                         return "";
                                       } else if (passCantroller.text !=
                                           confirmPassCantroller.text) {
-                                        valid();
-
                                         passError1 =
-                                            "Confirm Password doesn't match!";
-
-                                        print(validate);
+                                            "Confirm Password doesn't match";
+                                        setState(() {});
                                         return "";
                                       } else {
                                         passError1 = "";
                                       }
                                     },
                                     decoration: InputDecoration(
-                                        errorStyle: TextStyle(height: 0),
+                                        errorStyle: const TextStyle(height: 0),
                                         errorText: "",
                                         hintText: "Confirm Password",
                                         hintStyle: const TextStyle(
@@ -264,8 +268,8 @@ class _SignupState extends State<Signup> {
                                         suffixIcon: IconButton(
                                           icon: Icon(
                                               _passwordVisible1
-                                                  ? Icons.visibility
-                                                  : Icons.visibility_off,
+                                                  ? Icons.visibility_off
+                                                  : Icons.visibility,
                                               color: GRAY_CLR),
                                           onPressed: () {
                                             setState(() {
@@ -290,36 +294,57 @@ class _SignupState extends State<Signup> {
                                 ),
                                 Consumer(builder: (BuildContext context, value,
                                     Widget? child) {
-                                  return DefaultButton(
-                                      text: SIGN_UP,
-                                      ontap: () {
-                                        if (_formkey.currentState!.validate()) {
-                                          Sinup(
-                                                  emailCantroller.text
-                                                      .toString(),
-                                                  passCantroller.text
-                                                      .toString(),
-                                                  confirmPassCantroller.text
-                                                      .toString())
-                                              .then((value) {
-                                            emailCantroller.clear();
-                                            passCantroller.clear();
-                                            confirmPassCantroller.clear();
-                                            Navigate_to(
-                                                context, Signup_OTP_Verify());
-                                          }).catchError((e) {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(SnackBar(
-                                                    backgroundColor: GREEN_CLR,
-                                                    content:
-                                                        Text(e.toString())));
-                                            print(e.toString());
-                                          });
-                                        }
-                                      },
-                                      fontsize: 16,
-                                      height: h * 0.062,
-                                      width: w * 1);
+                                  return isLoading == true
+                                      ? const Center(
+                                          child: CircularProgressIndicator(
+                                          color: GREEN_CLR,
+                                        ))
+                                      : DefaultButton(
+                                          text: SIGN_UP,
+                                          ontap: () {
+                                            setState(() async {
+                                              unfocus(context);
+                                              if (_formkey.currentState!
+                                                  .validate()) {
+                                                setState(() {
+                                                  isLoading = true;
+                                                });
+                                                await Sinup(
+                                                        emailCantroller.text
+                                                            .toString(),
+                                                        passCantroller.text
+                                                            .toString(),
+                                                        confirmPassCantroller
+                                                            .text
+                                                            .toString())
+                                                    .then((value) {
+                                                  FocusManager
+                                                      .instance.primaryFocus
+                                                      ?.unfocus();
+                                                  emailCantroller.clear();
+                                                  passCantroller.clear();
+                                                  confirmPassCantroller.clear();
+
+                                                  Navigate_to(context,
+                                                      const Signup_OTP_Verify());
+                                                }).catchError((e) {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(SnackBar(
+                                                          backgroundColor:
+                                                              GREEN_CLR,
+                                                          content: Text(
+                                                              e.toString())));
+                                                  print(e.toString());
+                                                });
+                                                setState(() {
+                                                  isLoading = false;
+                                                });
+                                              }
+                                            });
+                                          },
+                                          fontsize: 16,
+                                          height: h * 0.062,
+                                          width: w * 1);
                                 }),
                                 SizedBox(
                                   height: h * 0.010,
@@ -392,8 +417,8 @@ class _SignupState extends State<Signup> {
                                         (BuildContext context, value,
                                             Widget? child) {
                                       return GestureDetector(
-                                          onTap: () => ProviderTutorial()
-                                              .NavigateLogin(context),
+                                          onTap: () => Navigate_replace(
+                                              context, const Login()),
                                           child: styleText(LOGIN, GREEN_CLR,
                                               FontWeight.normal, 15));
                                     })

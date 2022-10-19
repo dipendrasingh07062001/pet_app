@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:loading_overlay_pro/animations/bouncing_line.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/UTILS/Utils.dart';
+import 'package:pet_app/main.dart';
 import '../../Api/Services.dart';
 import '../../Componants/Images&Icons.dart';
 import 'ResetPassword.dart';
@@ -76,7 +78,7 @@ class _ForgotPassword_OTP_VerifyState extends State<ForgotPassword_OTP_Verify> {
     w = MediaQuery.of(context).size.width;
     return Scaffold(
       extendBody: true,
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       backgroundColor: WHITE70_CLR,
       body: Form(
         key: _formkey,
@@ -93,7 +95,7 @@ class _ForgotPassword_OTP_VerifyState extends State<ForgotPassword_OTP_Verify> {
                     onTap: () {
                       Navigator.of(context).pop();
                     },
-                    child: Align(
+                    child: const Align(
                       alignment: Alignment.topLeft,
                       child: SizedBox(
                         height: 35,
@@ -130,7 +132,7 @@ class _ForgotPassword_OTP_VerifyState extends State<ForgotPassword_OTP_Verify> {
                     15,
                   ),
                   Text(resendotpemail.toString(),
-                      style: TextStyle(
+                      style: const TextStyle(
                           decoration: TextDecoration.underline,
                           fontSize: 15,
                           color: GREEN_CLR)),
@@ -143,7 +145,7 @@ class _ForgotPassword_OTP_VerifyState extends State<ForgotPassword_OTP_Verify> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                            padding: EdgeInsets.all(0),
+                            padding: const EdgeInsets.all(0),
                             alignment: Alignment.center,
                             height: 60,
                             width: 60,
@@ -159,11 +161,11 @@ class _ForgotPassword_OTP_VerifyState extends State<ForgotPassword_OTP_Verify> {
                                 // obscureText: false,
                                 maxLength: 1,
                                 textAlign: TextAlign.center,
-                                style:
-                                    TextStyle(fontSize: 24, color: WHITE70_CLR),
+                                style: const TextStyle(
+                                    fontSize: 24, color: WHITE70_CLR),
                                 keyboardType: TextInputType.number,
 
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                     border: InputBorder.none,
                                     counterText: "",
                                     filled: true,
@@ -189,11 +191,11 @@ class _ForgotPassword_OTP_VerifyState extends State<ForgotPassword_OTP_Verify> {
                                   controller: second,
                                   focusNode: pin2FocusNode,
                                   obscureText: false,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 24, color: Colors.white),
                                   keyboardType: TextInputType.number,
                                   textAlign: TextAlign.center,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                       border: InputBorder.none,
                                       counterText: "",
                                       filled: true,
@@ -236,11 +238,11 @@ class _ForgotPassword_OTP_VerifyState extends State<ForgotPassword_OTP_Verify> {
                                   controller: third,
                                   focusNode: pin3FocusNode,
                                   obscureText: false,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 24, color: Colors.white),
                                   keyboardType: TextInputType.number,
                                   textAlign: TextAlign.center,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                       border: InputBorder.none,
                                       counterText: "",
                                       filled: true,
@@ -279,11 +281,11 @@ class _ForgotPassword_OTP_VerifyState extends State<ForgotPassword_OTP_Verify> {
                                 controller: fourth,
                                 focusNode: pin4FocusNode,
                                 obscureText: false,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 24, color: Colors.white),
                                 keyboardType: TextInputType.number,
                                 // textAlign: TextAlign.center,
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                     border: InputBorder.none,
                                     counterText: "",
                                     filled: true,
@@ -321,53 +323,106 @@ class _ForgotPassword_OTP_VerifyState extends State<ForgotPassword_OTP_Verify> {
                     FontWeight.normal,
                     15,
                   ),
-                  GestureDetector(
-                      onTap: () {
-                        Resend_OTP_ForgotPassword().then((value) {
-                          first.clear();
-                          first.clear();
-                          first.clear();
-                          first.clear();
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              backgroundColor: GREEN_CLR,
-                              content: Text(resendOTPmsg.toString())));
-                        }).catchError((e) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              backgroundColor: GREEN_CLR,
-                              content: Text(e.toString())));
-                        });
-                      },
-                      child: Text(
-                        RESEND,
-                        style: TextStyle(color: GREEN_CLR, fontSize: 15),
-                      )),
+                  resendotploading
+                      ? const LoadingBouncingLine.circle(
+                          backgroundColor: GREEN_CLR,
+                          size: 45.0,
+                          duration: Duration(seconds: 2),
+                          borderColor: GREEN_CLR)
+                      : GestureDetector(
+                          onTap: () async {
+                            setState(() {
+                              resendotploading = true;
+                            });
+                            await Resend_OTP_ForgotPassword().then((value) {
+                              first.clear();
+                              second.clear();
+                              third.clear();
+                              fourth.clear();
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      backgroundColor: GREEN_CLR,
+                                      content: Text(resendOTPmsg.toString())));
+                              setState(() {
+                                resendotploading = false;
+                              });
+                            }).catchError((e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      backgroundColor: GREEN_CLR,
+                                      content: Text(e.toString())));
+                              setState(() {
+                                resendotploading = false;
+                              });
+                            });
+                            setState(() {
+                              resendotploading = false;
+                            });
+                          },
+                          child: const Text(
+                            RESEND,
+                            style: TextStyle(color: GREEN_CLR, fontSize: 15),
+                          )),
                   SizedBox(
                     height: h * 0.030,
                   ),
-                  DefaultButton(
-                      text: VERIFY,
-                      ontap: () {
-                        if (_formkey.currentState!.validate()) {
-                          ForgotPass_OTP_VERIFY((first.text.toString() +
-                                  second.text.toString() +
-                                  third.text.toString() +
-                                  fourth.text.toString()))
-                              .then((value) {
-                            first.clear();
-                            first.clear();
-                            first.clear();
-                            first.clear();
-                            Navigate_to(context, ResetPassword());
-                          }).catchError((e) {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                backgroundColor: GREEN_CLR,
-                                content: Text(e.toString())));
-                          });
-                        }
-                      },
-                      fontsize: 18,
-                      height: h * 0.060,
-                      width: w * 0.85),
+                  isLoadingforgotOtp
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                          color: GREEN_CLR,
+                        ))
+                      : DefaultButton(
+                          text: VERIFY,
+                          ontap: () async {
+                            unfocus(context);
+
+                            if (_formkey.currentState!.validate()) {
+                              if (first.text == "" ||
+                                  second.text == "" ||
+                                  third.text == "" ||
+                                  fourth.text == "") {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        elevation: 1,
+                                        backgroundColor: GREEN_CLR,
+                                        content: Text("Please enter OTP")));
+                              } else {
+                                setState(() {
+                                  isLoadingforgotOtp = true;
+                                });
+                                await ForgotPass_OTP_VERIFY(
+                                        (first.text.toString() +
+                                            second.text.toString() +
+                                            third.text.toString() +
+                                            fourth.text.toString()))
+                                    .then((value) {
+                                  first.clear();
+                                  second.clear();
+                                  third.clear();
+                                  fourth.clear();
+                                  Navigate_replace(
+                                      context, const ResetPassword());
+                                  setState(() {
+                                    isLoadingforgotOtp = false;
+                                  });
+                                }).catchError((e) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          backgroundColor: GREEN_CLR,
+                                          content: Text(e.toString())));
+                                  setState(() {
+                                    isLoadingforgotOtp = false;
+                                  });
+                                });
+                                setState(() {
+                                  isLoadingforgotOtp = false;
+                                });
+                              }
+                            }
+                          },
+                          fontsize: 18,
+                          height: h * 0.060,
+                          width: w * 0.85),
                 ],
               )),
         ),

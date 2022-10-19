@@ -1,10 +1,13 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_app/Api/Services.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Componants/Images&Icons.dart';
 import 'package:pet_app/Screens/Onbording/ForgotPassOTP_Verify.dart';
+import 'package:pet_app/Screens/Onbording/Login.dart';
 import 'package:pet_app/UTILS/Utils.dart';
+import 'package:pet_app/main.dart';
 import '../../Provider/Provider.dart';
 
 class ForgotPassword extends StatefulWidget {
@@ -18,6 +21,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   final _formkey = GlobalKey<FormState>();
 
   TextEditingController emailCantroller = TextEditingController();
+  bool isEmail(String input) => EmailValidator.validate(input);
 
   String emailError = "";
   var h;
@@ -29,7 +33,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     w = MediaQuery.of(context).size.width;
     return Scaffold(
       extendBody: true,
-      resizeToAvoidBottomInset: true,
+      // resizeToAvoidBottomInset: false,
       backgroundColor: WHITE70_CLR,
       body: Form(
         key: _formkey,
@@ -44,7 +48,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   padding: EdgeInsets.only(top: h * 0.1, left: w * 0.035),
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pop();
+                      Navigate_PushRemove(context, const Login());
                     },
                     child: const Align(
                       alignment: Alignment.topLeft,
@@ -95,7 +99,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           controller: emailCantroller,
                           validator: (value) {
                             if (value!.isEmpty) {
-                              emailError = ENTER_EMAIL;
+                              emailError = "Please enter email";
+                              setState(() {});
+                              return "";
+                            } else if (!isEmail(value)) {
+                              emailError = "Please enter a valid email";
                               setState(() {});
                               return "";
                             } else {
@@ -125,34 +133,50 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           visible: emailError != "",
                           child: Text(
                             emailError,
-                            style: TextStyle(color: Colors.red, fontSize: 12),
+                            style: const TextStyle(
+                                color: Colors.red, fontSize: 12),
                             textAlign: TextAlign.start,
                           )),
                     ),
                     SizedBox(
                       height: h * 0.035,
                     ),
-                    DefaultButton(
-                        text: FORGOT_PASS,
-                        ontap: () {
-                          if (_formkey.currentState!.validate()) {
-                            emailError = "";
+                    isLoading == true
+                        ? const Center(
+                            child: CircularProgressIndicator(
+                            color: GREEN_CLR,
+                          ))
+                        : DefaultButton(
+                            text: FORGOT_PASS,
+                            ontap: () async {
+                              unfocus(context);
 
-                            ForgotPasswordApi(emailCantroller.text.toString())
-                                .then((value) {
-                              emailCantroller.clear();
-                              Navigate_to(context, ForgotPassword_OTP_Verify());
-                            }).catchError((e) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      backgroundColor: GREEN_CLR,
-                                      content: Text(e.toString())));
-                            });
-                          }
-                        },
-                        fontsize: 18,
-                        height: h * 0.060,
-                        width: w * 1),
+                              if (_formkey.currentState!.validate()) {
+                                emailError = "";
+                                setState(() {
+                                  isLoading = true;
+                                });
+                                await ForgotPasswordApi(
+                                        emailCantroller.text.toString())
+                                    .then((value) {
+                                  Navigate_to(context,
+                                      const ForgotPassword_OTP_Verify());
+                                  emailCantroller.clear();
+                                }).catchError((e) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          backgroundColor: GREEN_CLR,
+                                          content: Text(e.toString())));
+                                });
+
+                                setState(() {
+                                  isLoading = false;
+                                });
+                              }
+                            },
+                            fontsize: 18,
+                            height: h * 0.060,
+                            width: w * 1),
                     SizedBox(
                       height: h * 0.040,
                     ),

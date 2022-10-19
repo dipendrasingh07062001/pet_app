@@ -9,6 +9,8 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Provider/ServiceListProvider.dart';
 
+bool isLoading = false;
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Preference.Pref = await SharedPreferences.getInstance();
@@ -76,7 +78,7 @@ class MyApp extends StatelessWidget {
               // buttonColor: BLACK_CLR,
               primarySwatch: Colors.blue,
             ),
-            home: Home(),
+            home: Splash(),
           ),
         ));
   }

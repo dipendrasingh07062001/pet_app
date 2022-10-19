@@ -1,12 +1,14 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Componants/Images&Icons.dart';
 import 'package:pet_app/Provider/Provider.dart';
 import 'package:pet_app/Screens/HOME/Home.dart';
+import 'package:pet_app/Screens/Onbording/Signup.dart';
 import 'package:pet_app/UTILS/Utils.dart';
+import 'package:pet_app/main.dart';
 import 'package:provider/provider.dart';
-
 import '../../Api/Services.dart';
 
 class Login extends StatefulWidget {
@@ -21,7 +23,7 @@ class _LoginState extends State<Login> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   TextEditingController emailCantroller = TextEditingController();
-  TextEditingController passwordCantrolller = TextEditingController();
+  TextEditingController passwordCantroller = TextEditingController();
 
   String emailError = "";
   String passError = "";
@@ -29,7 +31,8 @@ class _LoginState extends State<Login> {
   var h;
   var w;
 
-  bool _passwordVisible = false;
+  bool _passwordVisible = true;
+  bool isEmail(String input) => EmailValidator.validate(input);
 
   @override
   Widget build(BuildContext context) {
@@ -97,32 +100,37 @@ class _LoginState extends State<Login> {
                                 ],
                               ),
                               child: TextFormField(
-                                  controller: emailCantroller,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      emailError = ENTER_EMAIL;
-                                      setState(() {});
-                                      return "";
-                                    } else {
-                                      emailError = "";
-                                    }
-                                  },
-                                  textCapitalization: TextCapitalization.none,
-                                  textAlign: TextAlign.start,
-                                  decoration: const InputDecoration(
-                                      errorText: "",
-                                      errorStyle: TextStyle(height: 0),
-                                      hintText: "Email Address",
-                                      hintStyle: TextStyle(
-                                          color: GRAY_CLR,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.normal),
-                                      prefixIcon: Icon(
-                                        Icons.email_outlined,
+                                controller: emailCantroller,
+                                textAlign: TextAlign.start,
+                                decoration: const InputDecoration(
+                                    errorText: "",
+                                    errorStyle: TextStyle(height: 0),
+                                    hintText: "Email Address",
+                                    hintStyle: TextStyle(
                                         color: GRAY_CLR,
-                                        size: 22,
-                                      ),
-                                      border: InputBorder.none)),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.normal),
+                                    prefixIcon: Icon(
+                                      Icons.email_outlined,
+                                      color: GRAY_CLR,
+                                      size: 22,
+                                    ),
+                                    border: InputBorder.none),
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    emailError = "Please enter email";
+                                    setState(() {});
+                                    return "";
+                                  } else if (!isEmail(value)) {
+                                    emailError = "Please enter a valid email";
+                                    setState(() {});
+                                    return "";
+                                  } else {
+                                    emailError = "";
+                                    // setState(() {});
+                                  }
+                                },
+                              ),
                             ),
                             Align(
                               alignment: Alignment.centerLeft,
@@ -149,12 +157,16 @@ class _LoginState extends State<Login> {
                               // color: WHITE_CLR,
 
                               child: TextFormField(
-                                controller: passwordCantrolller,
+                                controller: passwordCantroller,
                                 validator: (value) {
                                   if (value!.isEmpty) {
-                                    passError = ENTER_PASSWORD;
-                                    setState(() {});
+                                    passError = ENTER_NEW_PASS;
+                                    // setState(() {});
                                     return "";
+                                  } else if (value.length < 6) {
+                                    passError =
+                                        "Please enter at least 6 character";
+                                    setState(() {});
                                   } else {
                                     passError = "";
                                   }
@@ -165,7 +177,7 @@ class _LoginState extends State<Login> {
                                 textAlign: TextAlign.start,
                                 decoration: InputDecoration(
                                     errorText: "",
-                                    errorStyle: TextStyle(height: 0),
+                                    errorStyle: const TextStyle(height: 0),
                                     hintText: "Password",
                                     hintStyle: const TextStyle(
                                         color: GRAY_CLR,
@@ -180,8 +192,8 @@ class _LoginState extends State<Login> {
                                     suffixIcon: IconButton(
                                       icon: Icon(
                                           _passwordVisible
-                                              ? Icons.visibility
-                                              : Icons.visibility_off,
+                                              ? Icons.visibility_off
+                                              : Icons.visibility,
                                           color: GRAY_CLR),
                                       onPressed: () {
                                         setState(() {
@@ -232,35 +244,49 @@ class _LoginState extends State<Login> {
                             ),
                             Consumer<ProviderTutorial>(builder:
                                 (BuildContext context, value, Widget? child) {
-                              return value.isloding == true
-                                  ? const CircularProgressIndicator()
+                              return isLoading == true
+                                  ? const Center(
+                                      child: CircularProgressIndicator(
+                                      color: GREEN_CLR,
+                                    ))
                                   : DefaultButton(
                                       text: "Login",
                                       ontap: () async {
+                                        unfocus(context);
                                         if (_formkey.currentState!.validate()) {
                                           emailError = "";
                                           passError = "";
+                                          unfocus(context);
 
-                                          value.isloding = true;
+                                          setState(() {
+                                            isLoading = true;
+                                          });
                                           await LoginApi(
                                                   emailCantroller.text
                                                       .toString(),
-                                                  passwordCantrolller.text
+                                                  passwordCantroller.text
                                                       .toString())
                                               .then((value) {
                                             emailCantroller.clear();
-                                            passwordCantrolller.clear();
-                                            Navigate_replace(context, Home());
+                                            passwordCantroller.clear();
+                                            Navigate_PushRemove(
+                                                context, Home());
+                                            setState(() {
+                                              isLoading = false;
+                                            });
                                           }).catchError((e) {
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(SnackBar(
                                                     backgroundColor: GREEN_CLR,
                                                     content:
                                                         Text(e.toString())));
+
                                             print(e.toString());
                                           });
 
-                                          value.isloding = false;
+                                          setState(() {
+                                            isLoading = false;
+                                          });
                                         }
                                       },
                                       fontsize: 16,
@@ -340,8 +366,8 @@ class _LoginState extends State<Login> {
                                         Widget? child) {
                                   return GestureDetector(
                                       onTap: () {
-                                        ProviderTutorial()
-                                            .NavigateSinup(context);
+                                        Navigate_replace(
+                                            context, const Signup());
                                       },
                                       child: styleText(REGISTER_NOW, GREEN_CLR,
                                           FontWeight.normal, 15));

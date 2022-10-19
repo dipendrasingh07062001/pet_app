@@ -5,6 +5,7 @@ import 'package:pet_app/SevicesListAll_Screens/Medicines.dart';
 import 'package:pet_app/SevicesListAll_Screens/Pregnancy.dart';
 import 'package:pet_app/SevicesListAll_Screens/Vactionations.dart';
 import 'package:pet_app/UTILS/Utils.dart';
+import '../Api/Models/My_pet_model.dart';
 import '../Api/Models/ServiceListModel.dart';
 import '../Api/Models/addPetModel.dart';
 import '../Api/Services.dart';
@@ -67,6 +68,19 @@ class AddPetProvider extends ChangeNotifier {
   List<Widget> pages = [const AddPets(), const AddPet2(), const Addpet3()];
 
   int currentIndex = 0;
+  getvalues(MypetListdata petModel) {
+    addPetModel.name = petModel.name ?? "";
+    nameCan.text = petModel.name ?? "";
+    addPetModel.parentName = petModel.parentname ?? "";
+    addPetModel.breed = petModel.breed ?? "";
+    addPetModel.editdoc = petModel.uploaddocument ?? "";
+    addPetModel.dob = petModel.dob ?? "";
+    addPetModel.editimage = petModel.image ?? "";
+    addPetModel.type = petModel.type ?? "";
+    addPetModel.weight = petModel.weight ?? "";
+    addPetModel.gender = petModel.gendar ?? "";
+    notifyListeners();
+  }
 
   onChangedPage(int value) {
     currentIndex = value;
@@ -85,25 +99,11 @@ class AddPetProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-////select date
-
-  // DateTime currentdate1 = DateTime.now();
-  // Future datechange1(BuildContext context) async {
-  //   final DateTime? datechange1 = await showDatePicker(
-  //       context: context,
-  //       initialDate: currentdate1,
-  //       firstDate: DateTime(2001),
-  //       lastDate: currentdate1);
-  //   if (datechange1 != null) {
-  //     currentdate1 = datechange1;
-  //   }
-
-  //   notifyListeners();
-  // }
+//select date
 
   String? selectAtdate;
   DateTime? birthDate;
-  Future<void> datePicker(context, String selectAtdate) async {
+  Future datePicker(context, String selectAtdate) async {
     final datePick = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),

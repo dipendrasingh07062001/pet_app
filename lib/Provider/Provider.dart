@@ -9,7 +9,7 @@ import '../UTILS/Utils.dart';
 class ProviderTutorial extends ChangeNotifier {
   bool isClick = false;
 
-  bool isloding = false;
+  bool isloding = true;
 
   changePage() {
     isClick = true;
@@ -24,13 +24,13 @@ class ProviderTutorial extends ChangeNotifier {
   }
 
   NavigateLogin(BuildContext context) {
-    Navigate_replace(context, Login());
+    Navigate_replace(context, const Login());
     isClick = true;
     notifyListeners();
   }
 
   NavigateSinup(BuildContext context) {
-    Navigate_to(context, Signup());
+    Navigate_to(context, const Signup());
     isClick = false;
     notifyListeners();
   }
