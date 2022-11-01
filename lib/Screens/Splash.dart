@@ -1,9 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:pet_app/Api/Models/My_pet_model.dart';
 import 'package:pet_app/Api/Prefrence.dart';
+import 'package:pet_app/Api/Services.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Screens/HOME/Home.dart';
-import 'package:pet_app/Screens/Tutorial.dart';
 import '../Componants/Images&Icons.dart';
 import '../UTILS/Utils.dart';
 import 'Onbording/Login.dart';
@@ -19,34 +20,20 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
   var userExist = false;
   var h;
   var w;
-  // late final AnimationController _controller = AnimationController(
-  //   duration: const Duration(seconds: 2),
-  //   vsync: this,
-  // )..repeat(reverse: true);
-  // late final Animation<Offset> _offsetAnimation = Tween<Offset>(
-  //   begin: Offset.zero,
-  //   end: const Offset(1.5, 0.0),
-  // ).animate(CurvedAnimation(
-  //   parent: _controller,
-  //   curve: Curves.elasticIn,
-  // ));
-
-  // @override
-  // void dispose() {
-  //   _controller.dispose();
-  //   super.dispose();
-  // }
+  var id;
 
   @override
   void initState() {
     super.initState();
+    id = Preference.Pref.getInt('userId');
     getLoginStatus();
-    // getLoginStatus();
-    // Timer(Duration(milliseconds: 4500),
-    //     () => Navigate_replace(context, Tutorial()));
+    if (id != null) {
+      mypetApi().then((value) {
+        mypetmoellist = value;
+        setState(() {});
+      });
+    }
   }
-
-  int? id;
 
   @override
   Widget build(BuildContext context) {
@@ -63,18 +50,17 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
   }
 
   getLoginStatus() {
-    id = Preference.Pref.getInt('id');
-    var firstTime;
-    firstTime = Preference.Pref.getBool("isFirstTimeUser") ?? true;
-    if (firstTime) {
-      Preference.Pref.setBool('isFirstTimeUser', false);
-    }
-    print("id :" + id.toString() + "^");
+    // var firstTime;
+    // firstTime = Preference.Pref.getBool("isFirstTimeUser") ?? true;
+    // if (firstTime) {
+    //   Preference.Pref.setBool('isFirstTimeUser', false);
+    // }
+    // print("id :" + id.toString() + "^");
 
     Future.delayed(const Duration(seconds: 2), () {
       id.toString() == "" || id.toString() == "null" || id == ''
           ? Navigate_PushRemove(context, const Login())
-          : Navigate_PushRemove(context, Home());
+          : Navigate_PushRemove(context, const Home());
     });
   }
 }

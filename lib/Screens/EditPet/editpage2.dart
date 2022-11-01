@@ -1,10 +1,10 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pet_app/Api/Models/getBreedModel.dart';
 import 'package:pet_app/Provider/Provider.dart';
 import 'package:pet_app/Provider/ServiceListProvider.dart';
+import 'package:pet_app/Screens/EditPet/EditPage.dart';
 import 'package:provider/provider.dart';
 import '../../Api/Services.dart';
 import '../../Colors/COLORS.dart';
@@ -13,15 +13,16 @@ import '../../UTILS/Utils.dart';
 
 String? selectBreed;
 
-class AddPet2 extends StatefulWidget {
-  const AddPet2({super.key});
-
+class EditPet2 extends StatefulWidget {
   @override
-  State<AddPet2> createState() => _AddPet2State();
+  State<EditPet2> createState() => _EditPet2State();
 }
 
-class _AddPet2State extends State<AddPet2> {
+class _EditPet2State extends State<EditPet2> {
+  TextEditingController nameCan = TextEditingController();
+  TextEditingController parentNmaeCan = TextEditingController();
   GetBreedModel breedModel = GetBreedModel();
+
   @override
   void initState() {
     super.initState();
@@ -31,6 +32,9 @@ class _AddPet2State extends State<AddPet2> {
     getBreedApi().whenComplete(() {
       setState(() {});
     });
+
+    nameCan.text = name.toString();
+    parentNmaeCan.text = parentName.toString();
   }
 
   var h;
@@ -39,8 +43,6 @@ class _AddPet2State extends State<AddPet2> {
   @override
   Widget build(BuildContext context) {
     // final UpadteValue = Provider.of<AddPetProvider>(context, listen: true);
-
-    // String joningdate = DateFormat.yMMMd().format(UpadteValue.currentdate1);
 
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
@@ -62,11 +64,11 @@ class _AddPet2State extends State<AddPet2> {
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(color: BORDER_CLR, width: 1)),
                 child: TextFormField(
-                    controller: value.nameCan,
+                    controller: nameCan,
                     decoration: const InputDecoration(
                         errorText: "",
                         errorStyle: TextStyle(height: 0),
-                        hintText: "Pet Name",
+                        hintText: "Pet name ",
                         hintStyle: TextStyle(
                             color: GRAY_CLR,
                             fontSize: 14,
@@ -83,7 +85,7 @@ class _AddPet2State extends State<AddPet2> {
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(color: BORDER_CLR, width: 1)),
                 child: TextFormField(
-                    controller: value.parentNmaeCan,
+                    controller: parentNmaeCan,
                     decoration: const InputDecoration(
                         errorText: "",
                         errorStyle: TextStyle(height: 0),

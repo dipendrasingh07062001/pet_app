@@ -20,8 +20,8 @@ class _CycleTrackingPageState extends State<CycleTrackingPage> {
 
   int mCurrentIndex = -1;
 
-  PageController _controller = new PageController();
-  static const _kDuration = const Duration(milliseconds: 300);
+  PageController _controller = PageController();
+  static const _kDuration = Duration(milliseconds: 300);
   static const _kCurve = Curves.ease;
 
   var h;
@@ -47,9 +47,9 @@ class _CycleTrackingPageState extends State<CycleTrackingPage> {
                   margin: EdgeInsets.only(top: h * 0.125),
                   child: PageView.builder(
                     allowImplicitScrolling: true,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     controller: _controller,
-                    onPageChanged: value.OnChangedPage,
+                    onPageChanged: value.onChangedPage,
                     itemBuilder: (context, position) {
                       return value.pages[position];
                     },
@@ -75,7 +75,7 @@ class _CycleTrackingPageState extends State<CycleTrackingPage> {
                               duration: _kDuration, curve: _kCurve);
 
                           if (value.currentIndex == 4) {
-                            Navigate_to(context, Cycle_Tracking6());
+                            Navigate_to(context, const Cycle_Tracking6());
                           }
                         },
                         child:
@@ -85,7 +85,7 @@ class _CycleTrackingPageState extends State<CycleTrackingPage> {
                     ),
                     GestureDetector(
                         onTap: () {
-                          Navigate_to(context, Cycle_Tracking6());
+                          Navigate_to(context, const Cycle_Tracking6());
                         },
                         child: styleText(
                             "Skip", GREEN_CLR, FontWeight.normal, 15)),

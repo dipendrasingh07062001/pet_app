@@ -37,8 +37,6 @@ class _ResetPasswordState extends State<ResetPassword> {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
     return Scaffold(
-      extendBody: true,
-      resizeToAvoidBottomInset: false,
       backgroundColor: WHITE70_CLR,
       body: Form(
         key: _formkey,
@@ -107,8 +105,10 @@ class _ResetPasswordState extends State<ResetPassword> {
                           } else if (value.length < 6) {
                             passError = "Please enter at least 6 character";
                             setState(() {});
+                            return "";
                           } else {
                             passError = "";
+                            setState(() {});
                           }
                         },
                         obscureText: _passwordVisible,
@@ -180,6 +180,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                             return "";
                           } else {
                             newPassError = "";
+                            setState(() {});
                           }
                         },
                         obscureText: _passwordVisible1,

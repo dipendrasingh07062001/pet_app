@@ -1,104 +1,96 @@
 import 'package:flutter/material.dart';
 
-class HeroExample extends StatelessWidget {
+class HeroExample extends StatefulWidget {
   HeroExample({super.key});
 
-  String text =
-      'This red icon will use a default rect tween during the hero flight.';
+  @override
+  State<HeroExample> createState() => _HeroExampleState();
+}
+
+class _HeroExampleState extends State<HeroExample> {
+  int index = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Hero Sample')),
+      backgroundColor: Colors.white,
       body: Column(
-        children: <Widget>[
-          ListTile(
-            leading: Hero(
-              tag: 'hero-default-tween',
-              child: BoxWidget(
-                size: const Size(50.0, 50.0),
-                color: Colors.red[700]!.withOpacity(0.5),
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              MaterialButton(
+                height: 40,
+                minWidth: 80,
+                color: Colors.purple,
+                onPressed: () {
+                  setState(() {
+                    index = 0;
+                  });
+                },
+                child: Text("Tap 1"),
               ),
-            ),
-            title: Text(
-              text,
-            ),
-          ),
-          const SizedBox(height: 10.0),
-          ListTile(
-            leading: Hero(
-              tag: 'hero-custom-tween',
-              createRectTween: (Rect? begin, Rect? end) {
-                return MaterialRectCenterArcTween(begin: begin, end: end);
-              },
-              child: BoxWidget(
-                size: const Size(50.0, 50.0),
-                color: Colors.blue[700]!.withOpacity(0.5),
+              MaterialButton(
+                height: 40,
+                minWidth: 80,
+                color: Colors.purple,
+                onPressed: () {
+                  setState(() {
+                    index = 1;
+                  });
+                },
+                child: Text("Tap 2"),
               ),
-            ),
-            title: Text(text),
+            ],
           ),
-          const SizedBox(height: 10),
-          ElevatedButton(
-            onPressed: () => _gotoDetailsPage(context),
-            child: const Text('Tap to trigger hero flight'),
-          ),
+          index == 0
+              ? Tap1()
+              : index == 1
+                  ? Tap2()
+                  : Container()
         ],
       ),
     );
   }
-
-  void _gotoDetailsPage(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute<void>(
-      builder: (BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: const Text('Second Page'),
-        ),
-        body: Align(
-          alignment: Alignment.bottomRight,
-          child: Stack(
-            children: <Widget>[
-              Hero(
-                tag: 'hero-custom-tween',
-                createRectTween: (Rect? begin, Rect? end) {
-                  return MaterialRectCenterArcTween(begin: begin, end: end);
-                },
-                child: BoxWidget(
-                  size: const Size(400.0, 400.0),
-                  color: Colors.blue[700]!.withOpacity(0.5),
-                ),
-              ),
-              Hero(
-                tag: 'hero-default-tween',
-                child: BoxWidget(
-                  size: const Size(400.0, 400.0),
-                  color: Colors.red[700]!.withOpacity(0.5),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    ));
-  }
 }
 
-class BoxWidget extends StatelessWidget {
-  const BoxWidget({
-    super.key,
-    required this.size,
-    required this.color,
-  });
-
-  final Size size;
-  final Color color;
+class Tap1 extends StatelessWidget {
+  const Tap1({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: size.width,
-      height: size.height,
-      color: color,
+    return Column(
+      children: [
+        Text("ewdew"),
+        Text("datdededa"),
+        Text("ddddd"),
+        Text("dsdsdsds"),
+        Text("ddsss"),
+        Text("ssdcdscs"),
+        Text("dcdscsc"),
+        Text("dcdscdsc"),
+      ],
+    );
+  }
+}
+
+class Tap2 extends StatelessWidget {
+  const Tap2({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text("data"),
+        Text("data"),
+        Text("data"),
+        Text("data"),
+        Text("data"),
+        Text("data"),
+        Text("data"),
+        Text("data"),
+      ],
     );
   }
 }

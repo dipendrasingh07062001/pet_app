@@ -1,8 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:pet_app/Colors/COLORS.dart';
-
-import '../Api/Services.dart';
 import '../Componants/Images&Icons.dart';
+
+//// select date
+///
+Future<DateTime?> cutomDatePicker(BuildContext context) async {
+  final datePick = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2100));
+  if (datePick != null) {
+    return datePick;
+  }
+  return null;
+}
+
+//// select time
+///
+Future showTime(BuildContext context) async {
+  final TimeOfDay? result =
+      await showTimePicker(context: context, initialTime: TimeOfDay.now());
+  if (result != null) {
+    return result;
+  }
+  return null;
+}
 
 //Default Button
 class DefaultButton extends StatelessWidget {
@@ -136,35 +159,21 @@ class DefaultRadioButton extends StatelessWidget {
   }
 
   ////date picker /// select dob
-  DateTime? birthDate;
-  Future datePicker(BuildContext context, String? selectdate) async {
-    final datePick = await showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(1900),
-        lastDate: DateTime(2100));
-    if (datePick != null && datePick != birthDate) {
-      birthDate = datePick;
-      selectdate =
-          "${birthDate!.day}-${birthDate!.month}-${birthDate!.year}"; // 08/14/2019
-
-    }
-  }
 
   //// Snacbar
 
-  ScaffoldFeatureController<SnackBar, SnackBarClosedReason> snkbar(
-    BuildContext context,
-    String txt,
-  ) {
-    return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(
-        txt,
-        style: const TextStyle(color: WHITE_CLR),
-      ),
-      backgroundColor: GREEN_CLR,
-    ));
-  }
+  // ScaffoldFeatureController<SnackBar, SnackBarClosedReason> snkbar(
+  //   BuildContext context,
+  //   String txt,
+  // ) {
+  //   return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  //     content: Text(
+  //       txt,
+  //       style: const TextStyle(color: WHITE_CLR),
+  //     ),
+  //     backgroundColor: GREEN_CLR,
+  //   ));
+  // }
 }
 
 //// Delete Dilodg
@@ -221,7 +230,6 @@ var currentFocus;
 
 unfocus(BuildContext context) {
   currentFocus = FocusScope.of(context);
-
   if (!currentFocus.hasPrimaryFocus) {
     currentFocus.unfocus();
   }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 
@@ -48,7 +47,7 @@ class _CycleTracking2State extends State<CycleTracking2> {
             SizedBox(
               height: h * 0.050,
             ),
-            styleText("How long does your pet’s period usually last?", DARK_CLR,
+            styleText("How long does your pet's period usually last?", DARK_CLR,
                 FontWeight.bold, 20),
             SizedBox(
               height: h * 0.090,

@@ -4,7 +4,6 @@ import 'package:loading_overlay_pro/animations/bouncing_line.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Screens/SuccesFullVerified.dart';
 import 'package:pet_app/UTILS/Utils.dart';
-import 'package:pet_app/main.dart';
 import '../../Api/Services.dart';
 import '../../Componants/Images&Icons.dart';
 

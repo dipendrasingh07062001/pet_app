@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pet_app/Screens/Add_Pets/AddPet3.dart';
+import 'package:pet_app/Screens/EditPet/editPage1.dart';
+import 'package:pet_app/Screens/EditPet/editPet3.dart';
+import 'package:pet_app/Screens/EditPet/editpage2.dart';
 import 'package:pet_app/SevicesListAll_Screens/Medicines.dart';
 import 'package:pet_app/SevicesListAll_Screens/Pregnancy.dart';
 import 'package:pet_app/SevicesListAll_Screens/Vactionations.dart';
@@ -8,6 +11,7 @@ import 'package:pet_app/UTILS/Utils.dart';
 import '../Api/Models/My_pet_model.dart';
 import '../Api/Models/ServiceListModel.dart';
 import '../Api/Models/addPetModel.dart';
+import '../Api/Models/getBreedModel.dart';
 import '../Api/Services.dart';
 import '../Screens/Add_Pets/Add_pet2.dart';
 import '../Screens/Add_Pets/addPet1.dart';
@@ -20,15 +24,14 @@ import 'package:pet_app/Screens/CycleTrackingPageViewBuilder/Cycle_Tracking4.dar
 import 'package:pet_app/Screens/CycleTrackingPageViewBuilder/WheelList_CycleTracking2.dart';
 
 ////ServiceHelthProvider
-
 class ServiceHealthProvider extends ChangeNotifier {
   // List Service = ["Health", "Vets", "Gromming", "Trainig", "illness"];
   static List<Widget> PageRoute = [
-    CycleTrackingPage(),
-    Medicines(),
-    Vaccinations(),
-    Deworming(),
-    Pregnancy()
+    const CycleTrackingPage(),
+    const Medicines(),
+    const Vaccinations(),
+    const Deworming(),
+    const Pregnancy()
   ];
   ServiceModel servicelistmodel = ServiceModel();
   bool loading = false;
@@ -57,28 +60,50 @@ class ServiceHealthProvider extends ChangeNotifier {
 
 class AddPetProvider extends ChangeNotifier {
   AddPetModel addPetModel = AddPetModel();
+  MypetListdata petdata = MypetListdata();
+  int currentIndex = 0;
+  // var myPetList;
 
   TextEditingController nameCan = TextEditingController();
   TextEditingController parentNmaeCan = TextEditingController();
   String selectedpet = "";
-
   String weightDropdoun = 'Weight';
-  final weightItems = ['Weight', '10', '20', '30', '40', '50', '60'];
+  final weightItems = [
+    'Weight',
+    '10',
+    '15',
+    '20',
+    '25',
+    '30',
+    '35',
+    '40',
+    '45',
+    '50',
+    '55',
+    '60'
+  ];
   List text = ["Select Type", "Fill the Details", "Upload Pictures"];
   List<Widget> pages = [const AddPets(), const AddPet2(), const Addpet3()];
-
-  int currentIndex = 0;
+  List<Widget> editpetPage = [const EditPet1(), EditPet2(), const Editpate3()];
+  GetBreedModel breedModel = GetBreedModel();
   getvalues(MypetListdata petModel) {
-    addPetModel.name = petModel.name ?? "";
+    // addPetModel.name = petModel.name ?? "";
+    // addPetModel.parentName = petModel.parentname ?? "";
+    // addPetModel.breed = petModel.breed ?? "";
+    // addPetModel.editdoc = petModel.uploaddocument ?? "";
+    // addPetModel.dob = petModel.dob ?? "";
+    // addPetModel.editimage = petModel.image ?? "";
+    // addPetModel.type = petModel.type ?? "";
+    // addPetModel.weight = petModel.weight ?? "";
+    // addPetModel.gender = petModel.gendar ?? "";
+
+    petdata = petModel;
+    selectedpet = petModel.type ?? "";
     nameCan.text = petModel.name ?? "";
-    addPetModel.parentName = petModel.parentname ?? "";
-    addPetModel.breed = petModel.breed ?? "";
-    addPetModel.editdoc = petModel.uploaddocument ?? "";
-    addPetModel.dob = petModel.dob ?? "";
-    addPetModel.editimage = petModel.image ?? "";
-    addPetModel.type = petModel.type ?? "";
-    addPetModel.weight = petModel.weight ?? "";
-    addPetModel.gender = petModel.gendar ?? "";
+    parentNmaeCan.text = petModel.parentname ?? "";
+    weightDropdoun = petModel.weight ?? "";
+    gender = petModel.gendar ?? "";
+
     notifyListeners();
   }
 
@@ -87,7 +112,7 @@ class AddPetProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  String gender = 'male';
+  String gender = '';
   onValueChange(String? index) {
     gender = index ?? gender;
     notifyListeners();
@@ -99,24 +124,12 @@ class AddPetProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-//select date
-
-  String? selectAtdate;
-  DateTime? birthDate;
-  Future datePicker(context, String selectAtdate) async {
-    final datePick = await showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(1900),
-        lastDate: DateTime(2100));
-    if (datePick != null && datePick != birthDate) {
-      birthDate = datePick;
-      selectAtdate =
-          "${birthDate!.day}-${birthDate!.month}-${birthDate!.year}"; // 08/14/2019
-
-    }
+  String day1 = 'daily';
+  dayChangevalue1(String? index) {
+    day1 = index ?? day;
     notifyListeners();
   }
+
   ////Clickedd photo providder
 
   PickedFile? selectImage = null;
@@ -147,7 +160,7 @@ class CycleTrackingProvider extends ChangeNotifier {
     const CycleTracking5(),
   ];
   var currentIndex = 0;
-  OnChangedPage(int index) {
+  onChangedPage(int index) {
     currentIndex = index;
     notifyListeners();
   }

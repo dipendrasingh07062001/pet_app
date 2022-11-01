@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:pet_app/Screens/BlogDetails.dart';
-import '../../Api/Models/blogModel.dart';
+import '../../Api/Models/cycleTrackingBlogModel.dart';
 import '../../Api/Services.dart';
 import '../../Colors/COLORS.dart';
 import '../../UTILS/Utils.dart';
 
-class BlogDetailsList extends StatefulWidget {
-  const BlogDetailsList({super.key});
+class CycleTrackingBlog extends StatefulWidget {
+  const CycleTrackingBlog({super.key});
 
   @override
-  State<BlogDetailsList> createState() => _BlogDetailsListState();
+  State<CycleTrackingBlog> createState() => _CycleTrackingBlogState();
 }
 
-class _BlogDetailsListState extends State<BlogDetailsList> {
-  BlogModel result = BlogModel();
-
+class _CycleTrackingBlogState extends State<CycleTrackingBlog> {
+  CycleTackingBlogModel result = CycleTackingBlogModel();
   @override
   void initState() {
     super.initState();
-    getblogApi().then((value) {
+    getCycleTrackingblogApi().then((value) {
       setState(() {
         result = value;
         // print(result.blogListdata.toString());
@@ -35,12 +34,12 @@ class _BlogDetailsListState extends State<BlogDetailsList> {
     w = MediaQuery.of(context).size.width;
     return SizedBox(
       height: h * 0.25,
-      child: result.blogListdata == null
+      child: result.cycleTrackingblogListdata == null
           ? const Center(child: CircularProgressIndicator())
           : ListView.builder(
               physics: const BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
-              itemCount: result.blogListdata!.length,
+              itemCount: result.cycleTrackingblogListdata!.length,
               shrinkWrap: true,
               padding: const EdgeInsets.symmetric(horizontal: 0),
               itemBuilder: (BuildContext context, int index) {
@@ -54,7 +53,8 @@ class _BlogDetailsListState extends State<BlogDetailsList> {
                       borderRadius: BorderRadius.circular(15),
                       image: DecorationImage(
                           image: NetworkImage(
-                              result.blogListdata![index].image.toString(),
+                              result.cycleTrackingblogListdata![index].image
+                                  .toString(),
                               scale: 1.0),
                           fit: BoxFit.cover),
                     ),
@@ -80,7 +80,9 @@ class _BlogDetailsListState extends State<BlogDetailsList> {
                                       children: <InlineSpan>[
                                         TextSpan(
                                             text: result
-                                                .blogListdata![index].name
+                                                .cycleTrackingblogListdata![
+                                                    index]
+                                                .name
                                                 .toString(),
                                             style: const TextStyle(
                                               color: GRAY_CLR,
@@ -93,7 +95,10 @@ class _BlogDetailsListState extends State<BlogDetailsList> {
                                               width: w * 0.1,
                                             )),
                                         TextSpan(
-                                            text: result.blogListdata![index].id
+                                            text: result
+                                                .cycleTrackingblogListdata![
+                                                    index]
+                                                .id
                                                 .toString(),
                                             style: const TextStyle(
                                                 color: GRAY_CLR, fontSize: 10)),
@@ -104,7 +109,8 @@ class _BlogDetailsListState extends State<BlogDetailsList> {
                                     height: h * 0.015,
                                   ),
                                   styleText(
-                                    result.blogListdata![index].description
+                                    result.cycleTrackingblogListdata![index]
+                                        .description
                                         .toString(),
                                     DARK_CLR,
                                     FontWeight.bold,

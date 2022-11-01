@@ -77,8 +77,8 @@ class _ForgotPassword_OTP_VerifyState extends State<ForgotPassword_OTP_Verify> {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
     return Scaffold(
-      extendBody: true,
-      resizeToAvoidBottomInset: false,
+      // extendBody: true,
+      // resizeToAvoidBottomInset: false,
       backgroundColor: WHITE70_CLR,
       body: Form(
         key: _formkey,

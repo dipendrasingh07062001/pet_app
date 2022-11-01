@@ -9,6 +9,8 @@ import 'package:pet_app/main.dart';
 import 'package:provider/provider.dart';
 import '../../Api/Services.dart';
 import '../../Componants/Images&Icons.dart';
+import '../../FirebaseServices/GoogleAuth.dart';
+import '../HOME/Home.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -33,6 +35,7 @@ class _SignupState extends State<Signup> {
   String emailError = "";
   String passError = "";
   String passError1 = "";
+
   bool isEmail(String input) => EmailValidator.validate(input);
 
   @override
@@ -44,8 +47,6 @@ class _SignupState extends State<Signup> {
       create: (BuildContext context) => ProviderTutorial(),
       child: Scaffold(
         backgroundColor: GREEN_CLR,
-        resizeToAvoidBottomInset: false,
-        extendBody: false,
         body: SingleChildScrollView(
           child: Form(
             key: _formkey,
@@ -117,14 +118,16 @@ class _SignupState extends State<Signup> {
                                       validator: (value) {
                                         if (value!.isEmpty) {
                                           emailError = "Please enter email";
-                                          // setState(() {});
+                                          setState(() {});
+                                          return "";
                                         } else if (!isEmail(value)) {
                                           emailError =
                                               "Please enter a valid email";
-                                          // setState(() {});
+                                          setState(() {});
+                                          return "";
                                         } else {
                                           emailError = "";
-                                          // setState(() {});
+                                          setState(() {});
                                         }
                                       },
                                       decoration: const InputDecoration(
@@ -324,7 +327,6 @@ class _SignupState extends State<Signup> {
                                                   emailCantroller.clear();
                                                   passCantroller.clear();
                                                   confirmPassCantroller.clear();
-
                                                   Navigate_to(context,
                                                       const Signup_OTP_Verify());
                                                 }).catchError((e) {
@@ -358,21 +360,49 @@ class _SignupState extends State<Signup> {
                                   // crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Container(
-                                        height: 45,
-                                        width: 45,
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                            color: WHITE_CLR,
-                                            borderRadius:
-                                                BorderRadius.circular(50)),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(10),
-                                          child: Image.asset(
-                                            GOOGLE_ICON,
-                                            height: 40,
-                                          ),
-                                        )),
+                                    GestureDetector(
+                                      onTap: () async {
+                                        setState(() {
+                                          googlesigning = true;
+                                        });
+
+                                        googleLogin().then((value) {
+                                          socialSigningApi(gemail.toString(),
+                                                  gname.toString(), "Google")
+                                              .then((value) {
+                                            setState(() {
+                                              Navigate_PushRemove(
+                                                  context, const Home());
+                                              googlesigning = false;
+                                            });
+                                          }).catchError((e) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(SnackBar(
+                                                    backgroundColor: GREEN_CLR,
+                                                    content:
+                                                        Text(e.toString())));
+                                            setState(() {
+                                              googlesigning = false;
+                                            });
+                                          });
+                                        });
+                                      },
+                                      child: Container(
+                                          height: 45,
+                                          width: 45,
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                              color: WHITE_CLR,
+                                              borderRadius:
+                                                  BorderRadius.circular(50)),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(10),
+                                            child: Image.asset(
+                                              GOOGLE_ICON,
+                                              height: 40,
+                                            ),
+                                          )),
+                                    ),
                                     Container(
                                         height: 45,
                                         width: 45,

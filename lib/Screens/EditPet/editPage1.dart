@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_app/Colors/COLORS.dart';
+import 'package:pet_app/Screens/Add_Pets/addpet1.dart';
+import 'package:pet_app/Screens/EditPet/EditPage.dart';
 import 'package:provider/provider.dart';
 import '../../Provider/ServiceListProvider.dart';
 import '../../UTILS/Utils.dart';
@@ -14,16 +16,14 @@ class PetsModal {
   );
 }
 
-var type;
-
-class AddPets extends StatefulWidget {
-  const AddPets({super.key});
+class EditPet1 extends StatefulWidget {
+  const EditPet1({super.key});
 
   @override
-  State<AddPets> createState() => _AddPetsState();
+  State<EditPet1> createState() => _EditPet1State();
 }
 
-class _AddPetsState extends State<AddPets> {
+class _EditPet1State extends State<EditPet1> {
   static List<String> petName = ["Dog", "Cat", "Rabit", "Tutorail"];
 
   static List url = [
@@ -38,15 +38,18 @@ class _AddPetsState extends State<AddPets> {
 
   var h;
   var w;
+
   @override
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
+    print("===" + type2.toString());
 
     return Stack(
       children: [
         Consumer<AddPetProvider>(
             builder: (BuildContext context, value, Widget? child) {
+          value.selectedpet = type2.toString();
           return Padding(
             padding: EdgeInsets.only(top: h * 0.09),
             child: GridView.builder(
@@ -63,11 +66,10 @@ class _AddPetsState extends State<AddPets> {
                   onTap: () {
                     setState(() {
                       value.selectedpet = petName.elementAt(index);
-                      value.addPetModel.type = petName.elementAt(index);
-                      type = value.addPetModel.type;
-                      print("==" + type);
-                      print('===' + value.addPetModel.type.toString());
-
+                      type2 = petName.elementAt(index);
+                      // value.addPetModel.type = petName.elementAt(index);
+                      // type = value.addPetModel.type;
+                      // print('===' + value.addPetModel.type.toString());
                       // print("petName " + value.selectedpet);
                     });
                   },

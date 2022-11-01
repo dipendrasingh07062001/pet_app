@@ -1,11 +1,10 @@
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pet_app/Api/Prefrence.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Componants/Images&Icons.dart';
+import 'package:pet_app/Screens/Setting.dart';
 import 'package:pet_app/UTILS/Utils.dart';
-import 'package:pet_app/main.dart';
-
 import '../../Api/Services.dart';
 
 class ChangePassword1 extends StatefulWidget {
@@ -31,14 +30,11 @@ class _ChangePassword1State extends State<ChangePassword1> {
   bool _passwordVisible2 = true;
   var h;
   var w;
-
   @override
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
     return Scaffold(
-      extendBody: true,
-      resizeToAvoidBottomInset: false,
       backgroundColor: WHITE70_CLR,
       body: Form(
         key: _formkey,
@@ -102,11 +98,14 @@ class _ChangePassword1State extends State<ChangePassword1> {
                           controller: oldPasswordCantroller,
                           validator: (value) {
                             if (value!.isEmpty) {
-                              newPassError = ENTER_OLD_PASS;
+                              passError = ENTER_OLD_PASS;
+                              // setState(() {});
+                            } else if (value.length < 6) {
+                              passError = "Please enter at least 6 character";
                               setState(() {});
                               return "";
                             } else {
-                              newPassError = "";
+                              passError = "";
                             }
                           },
                           obscureText: _passwordVisible,
@@ -143,9 +142,9 @@ class _ChangePassword1State extends State<ChangePassword1> {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Visibility(
-                            visible: newPassError != "",
+                            visible: passError != "",
                             child: Text(
-                              newPassError,
+                              passError,
                               style: const TextStyle(
                                   color: Colors.red, fontSize: 12),
                               textAlign: TextAlign.start,
@@ -168,14 +167,17 @@ class _ChangePassword1State extends State<ChangePassword1> {
                           controller: newPasswordCantrolller,
                           validator: (value) {
                             if (value!.isEmpty) {
-                              passError = ENTER_NEW_PASS;
+                              newPassError = ENTER_NEW_PASS;
                               setState(() {});
                               return "";
                             } else if (value.length < 6) {
-                              passError = "Enter password minimum 6 charactor";
+                              newPassError =
+                                  "Please enter at least 6 character";
                               setState(() {});
+                              return "";
                             } else {
-                              passError = "";
+                              newPassError = "";
+                              setState(() {});
                             }
                           },
                           obscureText: _passwordVisible1,
@@ -212,9 +214,9 @@ class _ChangePassword1State extends State<ChangePassword1> {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Visibility(
-                            visible: passError != "",
+                            visible: newPassError != "",
                             child: Text(
-                              passError,
+                              newPassError,
                               style: const TextStyle(
                                   color: Colors.red, fontSize: 12),
                               textAlign: TextAlign.start,
@@ -231,8 +233,6 @@ class _ChangePassword1State extends State<ChangePassword1> {
                                   color: SHADOW_CLR.withOpacity(0.1),
                                   blurRadius: 14)
                             ]),
-                        // color: WHITE_CLR,
-
                         child: TextFormField(
                           controller: confirmPasswordCantrolller,
                           validator: (value) {
@@ -240,11 +240,12 @@ class _ChangePassword1State extends State<ChangePassword1> {
                               confirmPassError = ENTER_CONFIRM_PASS;
                               setState(() {});
                               return "";
-                            } else if (confirmPasswordCantrolller !=
-                                newPasswordCantrolller) {
+                            } else if (newPasswordCantrolller.text !=
+                                confirmPasswordCantrolller.text) {
                               confirmPassError =
-                                  ENTER_CONFIRM_PASS_DOES_NOT_MATCH;
+                                  "Confirm Password doesn't match";
                               setState(() {});
+                              return "";
                             } else {
                               confirmPassError = "";
                               setState(() {});
@@ -295,7 +296,7 @@ class _ChangePassword1State extends State<ChangePassword1> {
                       SizedBox(
                         height: h * 0.040,
                       ),
-                      isLoading == true
+                      isChangepassword
                           ? const Center(
                               child: CircularProgressIndicator(
                               color: GREEN_CLR,
@@ -304,27 +305,27 @@ class _ChangePassword1State extends State<ChangePassword1> {
                               text: SUBMIT,
                               ontap: () async {
                                 unfocus(context);
-
+                                setState(() {
+                                  isChangepassword = true;
+                                });
                                 if (_formkey.currentState!.validate()) {
                                   passError = "";
                                   newPassError = "";
-                                  setState(() {
-                                    isLoading = true;
-                                  });
-
+                                  confirmPassError = "";
                                   await ChangePasswordApi(
-                                          oldPasswordCantroller.text.toString(),
-                                          confirmPasswordCantrolller.text
-                                              .toString())
-                                      .then((value) {
-                                    FocusManager.instance.primaryFocus
-                                        ?.unfocus();
-
+                                    Preference.Pref.getInt('userid'),
+                                    oldPasswordCantroller.text.toString(),
+                                    confirmPasswordCantrolller.text.toString(),
+                                  ).then((value) {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                         SnackBar(
                                             backgroundColor: GREEN_CLR,
                                             content: Text(
                                                 changepasswordmsg.toString())));
+                                    Navigate_replace(context, const Setting());
+                                    setState(() {
+                                      isChangepassword = false;
+                                    });
                                   }).catchError((e) {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                         SnackBar(
@@ -332,9 +333,12 @@ class _ChangePassword1State extends State<ChangePassword1> {
                                             content: Text(e.toString())));
                                   });
                                   setState(() {
-                                    isLoading = false;
+                                    isChangepassword = false;
                                   });
                                 }
+                                setState(() {
+                                  isChangepassword = false;
+                                });
                               },
                               fontsize: 18,
                               height: h * 0.060,

@@ -23,46 +23,60 @@ class _SuccessFullyVerifiedState extends State<SuccessFullyVerified> {
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
-    return Scaffold(
-      extendBody: true,
-      resizeToAvoidBottomInset: false,
-      backgroundColor: WHITE70_CLR,
-      body: Container(
-        padding:
-            EdgeInsets.only(top: h * 0.20, left: w * 0.050, right: w * 0.050),
-        alignment: Alignment.center,
-        height: h * 1,
-        child: Column(crossAxisAlignment: CrossAxisAlignment.center,
-            // mainAxisAlignment: MainAxisAlignment.center,
+    return WillPopScope(
+      onWillPop: () async {
+        pushPage(context, const Login());
+        return false;
+        // moveToScreen2(context);
+      },
+      child: Scaffold(
+        extendBody: true,
+        resizeToAvoidBottomInset: false,
+        backgroundColor: WHITE70_CLR,
+        body: Container(
+          padding:
+              EdgeInsets.only(top: h * 0.20, left: w * 0.050, right: w * 0.050),
+          alignment: Alignment.center,
+          height: h * 1,
+          child: Column(crossAxisAlignment: CrossAxisAlignment.center,
+              // mainAxisAlignment: MainAxisAlignment.center,
 
-            children: [
-              SizedBox(
-                  height: h * 0.2,
-                  width: w * 0.5,
-                  child: SvgPicture.asset(
-                    SUCCESSFULLY_IMAGE,
-                  )),
-              SizedBox(
-                height: h * 0.05,
-              ),
-              styleText(HURRAY, BLACK70_CLR, FontWeight.bold, 19),
-              SizedBox(
-                height: h * 0.020,
-              ),
-              TutorialText(SUCCESSFULLY_TITLE, GRAY_CLR, FontWeight.normal, 15),
-              SizedBox(
-                height: h * 0.040,
-              ),
-              DefaultButton(
-                  text: GO_TO_LOGIN,
-                  ontap: () {
-                    Navigate_PushRemove(context, const Login());
-                  },
-                  fontsize: 18,
-                  height: h * 0.060,
-                  width: w * 1),
-            ]),
+              children: [
+                SizedBox(
+                    height: h * 0.2,
+                    width: w * 0.5,
+                    child: SvgPicture.asset(
+                      SUCCESSFULLY_IMAGE,
+                    )),
+                SizedBox(
+                  height: h * 0.05,
+                ),
+                styleText(HURRAY, BLACK70_CLR, FontWeight.bold, 19),
+                SizedBox(
+                  height: h * 0.020,
+                ),
+                TutorialText(
+                    SUCCESSFULLY_TITLE, GRAY_CLR, FontWeight.normal, 15),
+                SizedBox(
+                  height: h * 0.040,
+                ),
+                DefaultButton(
+                    text: GO_TO_LOGIN,
+                    ontap: () {
+                      Navigate_PushRemove(context, const Login());
+                    },
+                    fontsize: 18,
+                    height: h * 0.060,
+                    width: w * 1),
+              ]),
+        ),
       ),
     );
   }
+}
+
+Future<T?> pushPage<T>(BuildContext context, Widget page) {
+  return Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (context) => page),
+      (Route<dynamic> route) => false);
 }

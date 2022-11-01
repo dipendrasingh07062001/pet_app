@@ -11,10 +11,12 @@ import 'package:pet_app/Api/Models/vaccinationModel.dart';
 import 'ApiBaseUrl.dart';
 import 'Models/My_pet_model.dart';
 import 'Models/ServiceListModel.dart';
+import 'Models/cycleTrackingBlogModel.dart';
 import 'Prefrence.dart';
 
 String? loginmsg;
 
+bool islogin = false;
 Future LoginApi(
   String email,
   password,
@@ -23,6 +25,7 @@ Future LoginApi(
     'email': email,
     'password': password,
   });
+  islogin = true;
 
   if (response.statusCode == 200) {
     var value = jsonDecode(response.body);
@@ -33,27 +36,29 @@ Future LoginApi(
       print(response.body);
 
       Preference.Pref.setString('image', value['data']['image'].toString());
-      Preference.Pref.setInt('id', value['data']['id']);
+      Preference.Pref.setInt('userId', value['data']['id']);
       Preference.Pref.setString('email', value['data']['email'].toString());
       Preference.Pref.setString('name', value['data']['name'].toString());
       Preference.Pref.setString('status', value['data']['status'].toString());
       Preference.Pref.setBool("isFirstTimeUser", false);
 
-      final Userid = Preference.Pref.getInt('id').toString();
+      final Userid = Preference.Pref.getInt('userId').toString();
       print("user id ====$Userid");
       final userName = Preference.Pref.getString('name').toString();
-      print("user id ====$userName");
+      print("user  ====$userName");
       final userImage = Preference.Pref.getString('image');
       final Email = Preference.Pref.getString('email');
       print("Image ==== " + value['data']['image']);
-      print('User Id : ' + Userid.toString());
-
+      print('User Id : ' + Userid);
+      islogin = false;
       return value;
     } else {
+      islogin = false;
       loginmsg = value['message'];
       return Future.error(value["message"]);
     }
   } else {
+    islogin = false;
     return Future.error("Server Error");
   }
 }
@@ -63,7 +68,11 @@ Future LoginApi(
 String? Sinupmsg;
 String? signupEmail;
 
-Future Sinup(String email, password, confirmPassword) async {
+Future Sinup(
+  String email,
+  password,
+  confirmPassword,
+) async {
   var response = await http.post(Uri.parse(baseURL + signup), body: {
     'email': email,
     'password': password,
@@ -77,9 +86,7 @@ Future Sinup(String email, password, confirmPassword) async {
     if (data["status"] == true) {
       print(data["message"]);
       print(response.body);
-
       Preference.Pref.setString('email', email);
-
       signupEmail = Preference.Pref.getString('email').toString();
       return data;
     } else {
@@ -217,10 +224,10 @@ Future otpVerifySinup(String otp) async {
 
       lqlmsg = data['message'];
       Preference.Pref.setString('image', data['data']['image'].toString());
-      Preference.Pref.setInt('id', data['data']['id']);
       Preference.Pref.setString('email', data['data']['email'].toString());
       Preference.Pref.setString('name', data['data']['name'].toString());
       Preference.Pref.setString('status', data['data']['status'].toString());
+      Preference.Pref.setInt('userId', data['data']['id']);
 
       isLoadingOtp = false;
 
@@ -240,9 +247,11 @@ Future otpVerifySinup(String otp) async {
 
 String? forgotmsg;
 String? resendotpemail;
+bool isforgotpassword = false;
 Future ForgotPasswordApi(String email) async {
   var response = await http
       .post(Uri.parse(baseURL + forgotPasswordSendOtp), body: {'email': email});
+  isforgotpassword = true;
 
   if (response.statusCode == 200) {
     var data = jsonDecode(response.body);
@@ -255,14 +264,16 @@ Future ForgotPasswordApi(String email) async {
       Preference.Pref.setString('email', email.toString()).toString();
 
       resendotpemail = Preference.Pref.getString('email').toString();
-
+      isforgotpassword = false;
       return data;
     } else {
+      isforgotpassword = false;
       forgotmsg = data['message'];
       print("=======" + forgotmsg.toString());
       return Future.error(data["message"]);
     }
   } else {
+    isforgotpassword = false;
     return Future.error("Server Error");
   }
 }
@@ -301,16 +312,17 @@ Future ForgotPass_OTP_VERIFY(String otp) async {
 //// change password api
 ///
 String? changepasswordmsg;
-
-Future ChangePasswordApi(String oldpassword, String newPassword) async {
-  final userId = Preference.Pref.getInt('id').toString();
+bool isChangepassword = false;
+Future ChangePasswordApi(
+    int userid, String oldpassword, String newPassword) async {
+  // final userId = Preference.Pref.getInt('userId').toString();
 
   var response = await http.post(Uri.parse(baseURL + changePassword), body: {
-    'user_id': userId.toString(),
+    'user_id': userid,
     'oldpassword': oldpassword,
     'newpassword': newPassword
   });
-
+  isChangepassword = true;
   if (response.statusCode == 200) {
     var data = jsonDecode(response.body);
 
@@ -322,12 +334,14 @@ Future ChangePasswordApi(String oldpassword, String newPassword) async {
       changepasswordmsg = data['message'];
 
       print("Id   : " + data['data']['id'].toString());
-
+      isChangepassword = false;
       return data;
     } else {
+      isChangepassword = false;
       return Future.error(data["message"]);
     }
   } else {
+    isChangepassword = false;
     return Future.error("Server Error");
   }
 }
@@ -357,7 +371,7 @@ Future servicelistApi([String search = ""]) async {
 //// get my pet list api
 ///
 
-var petid;
+// var petid;
 Future mypetApi() async {
   MyPetModel result = MyPetModel();
   var response = await http.get(Uri.parse(baseURL + getMyPet));
@@ -366,8 +380,9 @@ Future mypetApi() async {
     if (data['status']) {
       result = MyPetModel.fromjson(data);
       print(result);
-      Preference.Pref.setString('id', '2');
-      petid = Preference.Pref.getString('id').toString();
+      mypetmoellist.clear();
+      mypetmoellist.addAll(result.mypetdata!);
+
       return result;
     } else {
       return Future.error(data['message']);
@@ -482,10 +497,10 @@ Future addPetApi(String type, String name, String parentname, String breed,
 }
 
 //// edit pet Api
-///
 
 String? editpetmsg;
 Future editPetApi(
+  String petId,
   String type,
   String name,
   String parentname,
@@ -495,14 +510,11 @@ Future editPetApi(
   String dob,
   File image,
   File documnt,
-  String editimage,
-  String editdoc,
 ) async {
   var request = http.MultipartRequest(
     'POST',
     Uri.parse(baseURL + editPet),
   );
-
   request.files.add(
     http.MultipartFile(
       'image',
@@ -522,6 +534,7 @@ Future editPetApi(
   );
 
   request.fields.addAll({
+    'id': petId,
     'type': type,
     'name': name,
     'parent_name': parentname,
@@ -542,6 +555,7 @@ Future editPetApi(
     if (jsoncode['status'] == true) {
       print(data);
       editpetmsg = jsoncode['message'].toString();
+      print(editpetmsg);
       return jsoncode;
     } else {
       return Future.error(jsoncode['message']);
@@ -562,6 +576,28 @@ Future getblogApi() async {
     final data = json.decode(response.body);
     if (data['status'] == true) {
       result = BlogModel.fromjson(data);
+      print(result);
+
+      return result;
+    } else {
+      return Future.error(data['message']);
+    }
+  } else {
+    return Future.error('Server error');
+  }
+}
+
+//// get CycleTracking blog Api
+////
+
+Future getCycleTrackingblogApi() async {
+  CycleTackingBlogModel result = CycleTackingBlogModel();
+
+  var response = await http.get(Uri.parse(baseURL + cycleTrackingBlog));
+  if (response.statusCode == 200) {
+    final data = json.decode(response.body);
+    if (data['status'] == true) {
+      result = CycleTackingBlogModel.fromjson(data);
       print(result);
 
       return result;
@@ -594,7 +630,7 @@ Future getVaccinationListApi() async {
   }
 }
 
-//// delete my pet api
+//// delete Vaccination api
 
 String? deleteVaccinationmsg;
 Future deleteVaccintionApi(String vaccinationId) async {
@@ -639,7 +675,7 @@ Future getVaccinationApi() async {
   }
 }
 
-//// add pet Api
+//// add Vaccination Api
 String? addVaccinationmsg;
 Future addVaccinationApi(
   String vaccinationName,
@@ -709,7 +745,7 @@ Future editVaccinationApi(
   ///MultiPart request
   var request = http.MultipartRequest(
     'POST',
-    Uri.parse(baseURL + addVaccination),
+    Uri.parse(baseURL + editvaccination),
   );
 
   request.files.add(
@@ -748,21 +784,64 @@ Future editVaccinationApi(
     return Future.error('Server error');
   }
 }
+
 // get Deworming Api
 
-Future getDewormingListApi(String petid) async {
-  GetDewomingModel result = GetDewomingModel();
+bool isDewormindata = false;
+Future getDewormingListApi(int petid) async {
+  GetdewormingModelList result = GetdewormingModelList();
   var response = await http.get(Uri.parse(baseURL + getDewormingList));
+
+  isDewormindata = true;
+
   if (response.statusCode == 200) {
     final data = json.decode(response.body);
     if (data['status'] == true) {
-      result = GetDewomingModel.fromjson(data);
+      result = GetdewormingModelList.fromJson(data);
       print(result);
+      isDewormindata = false;
       return result;
     } else {
+      isDewormindata = false;
       return Future.error(data['message']);
     }
   } else {
+    isDewormindata = false;
+    return Future.error('Server error');
+  }
+}
+
+/// add Dewormong Api
+///
+
+String? addDewormingmsg;
+bool isAddDeworming = false;
+Future addDewormingApi(String petId, String status, String duration,
+    String date, String reminder, String atDate, String time) async {
+  var response = await http.post(Uri.parse(baseURL + addDeworming), body: {
+    'pet_id': petId,
+    'deworming_status': status,
+    'deworming_duration': duration,
+    "deworming_date": date,
+    'reminder': reminder,
+    'at_date': atDate,
+    'at_time': time
+  });
+  isAddDeworming = true;
+  if (response.statusCode == 200) {
+    final data = json.decode(response.body);
+    if (data['status'] == true) {
+      print(data['message']);
+      print(data['data']);
+      addDewormingmsg = data['message'].toString();
+      isAddDeworming = false;
+      return data;
+    } else {
+      isAddDeworming = false;
+      return Future.error(data['message']);
+    }
+  } else {
+    isAddDeworming = false;
     return Future.error('Server error');
   }
 }

@@ -7,7 +7,9 @@ import 'package:pet_app/Screens/Add_Pets/addPet.dart';
 import 'package:pet_app/Screens/HOME/BlogDetailList.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 import 'package:provider/provider.dart';
+import '../../Api/Models/My_pet_model.dart';
 import '../../Api/Models/ServiceListModel.dart';
+import '../../Api/Prefrence.dart';
 import '../../Api/Services.dart';
 import '../../Componants/Images&Icons.dart';
 import '../DrawerScreen.dart';
@@ -17,7 +19,7 @@ import '../Reminder.dart';
 String? Search;
 
 class Home extends StatefulWidget {
-  Home({
+  const Home({
     super.key,
   });
 
@@ -33,8 +35,11 @@ class _HomeState extends State<Home> {
   TextEditingController searchCantrolller = TextEditingController();
 
   ServiceModel result = ServiceModel();
+  List<PopupMenuItem<MypetListdata>> menuitem = [];
 
   var currentindex = 0;
+  var selectePetIndex;
+
   @override
   initState() {
     super.initState();
@@ -68,7 +73,7 @@ class _HomeState extends State<Home> {
               DRAWER_ICON,
               color: GRAY_CLR,
             )),
-        iconTheme: IconThemeData(color: BLACK_CLR),
+        iconTheme: const IconThemeData(color: BLACK_CLR),
         backgroundColor: WHITE70_CLR,
         elevation: 0,
         centerTitle: true,
@@ -109,83 +114,43 @@ class _HomeState extends State<Home> {
           ],
         ),
         actions: [
-          PopupMenuButton<int>(
+          PopupMenuButton<MypetListdata>(
             offset: const Offset(10, 80),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
             elevation: 10,
+            // initialValue: mypetmoellist[index],
             icon: Image.asset(USER_IMAGE),
             iconSize: 40,
             padding: const EdgeInsets.all(10),
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                child: Container(
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Image.asset(USER_IMAGE),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          styleText(PET_NAME, BLACK_CLR, FontWeight.normal, 15),
-                        ],
+            itemBuilder: (context) {
+              menuitem = showMenu();
+              menuitem.add(
+                PopupMenuItem(
+                    enabled: true,
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: MaterialButton(
+                        height: 30,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(40)),
+                        color: GREEN_CLR,
+                        onPressed: () {
+                          Navigate_replace(context, AddPetpage());
+                          Navigator.of(context).pop;
+                        },
+                        child: styleText(
+                            ADD_PET_NAME, WHITE70_CLR, FontWeight.normal, 13),
                       ),
-                      const Divider(
-                        color: FADE_BLUE_CLR,
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              PopupMenuItem(
-                child: Container(
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Image.asset(USER_IMAGE),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          styleText(PET_NAME, BLACK_CLR, FontWeight.normal, 15),
-                        ],
-                      ),
-                      const Divider(
-                        color: FADE_BLUE_CLR,
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              PopupMenuItem(
-                  enabled: true,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 15),
-                    child: MaterialButton(
-                      height: 30,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(40)),
-                      color: GREEN_CLR,
-                      onPressed: () {
-                        Navigate_to(
-                            context,
-                            AddPetpage(
-                              isEdit: false,
-                            ));
-                        Navigator.of(context).pop;
-                      },
-                      child: styleText(
-                          ADD_PET_NAME, WHITE70_CLR, FontWeight.normal, 13),
-                    ),
-                  ))
-            ],
+                    )),
+              );
+              return menuitem;
+            },
           ),
         ],
       ),
       drawer: const MyDrawer(),
-
       floatingActionButton: SizedBox(
         height: 70,
         child: FloatingActionButton(
@@ -253,6 +218,7 @@ class _HomeState extends State<Home> {
                       return result.serviceListdata == null
                           ? const Center(child: CircularProgressIndicator())
                           : ListView.builder(
+                              physics: const BouncingScrollPhysics(),
                               shrinkWrap: true,
                               controller: scrollController,
                               itemCount: result.serviceListdata!.length,
@@ -294,6 +260,7 @@ class _HomeState extends State<Home> {
                                               result
                                                   .serviceListdata![index].image
                                                   .toString(),
+                                              scale: 1.0,
 
                                               width: w * 0.14,
                                               height: h * 0.08,
@@ -329,7 +296,7 @@ class _HomeState extends State<Home> {
                   return result.serviceListdata == null
                       ? const Center(child: CircularProgressIndicator())
                       : ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
+                          physics: const BouncingScrollPhysics(),
                           shrinkWrap: true,
                           scrollDirection: Axis.vertical,
                           itemCount: result.serviceListdata?[value.currentindex]
@@ -365,6 +332,7 @@ class _HomeState extends State<Home> {
                                                   BorderRadius.circular(8),
                                               child: Image.network(
                                                 subResultdata!.image.toString(),
+                                                scale: 1.0,
 
                                                 width: w * 0.17,
                                                 height: h * 0.1,
@@ -401,7 +369,7 @@ class _HomeState extends State<Home> {
                 ),
 
                 ///BlogDetailList
-                BlogDetailsList(),
+                const BlogDetailsList(),
                 SizedBox(
                   height: h * 0.015,
                 ),
@@ -411,5 +379,56 @@ class _HomeState extends State<Home> {
         ),
       ),
     );
+  }
+
+  var petId;
+  List<PopupMenuItem<MypetListdata>> showMenu() {
+    final value = Provider.of<ServiceHealthProvider>(context, listen: false);
+    return List.generate(
+        mypetmoellist.length,
+        ((index) => PopupMenuItem(
+            onTap: () {
+              Preference.Pref.setInt('selectedPetId', mypetmoellist[index].id);
+              Preference.Pref.setString(
+                  'selectedPetName', mypetmoellist[index].name);
+              Preference.Pref.setString(
+                  'selectedPetGender', mypetmoellist[index].gendar);
+              Preference.Pref.getInt('selectedPetId');
+              petId = Preference.Pref.getInt('selectedPetId');
+              print(petId);
+              value.OnTap(index);
+              value.currentindex = index;
+            },
+            child: Column(
+              // mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 15,
+                      backgroundImage: NetworkImage(
+                          mypetmoellist[index].image.toString(),
+                          scale: 1.0),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    styleText(mypetmoellist[index].name.toString(), BLACK_CLR,
+                        FontWeight.normal, 15),
+                    Spacer(),
+                    Visibility(
+                      child: CircleAvatar(
+                          radius: 5,
+                          backgroundColor: value.currentindex == index
+                              ? GREEN_CLR
+                              : Colors.transparent),
+                    )
+                  ],
+                ),
+                const Divider(
+                  color: FADE_BLUE_CLR,
+                ),
+              ],
+            ))));
   }
 }

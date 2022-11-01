@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pet_app/Api/Models/v_model.dart';
@@ -20,6 +19,7 @@ class Add_Vaccinations extends StatefulWidget {
 
 class _Add_VaccinationsState extends State<Add_Vaccinations> {
   VModel vmodel = VModel();
+
   @override
   void initState() {
     super.initState();
@@ -34,13 +34,11 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
   String selectStatus = '---Slelect Status---';
   final selectStatusitems = [
     '---Slelect Status---',
-    'RABIT',
-    'CAT',
-    'DOG',
+    'true',
+    'false',
   ];
 
   String? selectedTime;
-
   Future<void> selectTime() async {
     final TimeOfDay? result =
         await showTimePicker(context: context, initialTime: TimeOfDay.now());
@@ -122,7 +120,6 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
                   onChanged: (newValue) {
                     vmodel = newValue!;
                     setState(() {});
-
                     print("id......" + vmodel.id.toString());
                   },
                   items:
@@ -452,18 +449,12 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
                                 selectedTime.toString(),
                                 selectAtdate.toString())
                             .then((value) {
-                          // print(value.day.toString());
-                          // print(vmodel.id.toString());
-                          // print(selectdate.toString());
-                          // print(selectStatus.toString());
-                          // print(selectedTime.toString());
-                          // print(selectAtdate.toString());
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               backgroundColor: GREEN_CLR,
                               content: Text(addVaccinationmsg.toString())));
                           print(addVaccinationmsg.toString());
                           setState(() {});
-                          Navigate_to(context, const Vaccinations());
+                          Navigate_replace(context, const Vaccinations());
                         }).catchError((e) {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               backgroundColor: GREEN_CLR,

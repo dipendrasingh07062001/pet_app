@@ -10,14 +10,14 @@ import '../../UTILS/Utils.dart';
 int index = 0;
 String? selectimage;
 
-class Addpet3 extends StatefulWidget {
-  const Addpet3({super.key});
+class Editpate3 extends StatefulWidget {
+  const Editpate3({super.key});
 
   @override
-  State<Addpet3> createState() => _Addpet3State();
+  State<Editpate3> createState() => _Editpate3State();
 }
 
-class _Addpet3State extends State<Addpet3> {
+class _Editpate3State extends State<Editpate3> {
   var h;
   var w;
 

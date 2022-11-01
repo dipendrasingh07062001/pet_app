@@ -10,6 +10,8 @@ import 'package:pet_app/Screens/CycleTrackingPageViewBuilder/Symptoms.dart';
 import 'package:pet_app/Screens/HOME/BlogDetailList.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 
+import 'cycleTrackingBlog.dart';
+
 class Cycle_Tracking6 extends StatefulWidget {
   const Cycle_Tracking6({super.key});
 
@@ -52,16 +54,16 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
         title: styleText(CYCLE_TRACKING, DARK_CLR, FontWeight.bold, 16),
         actions: [
           Padding(
-            padding: EdgeInsets.all(18),
+            padding: const EdgeInsets.all(18),
             child: MaterialButton(
                 height: 35,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
-                    side: BorderSide(color: GRAY_CLR)),
+                    side: const BorderSide(color: GRAY_CLR)),
                 onPressed: () {
-                  Navigate_to(context, Add_Period());
+                  Navigate_to(context, const Add_Period());
                 },
-                child: Text(
+                child: const Text(
                   ADD_PERIOD,
                   style: TextStyle(
                       color: GREEN_CLR,
@@ -87,15 +89,15 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
 
             Stack(children: [
               Container(
-                margin: EdgeInsets.only(top: 10),
+                margin: const EdgeInsets.only(top: 10),
                 width: w * 1,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     border:
                         Border(top: BorderSide(color: GREEN_CLR, width: 2))),
               ),
               Center(
                 child: Padding(
-                  padding: EdgeInsets.only(top: 6),
+                  padding: const EdgeInsets.only(top: 6),
                   child: Image.asset(DROP_ICON, height: 30, color: GREEN_CLR
                       // color: GREEN_CLR,
                       ),
@@ -117,7 +119,7 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
                     quarterTurns: 5,
                     child: ListWheelScrollView(
                       useMagnifier: false,
-                      physics: FixedExtentScrollPhysics(),
+                      physics: const FixedExtentScrollPhysics(),
                       diameterRatio: 1.5,
                       perspective: 0.0000000001,
                       clipBehavior: Clip.hardEdge,
@@ -161,7 +163,7 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 20,
                               ),
                               Stack(
@@ -200,7 +202,7 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
             Align(
               alignment: Alignment.center,
               child: Container(
-                margin: EdgeInsets.only(top: 10),
+                margin: const EdgeInsets.only(top: 10),
                 height: 1.2,
                 width: w * 1,
                 color: GRAY_CLR.withOpacity(0.3),
@@ -232,14 +234,14 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10), color: BROUN_CLR),
                 child: GestureDetector(
-                  onTap: () => Navigate_to(context, Symptoms()),
+                  onTap: () => Navigate_to(context, const Symptoms()),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         styleText(PERIOD, BLACK_CLR, FontWeight.normal, 15),
-                        Icon(
+                        const Icon(
                           Icons.add,
                           size: 20,
                           color: GRAY_CLR,
@@ -261,17 +263,17 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10), color: BROUN_CLR),
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(h * 0.005),
                 child: Column(
                   children: [
                     GestureDetector(
-                      onTap: () => Navigate_to(context, Symptoms()),
+                      onTap: () => Navigate_to(context, const Symptoms()),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           styleText(
                               SYMPTOMAS, BLACK_CLR, FontWeight.normal, 15),
-                          Icon(
+                          const Icon(
                             Icons.add,
                             size: 20,
                             color: GRAY_CLR,
@@ -279,7 +281,7 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Divider(
@@ -287,12 +289,12 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
                       thickness: 2,
                     ),
                     GestureDetector(
-                      onTap: () => Navigate_to(context, Symptoms()),
+                      onTap: () => Navigate_to(context, const Symptoms()),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           styleText(SPPOTING, BLACK_CLR, FontWeight.normal, 15),
-                          Icon(
+                          const Icon(
                             Icons.add,
                             size: 20,
                             color: GRAY_CLR,
@@ -323,7 +325,7 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
                 styleText(PREDICTION, DARK_CLR, FontWeight.bold, 18),
                 GestureDetector(
                     onTap: () =>
-                        Navigate_to(context, CycleTracking_Predication()),
+                        Navigate_to(context, const CycleTracking_Predication()),
                     child:
                         styleText(SHOW_ALL, GREEN_CLR, FontWeight.normal, 13)),
               ],
@@ -379,9 +381,9 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
 
             SizedBox(
                 height: h * 0.25,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: BlogDetailsList(),
+                child: const Padding(
+                  padding: EdgeInsets.only(bottom: 10),
+                  child: CycleTrackingBlog(),
                 )),
 
             SizedBox(

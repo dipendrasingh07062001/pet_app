@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pet_app/Componants/Images&Icons.dart';
 import 'package:pet_app/Provider/Provider.dart';
-import 'package:pet_app/Screens/HOME/Home.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 import 'package:provider/provider.dart';
 

@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pet_app/Api/Prefrence.dart';
@@ -11,8 +12,9 @@ import 'Provider/ServiceListProvider.dart';
 
 bool isLoading = false;
 
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   Preference.Pref = await SharedPreferences.getInstance();
   runApp(
     const MyApp(),
@@ -21,13 +23,6 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  // This widget is the  Provider root of your application.
-
-  // var userid = Preference.Pref.getInt('id').toString();
-  // var userName = Preference.Pref.getString('name').toString();
-  // var userImage = Preference.Pref.getString('image').toString();
-  // var Email = Preference.Pref.getString('email').toString();
 
   @override
   Widget build(BuildContext context) {
@@ -49,19 +44,6 @@ class MyApp extends StatelessWidget {
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Pet App',
-            // theme: ThemeData(
-            //   pageTransitionsTheme: PageTransitionsTheme(
-            //     builders: {
-            //       TargetPlatform.android: SharedAxisPageTransitionsBuilder(
-            //         transitionType: SharedAxisTransitionType.vertical,
-            //       ),
-            //       TargetPlatform.iOS: SharedAxisPageTransitionsBuilder(
-            //         transitionType: SharedAxisTransitionType.vertical,
-            //       ),
-            //     },
-            //   ),
-            // ),
-
             theme: ThemeData(
               appBarTheme: const AppBarTheme(
                 iconTheme: IconThemeData(color: BLACK_CLR),
@@ -78,7 +60,7 @@ class MyApp extends StatelessWidget {
               // buttonColor: BLACK_CLR,
               primarySwatch: Colors.blue,
             ),
-            home: Splash(),
+            home: const Splash(),
           ),
         ));
   }

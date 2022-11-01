@@ -2,6 +2,7 @@ import 'dart:io';
 
 class AddPetModel {
   String? type;
+  String? petId;
   String? name;
   String? parentName;
   String? breed;

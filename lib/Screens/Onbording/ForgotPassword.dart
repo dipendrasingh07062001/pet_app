@@ -141,7 +141,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     SizedBox(
                       height: h * 0.035,
                     ),
-                    isLoading == true
+                    isforgotpassword
                         ? const Center(
                             child: CircularProgressIndicator(
                             color: GREEN_CLR,
@@ -154,7 +154,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                               if (_formkey.currentState!.validate()) {
                                 emailError = "";
                                 setState(() {
-                                  isLoading = true;
+                                  isforgotpassword = true;
                                 });
                                 await ForgotPasswordApi(
                                         emailCantroller.text.toString())
@@ -162,15 +162,21 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                   Navigate_to(context,
                                       const ForgotPassword_OTP_Verify());
                                   emailCantroller.clear();
+                                  setState(() {
+                                    isforgotpassword = false;
+                                  });
                                 }).catchError((e) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                           backgroundColor: GREEN_CLR,
                                           content: Text(e.toString())));
+                                  setState(() {
+                                    isforgotpassword = false;
+                                  });
                                 });
 
                                 setState(() {
-                                  isLoading = false;
+                                  isforgotpassword = false;
                                 });
                               }
                             },
@@ -187,7 +193,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             ALLREADY_ACCOUNT, GRAY_CLR, FontWeight.normal, 15),
                         GestureDetector(
                             onTap: () {
-                              ProviderTutorial().NavigateLogin(context);
+                              Navigate_PushRemove(context, const Login());
                             },
                             child: styleText(
                                 LOGIN, GREEN_CLR, FontWeight.normal, 15))

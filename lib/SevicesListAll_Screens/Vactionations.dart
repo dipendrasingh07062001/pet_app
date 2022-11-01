@@ -46,7 +46,7 @@ class _VaccinationsState extends State<Vaccinations> {
               borderRadius: BorderRadius.all(Radius.circular(50)),
               side: BorderSide(color: GREEN_CLR)),
           onPressed: () {
-            Navigate_to(context, const Add_Vaccinations());
+            Navigate_replace(context, const Add_Vaccinations());
           },
           child: const Icon(
             Icons.add,
@@ -167,6 +167,12 @@ class _VaccinationsState extends State<Vaccinations> {
                                         height: 28,
                                         width: 28,
                                         child: GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              Navigate_replace(context,
+                                                  const Add_Vaccinations());
+                                            });
+                                          },
                                           child: const CircleAvatar(
                                             backgroundColor: FADE_BLUE_CLR,
                                             child: Icon(

@@ -1,27 +1,30 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:pet_app/Api/Services.dart';
 import 'package:pet_app/Componants/Images&Icons.dart';
-import 'package:pet_app/Screens/Add_Pets/Add_pet2.dart';
-import 'package:pet_app/Screens/HOME/Home.dart';
-import 'package:pet_app/Screens/My_Pets/My_Pets.dart';
 import 'package:provider/provider.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
-import '../../Api/Models/My_pet_model.dart';
 import '../../Colors/COLORS.dart';
 import '../../Provider/ServiceListProvider.dart';
 import '../../UTILS/Utils.dart';
 
-class AddPetpage extends StatefulWidget {
-  MypetListdata? editPetModel;
+String? type2;
+String? name;
+String? parentName;
+String? breed;
+String? gender;
+String? weight;
+String? date;
+String? document;
+String? image;
 
-  AddPetpage({Key? key, this.editPetModel}) : super(key: key);
+class EditPetPage extends StatefulWidget {
+  var myList;
+  EditPetPage({required this.myList});
 
-  State<AddPetpage> createState() => _AddPetpageState();
+  State<EditPetPage> createState() => _EditPetPageState();
 }
 
-class _AddPetpageState extends State<AddPetpage> {
-  PageController controller = PageController();
+class _EditPetPageState extends State<EditPetPage> {
+  PageController editpageController = PageController();
 
   static const _kDuration = Duration(milliseconds: 200);
   static const _kCurve = Curves.ease;
@@ -30,12 +33,25 @@ class _AddPetpageState extends State<AddPetpage> {
   var w;
 
   @override
+  void initState() {
+    super.initState();
+    type2 = widget.myList.type.toString();
+    name = widget.myList.name.toString();
+    parentName = widget.myList.parentname.toString();
+    breed = widget.myList.breed.toString();
+    gender = widget.myList.gendar.toString();
+    weight = widget.myList.weight.toString();
+    date = widget.myList.dob.toString();
+    document = widget.myList.uploaddocument.toString();
+    image = widget.myList.image.toString();
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
+    // print(widget.myList.name.toString());
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
-    if (widget.editPetModel != null) {
-      Provider.of<AddPetProvider>(context).getvalues(widget.editPetModel!);
-    }
     return Consumer<AddPetProvider>(
         builder: (BuildContext context, value, Widget? child) {
       return Scaffold(
@@ -47,14 +63,14 @@ class _AddPetpageState extends State<AddPetpage> {
                 value.currentIndex = 0;
               }
               Navigator.of(context).pop();
-              // print(value.currentIndex);
+              print(value.currentIndex);
             },
           ),
           centerTitle: true,
           toolbarHeight: 65,
           backgroundColor: WHITE70_CLR,
           elevation: 1,
-          title: styleText(ADD_PETS, DARK_CLR, FontWeight.bold, 16),
+          title: styleText("Edit Pets", DARK_CLR, FontWeight.bold, 16),
         ),
         extendBodyBehindAppBar: true,
         resizeToAvoidBottomInset: false,
@@ -65,12 +81,12 @@ class _AddPetpageState extends State<AddPetpage> {
             children: [
               PageView.builder(
                 physics: const NeverScrollableScrollPhysics(),
-                controller: controller,
+                controller: editpageController,
                 onPageChanged: value.onChangedPage,
                 itemBuilder: (context, position) {
-                  return value.pages[position];
+                  return value.editpetPage[position];
                 },
-                itemCount: value.pages.length,
+                itemCount: value.editpetPage.length,
               ),
               Container(
                   margin: EdgeInsets.only(top: h * 0.165),
@@ -109,52 +125,8 @@ class _AddPetpageState extends State<AddPetpage> {
                           ? (value.selectImage == null ? WHITE_CLR : GREEN_CLR)
                           : GREEN_CLR,
                       onPressed: () {
-                        value.addPetModel.type = value.addPetModel.type;
-                        value.addPetModel.name = value.nameCan.text.toString();
-                        value.addPetModel.parentName =
-                            value.parentNmaeCan.text.toString();
-                        value.addPetModel.breed = selectBreed;
-                        // value.addPetModel.dob = value.selectAtdate.toString();
-                        value.addPetModel.weight =
-                            value.weightDropdoun.toString();
-                        value.addPetModel.gender = value.gender.toString();
-
-                        value.currentIndex;
-                        controller.nextPage(
+                        editpageController.nextPage(
                             duration: _kDuration, curve: _kCurve);
-
-                        print(value.currentIndex);
-                        value.currentIndex == 2
-                            ? addPetApi(
-                                    value.addPetModel.type.toString(),
-                                    value.addPetModel.name.toString(),
-                                    value.addPetModel.parentName.toString(),
-                                    value.addPetModel.breed.toString(),
-                                    value.addPetModel.gender.toString(),
-                                    value.addPetModel.weight.toString(),
-                                    value.addPetModel.dob.toString(),
-                                    File(
-                                      value.selectImage!.path,
-                                    ),
-                                    File(value.selectImage!.path))
-                                .then((valu) {
-                                value.currentIndex = 0;
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                        backgroundColor: GREEN_CLR,
-                                        content: Text(addpetmsg.toString())));
-                                mypetApi().whenComplete(() {
-                                  Navigate_PushRemove(context, Home());
-                                  Navigate_to(context, My_Pets());
-                                });
-                              }).catchError((e) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                        backgroundColor: GREEN_CLR,
-                                        content: Text(e.toString())));
-                                print(e.toString());
-                              })
-                            : Container();
                       },
                       child: styleText(
                           value.currentIndex == 2

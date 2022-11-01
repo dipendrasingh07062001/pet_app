@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Componants/Images&Icons.dart';
+import 'package:pet_app/FirebaseServices/GoogleAuth.dart';
 import 'package:pet_app/Screens/Onbording/Login.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 import '../Api/Prefrence.dart';
@@ -19,21 +20,17 @@ class MyDrawer extends StatefulWidget {
 class _MyDrawerState extends State<MyDrawer> {
   final deleteUser = Preference.Pref.clear();
 
-  var Name;
-  var Email;
-  var Image;
+  String? username;
+  String? useremail;
+  String? userimage;
 
   @override
   void initState() {
     super.initState();
 
-    Name = Preference.Pref.getString('name');
-    Image = Preference.Pref.getString('image');
-    Email = Preference.Pref.getString('email');
-
-    print('====' + Name.toString());
-    print('===' + Image.toString());
-    print('===' + Email.toString());
+    username = Preference.Pref.getString('name');
+    userimage = Preference.Pref.getString('image');
+    useremail = Preference.Pref.getString('email');
   }
 
   var h;
@@ -45,7 +42,7 @@ class _MyDrawerState extends State<MyDrawer> {
     w = MediaQuery.of(context).size.width;
 
     return Drawer(
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               topRight: Radius.circular(20), bottomRight: Radius.circular(20))),
       backgroundColor: GREEN_CLR,
@@ -70,11 +67,9 @@ class _MyDrawerState extends State<MyDrawer> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     CircleAvatar(
-                      backgroundImage:
-                          //  NetworkImage(
-                          //   Image.toString(),
-
-                          AssetImage("assets/png_image/profile.png"),
+                      backgroundImage: NetworkImage(googlesigning == false
+                          ? gprofilePic.toString()
+                          : userimage.toString()),
                     ),
                     SizedBox(
                       width: w * 0.020,
@@ -83,16 +78,22 @@ class _MyDrawerState extends State<MyDrawer> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          Name.toString() == "null"
-                              ? "Bhimsingh Saini(Guest)"
-                              : Name.toString(),
-                          style: TextStyle(color: WHITE60_CLR, fontSize: 12),
+                          googlesigning == false
+                              ? gname.toString()
+                              : username.toString() == "null"
+                                  ? "Bhimsingh"
+                                  : username.toString(),
+                          style:
+                              const TextStyle(color: WHITE60_CLR, fontSize: 12),
                         ),
                         Text(
-                          Email.toString() == "null"
-                              ? "bhim@gmail.com(Guest)"
-                              : Email.toString(),
-                          style: TextStyle(color: WHITE60_CLR, fontSize: 12),
+                          googlesigning == false
+                              ? gemail.toString()
+                              : useremail.toString() == "null"
+                                  ? "Bhim@gmail.com"
+                                  : useremail.toString(),
+                          style:
+                              const TextStyle(color: WHITE60_CLR, fontSize: 12),
                         )
                       ],
                     ),
@@ -104,7 +105,7 @@ class _MyDrawerState extends State<MyDrawer> {
                 Row(
                   children: [
                     SvgPicture.asset(HOME_ICON),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     styleText(HOME, WHITE60_CLR, FontWeight.normal, 15),
@@ -116,12 +117,12 @@ class _MyDrawerState extends State<MyDrawer> {
                 GestureDetector(
                   onTap: () {
                     Navigator.of(context).pop();
-                    Navigate_to(context, My_Pets());
+                    Navigate_to(context, const My_Pets());
                   },
                   child: Row(
                     children: [
                       SvgPicture.asset(PET_ICON),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       styleText(MY_PET, WHITE60_CLR, FontWeight.normal, 15),
@@ -134,7 +135,7 @@ class _MyDrawerState extends State<MyDrawer> {
                 Row(
                   children: [
                     SvgPicture.asset(PROFILE_ICON),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     GestureDetector(
@@ -152,7 +153,7 @@ class _MyDrawerState extends State<MyDrawer> {
                 Row(
                   children: [
                     SvgPicture.asset(HEALTH_ICON),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     styleText(
@@ -165,7 +166,7 @@ class _MyDrawerState extends State<MyDrawer> {
                 Row(
                   children: [
                     SvgPicture.asset(DOCT_ICON),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     GestureDetector(
@@ -184,17 +185,17 @@ class _MyDrawerState extends State<MyDrawer> {
               child: Row(
                 children: [
                   SvgPicture.asset(SETTING_ICON),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   GestureDetector(
                       onTap: () {
                         Navigator.of(context).pop();
-                        Navigate_to(context, Setting());
+                        Navigate_to(context, const Setting());
                       },
                       child: styleText(
                           SETTING, WHITE60_CLR, FontWeight.normal, 15)),
-                  SizedBox(
+                  const SizedBox(
                     width: 15,
                   ),
                   GestureDetector(
@@ -233,7 +234,7 @@ Future<void> _Logout(BuildContext context) {
               child:
                   TutorialText(LOGOUT_TITLE, BLACK_CLR, FontWeight.normal, 17),
             ),
-            content: Container(
+            content: SizedBox(
               height: h * 0.12,
               width: w * 0.18,
               child: Column(
@@ -279,7 +280,7 @@ showdialog(context) {
     builder: (context) {
       return Dialog(
         backgroundColor: Colors.transparent,
-        insetPadding: EdgeInsets.all(20),
+        insetPadding: const EdgeInsets.all(20),
         child: Container(
           padding: EdgeInsets.only(top: h * 0.030),
           decoration: BoxDecoration(
@@ -296,13 +297,13 @@ showdialog(context) {
                 height: h * 0.055,
                 width: w * 0.82,
                 margin: EdgeInsets.only(top: h * 0.020),
-                padding: EdgeInsets.only(left: 10),
+                padding: const EdgeInsets.only(left: 10),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(color: TFFBORDER_CLR)),
                 child: TextFormField(
                   textAlign: TextAlign.start,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       border: InputBorder.none,
                       hintText: "Document Name",
                       hintStyle: TextStyle(fontSize: 14, color: GRAY_CLR)),

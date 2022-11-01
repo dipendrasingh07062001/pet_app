@@ -1,4 +1,5 @@
-const baseURL = "https://appicsoftwares.in/development/petapp/api/";
+const baseURL = "http://appicsoftwares.in/development/petapp/api/";
+const socialSignup = "social_signup";
 const signup = "signup";
 const otpVerify = "verifyotp";
 const login = "login";
@@ -19,4 +20,7 @@ const getVaccinationList = 'vaccination_list';
 const deleteVaccination = 'delete_vaccination';
 const getVacination = 'get_vaccination';
 const addVaccination = 'add_vaccination';
+const editvaccination = "edit_vaccinations";
 const getDewormingList = 'deworming_list';
+const cycleTrackingBlog = "get_cycleblog";
+const addDeworming = "add_deworming";

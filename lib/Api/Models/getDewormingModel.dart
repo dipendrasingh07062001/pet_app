@@ -1,47 +1,84 @@
-class GetDewomingModel {
+import 'dart:convert';
+
+GetdewormingModelList getdewormingModelListFromJson(String str) =>
+    GetdewormingModelList.fromJson(json.decode(str));
+
+String getdewormingModelListToJson(GetdewormingModelList data) =>
+    json.encode(data.toJson());
+
+class GetdewormingModelList {
+  GetdewormingModelList({
+    this.status,
+    this.message,
+    this.data,
+  });
+
   bool? status;
   String? message;
-  List<GetDewormingModelList>? getdewormingdata;
+  Data? data;
 
-  GetDewomingModel({this.status, this.message, this.getdewormingdata});
-
-  factory GetDewomingModel.fromjson(Map<String, dynamic> json) =>
-      GetDewomingModel(
+  factory GetdewormingModelList.fromJson(Map<String, dynamic> json) =>
+      GetdewormingModelList(
         status: json["status"],
         message: json["message"],
-        getdewormingdata: List<GetDewormingModelList>.from(
-            json["data"].map((x) => GetDewormingModelList.fromjson(x))),
+        data: Data.fromJson(json["data"]),
       );
+
+  Map<String, dynamic> toJson() => {
+        "status": status,
+        "message": message,
+        "data": data!.toJson(),
+      };
 }
 
-class GetDewormingModelList {
-  String? id;
-  String? petId;
+class Data {
+  Data({
+    this.id,
+    this.petId,
+    this.dewormingStatus,
+    this.dewormingDuration,
+    this.dewormingDate,
+    this.reminder,
+    this.atDate,
+    this.atTime,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  int? id;
+  int? petId;
   String? dewormingStatus;
   String? dewormingDuration;
-  String? dewormingDate;
+  DateTime? dewormingDate;
   String? reminder;
-  String? atDate;
+  DateTime? atDate;
   String? atTime;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
-  GetDewormingModelList(
-      {this.id,
-      this.petId,
-      this.dewormingStatus,
-      this.dewormingDuration,
-      this.dewormingDate,
-      this.atDate,
-      this.atTime,
-      this.reminder});
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
+        id: json["id"],
+        petId: json["pet_id"],
+        dewormingStatus: json["deworming_status"],
+        dewormingDuration: json["deworming_duration"],
+        dewormingDate: DateTime.parse(json["deworming_date"]),
+        reminder: json["reminder"],
+        atDate: DateTime.parse(json["at_date"]),
+        atTime: json["at_time"],
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+      );
 
-  factory GetDewormingModelList.fromjson(Map<String, dynamic> json) =>
-      GetDewormingModelList(
-          id: json['id'],
-          petId: json['pet_id'],
-          dewormingStatus: json['deworming_status'],
-          dewormingDuration: json['deworming_duration'],
-          dewormingDate: json['deworming_date'],
-          reminder: json['reminder'],
-          atDate: json['at_date'],
-          atTime: json['at_time']);
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "pet_id": petId,
+        "deworming_status": dewormingStatus,
+        "deworming_duration": dewormingDuration,
+        "deworming_date": dewormingDate.toString(),
+        "reminder": reminder,
+        "at_date": atDate.toString(),
+        "at_time": atTime,
+        "created_at": createdAt.toString(),
+        "updated_at": updatedAt.toString(),
+      };
 }

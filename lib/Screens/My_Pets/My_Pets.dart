@@ -15,19 +15,7 @@ class My_Pets extends StatefulWidget {
 
 class _My_PetsState extends State<My_Pets> {
   MyPetModel result = MyPetModel();
-
   bool isloading = false;
-
-  @override
-  void initState() {
-    super.initState();
-    mypetApi().then((value) {
-      setState(() {
-        result = value;
-        print(result.mypetdata.toString());
-      });
-    });
-  }
 
   var h;
   var w;
@@ -45,11 +33,7 @@ class _My_PetsState extends State<My_Pets> {
             borderRadius: BorderRadius.all(Radius.circular(50)),
             side: BorderSide(color: GREEN_CLR)),
         onPressed: () {
-          Navigate_to(
-              context,
-              AddPetpage(
-                isEdit: false,
-              ));
+          Navigate_replace(context, AddPetpage());
         },
         child: const Icon(
           Icons.add,
@@ -57,14 +41,18 @@ class _My_PetsState extends State<My_Pets> {
           color: GREEN_CLR,
         ),
       ),
-      body: result.mypetdata == null
-          ? const Center(child: CircularProgressIndicator())
+      body: mypetmoellist == null
+          ? const Center(
+              child: CircularProgressIndicator(
+              color: GREEN_CLR,
+            ))
           : Padding(
               padding: const EdgeInsets.only(top: 10, left: 15),
               child: ListView.builder(
+                  physics: const BouncingScrollPhysics(),
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
-                  itemCount: result.mypetdata?.length,
+                  itemCount: mypetmoellist.length,
                   itemBuilder: (BuildContext context, int index) {
                     // print("======" + result.mypetdata![index].name.toString());
                     return Stack(
@@ -99,19 +87,22 @@ class _My_PetsState extends State<My_Pets> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         styleText(
-                                            result.mypetdata![index].name
+                                            mypetmoellist[index]
+                                                .name
                                                 .toString(),
                                             BLACK_CLR,
                                             FontWeight.bold,
                                             16),
                                         styleText(
-                                            result.mypetdata![index].parentname
+                                            mypetmoellist[index]
+                                                .parentname
                                                 .toString(),
                                             GRAY_CLR,
                                             FontWeight.normal,
                                             13),
                                         styleText(
-                                            result.mypetdata![index].gendar
+                                            mypetmoellist[index]
+                                                .gendar
                                                 .toString(),
                                             GRAY_CLR,
                                             FontWeight.normal,
@@ -123,7 +114,8 @@ class _My_PetsState extends State<My_Pets> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             styleText(
-                                                result.mypetdata![index].weight
+                                                mypetmoellist[index]
+                                                    .weight
                                                     .toString(),
                                                 BLACK_CLR,
                                                 FontWeight.normal,
@@ -134,14 +126,17 @@ class _My_PetsState extends State<My_Pets> {
                                                   height: 28,
                                                   width: 28,
                                                   child: GestureDetector(
-                                                    onTap: () => Navigate_to(
-                                                        context,
-                                                        AddPetpage(
-                                                          isEdit: true,
-                                                          addPetModel:
-                                                              result.mypetdata![
-                                                                  index],
-                                                        )),
+                                                    onTap: () {
+                                                      setState(() {
+                                                        Navigate_to(
+                                                            context,
+                                                            AddPetpage(
+                                                              editPetModel:
+                                                                  mypetmoellist[
+                                                                      index],
+                                                            ));
+                                                      });
+                                                    },
                                                     child: const CircleAvatar(
                                                       backgroundColor:
                                                           FADE_BLUE_CLR,
@@ -159,11 +154,11 @@ class _My_PetsState extends State<My_Pets> {
                                                     onTap: () {
                                                       deleteDialog(context, () {
                                                         setState(() {
-                                                          deletepetApi(result
-                                                                  .mypetdata![
-                                                                      index]
-                                                                  .id
-                                                                  .toString())
+                                                          deletepetApi(
+                                                                  mypetmoellist[
+                                                                          index]
+                                                                      .id
+                                                                      .toString())
                                                               .then((value) {
                                                             mypetApi()
                                                                 .then((value) {
@@ -208,7 +203,8 @@ class _My_PetsState extends State<My_Pets> {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: Image.network(
-                            result.mypetdata![index].image.toString(),
+                            mypetmoellist[index].image.toString(),
+                            scale: 1.0,
                             width: w * 0.315,
                             height: h * 0.195,
                             fit: BoxFit.fill,

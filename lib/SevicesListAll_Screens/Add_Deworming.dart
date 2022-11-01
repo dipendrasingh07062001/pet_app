@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
-import 'package:pet_app/Provider/Provider.dart';
+import 'package:pet_app/Api/Models/My_pet_model.dart';
+import 'package:pet_app/Api/Prefrence.dart';
+import 'package:pet_app/Api/Services.dart';
+import 'package:pet_app/Provider/ServiceListProvider.dart';
+import 'package:pet_app/Screens/Add_Pets/AddPet3.dart';
+import 'package:pet_app/UTILS/Utils.dart';
 import 'package:provider/provider.dart';
-
 import '../Colors/COLORS.dart';
 import '../Componants/Images&Icons.dart';
-import '../UTILS/Utils.dart';
 
 class Add_Deworming extends StatefulWidget {
   const Add_Deworming({super.key});
@@ -16,44 +18,17 @@ class Add_Deworming extends StatefulWidget {
 }
 
 class _Add_DewormingState extends State<Add_Deworming> {
-  String selectStatus = '---Select Status---';
+  MyPetModel result = MyPetModel();
+
+  var id = Preference.Pref.getInt('selectedPetId');
+  String selectStatus = 'false';
   final SelectStstusitems = [
-    '---Select Status---',
-    'RABIT',
-    'CAT',
-    'DOG',
-    'CAT!'
+    'false',
+    'true',
   ];
-
-  DateTime _currentdate1 = DateTime.now();
-  Future<Null> _datechange1(BuildContext context) async {
-    final DateTime? _datechange1 = await showDatePicker(
-        context: context,
-        keyboardType: TextInputType.numberWithOptions(),
-        initialDate: _currentdate1,
-        firstDate: DateTime(2001),
-        lastDate: _currentdate1);
-    if (_datechange1 != null) {
-      setState(() {
-        _currentdate1 = _datechange1;
-      });
-    }
-  }
-
-  String? _selectedTime;
-
-  Future<void> _show() async {
-    final TimeOfDay? result =
-        await showTimePicker(context: context, initialTime: TimeOfDay.now());
-    if (result != null) {
-      setState(() {
-        _selectedTime = result.format(context);
-      });
-    }
-  }
-
-  int _radioSelected = 1;
-  String? _radioVal;
+  var selectAtdate;
+  String? selectDate;
+  String? selectedTime;
 
   var h;
   var w;
@@ -62,7 +37,7 @@ class _Add_DewormingState extends State<Add_Deworming> {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
 
-    final Updatevalue = Provider.of<ProviderTutorial>(context, listen: true);
+    final Updatevalue = Provider.of<AddPetProvider>(context, listen: true);
 
     return Scaffold(
       backgroundColor: WHITE70_CLR,
@@ -91,8 +66,9 @@ class _Add_DewormingState extends State<Add_Deworming> {
                   borderRadius: BorderRadius.circular(10),
                   underline: SizedBox(),
                   value: selectStatus,
-                  onChanged: (String? newValue) =>
-                      setState(() => selectStatus = newValue!),
+                  onChanged: (String? newValue) => setState(
+                    () => selectStatus = newValue!,
+                  ),
                   items: SelectStstusitems.map<DropdownMenuItem<String>>(
                       (String value) => DropdownMenuItem<String>(
                             value: value,
@@ -124,10 +100,10 @@ class _Add_DewormingState extends State<Add_Deworming> {
                   height: 20,
                   width: 20,
                   child: Radio(
-                      value: 1,
-                      groupValue: Updatevalue.gender,
+                      value: 'daily',
+                      groupValue: Updatevalue.day,
                       activeColor: GREEN_CLR,
-                      onChanged: Updatevalue.OnValueChange),
+                      onChanged: Updatevalue.dayChangevalue),
                 ),
                 SizedBox(
                   width: w * 0.010,
@@ -143,10 +119,10 @@ class _Add_DewormingState extends State<Add_Deworming> {
                   height: 20,
                   width: 20,
                   child: Radio(
-                      value: 2,
-                      groupValue: Updatevalue.gender,
+                      value: 'weekly',
+                      groupValue: Updatevalue.day,
                       activeColor: GREEN_CLR,
-                      onChanged: Updatevalue.OnValueChange),
+                      onChanged: Updatevalue.dayChangevalue),
                 ),
                 SizedBox(
                   width: w * 0.010,
@@ -162,10 +138,10 @@ class _Add_DewormingState extends State<Add_Deworming> {
                   height: 20,
                   width: 20,
                   child: Radio(
-                      value: 3,
-                      groupValue: Updatevalue.gender,
+                      value: 'monthly',
+                      groupValue: Updatevalue.day,
                       activeColor: GREEN_CLR,
-                      onChanged: Updatevalue.OnValueChange),
+                      onChanged: Updatevalue.dayChangevalue),
                 ),
                 SizedBox(
                   width: w * 0.010,
@@ -192,20 +168,23 @@ class _Add_DewormingState extends State<Add_Deworming> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    _currentdate1 == null ? "DD-MM-YYYY" : "$_currentdate1",
+                    selectDate == null ? "DD-MM-YYYY" : "${selectDate}",
                     style: TextStyle(color: GRAY_CLR, fontSize: 14),
                   ),
                   GestureDetector(
                       onTap: () {
-                        setState(() {
-                          _datechange1(context);
+                        cutomDatePicker(context).then((value) {
+                          setState(() {
+                            selectDate =
+                                DateFormat("dd-MM-yyyy").format(value!);
+                          });
                         });
                       },
                       child: Icon(
                         Icons.calendar_month_sharp,
                         color: GRAY_CLR.withOpacity(0.5),
                         size: 20,
-                      )),
+                      ))
                 ],
               ),
             ),
@@ -227,10 +206,10 @@ class _Add_DewormingState extends State<Add_Deworming> {
                   height: 20,
                   width: 20,
                   child: Radio(
-                      value: 1,
-                      groupValue: Updatevalue.gender,
+                      value: 'daily',
+                      groupValue: Updatevalue.day1,
                       activeColor: GREEN_CLR,
-                      onChanged: Updatevalue.OnValueChange),
+                      onChanged: Updatevalue.dayChangevalue1),
                 ),
                 SizedBox(
                   width: w * 0.010,
@@ -246,16 +225,10 @@ class _Add_DewormingState extends State<Add_Deworming> {
                   height: 20,
                   width: 20,
                   child: Radio(
-                    value: 2,
-                    groupValue: _radioSelected,
-                    activeColor: GREEN_CLR,
-                    onChanged: (value) {
-                      setState(() {
-                        _radioSelected = value!;
-                        _radioVal = 'weekly1';
-                      });
-                    },
-                  ),
+                      value: 'weekly',
+                      groupValue: Updatevalue.day1,
+                      activeColor: GREEN_CLR,
+                      onChanged: Updatevalue.dayChangevalue1),
                 ),
                 SizedBox(
                   width: w * 0.010,
@@ -271,16 +244,10 @@ class _Add_DewormingState extends State<Add_Deworming> {
                   height: 20,
                   width: 20,
                   child: Radio(
-                    value: 3,
-                    groupValue: _radioSelected,
-                    activeColor: GREEN_CLR,
-                    onChanged: (value) {
-                      setState(() {
-                        _radioSelected = value!;
-                        _radioVal = 'monthly1';
-                      });
-                    },
-                  ),
+                      value: 'monthly',
+                      groupValue: Updatevalue.day1,
+                      activeColor: GREEN_CLR,
+                      onChanged: Updatevalue.dayChangevalue1),
                 ),
                 SizedBox(
                   width: w * 0.010,
@@ -315,11 +282,18 @@ class _Add_DewormingState extends State<Add_Deworming> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "00",
+                            selectAtdate == null ? " DD-MM-YYYY" : selectAtdate,
                             style: TextStyle(color: GRAY_CLR, fontSize: 14),
                           ),
                           GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                cutomDatePicker(context).then((value) {
+                                  setState(() {
+                                    selectAtdate =
+                                        DateFormat("dd-MM-yyyy").format(value!);
+                                  });
+                                });
+                              },
                               child: Icon(
                                 Icons.calendar_month_sharp,
                                 color: GRAY_CLR.withOpacity(0.5),
@@ -348,13 +322,19 @@ class _Add_DewormingState extends State<Add_Deworming> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            _selectedTime != null ? _selectedTime! : '00:05 AM',
+                            selectedTime != null
+                                ? selectedTime!
+                                : 'Select Time ',
                             style: TextStyle(color: GRAY_CLR, fontSize: 14),
                           ),
                           GestureDetector(
                               onTap: () {
                                 setState(() {
-                                  _show();
+                                  showTime(context).then((value) {
+                                    setState(() {
+                                      selectedTime = value.format(context);
+                                    });
+                                  });
                                 });
                               },
                               child: Icon(
@@ -374,14 +354,45 @@ class _Add_DewormingState extends State<Add_Deworming> {
             ),
             Align(
                 alignment: Alignment.bottomCenter,
-                child: DefaultButton(
-                    text: DONE,
-                    ontap: () {
-                      Navigator.of(context).pop();
-                    },
-                    fontsize: 15,
-                    height: h * 0.060,
-                    width: w * 0.8))
+                child: isAddDeworming
+                    ? CircularProgressIndicator()
+                    : DefaultButton(
+                        text: DONE,
+                        ontap: () async {
+                          setState(() {
+                            isAddDeworming = true;
+                          });
+
+                          await addDewormingApi(
+                                  '140',
+                                  selectStatus,
+                                  Updatevalue.day,
+                                  selectDate.toString(),
+                                  Updatevalue.day1,
+                                  selectAtdate,
+                                  selectedTime.toString())
+                              .then((value) {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                backgroundColor: GREEN_CLR,
+                                content: Text(addDewormingmsg.toString())));
+                            setState(() {
+                              isAddDeworming = false;
+                            });
+                          }).catchError((e) {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                backgroundColor: GREEN_CLR,
+                                content: Text(e.toString())));
+                            setState(() {
+                              isAddDeworming = false;
+                            });
+                          });
+                          setState(() {
+                            isAddDeworming = false;
+                          });
+                        },
+                        fontsize: 15,
+                        height: h * 0.060,
+                        width: w * 0.8))
           ]),
         ),
       ),

@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 // Images
 
 const SPLASH_LOGO = "assets/png_image/Group 1.png";
