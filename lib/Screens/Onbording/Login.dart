@@ -294,6 +294,7 @@ class _LoginState extends State<Login> {
                                                         passwordCantroller.text
                                                             .toString())
                                                     .then((value) {
+                                                  mypetApi();
                                                   emailCantroller.clear();
                                                   passwordCantroller.clear();
                                                   Navigate_PushRemove(
@@ -346,6 +347,7 @@ class _LoginState extends State<Login> {
                                             socialSigningApi(gemail.toString(),
                                                     gname.toString(), "Google")
                                                 .then((value) {
+                                              mypetApi();
                                               Preference.Pref.setString('email',
                                                   value['data']['email']);
                                               Preference.Pref.setString('name',

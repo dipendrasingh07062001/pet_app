@@ -21,7 +21,7 @@ class _DewormingState extends State<Deworming> {
   @override
   void initState() {
     super.initState();
-    getDewormingListApi(141).then((value) {
+    getDewormingListApi(id).then((value) {
       setState(() {
         result = value;
         print("==id ==" + id);
