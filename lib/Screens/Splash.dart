@@ -50,13 +50,6 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
   }
 
   getLoginStatus() {
-    // var firstTime;
-    // firstTime = Preference.Pref.getBool("isFirstTimeUser") ?? true;
-    // if (firstTime) {
-    //   Preference.Pref.setBool('isFirstTimeUser', false);
-    // }
-    // print("id :" + id.toString() + "^");
-
     Future.delayed(const Duration(seconds: 2), () {
       id.toString() == "" || id.toString() == "null" || id == ''
           ? Navigate_PushRemove(context, const Login())

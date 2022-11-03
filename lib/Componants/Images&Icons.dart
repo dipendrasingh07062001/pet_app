@@ -54,6 +54,8 @@ const NOT_MEMBER = "Not a Member?";
 const REGISTER_NOW = " Register Now";
 const DELETE_PET = "Are you sure you want to delete this pet?";
 const deletVaccination = "Are you sure you want to delete this Vaccination?";
+const deleteMedicinetitle = "Are you sure you want to delete this Medicine?";
+
 const DELETE = "Delete";
 const CANCEL = "Cancel";
 const LOGOUT = "Logout";

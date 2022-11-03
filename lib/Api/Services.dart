@@ -6,12 +6,15 @@ import 'package:http/http.dart' as http;
 import 'package:pet_app/Api/Models/blogModel.dart';
 import 'package:pet_app/Api/Models/getBreedModel.dart';
 import 'package:pet_app/Api/Models/getDewormingModel.dart';
+import 'package:pet_app/Api/Models/getMedicineModel.dart';
+import 'package:pet_app/Api/Models/getMedicineNameModel.dart';
 import 'package:pet_app/Api/Models/v_model.dart';
 import 'package:pet_app/Api/Models/vaccinationModel.dart';
 import 'ApiBaseUrl.dart';
 import 'Models/My_pet_model.dart';
 import 'Models/ServiceListModel.dart';
 import 'Models/cycleTrackingBlogModel.dart';
+import 'Models/getPregnancyModel.dart';
 import 'Prefrence.dart';
 
 String? loginmsg;
@@ -427,7 +430,6 @@ Future getBreedApi() async {
       breedlist.addAll(getBreedModelFromJson(jsonEncode(list)));
       // breedlist.addAll(list.map((e) => GetBreedModel.fromJson(e)).toList());
       print(breedlist.toString());
-
       return data;
     } else {
       return Future.error(data['message']);
@@ -787,26 +789,21 @@ Future editVaccinationApi(
 
 // get Deworming Api
 
-bool isDewormindata = false;
 Future getDewormingListApi(int petid) async {
   GetdewormingModelList result = GetdewormingModelList();
-  var response = await http.get(Uri.parse(baseURL + getDewormingList));
-
-  isDewormindata = true;
+  var response =
+      await http.get(Uri.parse(baseURL + getDewormingList + "?pet_id=$petid"));
 
   if (response.statusCode == 200) {
     final data = json.decode(response.body);
     if (data['status'] == true) {
       result = GetdewormingModelList.fromJson(data);
       print(result);
-      isDewormindata = false;
       return result;
     } else {
-      isDewormindata = false;
       return Future.error(data['message']);
     }
   } else {
-    isDewormindata = false;
     return Future.error('Server error');
   }
 }
@@ -816,10 +813,10 @@ Future getDewormingListApi(int petid) async {
 
 String? addDewormingmsg;
 bool isAddDeworming = false;
-Future addDewormingApi(String petId, String status, String duration,
-    String date, String reminder, String atDate, String time) async {
+Future addDewormingApi(String status, String duration, String date,
+    String reminder, String atDate, String time) async {
   var response = await http.post(Uri.parse(baseURL + addDeworming), body: {
-    'pet_id': petId,
+    'pet_id': Preference.Pref.getInt('selectedPetId').toString(),
     'deworming_status': status,
     'deworming_duration': duration,
     "deworming_date": date,
@@ -842,6 +839,247 @@ Future addDewormingApi(String petId, String status, String duration,
     }
   } else {
     isAddDeworming = false;
+    return Future.error('Server error');
+  }
+}
+
+/// edit Deworming Api
+
+String? editDewormingmsg;
+
+Future editDewormingApi(String status, String duration, String date,
+    String remindr, String atDate, String attime, String dewormingid) async {
+  var response = await http.post(Uri.parse(baseURL + editDeworming), body: {
+    'pet_id': Preference.Pref.getInt("selectedPetId").toString(),
+    'deworming_status': status,
+    'deworming_duration': duration,
+    'deworming_date': date,
+    'reminder': remindr,
+    'at_date': atDate,
+    'at_time': attime,
+    'id': dewormingid
+  });
+
+  if (response.statusCode == 200) {
+    final data = json.decode(response.body);
+
+    if (data['status'] == true) {
+      print(data['message']);
+      print(data['data']);
+      editDewormingmsg = data['message'].toString();
+
+      return data;
+    } else {
+      Future.error(data['message']);
+    }
+  } else {
+    return Future.error('Server error');
+  }
+}
+
+//// addd Pregnancy Api
+bool isaddpregnancy = false;
+String? addPregnancysg;
+Future addPregnancyApi(
+  String sexuallyActive,
+  String pastPregnancy,
+  String previousLitter,
+  String nuetered,
+  String reminder,
+  String time,
+  String date,
+) async {
+  var response = await http.post(Uri.parse(baseURL + addPregnancy), body: {
+    'sexually_active': sexuallyActive,
+    'past_pregnancy': pastPregnancy,
+    'previous_litter': previousLitter,
+    'neutered': nuetered,
+    'reminder': reminder,
+    'at_time': time,
+    'at_date': date,
+    'pet_id': Preference.Pref.getInt('selectedPetId').toString()
+  });
+  isaddpregnancy = true;
+  if (response.statusCode == 200) {
+    var data = json.decode(response.body);
+    if (data['status'] == true) {
+      addPregnancysg = data['message'].toString();
+      Preference.Pref.setInt('pregnancyId', data['data']['id']);
+      isaddpregnancy = false;
+
+      return data;
+    } else {
+      isaddpregnancy = false;
+      return Future.error(data['message']);
+    }
+  } else {
+    isaddpregnancy = false;
+    return Future.error('Server error');
+  }
+}
+
+// get Pregnancy Api
+
+Future getPregnancyListApi(int pregnancyId) async {
+  GetPregnancyModel result = GetPregnancyModel();
+  var response = await http
+      .get(Uri.parse(baseURL + getPregnancy + "?pregnancy_id=$pregnancyId"));
+  if (response.statusCode == 200) {
+    final data = json.decode(response.body);
+    if (data['status'] == true) {
+      result = GetPregnancyModel.fromJson(data);
+      print(result);
+      return result;
+    } else {
+      return Future.error(data['message']);
+    }
+  } else {
+    return Future.error('Server error');
+  }
+}
+
+//// get Medicine List Api
+///
+Future getMedicineListApi(int petId) async {
+  GetMedicineModel result = GetMedicineModel();
+  var response =
+      await http.get(Uri.parse(baseURL + getMedicine + "?pet_id=$petId"));
+  if (response.statusCode == 200) {
+    final data = json.decode(response.body);
+    if (data['status'] == true) {
+      result = GetMedicineModel.fromjson(data);
+      print(result);
+      return result;
+    } else {
+      return Future.error(data['message']);
+    }
+  } else {
+    return Future.error('Server error');
+  }
+}
+
+//// delete Vaccination
+String? deleteMedicinemsg;
+Future deleteMedicineApi(String medicineId) async {
+  var response = await http.post(Uri.parse(baseURL + deletemedicine),
+      body: {'medicine_id': medicineId});
+  if (response.statusCode == 200) {
+    final data = json.decode(response.body);
+    if (data['status'] == true) {
+      print(data['message']);
+      deleteMedicinemsg = data['message'].toString();
+      return data;
+    } else {
+      return Future.error(data['message']);
+    }
+  } else {
+    return Future.error('Server error');
+  }
+}
+
+///// getMedicicnename api
+
+List<GetMedicineNameModel> medicinenamelist = [];
+
+Future getMedicineNameApi() async {
+  var response = await http.get(Uri.parse(baseURL + getMedicinename));
+  var jsonRes;
+  if (response.statusCode == 200) {
+    final data = json.decode(response.body);
+
+    jsonRes = data['data'];
+    if (data['status'] == true) {
+      // List list = jsonRes;
+      medicinenamelist
+          .addAll(GetMedicineNameModelFromJson(jsonEncode(jsonRes)));
+      print(medicinenamelist);
+      return data;
+    } else {
+      return Future.error(data['message']);
+    }
+  } else {
+    return Future.error('Server error');
+  }
+}
+
+//// Add Medicine Api
+bool isaddmedicine = false;
+
+Future addMedicineApi(
+  String medicineName,
+  String duration,
+  String dose,
+  String startDate,
+  String enddate,
+  String reminder,
+  String attime,
+) async {
+  var response = await http.post(Uri.parse(baseURL + addMedicine), body: {
+    'pet_id': Preference.Pref.getInt("selectedPetId").toString(),
+    'medicine_name': medicineName,
+    'duration': duration,
+    'does': dose,
+    'course_start_date': startDate,
+    'course_end_date': enddate,
+    'reminder': reminder,
+    'at_time': attime,
+  });
+  isaddmedicine = true;
+
+  if (response.statusCode == 200) {
+    final data = json.decode(response.body);
+    if (data['status'] == true) {
+      print(data['message']);
+      isaddmedicine = false;
+      return data;
+    } else {
+      isaddmedicine = false;
+      return Future.error(data['message']);
+    }
+  } else {
+    isaddmedicine = false;
+
+    return Future.error('Server error');
+  }
+}
+
+//// edit Medicine Api
+bool isdeditingmedicine = false;
+Future EditMedicineApi(
+  String medicineName,
+  String duration,
+  String dose,
+  String startDate,
+  String enddate,
+  String reminder,
+  String attime,
+  String medicineId,
+) async {
+  var response = await http.post(Uri.parse(baseURL + editMedicine), body: {
+    'medicine_name': medicineName,
+    'duration': duration,
+    'does': dose,
+    'course_start_date': startDate,
+    'course_end_date': enddate,
+    'reminder': reminder,
+    'at_time': attime,
+    'id': medicineId,
+  });
+  isdeditingmedicine = true;
+  if (response.statusCode == 200) {
+    final data = json.decode(response.body);
+    if (data['status'] == true) {
+      print(data['message']);
+      isdeditingmedicine = false;
+      return data;
+    } else {
+      isdeditingmedicine = false;
+
+      return Future.error(data['message']);
+    }
+  } else {
+    isdeditingmedicine = false;
+
     return Future.error('Server error');
   }
 }

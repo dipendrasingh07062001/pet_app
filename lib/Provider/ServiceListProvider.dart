@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pet_app/Api/Models/getDewormingModel.dart';
 import 'package:pet_app/Screens/Add_Pets/AddPet3.dart';
 import 'package:pet_app/Screens/EditPet/editPage1.dart';
 import 'package:pet_app/Screens/EditPet/editPet3.dart';
@@ -25,13 +26,12 @@ import 'package:pet_app/Screens/CycleTrackingPageViewBuilder/WheelList_CycleTrac
 
 ////ServiceHelthProvider
 class ServiceHealthProvider extends ChangeNotifier {
-  // List Service = ["Health", "Vets", "Gromming", "Trainig", "illness"];
-  static List<Widget> PageRoute = [
-    const CycleTrackingPage(),
-    const Medicines(),
-    const Vaccinations(),
-    const Deworming(),
-    const Pregnancy()
+  List<Widget> PageRoute = [
+    CycleTrackingPage(),
+    Medicines(),
+    Vaccinations(),
+    Deworming(),
+    Pregnancy()
   ];
   ServiceModel servicelistmodel = ServiceModel();
   bool loading = false;

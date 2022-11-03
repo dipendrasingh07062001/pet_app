@@ -3,7 +3,7 @@ import 'package:pet_app/Colors/COLORS.dart';
 import '../Componants/Images&Icons.dart';
 
 //// select date
-///
+
 Future<DateTime?> cutomDatePicker(BuildContext context) async {
   final datePick = await showDatePicker(
       context: context,
@@ -16,8 +16,21 @@ Future<DateTime?> cutomDatePicker(BuildContext context) async {
   return null;
 }
 
+/////Snackbar
+
+customSnackbar(
+  BuildContext context,
+  String txt,
+) {
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      duration: Duration(milliseconds: 1000),
+      backgroundColor: GREEN_CLR,
+      behavior: SnackBarBehavior.floating,
+      content: Text(txt.toString())));
+}
+
 //// select time
-///
+
 Future showTime(BuildContext context) async {
   final TimeOfDay? result =
       await showTimePicker(context: context, initialTime: TimeOfDay.now());
@@ -157,23 +170,6 @@ class DefaultRadioButton extends StatelessWidget {
               ))
         ]));
   }
-
-  ////date picker /// select dob
-
-  //// Snacbar
-
-  // ScaffoldFeatureController<SnackBar, SnackBarClosedReason> snkbar(
-  //   BuildContext context,
-  //   String txt,
-  // ) {
-  //   return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-  //     content: Text(
-  //       txt,
-  //       style: const TextStyle(color: WHITE_CLR),
-  //     ),
-  //     backgroundColor: GREEN_CLR,
-  //   ));
-  // }
 }
 
 //// Delete Dilodg
@@ -233,4 +229,38 @@ unfocus(BuildContext context) {
   if (!currentFocus.hasPrimaryFocus) {
     currentFocus.unfocus();
   }
+}
+
+flotingButton(Function() ontap) {
+  return Padding(
+    padding: const EdgeInsets.only(top: 10),
+    child: FloatingActionButton(
+      backgroundColor: WHITE70_CLR,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(50)),
+          side: BorderSide(color: GREEN_CLR)),
+      onPressed: ontap,
+      child: const Icon(
+        Icons.add,
+        size: 40,
+        color: GREEN_CLR,
+      ),
+    ),
+  );
+}
+
+customradioButton(
+  String value,
+  String groupvalue,
+  Function(String?) ontap,
+) {
+  return SizedBox(
+    height: 20,
+    width: 20,
+    child: Radio(
+        value: value,
+        groupValue: groupvalue,
+        activeColor: GREEN_CLR,
+        onChanged: ontap),
+  );
 }

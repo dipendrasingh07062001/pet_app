@@ -151,6 +151,7 @@ class _VaccinationsState extends State<Vaccinations> {
                                       result.vaccinationModeldata![index]
                                           .vaccinationcertificate
                                           .toString(),
+                                      scale: 1.0,
                                       errorBuilder:
                                           (context, error, stackTrace) =>
                                               Container(),
@@ -206,12 +207,8 @@ class _VaccinationsState extends State<Vaccinations> {
 
                                                   Navigator.of(context).pop();
                                                 }).catchError((e) {
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(SnackBar(
-                                                          backgroundColor:
-                                                              GREEN_CLR,
-                                                          content: Text(
-                                                              e.toString())));
+                                                  customSnackbar(
+                                                      context, e.toString());
                                                 });
                                               }, deletVaccination);
                                             });

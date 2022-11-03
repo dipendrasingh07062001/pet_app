@@ -58,7 +58,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
-
+    print(Preference.Pref.getInt('selectedPetId'));
     return Scaffold(
       key: _scaffoldKey,
       extendBody: true,
@@ -166,104 +166,175 @@ class _HomeState extends State<Home> {
         height: h * 1,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(25), color: HBACKGROUND_CLR),
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.only(left: w * 0.030, right: w * 0.030),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  alignment: Alignment.center,
-                  height: 48,
-                  margin: EdgeInsets.only(top: h * 0.03),
-                  decoration: BoxDecoration(
-                    color: WHITE70_CLR,
-                    borderRadius: BorderRadius.circular(15),
-                    boxShadow: [
-                      BoxShadow(
-                          blurRadius: 8, color: SHADOW_CLR.withOpacity(0.1)),
-                    ],
-                  ),
-                  child: TextFormField(
-                      controller: searchCantrolller,
-                      decoration: InputDecoration(
-                          errorText: "",
-                          errorStyle: const TextStyle(height: 0),
-                          hintText: "Search",
-                          hintStyle: const TextStyle(
-                              color: GRAY_CLR,
-                              fontSize: 16,
-                              fontWeight: FontWeight.normal),
-                          prefixIcon: Image.asset(
-                            "assets/png_icon/magnifying-glass.png",
+        child: Padding(
+          padding: EdgeInsets.only(left: w * 0.030, right: w * 0.030),
+          child: ListView(
+            shrinkWrap: true,
+            scrollDirection: Axis.vertical,
+            physics: BouncingScrollPhysics(),
+            children: [
+              Container(
+                alignment: Alignment.center,
+                height: 48,
+                margin: EdgeInsets.only(top: h * 0.03),
+                decoration: BoxDecoration(
+                  color: WHITE70_CLR,
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: [
+                    BoxShadow(
+                        blurRadius: 8, color: SHADOW_CLR.withOpacity(0.1)),
+                  ],
+                ),
+                child: TextFormField(
+                    controller: searchCantrolller,
+                    decoration: InputDecoration(
+                        errorText: "",
+                        errorStyle: const TextStyle(height: 0),
+                        hintText: "Search",
+                        hintStyle: const TextStyle(
                             color: GRAY_CLR,
-                          ),
-                          suffixIcon: Image.asset(FILTTER_ICON),
-                          border: InputBorder.none)),
-                ),
-                SizedBox(
-                  height: h * 0.020,
-                ),
+                            fontSize: 16,
+                            fontWeight: FontWeight.normal),
+                        prefixIcon: Image.asset(
+                          "assets/png_icon/magnifying-glass.png",
+                          color: GRAY_CLR,
+                        ),
+                        suffixIcon: Image.asset(FILTTER_ICON),
+                        border: InputBorder.none)),
+              ),
+              SizedBox(
+                height: h * 0.020,
+              ),
 
-                styleText(SERVICES, BLACK_CLR, FontWeight.bold, 19),
+              styleText(SERVICES, BLACK_CLR, FontWeight.bold, 19),
 
-                SizedBox(
-                  height: h * 0.010,
-                ),
+              SizedBox(
+                height: h * 0.010,
+              ),
 
-                SizedBox(
-                    height: h * 0.145,
-                    child: Consumer<ServiceHealthProvider>(
-                        builder: (BuildContext context, value, Widget? child) {
-                      return result.serviceListdata == null
-                          ? const Center(child: CircularProgressIndicator())
-                          : ListView.builder(
-                              physics: const BouncingScrollPhysics(),
-                              shrinkWrap: true,
-                              controller: scrollController,
-                              itemCount: result.serviceListdata!.length,
-                              scrollDirection: Axis.horizontal,
-                              // physics: NeverScrollableScrollPhysics(),
-                              itemBuilder: (BuildContext context, int index) {
-                                print(result.serviceListdata![index].name
-                                    .toString());
-                                return Column(
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        value.OnTap(index);
-                                        value.currentindex = index;
-                                        print(value.currentindex);
-                                        setState(() {});
-                                      },
-                                      child: Container(
-                                        margin: const EdgeInsets.symmetric(
-                                            horizontal: 13),
-                                        height: 70,
-                                        width: 70,
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(15),
-                                            color: value.currentindex == index
-                                                ? GREEN_CLR
-                                                : WHITE_CLR,
-                                            boxShadow: const [
-                                              BoxShadow(color: SHADOW_CLR)
-                                            ]),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(10),
+              SizedBox(
+                  height: h * 0.145,
+                  child: Consumer<ServiceHealthProvider>(
+                      builder: (BuildContext context, value, Widget? child) {
+                    return result.serviceListdata == null
+                        ? const Center(child: CircularProgressIndicator())
+                        : ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            shrinkWrap: true,
+                            controller: scrollController,
+                            itemCount: result.serviceListdata!.length,
+                            scrollDirection: Axis.horizontal,
+                            // physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (BuildContext context, int index) {
+                              print(result.serviceListdata![index].name
+                                  .toString());
+                              return Column(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      value.OnTap(index);
+                                      value.currentindex = index;
+                                      print(value.currentindex);
+                                      setState(() {});
+                                    },
+                                    child: Container(
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 13),
+                                      height: 70,
+                                      width: 70,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          color: value.currentindex == index
+                                              ? GREEN_CLR
+                                              : WHITE_CLR,
+                                          boxShadow: const [
+                                            BoxShadow(color: SHADOW_CLR)
+                                          ]),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(10),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          child: Image.network(
+                                            result.serviceListdata![index].image
+                                                .toString(),
+                                            scale: 1.0,
+                                            width: w * 0.14,
+                                            height: h * 0.08,
+                                            fit: BoxFit.fill,
+                                            // "",
+                                            errorBuilder:
+                                                (context, error, stackTrace) {
+                                              return Container();
+                                            },
+                                            // value.detaildata[index].ImageUrl),
+                                          ),
+                                        ),
+                                      ),
+                                      // child: Image.asset(SERVICES_ICON,color: value.data.elementAt(index)==value.Services? WHITE70_CLR:GRAY_CLR,),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: h * 0.010,
+                                  ),
+                                  styleText(
+                                      result.serviceListdata![index].name
+                                          .toString(),
+                                      GRAY_CLR,
+                                      FontWeight.bold,
+                                      13)
+                                ],
+                              );
+                            });
+                  })),
+
+              Consumer<ServiceHealthProvider>(
+                  builder: (BuildContext context, value, Widget? child) {
+                return result.serviceListdata == null
+                    ? const Center(child: CircularProgressIndicator())
+                    : ListView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        itemCount: result.serviceListdata?[value.currentindex]
+                            .subserviceListdata?.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          SubServiceListModel? subResultdata = result
+                              .serviceListdata?[currentindex]
+                              .subserviceListdata?[index];
+                          print(subResultdata?.name);
+                          return SizedBox(
+                            height: h * 0.12,
+                            width: w * 1,
+                            child: GestureDetector(
+                              onTap: () {
+                                value.onClickedList(context, index);
+                              },
+                              // onTap: ()=> Navigate_to(context, PageRoute[index]),
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 8),
+                                child: Card(
+                                    color: WHITE70_CLR,
+                                    elevation: 1,
+                                    // shadowColor: GRAY_CLR,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(15)),
+                                    child: Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(8),
                                           child: ClipRRect(
                                             borderRadius:
                                                 BorderRadius.circular(8),
                                             child: Image.network(
-                                              result
-                                                  .serviceListdata![index].image
-                                                  .toString(),
+                                              subResultdata!.image.toString(),
                                               scale: 1.0,
 
-                                              width: w * 0.14,
-                                              height: h * 0.08,
+                                              width: w * 0.17,
+                                              height: h * 0.1,
                                               fit: BoxFit.fill,
                                               // "",
                                               errorBuilder:
@@ -274,107 +345,34 @@ class _HomeState extends State<Home> {
                                             ),
                                           ),
                                         ),
-                                        // child: Image.asset(SERVICES_ICON,color: value.data.elementAt(index)==value.Services? WHITE70_CLR:GRAY_CLR,),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: h * 0.010,
-                                    ),
-                                    styleText(
-                                        result.serviceListdata![index].name
-                                            .toString(),
-                                        GRAY_CLR,
-                                        FontWeight.bold,
-                                        13)
-                                  ],
-                                );
-                              });
-                    })),
-
-                Consumer<ServiceHealthProvider>(
-                    builder: (BuildContext context, value, Widget? child) {
-                  return result.serviceListdata == null
-                      ? const Center(child: CircularProgressIndicator())
-                      : ListView.builder(
-                          physics: const BouncingScrollPhysics(),
-                          shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
-                          itemCount: result.serviceListdata?[value.currentindex]
-                              .subserviceListdata?.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            SubServiceListModel? subResultdata = result
-                                .serviceListdata?[currentindex]
-                                .subserviceListdata?[index];
-                            print(subResultdata?.name);
-                            return SizedBox(
-                              height: h * 0.12,
-                              width: w * 1,
-                              child: GestureDetector(
-                                onTap: () {
-                                  value.onClickedList(context, index);
-                                },
-                                // onTap: ()=> Navigate_to(context, PageRoute[index]),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(bottom: 8),
-                                  child: Card(
-                                      color: WHITE70_CLR,
-                                      elevation: 1,
-                                      // shadowColor: GRAY_CLR,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(15)),
-                                      child: Row(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(8),
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              child: Image.network(
-                                                subResultdata!.image.toString(),
-                                                scale: 1.0,
-
-                                                width: w * 0.17,
-                                                height: h * 0.1,
-                                                fit: BoxFit.fill,
-                                                // "",
-                                                errorBuilder: (context, error,
-                                                    stackTrace) {
-                                                  return Container();
-                                                },
-                                                // value.detaildata[index].ImageUrl),
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: w * 0.035,
-                                          ),
-                                          styleText(
-                                              subResultdata.name.toString(),
-                                              // "",
-                                              // value.detaildata[index].name,
-                                              DARK_CLR,
-                                              FontWeight.bold,
-                                              17)
-                                        ],
-                                      )),
-                                ),
+                                        SizedBox(
+                                          width: w * 0.035,
+                                        ),
+                                        styleText(
+                                            subResultdata.name.toString(),
+                                            // "",
+                                            // value.detaildata[index].name,
+                                            DARK_CLR,
+                                            FontWeight.bold,
+                                            17)
+                                      ],
+                                    )),
                               ),
-                            );
-                          });
-                }),
-                styleText(EXPLORE, BLACK_CLR, FontWeight.bold, 19),
-                SizedBox(
-                  height: h * 0.015,
-                ),
+                            ),
+                          );
+                        });
+              }),
+              styleText(EXPLORE, BLACK_CLR, FontWeight.bold, 19),
+              SizedBox(
+                height: h * 0.015,
+              ),
 
-                ///BlogDetailList
-                const BlogDetailsList(),
-                SizedBox(
-                  height: h * 0.015,
-                ),
-              ],
-            ),
+              ///BlogDetailList
+              const BlogDetailsList(),
+              SizedBox(
+                height: h * 0.015,
+              ),
+            ],
           ),
         ),
       ),
