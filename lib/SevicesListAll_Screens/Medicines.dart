@@ -20,7 +20,8 @@ class _MedicinesState extends State<Medicines> {
   @override
   void initState() {
     super.initState();
-    getMedicineListApi(Preference.Pref.getInt('selectedPetId')).then((value) {
+    getMedicineListApi(Preference.Pref.getInt('selectedPetId').toString())
+        .then((value) {
       result = value;
       print(Preference.Pref.getInt('selectedPetId'));
       setState(() {});
@@ -82,12 +83,7 @@ class _MedicinesState extends State<Medicines> {
                           children: [
                             styleText(
                                 result.getMedicinemodelListdata![index].name
-                                            .toString() ==
-                                        "null"
-                                    ? ""
-                                    : result
-                                        .getMedicinemodelListdata![index].name
-                                        .toString(),
+                                    .toString(),
                                 BLACK_CLR,
                                 FontWeight.bold,
                                 16),
@@ -98,7 +94,7 @@ class _MedicinesState extends State<Medicines> {
                                   height: 28,
                                   child: GestureDetector(
                                     onTap: () {
-                                      Navigate_to(
+                                      Navigate_replace(
                                           context,
                                           Add_Medicine(
                                             isedit: true,
@@ -134,7 +130,8 @@ class _MedicinesState extends State<Medicines> {
                                             .then((value) {
                                           getMedicineListApi(
                                                   Preference.Pref.getInt(
-                                                      'selectedPetId'))
+                                                          'selectedPetId')
+                                                      .toString())
                                               .then((value) {
                                             result = value;
                                             setState(() {});
@@ -143,6 +140,8 @@ class _MedicinesState extends State<Medicines> {
                                           customSnackbar(context,
                                               deleteMedicinemsg.toString());
                                         }).catchError((e) {
+                                          Navigator.of(context).pop();
+
                                           customSnackbar(context, e.toString());
                                         });
                                       }, deleteMedicinetitle);
@@ -177,14 +176,8 @@ class _MedicinesState extends State<Medicines> {
                                       FontWeight.normal, 13),
                                   styleText(
                                       result.getMedicinemodelListdata![index]
-                                                  .startDate
-                                                  .toString() ==
-                                              "null"
-                                          ? ""
-                                          : result
-                                              .getMedicinemodelListdata![index]
-                                              .startDate
-                                              .toString(),
+                                          .startDate
+                                          .toString(),
                                       BLACK_CLR,
                                       FontWeight.normal,
                                       15),
@@ -194,15 +187,9 @@ class _MedicinesState extends State<Medicines> {
                                   styleText(HEALTH_OF_PREVIOUS, GRAY_CLR,
                                       FontWeight.normal, 13),
                                   styleText(
-                                      result.getMedicinemodelListdata![index]
-                                                  .does
-                                                  .toString() ==
-                                              "null"
-                                          ? ""
-                                          : result
-                                              .getMedicinemodelListdata![index]
-                                              .does
-                                              .toString(),
+                                      result
+                                          .getMedicinemodelListdata![index].does
+                                          .toString(),
                                       BLACK_CLR,
                                       FontWeight.normal,
                                       15),
@@ -218,14 +205,8 @@ class _MedicinesState extends State<Medicines> {
                                       FontWeight.normal, 13),
                                   styleText(
                                       result.getMedicinemodelListdata![index]
-                                                  .endDate
-                                                  .toString() !=
-                                              "null"
-                                          ? result
-                                              .getMedicinemodelListdata![index]
-                                              .endDate
-                                              .toString()
-                                          : "",
+                                          .endDate
+                                          .toString(),
                                       BLACK_CLR,
                                       FontWeight.normal,
                                       15),
@@ -271,9 +252,8 @@ class _MedicinesState extends State<Medicines> {
                                       FontWeight.normal, 13),
                                   styleText(
                                       result.getMedicinemodelListdata![index]
-                                              .reminder
-                                              .toString() ??
-                                          "",
+                                          .duration
+                                          .toString(),
                                       BLACK_CLR,
                                       FontWeight.normal,
                                       15),
@@ -289,9 +269,8 @@ class _MedicinesState extends State<Medicines> {
                                       FontWeight.normal, 13),
                                   styleText(
                                       result.getMedicinemodelListdata![index]
-                                              .atTime
-                                              .toString() ??
-                                          "",
+                                          .atTime
+                                          .toString(),
                                       BLACK_CLR,
                                       FontWeight.normal,
                                       15),

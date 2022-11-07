@@ -17,14 +17,13 @@ class Deworming extends StatefulWidget {
 class _DewormingState extends State<Deworming> {
   GetdewormingModelList result = GetdewormingModelList();
 
+  final petId = Preference.Pref.getInt('selectedPetId').toString();
   @override
   void initState() {
     super.initState();
-    getDewormingListApi(150).then((value) {
+    getDewormingListApi(petId).then((value) {
       result = value;
-      print("=======" + value.toString());
       setState(() {});
-      // print("=======" + result.data!.atDate.toString());
     });
   }
 
@@ -130,8 +129,11 @@ class _DewormingState extends State<Deworming> {
                                   children: [
                                     styleText(NEXT_DEWORMING, GRAY_CLR,
                                         FontWeight.normal, 13),
-                                    styleText(result.data!.atDate.toString(),
-                                        BLACK_CLR, FontWeight.normal, 15),
+                                    styleText(
+                                        result.data!.dewormingDate.toString(),
+                                        BLACK_CLR,
+                                        FontWeight.normal,
+                                        15),
                                   ],
                                 ),
                               )

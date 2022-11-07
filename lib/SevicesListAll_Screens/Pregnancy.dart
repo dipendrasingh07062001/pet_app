@@ -17,14 +17,13 @@ class Pregnancy extends StatefulWidget {
 
 class _PregnancyState extends State<Pregnancy> {
   GetPregnancyModel result = GetPregnancyModel();
-
+  final pregnancyId = Preference.Pref.getInt("pregnancyId").toString();
   @override
   void initState() {
     super.initState();
-    getPregnancyListApi(Preference.Pref.getInt('pregnancyId')).then((value) {
+    getPregnancyListApi(pregnancyId).then((value) {
       result = value;
       setState(() {});
-      print("==" + value['message']);
     });
   }
 
@@ -39,7 +38,11 @@ class _PregnancyState extends State<Pregnancy> {
         backgroundColor: WHITE70_CLR,
         appBar: DefaultAppBar(PREGNANCY),
         floatingActionButton: flotingButton(() {
-          Navigate_replace(context, Add_Pregnancy());
+          Navigate_replace(
+              context,
+              Add_Pregnancy(
+                ispregnancyEdit: false,
+              ));
         }),
         body: result.data == null
             ? Center(
@@ -81,7 +84,12 @@ class _PregnancyState extends State<Pregnancy> {
                                 height: 28,
                                 child: GestureDetector(
                                   onTap: () {
-                                    Navigate_to(context, Add_Pregnancy());
+                                    Navigate_replace(
+                                        context,
+                                        Add_Pregnancy(
+                                          ispregnancyEdit: true,
+                                          editpregnancymodel: result.data,
+                                        ));
                                   },
                                   child: const CircleAvatar(
                                     backgroundColor: FADE_BLUE_CLR,
@@ -173,7 +181,10 @@ class _PregnancyState extends State<Pregnancy> {
                                       borderRadius: BorderRadius.circular(5)),
                                   onPressed: () {},
                                   child: styleText(
-                                      MONTH1, WHITE_CLR, FontWeight.normal, 11))
+                                      result.data!.reminder.toString(),
+                                      WHITE_CLR,
+                                      FontWeight.normal,
+                                      11))
                             ],
                           ),
                           Row(
@@ -187,7 +198,7 @@ class _PregnancyState extends State<Pregnancy> {
                                   children: [
                                     styleText(REMINDER_DATE, GRAY_CLR,
                                         FontWeight.normal, 13),
-                                    styleText(result.data!.reminder.toString(),
+                                    styleText(result.data!.atDate.toString(),
                                         BLACK_CLR, FontWeight.normal, 15),
                                   ],
                                 ),

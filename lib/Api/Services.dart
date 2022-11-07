@@ -678,6 +678,7 @@ Future getVaccinationApi() async {
 }
 
 //// add Vaccination Api
+bool addvaccination = false;
 String? addVaccinationmsg;
 Future addVaccinationApi(
   String vaccinationName,
@@ -685,8 +686,8 @@ Future addVaccinationApi(
   String vaccinationdate,
   File vaccinationCertificate,
   String reminder,
-  String attime,
   String atdate,
+  String attime,
 ) async {
   ///MultiPart request
   var request = http.MultipartRequest(
@@ -708,41 +709,49 @@ Future addVaccinationApi(
     'vaccination_status': vaccinationStatus,
     'vaccination_date': vaccinationdate,
     'reminder': reminder,
-    'at_time': attime,
     'at_date': atdate,
+    'at_time': attime,
+    'pet_id': Preference.Pref.getInt('selctedPetId').toString()
   });
+  addvaccination = true;
   print(request.toString());
   var res = await request.send();
   print(res.toString());
 
   if (res.statusCode == 200) {
-    var data = await res.stream.bytesToString();
+    final data = await res.stream.bytesToString();
     var jsoncode = jsonDecode(data);
 
     if (jsoncode['status'] == true) {
       print(data);
       addVaccinationmsg = jsoncode['message'].toString();
+      addvaccination = false;
+
       return jsoncode;
     } else {
+      addvaccination = false;
+
       return Future.error(jsoncode['message']);
     }
   } else {
+    addvaccination = false;
+
     return Future.error('Server error');
   }
 }
 
 //// edit Vaccination Api
 ///
+bool iseditvaccion = false;
 String? editvaccinationmsg;
 Future editVaccinationApi(
   String vaccinationName,
   String vaccinationStatus,
   String vaccinationdate,
   File vaccinationCertificate,
-  String tringVaccinationCertificate,
   String reminder,
-  String attime,
   String atdate,
+  String attime,
 ) async {
   ///MultiPart request
   var request = http.MultipartRequest(
@@ -764,32 +773,35 @@ Future editVaccinationApi(
     'vaccination_status': vaccinationStatus,
     'vaccination_date': vaccinationdate,
     'reminder': reminder,
-    'at_time': attime,
     'at_date': atdate,
+    'at_time': attime,
+    'id': Preference.Pref.getInt('vaccinationId').toString()
   });
-  print(request.toString());
+  iseditvaccion = true;
   var res = await request.send();
-  print(res.toString());
 
   if (res.statusCode == 200) {
-    var data = await res.stream.bytesToString();
+    final data = await res.stream.bytesToString();
     var jsoncode = jsonDecode(data);
 
     if (jsoncode['status'] == true) {
       print(data);
       editvaccinationmsg = jsoncode['message'].toString();
+      iseditvaccion = false;
       return jsoncode;
     } else {
+      iseditvaccion = false;
       return Future.error(jsoncode['message']);
     }
   } else {
+    iseditvaccion = false;
     return Future.error('Server error');
   }
 }
 
 // get Deworming Api
 
-Future getDewormingListApi(int petid) async {
+Future getDewormingListApi(String petid) async {
   GetdewormingModelList result = GetdewormingModelList();
   var response =
       await http.get(Uri.parse(baseURL + getDewormingList + "?pet_id=$petid"));
@@ -846,9 +858,9 @@ Future addDewormingApi(String status, String duration, String date,
 /// edit Deworming Api
 
 String? editDewormingmsg;
-
+bool iseditDeworming = false;
 Future editDewormingApi(String status, String duration, String date,
-    String remindr, String atDate, String attime, String dewormingid) async {
+    String remindr, String atDate, String attime) async {
   var response = await http.post(Uri.parse(baseURL + editDeworming), body: {
     'pet_id': Preference.Pref.getInt("selectedPetId").toString(),
     'deworming_status': status,
@@ -857,9 +869,9 @@ Future editDewormingApi(String status, String duration, String date,
     'reminder': remindr,
     'at_date': atDate,
     'at_time': attime,
-    'id': dewormingid
+    'id': Preference.Pref.getInt('dewormingId').toString()
   });
-
+  iseditDeworming = true;
   if (response.statusCode == 200) {
     final data = json.decode(response.body);
 
@@ -867,12 +879,14 @@ Future editDewormingApi(String status, String duration, String date,
       print(data['message']);
       print(data['data']);
       editDewormingmsg = data['message'].toString();
-
+      iseditDeworming = false;
       return data;
     } else {
+      iseditDeworming = false;
       Future.error(data['message']);
     }
   } else {
+    iseditDeworming = false;
     return Future.error('Server error');
   }
 }
@@ -904,9 +918,7 @@ Future addPregnancyApi(
     var data = json.decode(response.body);
     if (data['status'] == true) {
       addPregnancysg = data['message'].toString();
-      Preference.Pref.setInt('pregnancyId', data['data']['id']);
       isaddpregnancy = false;
-
       return data;
     } else {
       isaddpregnancy = false;
@@ -918,9 +930,47 @@ Future addPregnancyApi(
   }
 }
 
+//// edit Pregnancy Api
+bool iseditpregnancy = false;
+Future editPregnancyApi(
+  String sexuallyActive,
+  String pastPregnancy,
+  String previousLitter,
+  String nuetered,
+  String reminder,
+  String time,
+  String date,
+) async {
+  var response = await http.post(Uri.parse(baseURL + editPregnancy), body: {
+    'sexually_active': sexuallyActive,
+    'past_pregnancy': pastPregnancy,
+    'previous_litter': previousLitter,
+    'neutered': nuetered,
+    'reminder': reminder,
+    'at_time': time,
+    'at_date': date,
+    'id': Preference.Pref.getInt('pregnancyId').toString()
+  });
+  iseditpregnancy = true;
+  if (response.statusCode == 200) {
+    var data = json.decode(response.body);
+    if (data['status'] == true) {
+      iseditpregnancy = false;
+
+      return data;
+    } else {
+      iseditpregnancy = false;
+      return Future.error(data['message']);
+    }
+  } else {
+    iseditpregnancy = false;
+    return Future.error('Server error');
+  }
+}
+
 // get Pregnancy Api
 
-Future getPregnancyListApi(int pregnancyId) async {
+Future getPregnancyListApi(String pregnancyId) async {
   GetPregnancyModel result = GetPregnancyModel();
   var response = await http
       .get(Uri.parse(baseURL + getPregnancy + "?pregnancy_id=$pregnancyId"));
@@ -940,7 +990,7 @@ Future getPregnancyListApi(int pregnancyId) async {
 
 //// get Medicine List Api
 ///
-Future getMedicineListApi(int petId) async {
+Future getMedicineListApi(String petId) async {
   GetMedicineModel result = GetMedicineModel();
   var response =
       await http.get(Uri.parse(baseURL + getMedicine + "?pet_id=$petId"));

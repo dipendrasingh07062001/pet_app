@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import '../Componants/Images&Icons.dart';
 
@@ -263,4 +264,50 @@ customradioButton(
         activeColor: GREEN_CLR,
         onChanged: ontap),
   );
+}
+
+///// custom date Container
+var h;
+var w;
+customDateContainer(BuildContext context, Function()? ontap, String text) {
+  h = MediaQuery.of(context).size.height;
+  w = MediaQuery.of(context).size.width;
+  return Container(
+    height: h * 0.06,
+    padding: EdgeInsets.only(left: w * 0.030, right: w * 0.030),
+    margin: EdgeInsets.only(top: h * 0.010),
+    decoration: BoxDecoration(
+        color: WHITE_CLR,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: BORDER_CLR, width: 1)),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          text,
+          style: const TextStyle(color: GRAY_CLR, fontSize: 14),
+        ),
+        GestureDetector(
+          onTap: ontap,
+          child: Icon(
+            Icons.calendar_month_sharp,
+            color: GRAY_CLR.withOpacity(0.5),
+            size: 20,
+          ),
+        )
+      ],
+    ),
+  );
+}
+
+///// image picker by galllery
+
+PickedFile? selectImage = null;
+
+Opengallery(BuildContext context) async {
+  final GalleryImage = await ImagePicker().getImage(
+    source: ImageSource.gallery,
+  );
+
+  selectImage = GalleryImage!;
 }

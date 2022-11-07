@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:pet_app/Api/Models/My_pet_model.dart';
 import 'package:pet_app/Api/Prefrence.dart';
 import 'package:pet_app/Api/Services.dart';
 import 'package:pet_app/Screens/HOME/Home.dart';
@@ -20,9 +19,8 @@ class Add_Deworming extends StatefulWidget {
 }
 
 class _Add_DewormingState extends State<Add_Deworming> {
-  MyPetModel result = MyPetModel();
-  String day = 'daily';
-  String day1 = 'daily';
+  String day = 'Daily';
+  String day1 = 'Daily';
   String selectStatus = 'false';
   final SelectStstusitems = [
     'false',
@@ -85,7 +83,7 @@ class _Add_DewormingState extends State<Add_Deworming> {
                         (String value) => DropdownMenuItem<String>(
                               value: value,
                               child: Text(
-                                value,
+                                value.toString(),
                                 style: TextStyle(color: GRAY_CLR, fontSize: 14),
                               ),
                             )).toList(),
@@ -108,20 +106,11 @@ class _Add_DewormingState extends State<Add_Deworming> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: 20,
-                    width: 20,
-                    child: Radio(
-                      value: 'daily',
-                      groupValue: day,
-                      activeColor: GREEN_CLR,
-                      onChanged: (value) {
-                        setState(() {
-                          day = value.toString();
-                        });
-                      },
-                    ),
-                  ),
+                  customradioButton("Daily", day, (value) {
+                    setState(() {
+                      day = value.toString();
+                    });
+                  }),
                   SizedBox(
                     width: w * 0.010,
                   ),
@@ -132,19 +121,11 @@ class _Add_DewormingState extends State<Add_Deworming> {
                   SizedBox(
                     width: w * 0.1,
                   ),
-                  SizedBox(
-                    height: 20,
-                    width: 20,
-                    child: Radio(
-                        value: 'weekly',
-                        groupValue: day,
-                        activeColor: GREEN_CLR,
-                        onChanged: (value) {
-                          setState(() {
-                            day = value.toString();
-                          });
-                        }),
-                  ),
+                  customradioButton("Weekly", day, (value) {
+                    setState(() {
+                      day = value.toString();
+                    });
+                  }),
                   SizedBox(
                     width: w * 0.010,
                   ),
@@ -155,19 +136,11 @@ class _Add_DewormingState extends State<Add_Deworming> {
                   SizedBox(
                     width: w * 0.1,
                   ),
-                  SizedBox(
-                    height: 20,
-                    width: 20,
-                    child: Radio(
-                        value: 'monthly',
-                        groupValue: day,
-                        activeColor: GREEN_CLR,
-                        onChanged: (value) {
-                          setState(() {
-                            day = value.toString();
-                          });
-                        }),
-                  ),
+                  customradioButton("Monthly", day, (value) {
+                    setState(() {
+                      day = value.toString();
+                    });
+                  }),
                   SizedBox(
                     width: w * 0.010,
                   ),
@@ -227,19 +200,11 @@ class _Add_DewormingState extends State<Add_Deworming> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: Radio(
-                        value: 'daily',
-                        groupValue: day1,
-                        activeColor: GREEN_CLR,
-                        onChanged: (value) {
-                          setState(() {
-                            day1 = value.toString();
-                          });
-                        },
-                      )),
+                  customradioButton("Daily", day1, (value) {
+                    setState(() {
+                      day1 = value.toString();
+                    });
+                  }),
                   SizedBox(
                     width: w * 0.010,
                   ),
@@ -250,19 +215,11 @@ class _Add_DewormingState extends State<Add_Deworming> {
                   SizedBox(
                     width: w * 0.1,
                   ),
-                  SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: Radio(
-                        value: 'weekly',
-                        groupValue: day1,
-                        activeColor: GREEN_CLR,
-                        onChanged: (value) {
-                          setState(() {
-                            day1 = value.toString();
-                          });
-                        },
-                      )),
+                  customradioButton("Weekly", day1, (value) {
+                    setState(() {
+                      day1 = value.toString();
+                    });
+                  }),
                   SizedBox(
                     width: w * 0.010,
                   ),
@@ -273,19 +230,11 @@ class _Add_DewormingState extends State<Add_Deworming> {
                   SizedBox(
                     width: w * 0.1,
                   ),
-                  SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: Radio(
-                        value: 'monthly',
-                        groupValue: day1,
-                        activeColor: GREEN_CLR,
-                        onChanged: (value) {
-                          setState(() {
-                            day1 = value.toString();
-                          });
-                        },
-                      )),
+                  customradioButton("Monthly", day1, (value) {
+                    setState(() {
+                      day1 = value.toString();
+                    });
+                  }),
                   SizedBox(
                     width: w * 0.010,
                   ),
@@ -392,7 +341,7 @@ class _Add_DewormingState extends State<Add_Deworming> {
               ),
               Align(
                   alignment: Alignment.bottomCenter,
-                  child: isAddDeworming
+                  child: isAddDeworming || iseditDeworming
                       ? CircularProgressIndicator(
                           color: GREEN_CLR,
                         )
@@ -400,52 +349,69 @@ class _Add_DewormingState extends State<Add_Deworming> {
                           text: DONE,
                           ontap: () async {
                             if (widget.isedit) {
-                              editDewormingApi(
-                                      selectStatus,
-                                      day,
-                                      selectDate.toString(),
-                                      day1,
-                                      selectAtdate,
-                                      selectedTime.toString(),
-                                      widget.editDewormingModel!.id.toString())
-                                  .then((value) {
+                              setState(() {
+                                iseditDeworming = true;
+                              });
+                              await editDewormingApi(
+                                selectStatus,
+                                day,
+                                selectDate.toString(),
+                                day1,
+                                selectAtdate,
+                                selectedTime.toString(),
+                              ).then((value) {
                                 getDewormingListApi(
-                                    Preference.Pref.getInt('selectedPetId'));
+                                    Preference.Pref.getInt('selectedPetId')
+                                        .toString());
                                 customSnackbar(
                                     context, editDewormingmsg.toString());
                                 Navigate_replace(context, Deworming());
+                                setState(() {
+                                  iseditDeworming = false;
+                                });
                               }).catchError((e) {
                                 customSnackbar(context, e.toString());
+                                setState(() {
+                                  iseditDeworming = false;
+                                });
+                              });
+                              setState(() {
+                                iseditDeworming = false;
                               });
                             } else {
-                              setState(() {
-                                isAddDeworming = true;
-                              });
-                              await addDewormingApi(
-                                      selectStatus,
-                                      day,
-                                      selectDate.toString(),
-                                      day1,
-                                      selectAtdate,
-                                      selectedTime.toString())
-                                  .then((value) {
-                                customSnackbar(
-                                    context, addDewormingmsg.toString());
-                                Navigate_replace(context, Home());
+                              if (devormingValidation()) {
+                                setState(() {
+                                  isAddDeworming = true;
+                                });
+                                await addDewormingApi(
+                                        selectStatus,
+                                        day,
+                                        selectDate.toString(),
+                                        day1,
+                                        selectAtdate,
+                                        selectedTime.toString())
+                                    .then((value) {
+                                  Preference.Pref.setInt(
+                                      'dewormingId', value['data']['id']);
+                                  print(value['data']['id']);
+                                  customSnackbar(
+                                      context, addDewormingmsg.toString());
+                                  Navigate_replace(context, Home());
 
+                                  setState(() {
+                                    isAddDeworming = false;
+                                  });
+                                }).catchError((e) {
+                                  customSnackbar(context, e.toString());
+                                  print(e);
+                                  setState(() {
+                                    isAddDeworming = false;
+                                  });
+                                });
                                 setState(() {
                                   isAddDeworming = false;
                                 });
-                              }).catchError((e) {
-                                customSnackbar(context, e.toString());
-                                print(e);
-                                setState(() {
-                                  isAddDeworming = false;
-                                });
-                              });
-                              setState(() {
-                                isAddDeworming = false;
-                              });
+                              }
                             }
                           },
                           fontsize: 15,
@@ -454,5 +420,19 @@ class _Add_DewormingState extends State<Add_Deworming> {
             ]),
           ),
         ));
+  }
+
+  devormingValidation() {
+    if (selectDate == null) {
+      customSnackbar(context, "Please select deworming date");
+      return false;
+    } else if (selectAtdate == null) {
+      customSnackbar(context, "Please select  date");
+      return false;
+    } else if (selectedTime == null) {
+      customSnackbar(context, "Please select time");
+      return false;
+    }
+    return true;
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:pet_app/Api/Models/getDewormingModel.dart';
 import 'package:pet_app/Screens/Add_Pets/AddPet3.dart';
 import 'package:pet_app/Screens/EditPet/editPage1.dart';
 import 'package:pet_app/Screens/EditPet/editPet3.dart';

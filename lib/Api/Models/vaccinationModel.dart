@@ -21,18 +21,19 @@ class VaccinationMaodelList {
   String? vaccinationdate;
   String? reminder;
   String? vaccinationstatus;
-  String? attime;
   String? atdate;
+  String? attime;
 
-  VaccinationMaodelList(
-      {this.id,
-      this.vaccinationcertificate,
-      this.vaccinationid,
-      this.vaccinationdate,
-      this.reminder,
-      this.vaccinationstatus,
-      this.attime,
-      this.atdate});
+  VaccinationMaodelList({
+    this.id,
+    this.vaccinationcertificate,
+    this.vaccinationid,
+    this.vaccinationdate,
+    this.reminder,
+    this.vaccinationstatus,
+    this.atdate,
+    this.attime,
+  });
 
   factory VaccinationMaodelList.fromjson(Map<String, dynamic> json) =>
       VaccinationMaodelList(

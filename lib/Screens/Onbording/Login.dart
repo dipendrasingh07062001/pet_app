@@ -33,6 +33,7 @@ class _LoginState extends State<Login> {
   var w;
 
   bool _passwordVisible = true;
+
   bool isEmail(String input) => EmailValidator.validate(input);
 
   @override

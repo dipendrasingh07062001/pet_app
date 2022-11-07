@@ -38,29 +38,22 @@ class _VaccinationsState extends State<Vaccinations> {
     return Scaffold(
       backgroundColor: WHITE70_CLR,
       appBar: DefaultAppBar(VACCINATOIN),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(top: 10),
-        child: FloatingActionButton(
-          backgroundColor: WHITE70_CLR,
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(50)),
-              side: BorderSide(color: GREEN_CLR)),
-          onPressed: () {
-            Navigate_replace(context, const Add_Vaccinations());
-          },
-          child: const Icon(
-            Icons.add,
-            size: 40,
-            color: GREEN_CLR,
-          ),
-          heroTag: "b1",
-        ),
-      ),
+      floatingActionButton: flotingButton(() {
+        Navigate_replace(
+            context,
+            Add_Vaccinations(
+              isEditVaccination: false,
+            ));
+      }),
       body: result.vaccinationModeldata == null
-          ? const Center(child: CircularProgressIndicator())
+          ? const Center(
+              child: CircularProgressIndicator(
+              color: GREEN_CLR,
+            ))
           : ListView.builder(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
+              physics: BouncingScrollPhysics(),
               itemCount: result.vaccinationModeldata!.length,
               padding: const EdgeInsets.symmetric(vertical: 20),
               itemBuilder: (BuildContext context, int index) {
@@ -170,8 +163,14 @@ class _VaccinationsState extends State<Vaccinations> {
                                         child: GestureDetector(
                                           onTap: () {
                                             setState(() {
-                                              Navigate_replace(context,
-                                                  const Add_Vaccinations());
+                                              Navigate_replace(
+                                                  context,
+                                                  Add_Vaccinations(
+                                                    isEditVaccination: true,
+                                                    editVaccinationmodeldata:
+                                                        result.vaccinationModeldata![
+                                                            index],
+                                                  ));
                                             });
                                           },
                                           child: const CircleAvatar(
@@ -199,6 +198,10 @@ class _VaccinationsState extends State<Vaccinations> {
                                                         .id
                                                         .toString())
                                                     .then((value) {
+                                                  customSnackbar(
+                                                      context,
+                                                      value['message']
+                                                          .toString());
                                                   getVaccinationListApi()
                                                       .then((value) {
                                                     result = value;

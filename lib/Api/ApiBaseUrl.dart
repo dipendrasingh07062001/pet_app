@@ -27,6 +27,7 @@ const addDeworming = "add_deworming";
 const editDeworming = "edit_deworming";
 const addPregnancy = 'pregnancy';
 const getPregnancy = 'get_pregnancy';
+const editPregnancy = 'edit_pregnancy';
 const getMedicine = 'get_medicine';
 const deletemedicine = 'delete_medicine';
 const getMedicinename = 'get_admin_medicine';

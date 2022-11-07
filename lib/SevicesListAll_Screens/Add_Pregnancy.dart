@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:pet_app/Api/Prefrence.dart';
 import 'package:pet_app/Api/Services.dart';
 import 'package:pet_app/SevicesListAll_Screens/Pregnancy.dart';
+import '../Api/Models/getPregnancyModel.dart';
 import '../Colors/COLORS.dart';
 import '../Componants/Images&Icons.dart';
 import '../UTILS/Utils.dart';
 
 class Add_Pregnancy extends StatefulWidget {
-  const Add_Pregnancy({super.key});
+  bool ispregnancyEdit;
+  GetPregnancyListData? editpregnancymodel;
+  Add_Pregnancy(
+      {super.key, required this.ispregnancyEdit, this.editpregnancymodel});
 
   @override
   State<Add_Pregnancy> createState() => _Add_PregnancyState();
@@ -24,6 +29,21 @@ class _Add_PregnancyState extends State<Add_Pregnancy> {
   String setualActive = 'Yes';
   String nuetered = 'Yes';
   String reminder = '6month';
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.ispregnancyEdit) {
+      setualActive = widget.editpregnancymodel!.sexuallyActive.toString();
+      PastPregnancy = widget.editpregnancymodel!.pastPregnancy.toString();
+      previouslitter.text =
+          widget.editpregnancymodel!.previousLitter.toString();
+      nuetered = widget.editpregnancymodel!.neutered.toString();
+      reminder = widget.editpregnancymodel!.reminder.toString();
+      date = widget.editpregnancymodel!.atDate.toString();
+      time = widget.editpregnancymodel!.atTime.toString();
+    }
+  }
 
   var h;
   var w;
@@ -312,43 +332,80 @@ class _Add_PregnancyState extends State<Add_Pregnancy> {
               ),
               Align(
                   alignment: Alignment.bottomCenter,
-                  child: isaddpregnancy
-                      ? CircularProgressIndicator()
+                  child: isaddpregnancy || iseditpregnancy
+                      ? CircularProgressIndicator(
+                          color: GREEN_CLR,
+                        )
                       : DefaultButton(
                           text: DONE,
                           ontap: () async {
-                            setState(() {
-                              isaddpregnancy = true;
-                            });
-
-                            bool checkValidation = true;
-
-                            await addPregnancyApi(
-                                    setualActive,
-                                    PastPregnancy,
-                                    previouslitter.text,
-                                    nuetered,
-                                    reminder,
-                                    time.toString(),
-                                    date.toString())
-                                .then((value) {
-                              customSnackbar(
-                                  context, addPregnancysg.toString());
-                              Navigate_replace(context, Pregnancy());
-                              print(value);
+                            if (widget.ispregnancyEdit == true) {
                               setState(() {
-                                isaddpregnancy = false;
+                                iseditpregnancy = true;
                               });
-                            }).catchError((e) {
-                              print(e);
-                              customSnackbar(context, e.toString());
+                              await editPregnancyApi(
+                                      setualActive,
+                                      PastPregnancy,
+                                      previouslitter.text,
+                                      nuetered,
+                                      reminder,
+                                      time.toString(),
+                                      date.toString())
+                                  .then((value) {
+                                customSnackbar(
+                                    context, value['message'].toString());
+                                Navigate_replace(context, Pregnancy());
+                                setState(() {
+                                  iseditpregnancy = false;
+                                });
+                              }).catchError((e) {
+                                print(e);
+                                customSnackbar(context, e.toString());
+                                setState(() {
+                                  iseditpregnancy = false;
+                                });
+                              });
                               setState(() {
-                                isaddpregnancy = false;
+                                iseditpregnancy = false;
                               });
-                            });
-                            setState(() {
-                              isaddpregnancy = false;
-                            });
+                            } else {
+                              if (AddPregnacyValidation()) {
+                                setState(() {
+                                  isaddpregnancy = true;
+                                });
+                                await addPregnancyApi(
+                                        setualActive,
+                                        PastPregnancy,
+                                        previouslitter.text,
+                                        nuetered,
+                                        reminder,
+                                        time.toString(),
+                                        date.toString())
+                                    .then((value) {
+                                  Preference.Pref.setInt(
+                                      "pregnancyId", value['data']['id']);
+                                  print("=========" +
+                                      Preference.Pref.getInt("pregnancyId")
+                                          .toString());
+                                  customSnackbar(
+                                      context, addPregnancysg.toString());
+                                  Navigator.of(context).pop();
+                                  print(value);
+                                  setState(() {
+                                    isaddpregnancy = false;
+                                  });
+                                }).catchError((e) {
+                                  print(e);
+                                  customSnackbar(context, e.toString());
+                                  setState(() {
+                                    isaddpregnancy = false;
+                                  });
+                                });
+                                setState(() {
+                                  isaddpregnancy = false;
+                                });
+                              }
+                            }
                           },
                           fontsize: 15,
                           height: h * 0.060,
@@ -356,5 +413,19 @@ class _Add_PregnancyState extends State<Add_Pregnancy> {
             ]),
       ),
     );
+  }
+
+  AddPregnacyValidation() {
+    if (previouslitter.text == "") {
+      customSnackbar(context, "Please enter previous litter");
+      return false;
+    } else if (date == null) {
+      customSnackbar(context, "Please select date");
+      return false;
+    } else if (time == null) {
+      customSnackbar(context, "Please select time");
+      return false;
+    }
+    return true;
   }
 }
