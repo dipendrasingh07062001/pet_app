@@ -17,11 +17,25 @@ Future googleLogin() async {
   print("googleLogin method Called");
   GoogleSignIn _googleSignIn = GoogleSignIn();
   try {
+    // final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    // // Obtain the auth details from the request
+    // final GoogleSignInAuthentication? googleAuth =
+    //     await googleUser?.authentication;
+
+    // // // Create a new credential
+    // final credential = GoogleAuthProvider.credential(
+    //   accessToken: googleAuth?.accessToken,
+    //   idToken: googleAuth?.idToken,
+    // );
+    // await FirebaseAuth.instance.signInWithCredential(credential);
     var reslut = await _googleSignIn.signIn();
     if (reslut != null) {
       final userData = await reslut.authentication;
       final credential = GoogleAuthProvider.credential(
-          accessToken: userData.accessToken, idToken: userData.idToken);
+        accessToken: userData.accessToken,
+        idToken: userData.idToken,
+      );
       var finalResult =
           await FirebaseAuth.instance.signInWithCredential(credential);
       print("Result $reslut");
