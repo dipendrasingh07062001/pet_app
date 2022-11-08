@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pet_app/Colors/COLORS.dart';
@@ -302,12 +304,25 @@ customDateContainer(BuildContext context, Function()? ontap, String text) {
 
 ///// image picker by galllery
 
-PickedFile? selectImage = null;
+// PickedFile? selectImage = null;
 
-Opengallery(BuildContext context) async {
-  final GalleryImage = await ImagePicker().getImage(
+// Opengallery(BuildContext context) async {
+//   final GalleryImage = await ImagePicker().getImage(
+//     source: ImageSource.gallery,
+//   );
+
+//   selectImage = GalleryImage!;
+
+File? imageFile;
+
+FromGallery() async {
+  PickedFile? pickedFile = await ImagePicker().getImage(
     source: ImageSource.gallery,
+    maxWidth: 1800,
+    maxHeight: 1800,
   );
-
-  selectImage = GalleryImage!;
+  if (pickedFile != null) {
+    // setState(() {});
+    imageFile = File(pickedFile.path);
+  }
 }

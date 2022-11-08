@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:intl/intl.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
@@ -12,12 +14,20 @@ class Cycle_Tracking1 extends StatefulWidget {
 }
 
 class _Cycle_Tracking1State extends State<Cycle_Tracking1> {
-  DateRangePickerController _datePickerController = DateRangePickerController();
-
+  final DateRangePickerController controller = DateRangePickerController();
+  String date = DateFormat('dd, MM,yyyy').format(DateTime.now()).toString();
   @override
   initState() {
-    _datePickerController.view = DateRangePickerView.month;
+    controller.view = DateRangePickerView.month;
     super.initState();
+  }
+
+  void selectionChanged(DateRangePickerSelectionChangedArgs args) {
+    SchedulerBinding.instance.addPostFrameCallback((duration) {
+      setState(() {
+        date = DateFormat('dd-MM-yyyy').format(args.value).toString();
+      });
+    });
   }
 
   var Date;
@@ -37,7 +47,7 @@ class _Cycle_Tracking1State extends State<Cycle_Tracking1> {
             SizedBox(
               height: h * 0.050,
             ),
-            styleText("When did your pet’s last\n period start?", DARK_CLR,
+            styleText("When did your pet`s last\n period start?", DARK_CLR,
                 FontWeight.bold, 20),
             SizedBox(
               height: h * 0.030,
@@ -47,11 +57,13 @@ class _Cycle_Tracking1State extends State<Cycle_Tracking1> {
                   borderRadius: BorderRadius.circular(10)),
               child: SfDateRangePicker(
                 view: DateRangePickerView.month,
-                selectionMode: DateRangePickerSelectionMode.multiple,
+                selectionMode: DateRangePickerSelectionMode.single,
                 headerHeight: h * 0.060,
-                controller: _datePickerController,
+                controller: controller,
+                onSelectionChanged: selectionChanged,
               ),
             ),
+            Text(date)
           ],
         ),
       ),

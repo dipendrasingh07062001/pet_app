@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pet_app/Colors/COLORS.dart';
+import 'package:pet_app/Screens/Add_Pets/AddPet3.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 
 class CycleTracking2 extends StatefulWidget {
@@ -32,6 +33,9 @@ class _CycleTracking2State extends State<CycleTracking2> {
     styleText("20 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
   ];
 
+  FixedExtentScrollController fixedExtentScrollController =
+      FixedExtentScrollController();
+
   var h;
   var w;
   @override
@@ -55,13 +59,18 @@ class _CycleTracking2State extends State<CycleTracking2> {
             SizedBox(
                 height: h * 0.4,
                 child: ListWheelScrollView.useDelegate(
-                  itemExtent: 50,
-                  physics: const FixedExtentScrollPhysics(),
-                  overAndUnderCenterOpacity: 0.5,
-                  childDelegate: ListWheelChildLoopingListDelegate(
-                    children: items,
-                  ),
-                )),
+                    itemExtent: 50,
+                    controller: fixedExtentScrollController,
+                    physics: FixedExtentScrollPhysics(),
+                    overAndUnderCenterOpacity: 0.5,
+                    useMagnifier: false,
+                    clipBehavior: Clip.antiAlias,
+                    childDelegate: ListWheelChildLoopingListDelegate(
+                      children: items,
+                    ),
+                    onSelectedItemChanged: (context) {
+                      print(items[index]);
+                    })),
           ],
         ),
       ),

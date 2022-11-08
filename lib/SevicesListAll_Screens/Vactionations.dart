@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:pet_app/Api/Models/vaccinationModel.dart';
+import 'package:pet_app/Api/Prefrence.dart';
 import 'package:pet_app/Api/Services.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Componants/Images&Icons.dart';
@@ -171,6 +172,11 @@ class _VaccinationsState extends State<Vaccinations> {
                                                         result.vaccinationModeldata![
                                                             index],
                                                   ));
+
+                                              print("m, m, " +
+                                                  Preference.Pref.getInt(
+                                                          'vaccinationId')
+                                                      .toString());
                                             });
                                           },
                                           child: const CircleAvatar(

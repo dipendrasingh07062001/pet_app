@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pet_app/Screens/Add_Pets/AddPet3.dart';
@@ -146,6 +148,21 @@ class AddPetProvider extends ChangeNotifier {
       source: ImageSource.camera,
     );
     selectImage = CameraImage;
+    notifyListeners();
+  }
+
+  File? imageFile;
+
+  FromGallery() async {
+    PickedFile? pickedFile = await ImagePicker().getImage(
+      source: ImageSource.gallery,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    );
+    if (pickedFile != null) {
+      // setState(() {});
+      imageFile = File(pickedFile.path);
+    }
     notifyListeners();
   }
 }

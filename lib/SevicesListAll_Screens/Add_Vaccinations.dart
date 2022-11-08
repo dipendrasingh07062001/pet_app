@@ -1,14 +1,13 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:pet_app/Api/Models/v_model.dart';
 import 'package:pet_app/Api/Models/vaccinationModel.dart';
 import 'package:pet_app/Api/Prefrence.dart';
 import 'package:pet_app/Api/Services.dart';
-import 'package:pet_app/Provider/ServiceListProvider.dart';
 import 'package:pet_app/SevicesListAll_Screens/Vactionations.dart';
-import 'package:provider/provider.dart';
 import '../Colors/COLORS.dart';
 import '../Componants/Images&Icons.dart';
 import '../UTILS/Utils.dart';
@@ -44,8 +43,8 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
           widget.editVaccinationmodeldata!.vaccinationstatus.toString();
       vaccinationdate =
           widget.editVaccinationmodeldata!.vaccinationdate.toString();
-      // editImage =
-      //     widget.editVaccinationmodeldata!.vaccinationcertificate.toString();
+      editImage =
+          widget.editVaccinationmodeldata!.vaccinationcertificate.toString();
       reminder = widget.editVaccinationmodeldata!.reminder.toString();
       atdate = widget.editVaccinationmodeldata!.atdate.toString();
       attime = widget.editVaccinationmodeldata!.attime.toString();
@@ -193,10 +192,12 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
                     color: WHITE70_CLR,
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(color: TFFBORDER_CLR)),
-                child: selectImage == null || editImage == ""
+                child: imageFile == null
                     ? GestureDetector(
                         onTap: () {
-                          Opengallery(context);
+                          setState(() {
+                            FromGallery();
+                          });
                         },
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -210,32 +211,23 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
                           ],
                         ),
                       )
-                    : Consumer<AddPetProvider>(
-                        builder: (BuildContext context, value, Widget? child) {
-                        return GestureDetector(
-                          onTap: () {
-                            value.Opengallery(context);
-                          },
-                          child: ClipRRect(
-                              borderRadius: BorderRadius.circular(5),
-                              child: editImage == ""
-                                  ? Image.file(
-                                      File(
-                                        selectImage!.path,
-                                      ),
-                                      scale: 1.0,
-                                      fit: BoxFit.fill,
-                                      // height: 100,
-                                      width: w * 1,
-                                    )
-                                  : Image.network(
-                                      editImage, scale: 1.0,
-                                      fit: BoxFit.fill,
-                                      // height: 100,
-                                      width: w * 1,
-                                    )),
-                        );
-                      })),
+                    : GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            FromGallery();
+                          });
+                        },
+                        child: ClipRRect(
+                            borderRadius: BorderRadius.circular(5),
+                            child: Image.file(
+                              File(
+                                imageFile!.path,
+                              ),
+                              scale: 1.0,
+                              fit: BoxFit.cover,
+                              width: w * 1,
+                            )),
+                      )),
             SizedBox(
               height: h * 0.025,
             ),
@@ -351,7 +343,7 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
                                     selectStatus.toString(),
                                     vaccinationdate.toString(),
                                     File(
-                                      selectImage!.path,
+                                      imageFile!.path,
                                     ),
                                     reminder.toString(),
                                     atdate.toString(),
@@ -384,7 +376,7 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
                                       selectStatus.toString(),
                                       vaccinationdate.toString(),
                                       File(
-                                        selectImage!.path,
+                                        imageFile!.path,
                                       ),
                                       reminder.toString(),
                                       atdate.toString(),
@@ -432,7 +424,7 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
     } else if (vaccinationdate == null) {
       customSnackbar(context, "Please select vaccination date");
       return false;
-    } else if (selectImage?.path == null) {
+    } else if (imageFile?.path == null) {
       customSnackbar(context, "Please select vaccination certificate");
       return false;
     } else if (atdate == null) {
@@ -443,5 +435,19 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
       return false;
     }
     return true;
+  }
+
+  File? imageFile;
+
+  FromGallery() async {
+    PickedFile? pickedFile = await ImagePicker().getImage(
+      source: ImageSource.gallery,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    );
+    if (pickedFile != null) {
+      setState(() {});
+      imageFile = File(pickedFile.path);
+    }
   }
 }
