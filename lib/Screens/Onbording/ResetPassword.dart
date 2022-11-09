@@ -229,9 +229,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                       height: h * 0.040,
                     ),
                     isLoading == true
-                        ? const CircularProgressIndicator(
-                            color: GREEN_CLR,
-                          )
+                        ? loader
                         : DefaultButton(
                             text: SUBMIT,
                             ontap: () async {

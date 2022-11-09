@@ -18,7 +18,7 @@ class MyDrawer extends StatefulWidget {
 }
 
 class _MyDrawerState extends State<MyDrawer> {
-  final deleteUser = Preference.Pref.clear();
+  // final deleteUser = Preference.Pref.clear();
 
   String? username;
   String? useremail;

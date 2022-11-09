@@ -298,10 +298,7 @@ class _SignupState extends State<Signup> {
                                 Consumer(builder: (BuildContext context, value,
                                     Widget? child) {
                                   return isLoading == true
-                                      ? const Center(
-                                          child: CircularProgressIndicator(
-                                          color: GREEN_CLR,
-                                        ))
+                                      ? loader
                                       : DefaultButton(
                                           text: SIGN_UP,
                                           ontap: () {
@@ -367,24 +364,34 @@ class _SignupState extends State<Signup> {
                                         });
 
                                         googleLogin().then((value) {
-                                          socialSigningApi(gemail.toString(),
-                                                  gname.toString(), "Google")
-                                              .then((value) {
-                                            setState(() {
-                                              Navigate_PushRemove(
-                                                  context, const Home());
-                                              googlesigning = false;
+                                          if (value) {
+                                            socialSigningApi(
+                                              gemail.toString(),
+                                              gname.toString(),
+                                              "Google",
+                                            ).then((value) {
+                                              setState(() {
+                                                Navigate_PushRemove(
+                                                  context,
+                                                  const Home(),
+                                                );
+                                                googlesigning = false;
+                                              });
+                                            }).catchError((e) {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(SnackBar(
+                                                      backgroundColor:
+                                                          GREEN_CLR,
+                                                      content:
+                                                          Text(e.toString())));
+                                              setState(() {
+                                                googlesigning = false;
+                                              });
                                             });
-                                          }).catchError((e) {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(SnackBar(
-                                                    backgroundColor: GREEN_CLR,
-                                                    content:
-                                                        Text(e.toString())));
-                                            setState(() {
-                                              googlesigning = false;
-                                            });
-                                          });
+                                          }
+                                        });
+                                        setState(() {
+                                          googlesigning = false;
                                         });
                                       },
                                       child: Container(

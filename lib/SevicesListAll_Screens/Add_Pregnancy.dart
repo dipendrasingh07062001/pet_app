@@ -333,9 +333,7 @@ class _Add_PregnancyState extends State<Add_Pregnancy> {
               Align(
                   alignment: Alignment.bottomCenter,
                   child: isaddpregnancy || iseditpregnancy
-                      ? CircularProgressIndicator(
-                          color: GREEN_CLR,
-                        )
+                      ? loader
                       : DefaultButton(
                           text: DONE,
                           ontap: () async {

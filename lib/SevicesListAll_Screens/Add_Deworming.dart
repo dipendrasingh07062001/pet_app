@@ -342,9 +342,7 @@ class _Add_DewormingState extends State<Add_Deworming> {
               Align(
                   alignment: Alignment.bottomCenter,
                   child: isAddDeworming || iseditDeworming
-                      ? CircularProgressIndicator(
-                          color: GREEN_CLR,
-                        )
+                      ? loader
                       : DefaultButton(
                           text: DONE,
                           ontap: () async {

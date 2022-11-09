@@ -326,3 +326,12 @@ FromGallery() async {
     imageFile = File(pickedFile.path);
   }
 }
+
+const loader = Center(
+  child: CircularProgressIndicator.adaptive(
+    backgroundColor: GREEN_CLR,
+  ),
+);
+Widget valueLoader(double? value) => Center(
+      child: CircularProgressIndicator.adaptive(value: value),
+    );

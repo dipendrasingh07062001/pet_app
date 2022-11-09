@@ -375,9 +375,7 @@ class _Add_MedicineState extends State<Add_Medicine> {
               Align(
                   alignment: Alignment.bottomCenter,
                   child: isaddmedicine || isdeditingmedicine
-                      ? CircularProgressIndicator(
-                          color: GREEN_CLR,
-                        )
+                      ? loader
                       : DefaultButton(
                           text: DONE,
                           ontap: () async {
@@ -386,7 +384,7 @@ class _Add_MedicineState extends State<Add_Medicine> {
                                 isdeditingmedicine = true;
                               });
                               await EditMedicineApi(
-                                      selectedmedicine.toString(),
+                                      medicinename.name ?? "",
                                       Duration,
                                       day,
                                       startdate.toString(),

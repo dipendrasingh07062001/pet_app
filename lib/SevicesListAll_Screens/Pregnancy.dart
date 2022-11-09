@@ -45,10 +45,7 @@ class _PregnancyState extends State<Pregnancy> {
               ));
         }),
         body: result.data == null
-            ? Center(
-                child: CircularProgressIndicator(
-                color: GREEN_CLR,
-              ))
+            ? loader
             : Column(
                 children: [
                   Padding(

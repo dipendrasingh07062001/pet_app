@@ -12,6 +12,7 @@ import '../../Api/Models/ServiceListModel.dart';
 import '../../Api/Prefrence.dart';
 import '../../Api/Services.dart';
 import '../../Componants/Images&Icons.dart';
+import '../../FirebaseServices/GoogleAuth.dart';
 import '../DrawerScreen.dart';
 import '../LocationBottomSeet.dart';
 import '../Reminder.dart';
@@ -43,6 +44,10 @@ class _HomeState extends State<Home> {
   @override
   initState() {
     super.initState();
+    gname = Preference.Pref!.getString("gname") ?? "";
+    gemail = Preference.Pref!.getString("gemail") ?? "";
+    gprofilePic = Preference.Pref!.getString("gprofilePic") ?? "";
+    appId = Preference.Pref!.getString("appId") ?? "";
     servicelistApi().then((value) {
       setState(() {
         result = value;
@@ -137,7 +142,11 @@ class _HomeState extends State<Home> {
                             borderRadius: BorderRadius.circular(40)),
                         color: GREEN_CLR,
                         onPressed: () {
-                          Navigate_replace(context, AddPetpage());
+                          Navigate_replace(
+                              context,
+                              AddPetpage(
+                                isedit: false,
+                              ));
                           Navigator.of(context).pop;
                         },
                         child: styleText(
@@ -199,7 +208,7 @@ class _HomeState extends State<Home> {
                           "assets/png_icon/magnifying-glass.png",
                           color: GRAY_CLR,
                         ),
-                        suffixIcon: Image.asset(FILTTER_ICON),
+                        // suffixIcon: Image.asset(FILTTER_ICON),
                         border: InputBorder.none)),
               ),
               SizedBox(
@@ -217,7 +226,7 @@ class _HomeState extends State<Home> {
                   child: Consumer<ServiceHealthProvider>(
                       builder: (BuildContext context, value, Widget? child) {
                     return result.serviceListdata == null
-                        ? const Center(child: CircularProgressIndicator())
+                        ? loader
                         : ListView.builder(
                             physics: const BouncingScrollPhysics(),
                             shrinkWrap: true,
@@ -265,6 +274,21 @@ class _HomeState extends State<Home> {
                                             height: h * 0.08,
                                             fit: BoxFit.fill,
                                             // "",
+                                            loadingBuilder: (context, child,
+                                                loadingProgress) {
+                                              if (loadingProgress == null) {
+                                                return child;
+                                              } else {
+                                                return valueLoader(loadingProgress
+                                                            .expectedTotalBytes !=
+                                                        null
+                                                    ? loadingProgress
+                                                            .cumulativeBytesLoaded /
+                                                        loadingProgress
+                                                            .expectedTotalBytes!
+                                                    : null);
+                                              }
+                                            },
                                             errorBuilder:
                                                 (context, error, stackTrace) {
                                               return Container();
@@ -293,7 +317,7 @@ class _HomeState extends State<Home> {
               Consumer<ServiceHealthProvider>(
                   builder: (BuildContext context, value, Widget? child) {
                 return result.serviceListdata == null
-                    ? const Center(child: CircularProgressIndicator())
+                    ? loader
                     : ListView.builder(
                         physics: const BouncingScrollPhysics(),
                         shrinkWrap: true,
@@ -337,6 +361,21 @@ class _HomeState extends State<Home> {
                                               height: h * 0.1,
                                               fit: BoxFit.fill,
                                               // "",
+                                              loadingBuilder: (context, child,
+                                                  loadingProgress) {
+                                                if (loadingProgress == null) {
+                                                  return child;
+                                                } else {
+                                                  return valueLoader(loadingProgress
+                                                              .expectedTotalBytes !=
+                                                          null
+                                                      ? loadingProgress
+                                                              .cumulativeBytesLoaded /
+                                                          loadingProgress
+                                                              .expectedTotalBytes!
+                                                      : null);
+                                                }
+                                              },
                                               errorBuilder:
                                                   (context, error, stackTrace) {
                                                 return Container();

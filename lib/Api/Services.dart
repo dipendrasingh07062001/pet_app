@@ -386,7 +386,7 @@ Future mypetApi() async {
       mypetmoellist.clear();
       mypetmoellist.addAll(result.mypetdata!);
 
-      return result;
+      return result.mypetdata;
     } else {
       return Future.error(data['message']);
     }
@@ -745,38 +745,51 @@ Future addVaccinationApi(
 bool iseditvaccion = false;
 String? editvaccinationmsg;
 Future editVaccinationApi(
-  String vaccinationName,
-  String vaccinationStatus,
-  String vaccinationdate,
-  File vaccinationCertificate,
-  String reminder,
-  String atdate,
-  String attime,
-) async {
+    String vaccinationName,
+    String vaccinationStatus,
+    String vaccinationdate,
+    File vaccinationCertificate,
+    String reminder,
+    String atdate,
+    String attime,
+    String editImageUrl) async {
   ///MultiPart request
   var request = http.MultipartRequest(
     'POST',
     Uri.parse(baseURL + editvaccination),
   );
+  if (vaccinationCertificate.path.isNotEmpty) {
+    request.files.add(
+      http.MultipartFile(
+        'vaccination_certificatee',
+        vaccinationCertificate.readAsBytes().asStream(),
+        vaccinationCertificate.lengthSync(),
+        filename: vaccinationCertificate.path.split("/").last,
+      ),
+    );
+    request.fields.addAll({
+      'vaccination_id': vaccinationName,
+      'vaccination_status': vaccinationStatus,
+      'vaccination_date': vaccinationdate,
+      'reminder': reminder,
+      'at_date': atdate,
+      'at_time': attime,
+      'id': Preference.Pref.getInt('vaccinationId').toString(),
+    });
+  }
+  {
+    request.fields.addAll({
+      'vaccination_id': vaccinationName,
+      'vaccination_status': vaccinationStatus,
+      'vaccination_date': vaccinationdate,
+      'reminder': reminder,
+      'at_date': atdate,
+      'at_time': attime,
+      'id': Preference.Pref.getInt('vaccinationId').toString(),
+      'vaccination_certificatee': editImageUrl
+    });
+  }
 
-  request.files.add(
-    http.MultipartFile(
-      'vaccination_certificatee',
-      vaccinationCertificate.readAsBytes().asStream(),
-      vaccinationCertificate.lengthSync(),
-      filename: vaccinationCertificate.path.split("/").last,
-    ),
-  );
-
-  request.fields.addAll({
-    'vaccination_id': vaccinationName,
-    'vaccination_status': vaccinationStatus,
-    'vaccination_date': vaccinationdate,
-    'reminder': reminder,
-    'at_date': atdate,
-    'at_time': attime,
-    'id': Preference.Pref.getInt('vaccinationId').toString()
-  });
   iseditvaccion = true;
   var res = await request.send();
 

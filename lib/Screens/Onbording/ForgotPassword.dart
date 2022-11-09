@@ -142,10 +142,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       height: h * 0.035,
                     ),
                     isforgotpassword
-                        ? const Center(
-                            child: CircularProgressIndicator(
-                            color: GREEN_CLR,
-                          ))
+                        ? loader
                         : DefaultButton(
                             text: FORGOT_PASS,
                             ontap: () async {

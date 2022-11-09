@@ -14,8 +14,10 @@ import '../../UTILS/Utils.dart';
 
 class AddPetpage extends StatefulWidget {
   MypetListdata? editPetModel;
+  bool isedit;
 
-  AddPetpage({Key? key, this.editPetModel}) : super(key: key);
+  AddPetpage({Key? key, this.editPetModel, required this.isedit})
+      : super(key: key);
 
   State<AddPetpage> createState() => _AddPetpageState();
 }
@@ -120,8 +122,10 @@ class _AddPetpageState extends State<AddPetpage> {
                         value.addPetModel.gender = value.gender.toString();
 
                         value.currentIndex;
-                        controller.nextPage(
-                            duration: _kDuration, curve: _kCurve);
+                        if (value.currentIndex < 2) {
+                          controller.nextPage(
+                              duration: _kDuration, curve: _kCurve);
+                        }
 
                         print(value.currentIndex);
                         value.currentIndex == 2
@@ -146,6 +150,8 @@ class _AddPetpageState extends State<AddPetpage> {
                                 mypetApi().whenComplete(() {
                                   Navigate_PushRemove(context, Home());
                                   Navigate_to(context, My_Pets());
+                                  Provider.of<AddPetProvider>(context)
+                                      .dispose();
                                 });
                               }).catchError((e) {
                                 ScaffoldMessenger.of(context).showSnackBar(

@@ -297,10 +297,7 @@ class _ChangePassword1State extends State<ChangePassword1> {
                         height: h * 0.040,
                       ),
                       isChangepassword
-                          ? const Center(
-                              child: CircularProgressIndicator(
-                              color: GREEN_CLR,
-                            ))
+                          ? loader
                           : DefaultButton(
                               text: SUBMIT,
                               ontap: () async {

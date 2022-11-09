@@ -190,6 +190,12 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
                 margin: EdgeInsets.only(top: h * 0.010),
                 decoration: BoxDecoration(
                     color: WHITE70_CLR,
+                    image: editImage != "" && imageFile == null
+                        ? DecorationImage(
+                            image: NetworkImage(editImage),
+                            fit: BoxFit.cover,
+                          )
+                        : null,
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(color: TFFBORDER_CLR)),
                 child: imageFile == null
@@ -328,13 +334,11 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
             Align(
                 alignment: Alignment.bottomCenter,
                 child: addvaccination || iseditvaccion
-                    ? CircularProgressIndicator(
-                        color: GREEN_CLR,
-                      )
+                    ? loader
                     : DefaultButton(
                         text: DONE,
                         ontap: () async {
-                          if (widget.isEditVaccination == true) {
+                          if (widget.isEditVaccination) {
                             setState(() {
                               iseditvaccion = true;
                             });
@@ -342,12 +346,15 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
                                     vmodel.name.toString(),
                                     selectStatus.toString(),
                                     vaccinationdate.toString(),
-                                    File(
-                                      imageFile!.path,
-                                    ),
+                                    imageFile != null
+                                        ? File(
+                                            imageFile!.path,
+                                          )
+                                        : File(""),
                                     reminder.toString(),
                                     atdate.toString(),
-                                    attime.toString())
+                                    attime.toString(),
+                                    editImage)
                                 .then((value) {
                               Preference.Pref.setInt(
                                   'vaccinationId', value['data']['id']);

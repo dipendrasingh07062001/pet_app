@@ -35,7 +35,7 @@ class _CycleTrackingBlogState extends State<CycleTrackingBlog> {
     return SizedBox(
       height: h * 0.25,
       child: result.cycleTrackingblogListdata == null
-          ? const Center(child: CircularProgressIndicator())
+          ? loader
           : ListView.builder(
               physics: const BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,

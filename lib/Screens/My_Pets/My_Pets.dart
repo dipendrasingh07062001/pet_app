@@ -33,7 +33,11 @@ class _My_PetsState extends State<My_Pets> {
             borderRadius: BorderRadius.all(Radius.circular(50)),
             side: BorderSide(color: GREEN_CLR)),
         onPressed: () {
-          Navigate_replace(context, AddPetpage());
+          Navigate_replace(
+              context,
+              AddPetpage(
+                isedit: true,
+              ));
         },
         child: const Icon(
           Icons.add,
@@ -42,10 +46,7 @@ class _My_PetsState extends State<My_Pets> {
         ),
       ),
       body: mypetmoellist == null
-          ? const Center(
-              child: CircularProgressIndicator(
-              color: GREEN_CLR,
-            ))
+          ? loader
           : Padding(
               padding: const EdgeInsets.only(top: 10, left: 15),
               child: ListView.builder(
@@ -134,6 +135,7 @@ class _My_PetsState extends State<My_Pets> {
                                                               editPetModel:
                                                                   mypetmoellist[
                                                                       index],
+                                                              isedit: true,
                                                             ));
                                                       });
                                                     },
@@ -200,17 +202,43 @@ class _My_PetsState extends State<My_Pets> {
                                         ),
                                       ])),
                             )),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.network(
-                            mypetmoellist[index].image.toString(),
-                            scale: 1.0,
-                            width: w * 0.315,
-                            height: h * 0.195,
-                            fit: BoxFit.fill,
-                            errorBuilder: (context, error, stackTrace) {
-                              return Container();
-                            },
+                        Positioned(
+                          // alignment: Alignment.centerLeft,
+                          left: 0,
+                          bottom: 0,
+                          top: 0,
+                          child: Center(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.network(
+                                mypetmoellist[index].image.toString(),
+                                loadingBuilder:
+                                    (context, child, loadingProgress) {
+                                  if (loadingProgress == null) {
+                                    return child;
+                                  } else {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: valueLoader(
+                                          loadingProgress.expectedTotalBytes !=
+                                                  null
+                                              ? loadingProgress
+                                                      .cumulativeBytesLoaded /
+                                                  loadingProgress
+                                                      .expectedTotalBytes!
+                                              : null),
+                                    );
+                                  }
+                                },
+                                scale: 1.0,
+                                width: w * 0.315,
+                                height: h * 0.195,
+                                fit: BoxFit.fill,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Container();
+                                },
+                              ),
+                            ),
                           ),
                         ),
                       ],

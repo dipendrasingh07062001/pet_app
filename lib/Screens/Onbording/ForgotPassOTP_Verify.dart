@@ -367,10 +367,7 @@ class _ForgotPassword_OTP_VerifyState extends State<ForgotPassword_OTP_Verify> {
                     height: h * 0.030,
                   ),
                   isLoadingforgotOtp
-                      ? const Center(
-                          child: CircularProgressIndicator(
-                          color: GREEN_CLR,
-                        ))
+                      ? loader
                       : DefaultButton(
                           text: VERIFY,
                           ontap: () async {

@@ -47,10 +47,7 @@ class _VaccinationsState extends State<Vaccinations> {
             ));
       }),
       body: result.vaccinationModeldata == null
-          ? const Center(
-              child: CircularProgressIndicator(
-              color: GREEN_CLR,
-            ))
+          ? loader
           : ListView.builder(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
@@ -145,6 +142,21 @@ class _VaccinationsState extends State<Vaccinations> {
                                       result.vaccinationModeldata![index]
                                           .vaccinationcertificate
                                           .toString(),
+                                      loadingBuilder:
+                                          (context, child, loadingProgress) {
+                                        if (loadingProgress == null) {
+                                          return child;
+                                        } else {
+                                          return valueLoader(loadingProgress
+                                                      .expectedTotalBytes !=
+                                                  null
+                                              ? loadingProgress
+                                                      .cumulativeBytesLoaded /
+                                                  loadingProgress
+                                                      .expectedTotalBytes!
+                                              : null);
+                                        }
+                                      },
                                       scale: 1.0,
                                       errorBuilder:
                                           (context, error, stackTrace) =>
@@ -164,6 +176,12 @@ class _VaccinationsState extends State<Vaccinations> {
                                         child: GestureDetector(
                                           onTap: () {
                                             setState(() {
+                                              Preference.Pref.setInt(
+                                                  'vaccinationId',
+                                                  result
+                                                      .vaccinationModeldata![
+                                                          index]
+                                                      .id);
                                               Navigate_replace(
                                                   context,
                                                   Add_Vaccinations(

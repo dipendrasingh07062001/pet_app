@@ -50,7 +50,7 @@ class _LoginState extends State<Login> {
               child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [
-                CircularProgressIndicator(),
+                loader,
                 SizedBox(
                   height: 20,
                 ),
@@ -120,6 +120,7 @@ class _LoginState extends State<Login> {
                                     child: TextFormField(
                                       controller: emailCantroller,
                                       textAlign: TextAlign.start,
+                                      keyboardType: TextInputType.emailAddress,
                                       decoration: const InputDecoration(
                                           errorText: "",
                                           errorStyle: TextStyle(height: 0),
@@ -272,10 +273,7 @@ class _LoginState extends State<Login> {
                                       (BuildContext context, value,
                                           Widget? child) {
                                     return islogin == true
-                                        ? const Center(
-                                            child: CircularProgressIndicator(
-                                            color: GREEN_CLR,
-                                          ))
+                                        ? loader
                                         : DefaultButton(
                                             text: "Login",
                                             ontap: () async {
@@ -344,35 +342,49 @@ class _LoginState extends State<Login> {
                                             googlesigning = true;
                                           });
 
-                                          googleLogin().then((value) {
-                                            socialSigningApi(gemail.toString(),
-                                                    gname.toString(), "Google")
-                                                .then((value) {
-                                              mypetApi();
-                                              Preference.Pref.setString('email',
-                                                  value['data']['email']);
-                                              Preference.Pref.setString('name',
-                                                  value['data']['name']);
-                                              Preference.Pref.setString('type',
-                                                  value['data']['type']);
-                                              Preference.Pref.setInt('userId',
-                                                  value['data']['id']);
+                                          await googleLogin()
+                                              .then((value) async {
+                                            if (value) {
+                                              await socialSigningApi(
+                                                      gemail.toString(),
+                                                      gname.toString(),
+                                                      "Google")
+                                                  .then((value) {
+                                                mypetApi();
+                                                Preference.Pref.setString(
+                                                    'email',
+                                                    value['data']['email']);
+                                                Preference.Pref.setString(
+                                                    'name',
+                                                    value['data']['name']);
+                                                Preference.Pref.setString(
+                                                    'type',
+                                                    value['data']['type']);
+                                                Preference.Pref.setInt('userId',
+                                                    value['data']['id']);
+                                                setState(() {
+                                                  Navigate_PushRemove(
+                                                      context, const Home());
+                                                  googlesigning = false;
+                                                });
+                                              }).catchError((e) {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(SnackBar(
+                                                        backgroundColor:
+                                                            GREEN_CLR,
+                                                        content: Text(
+                                                            e.toString())));
+                                                setState(() {
+                                                  googlesigning = false;
+                                                });
+                                              });
                                               setState(() {
-                                                Navigate_PushRemove(
-                                                    context, const Home());
                                                 googlesigning = false;
                                               });
-                                            }).catchError((e) {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(SnackBar(
-                                                      backgroundColor:
-                                                          GREEN_CLR,
-                                                      content:
-                                                          Text(e.toString())));
-                                              setState(() {
-                                                googlesigning = false;
-                                              });
-                                            });
+                                            }
+                                          });
+                                          setState(() {
+                                            googlesigning = false;
                                           });
                                         },
                                         child: Container(

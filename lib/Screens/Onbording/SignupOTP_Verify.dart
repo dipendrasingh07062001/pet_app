@@ -367,10 +367,7 @@ class _Signup_OTP_VerifyState extends State<Signup_OTP_Verify> {
                     height: h * 0.030,
                   ),
                   isLoadingOtp
-                      ? const Center(
-                          child: CircularProgressIndicator(
-                          color: GREEN_CLR,
-                        ))
+                      ? loader
                       : DefaultButton(
                           text: VERIFY,
                           ontap: () async {

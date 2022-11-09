@@ -30,6 +30,9 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     if (id != null) {
       mypetApi().then((value) {
         mypetmoellist = value;
+        Preference.Pref.getInt("selectedPetId") ??
+            Preference.Pref.setInt("selectedPetId", value[0].id);
+
         setState(() {});
       });
     }
@@ -51,7 +54,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
 
   getLoginStatus() {
     Future.delayed(const Duration(seconds: 2), () {
-      id.toString() == "" || id.toString() == "null" || id == ''
+      id.toString() == "" || id.toString() == "null" || id == null
           ? Navigate_PushRemove(context, const Login())
           : Navigate_PushRemove(context, const Home());
     });

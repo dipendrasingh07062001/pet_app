@@ -40,10 +40,7 @@ class _DewormingState extends State<Deworming> {
           Navigate_replace(context, Add_Deworming(isedit: false));
         }),
         body: result.data == null
-            ? const Center(
-                child: CircularProgressIndicator(
-                color: GREEN_CLR,
-              ))
+            ? loader
             : Column(
                 children: [
                   Padding(
@@ -77,6 +74,10 @@ class _DewormingState extends State<Deworming> {
                                 child: GestureDetector(
                                   onTap: () {
                                     setState(() {
+                                      Preference.Pref.setInt(
+                                        "dewormingId",
+                                        result.data?.id,
+                                      );
                                       Navigate_replace(
                                           context,
                                           Add_Deworming(
@@ -140,8 +141,8 @@ class _DewormingState extends State<Deworming> {
                             ],
                           ),
                           Container(
-                            height: h * 0.062,
-                            width: w * 0.4,
+                            // height: h * 0.062,
+                            // width: w * 0.4,
                             margin: EdgeInsets.only(bottom: h * 0.010),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5),

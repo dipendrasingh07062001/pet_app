@@ -49,7 +49,12 @@ Future googleLogin() async {
       gname = reslut.displayName.toString();
       gemail = reslut.email.toString();
       gprofilePic = reslut.photoUrl.toString();
+
       appId = reslut.id.toString();
+      Preference.Pref!.setString("gname", gname);
+      Preference.Pref!.setString("gemail", gemail);
+      Preference.Pref!.setString("gemail", gemail);
+      Preference.Pref!.setString("appId", appId);
 
       googlesigning = false;
       return true;
@@ -58,8 +63,8 @@ Future googleLogin() async {
     return false;
   } catch (error) {
     googlesigning = false;
-
     print(error);
+    return false;
   }
 }
 

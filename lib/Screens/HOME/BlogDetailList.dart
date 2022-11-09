@@ -36,7 +36,7 @@ class _BlogDetailsListState extends State<BlogDetailsList> {
     return SizedBox(
       height: h * 0.25,
       child: result.blogListdata == null
-          ? const Center(child: CircularProgressIndicator())
+          ? loader
           : ListView.builder(
               physics: const BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
