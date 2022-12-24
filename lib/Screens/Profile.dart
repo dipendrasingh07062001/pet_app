@@ -1,8 +1,11 @@
 import 'dart:io';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pet_app/Api/Services.dart';
 import 'package:pet_app/Componants/Images&Icons.dart';
 import 'package:pet_app/Screens/HOME/Home.dart';
+import '../Api/Prefrence.dart';
 import '../Colors/COLORS.dart';
 import '../UTILS/Utils.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -19,21 +22,16 @@ class _Profile1State extends State<Profile1> {
   var w;
 
   File? pickedImage;
-
-  pickImage(ImageSource imageType) async {
-    try {
-      final photo = await ImagePicker().pickImage(source: imageType);
-
-      if (photo == null) return;
-
-      final tempImage = File(photo.path);
-
-      setState(() {
-        pickedImage = tempImage;
-      });
-    } catch (error) {
-      debugPrint(error.toString());
-    }
+  TextEditingController name = TextEditingController();
+  TextEditingController phone = TextEditingController();
+  TextEditingController email = TextEditingController();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    email.text = Preference.Pref.getString('email') ?? "";
+    name.text = Preference.Pref.getString('name') ?? "";
+    phone.text = Preference.Pref.getString('mobile') ?? "";
   }
 
   @override
@@ -43,7 +41,7 @@ class _Profile1State extends State<Profile1> {
 
     return Scaffold(
       extendBody: true,
-      resizeToAvoidBottomInset: false,
+      // resizeToAvoidBottomInset: false,
       backgroundColor: WHITE70_CLR,
       appBar: AppBar(
         toolbarHeight: h * 0.08,
@@ -81,15 +79,33 @@ class _Profile1State extends State<Profile1> {
                                     pickedImage!,
                                     width: 100,
                                     height: 100,
+                                    fit: BoxFit.cover,
                                   )
                                 :
                                 // display Image
-                                Image.asset(
-                                    DEFAULT_USER_IMAGE,
-                                    width: 100,
-                                    height: 100,
-                                    fit: BoxFit.fill,
-                                  ),
+                                Preference.Pref.getString('image') != null
+                                    ? Image.network(
+                                        Preference.Pref.getString('image') ??
+                                            "",
+                                        width: 100,
+                                        height: 100,
+                                        fit: BoxFit.cover,
+                                        errorBuilder:
+                                            (context, error, stackTrace) {
+                                          return Image.asset(
+                                            DEFAULT_USER_IMAGE,
+                                            width: 100,
+                                            height: 100,
+                                            fit: BoxFit.cover,
+                                          );
+                                        },
+                                      )
+                                    : Image.asset(
+                                        DEFAULT_USER_IMAGE,
+                                        width: 100,
+                                        height: 100,
+                                        fit: BoxFit.cover,
+                                      ),
                           ),
                         ),
                       ),
@@ -103,8 +119,9 @@ class _Profile1State extends State<Profile1> {
                                 borderRadius: BorderRadius.circular(50),
                                 color: GREEN_CLR),
                             child: GestureDetector(
-                                onTap: () {
-                                  pickImage(ImageSource.camera);
+                                onTap: () async {
+                                  // pickImage(ImageSource.camera);
+                                  await showDialogcustom(context);
                                 },
                                 child: Icon(
                                   Icons.camera_alt_sharp,
@@ -128,6 +145,9 @@ class _Profile1State extends State<Profile1> {
                     color: WHITE_CLR,
                     boxShadow: [BoxShadow(color: GRAY_CLR, blurRadius: 1)]),
                 child: TextFormField(
+                  controller: name,
+                  textCapitalization: TextCapitalization.words,
+                  keyboardType: TextInputType.name,
                   decoration: InputDecoration(
                       hintText: "Name", border: InputBorder.none),
                 ),
@@ -143,7 +163,10 @@ class _Profile1State extends State<Profile1> {
                     color: WHITE_CLR,
                     boxShadow: [BoxShadow(color: GRAY_CLR, blurRadius: 1)]),
                 child: TextFormField(
+                  readOnly: true,
+                  controller: email,
                   decoration: InputDecoration(
+                      contentPadding: EdgeInsets.only(left: 10),
                       hintText: "  dummy123@gmail.com",
                       border: InputBorder.none),
                 ),
@@ -153,15 +176,21 @@ class _Profile1State extends State<Profile1> {
                 child: styleText(NUMBER, BLACK_CLR, FontWeight.normal, 15),
               ),
               Container(
-                padding: EdgeInsets.only(left: 10),
+                // padding: EdgeInsets.only(left: 10),\
+
                 margin: EdgeInsets.only(top: h * 0.01),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: WHITE_CLR,
                     boxShadow: [BoxShadow(color: GRAY_CLR, blurRadius: 1)]),
                 child: TextFormField(
+                  controller: phone,
+                  maxLength: 10,
                   decoration: InputDecoration(
-                      hintText: "2314655", border: InputBorder.none),
+                      contentPadding: EdgeInsets.only(left: 10),
+                      counterText: "",
+                      hintText: "Phone Number",
+                      border: InputBorder.none),
                 ),
               ),
               SizedBox(
@@ -172,7 +201,25 @@ class _Profile1State extends State<Profile1> {
                   child: DefaultButton(
                       text: UPDATE_PROFILE,
                       ontap: () {
-                        Navigate_to(context, Home());
+                        // Navigate_to(context, Home());
+                        if (phone.text.length < 10) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text("Please enter valid mobile no")));
+                          return;
+                        }
+                        if (name.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text("Please enter your name")));
+                          return;
+                        }
+                        update_profile(
+                            name.text,
+                            pickedImage ?? File(""),
+                            phone.text,
+                            context,
+                            imageFile != null
+                                ? ""
+                                : Preference.Pref.getString("image") ?? "");
                       },
                       fontsize: 16,
                       height: h * 0.060,
@@ -182,5 +229,67 @@ class _Profile1State extends State<Profile1> {
         ),
       ),
     );
+  }
+
+  Future showDialogcustom(BuildContext context) async {
+    showDialog(
+        context: context,
+        builder: (_) {
+          return AlertDialog(
+            title: Column(
+              children: [
+                Text(
+                  "Pick one options",
+                  style: TextStyle(color: BLACK_CLR),
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          backgroundColor: GREEN_CLR,
+                          padding: EdgeInsets.all(8),
+                        ),
+                        onPressed: () async {
+                          Navigator.pop(context);
+                          await pickImage(ImageSource.camera).then((value) {
+                            pickedImage = value;
+                            setState(() {});
+                          });
+                        },
+                        child: Text(
+                          "Camera",
+                          style: TextStyle(color: WHITE_CLR),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          backgroundColor: GREEN_CLR,
+                          padding: EdgeInsets.all(8),
+                        ),
+                        onPressed: () async {
+                          Navigator.pop(context);
+                          await pickImage(ImageSource.gallery).then((value) {
+                            pickedImage = value;
+                            setState(() {});
+                          });
+                        },
+                        child: Text(
+                          "Gallery",
+                          style: TextStyle(color: WHITE_CLR),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          );
+        });
   }
 }

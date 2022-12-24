@@ -11,6 +11,8 @@ import 'package:provider/provider.dart';
 import '../../Api/Prefrence.dart';
 import '../../Api/Services.dart';
 import '../../FirebaseServices/GoogleAuth.dart';
+import '../../Provider/AppleSignin_provider.dart';
+import 'dart:io' show Platform;
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -181,7 +183,7 @@ class _LoginState extends State<Login> {
                                       controller: passwordCantroller,
                                       validator: (value) {
                                         if (value!.isEmpty) {
-                                          passError = ENTER_NEW_PASS;
+                                          passError = "Please enter password";
                                           // setState(() {});
                                           return "";
                                         } else if (value.length < 6) {
@@ -403,21 +405,85 @@ class _LoginState extends State<Login> {
                                               ),
                                             )),
                                       ),
-                                      Container(
-                                          height: 45,
-                                          width: 45,
-                                          alignment: Alignment.center,
-                                          margin: const EdgeInsets.only(
-                                            left: 15,
-                                          ),
-                                          decoration: BoxDecoration(
-                                              color: WHITE_CLR,
-                                              borderRadius:
-                                                  BorderRadius.circular(50)),
-                                          child: const Icon(
-                                            Icons.apple,
-                                            size: 35,
-                                          )),
+                                      Visibility(
+                                        visible: Platform.isIOS,
+                                        child: GestureDetector(
+                                          onTap: () async {
+                                            context
+                                                .read<AuthenticationProvider>()
+                                                // .signOut();
+                                                .signInWithApple()
+                                                .then((value) async {
+                                              if (value != null) {
+                                                print(value);
+                                                await socialSigningApi(
+                                                        context
+                                                            .read<
+                                                                AuthenticationProvider>()
+                                                            .appleEmail,
+                                                        context
+                                                            .read<
+                                                                AuthenticationProvider>()
+                                                            .displayName,
+                                                        "Apple")
+                                                    .then((value) {
+                                                  context
+                                                      .read<
+                                                          AuthenticationProvider>()
+                                                      .loadingStatus(false);
+                                                  mypetApi();
+                                                  Preference.Pref.setString(
+                                                      'email',
+                                                      value['data']['email']);
+                                                  Preference.Pref.setString(
+                                                      'name',
+                                                      value['data']['name']);
+                                                  Preference.Pref.setString(
+                                                      'type',
+                                                      value['data']['type']);
+                                                  Preference.Pref.setInt(
+                                                      'userId',
+                                                      value['data']['id']);
+                                                  setState(() {
+                                                    Navigate_PushRemove(
+                                                        context, const Home());
+                                                    googlesigning = false;
+                                                  });
+                                                }).catchError((e) {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(SnackBar(
+                                                          backgroundColor:
+                                                              GREEN_CLR,
+                                                          content: Text(
+                                                              e.toString())));
+                                                  setState(() {
+                                                    googlesigning = false;
+                                                  });
+                                                });
+                                                setState(() {
+                                                  googlesigning = false;
+                                                });
+                                              }
+                                            });
+                                          },
+                                          child: Container(
+                                              height: 45,
+                                              width: 45,
+                                              alignment: Alignment.center,
+                                              margin: const EdgeInsets.only(
+                                                left: 15,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                  color: WHITE_CLR,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          50)),
+                                              child: const Icon(
+                                                Icons.apple,
+                                                size: 35,
+                                              )),
+                                        ),
+                                      ),
                                       Container(
                                           height: 45,
                                           width: 45,
@@ -458,7 +524,7 @@ class _LoginState extends State<Login> {
                                                 GREEN_CLR,
                                                 FontWeight.normal,
                                                 15));
-                                      })
+                                      }),
                                     ],
                                   )
                                 ],
@@ -467,7 +533,16 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                       ],
-                    )
+                    ),
+                    Visibility(
+                        visible: context
+                            .watch<AuthenticationProvider>()
+                            .appleLoading,
+                        child: Container(
+                            height: h,
+                            width: w,
+                            color: BLACK_CLR.withOpacity(0.4),
+                            child: loader))
                   ],
                 ),
               ),

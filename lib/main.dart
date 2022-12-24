@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,13 +8,22 @@ import 'package:pet_app/Provider/Provider.dart';
 import 'package:pet_app/Screens/Splash.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'Notification/notificationMathod.dart';
+import 'Provider/AddCycle.dart';
+import 'Provider/AppleSignin_provider.dart';
 import 'Provider/ServiceListProvider.dart';
+import 'Provider/predictionProvider.dart';
+import 'Testing1/linearCalender.dart';
 
 bool isLoading = false;
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  // requestNotificationPermission();
+  // listeningMessaging();
+  inMainMethodCall();
+  // shownotification();
   Preference.Pref = await SharedPreferences.getInstance();
   runApp(
     const MyApp(),
@@ -27,14 +37,26 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
+          ChangeNotifierProvider<Predictions>(
+            create: (context) => Predictions(),
+          ),
+          ChangeNotifierProvider<AddCycleProvider>(
+              create: (context) => AddCycleProvider()),
           ChangeNotifierProvider<ProviderTutorial>(
               create: (context) => ProviderTutorial()),
           ChangeNotifierProvider<ServiceHealthProvider>(
               create: (context) => ServiceHealthProvider()),
-          ChangeNotifierProvider<AddPetProvider>(
-              create: (context) => AddPetProvider()),
+          // ChangeNotifierProvider<AddPetProvider>(
+          //     create: (context) => AddPetProvider()),
           ChangeNotifierProvider<CycleTrackingProvider>(
-              create: (context) => CycleTrackingProvider())
+              create: (context) => CycleTrackingProvider()),
+          ChangeNotifierProvider<CurrentPage>(
+              create: ((context) => CurrentPage())),
+          ChangeNotifierProvider<AuthenticationProvider>(
+              create: ((context) =>
+                  AuthenticationProvider(FirebaseAuth.instance))),
+          ChangeNotifierProvider<CalenderProvider>(
+              create: ((context) => CalenderProvider()))
         ],
         child: AnnotatedRegion<SystemUiOverlayStyle>(
           value: const SystemUiOverlayStyle(

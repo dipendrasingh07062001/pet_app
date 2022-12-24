@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pet_app/Componants/Images&Icons.dart';
+import 'package:pet_app/Provider/AddCycle.dart';
 import 'package:provider/provider.dart';
+import '../../Api/Services.dart';
 import '../../Colors/COLORS.dart';
 import '../../Provider/ServiceListProvider.dart';
 import '../../UTILS/Utils.dart';
@@ -19,6 +21,14 @@ class _CycleTrackingPageState extends State<CycleTrackingPage> {
   // final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   int mCurrentIndex = -1;
+  @override
+  void initState() {
+    // TODO: implement initState
+    index = 0;
+    mCurrentIndex = -1;
+    Provider.of<CycleTrackingProvider>(context, listen: false).currentIndex = 0;
+    super.initState();
+  }
 
   PageController _controller = PageController();
   static const _kDuration = Duration(milliseconds: 300);
@@ -60,26 +70,49 @@ class _CycleTrackingPageState extends State<CycleTrackingPage> {
                 margin: EdgeInsets.only(bottom: h * 0.080),
                 child: Column(
                   children: [
-                    MaterialButton(
-                        elevation: 0,
-                        minWidth: w * 0.75,
-                        height: h * 0.057,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        color: GREEN_CLR,
-                        onPressed: () {
-                          print(value.currentIndex);
-                          value.currentIndex;
-                          _controller.nextPage(
-                              duration: _kDuration, curve: _kCurve);
+                    Consumer<AddCycleProvider>(
+                      builder: (context, val, child) {
+                        // val.isLoading = false;
+                        return val.isLoading
+                            ? loader
+                            : MaterialButton(
+                                elevation: 0,
+                                minWidth: w * 0.75,
+                                height: h * 0.057,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                color: GREEN_CLR,
+                                onPressed: () {
+                                  print(value.currentIndex);
+                                  value.currentIndex;
+                                  if (value.currentIndex < 4) {
+                                    _controller.nextPage(
+                                        duration: _kDuration, curve: _kCurve);
+                                  }
 
-                          if (value.currentIndex == 4) {
-                            Navigate_to(context, const Cycle_Tracking6());
-                          }
-                        },
-                        child:
-                            styleText(NEXT, WHITE_CLR, FontWeight.normal, 15)),
+                                  if (value.currentIndex == 4) {
+                                    val.setLoading(true);
+                                    addcycletracking(
+                                            val.focusedDate,
+                                            val.cycletime.toString(),
+                                            val.cyclerepeattime.toString(),
+                                            val.petcurrentstate,
+                                            val.periodPredictions.toString(),
+                                            val.periodNotification.toString())
+                                        .then((qwe) {
+                                      if (qwe) {
+                                        Navigate_replace(
+                                            context, const Cycle_Tracking6());
+                                        val.setLoading(false);
+                                      }
+                                    });
+                                  }
+                                },
+                                child: styleText(
+                                    NEXT, WHITE_CLR, FontWeight.normal, 15));
+                      },
+                    ),
                     SizedBox(
                       height: h * 0.020,
                     ),

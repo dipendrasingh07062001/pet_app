@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_calendar_widget/flutter_calendar_widget.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Componants/Images&Icons.dart';
 import 'package:pet_app/Screens/AddPeriod.dart';
 import 'package:pet_app/Screens/CycleTrackingPageViewBuilder/CycleTracking_Predication.dart';
 import 'package:pet_app/Screens/CycleTrackingPageViewBuilder/Symptoms.dart';
-import 'package:pet_app/Screens/HOME/BlogDetailList.dart';
 import 'package:pet_app/UTILS/Utils.dart';
-
+import 'package:provider/provider.dart';
+import 'package:table_calendar/table_calendar.dart';
+import '../../Api/Services.dart';
+import '../../Provider/predictionProvider.dart';
+import '../../Testing1/linearCalender.dart';
+import 'Cycle_prediction.dart';
 import 'cycleTrackingBlog.dart';
 
 class Cycle_Tracking6 extends StatefulWidget {
@@ -34,7 +36,8 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
   void initState() {
     super.initState();
     lastDayOfMonth = DateTime(2025, 12, 0);
-
+    context.read<Predictions>().getPreductionDates(context);
+    getcycletracking(context);
     list = List.generate(lastDayOfMonth.day, (x) => false);
   }
 
@@ -82,122 +85,126 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
               height: h * 0.040,
             ),
 
-            Align(
-                alignment: Alignment.center,
-                child: TutorialText("Today, ${selected} August", BLACK_CLR,
-                    FontWeight.bold, 15)),
+            // Align(
+            //     alignment: Alignment.center,
+            //     child: TutorialText("Today, ${selected} August", BLACK_CLR,
+            //         FontWeight.bold, 15)),
+            // // CycleCalendra(),
+            // Stack(children: [
+            //   Container(
+            //     margin: const EdgeInsets.only(top: 10),
+            //     width: w * 1,
+            //     decoration: const BoxDecoration(
+            //         border:
+            //             Border(top: BorderSide(color: GREEN_CLR, width: 2))),
+            //   ),
+            //   Center(
+            //     child: Padding(
+            //       padding: const EdgeInsets.only(top: 6),
+            //       child: Image.asset(DROP_ICON, height: 30, color: GREEN_CLR
+            //           // color: GREEN_CLR,
+            //           ),
+            //     ),
+            //   )
+            // ]),
+            LinearCalender(),
 
-            Stack(children: [
-              Container(
-                margin: const EdgeInsets.only(top: 10),
-                width: w * 1,
-                decoration: const BoxDecoration(
-                    border:
-                        Border(top: BorderSide(color: GREEN_CLR, width: 2))),
-              ),
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 6),
-                  child: Image.asset(DROP_ICON, height: 30, color: GREEN_CLR
-                      // color: GREEN_CLR,
-                      ),
-                ),
-              )
-            ]),
-
-            Container(
-              alignment: Alignment.bottomCenter,
-              height: h * 0.12,
-              child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    list[selected] = !list[selected];
-                    print(list);
-                  });
-                },
-                child: RotatedBox(
-                    quarterTurns: 5,
-                    child: ListWheelScrollView(
-                      useMagnifier: false,
-                      physics: const FixedExtentScrollPhysics(),
-                      diameterRatio: 1.5,
-                      perspective: 0.0000000001,
-                      clipBehavior: Clip.hardEdge,
-                      onSelectedItemChanged: (x) {
-                        setState(() {
-                          selected = x;
-                          print(x);
-                        });
-                        // print(selected);
-                      },
-                      itemExtent: itemWidth,
-                      controller: _scrollController,
-                      children: List.generate(
-                        lastDayOfMonth.day,
-                        (x) {
-                          final currentDate =
-                              lastDayOfMonth.add(Duration(days: x + 1));
-                          final dayName = DateFormat('E').format(currentDate);
-                          return Row(
-                            children: [
-                              Container(
-                                height: 28.0,
-                                width: 28.0,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  color: x == selected
-                                      ? GREEN_CLR
-                                      : Colors.transparent,
-                                  borderRadius: BorderRadius.circular(100.0),
-                                ),
-                                child: Transform.rotate(
-                                  angle: -70.7,
-                                  child: Text(
-                                    dayName.substring(0, 1),
-                                    style: TextStyle(
-                                      fontSize: 15.0,
-                                      color:
-                                          x == selected ? WHITE_CLR : GRAY_CLR,
-                                      fontWeight: FontWeight.w900,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 20,
-                              ),
-                              Stack(
-                                children: [
-                                  Transform.rotate(
-                                    angle: -80.1,
-                                    child: SvgPicture.asset(
-                                        CYCLE_TRACKING_IMAGE,
-                                        height: x == selected ? 55 : 40,
-                                        color: x == selected
-                                            ? GREEN_CLR
-                                            : GREEN_CLR.withOpacity(0.6)),
-                                  ),
-                                  Container(
-                                      height: 15,
-                                      width: 15,
-                                      margin: EdgeInsets.only(
-                                          left: selected == x ? 7 : 4,
-                                          top: selected == x ? 20 : 12),
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          color: list[x]
-                                              ? Colors.red
-                                              : Colors.transparent))
-                                ],
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                    )),
-              ),
-            ),
+            // SizedBox(
+            //   height: 100,
+            // ),
+            // Container(
+            //   alignment: Alignment.bottomCenter,
+            //   height: h * 0.12,
+            //   child: GestureDetector(
+            //     onTap: () {
+            //       setState(() {
+            //         list[selected] = !list[selected];
+            //         print(list);
+            //       });
+            //     },
+            //     child: RotatedBox(
+            //         quarterTurns: 5,
+            //         child: ListWheelScrollView(
+            //           useMagnifier: false,
+            //           physics: const FixedExtentScrollPhysics(),
+            //           diameterRatio: 1.5,
+            //           perspective: 0.0000000001,
+            //           clipBehavior: Clip.hardEdge,
+            //           onSelectedItemChanged: (x) {
+            //             setState(() {
+            //               selected = x;
+            //               print(x);
+            //             });
+            //             // print(selected);
+            //           },
+            //           itemExtent: itemWidth,
+            //           controller: _scrollController,
+            //           children: List.generate(
+            //             lastDayOfMonth.day,
+            //             (x) {
+            //               final currentDate =
+            //                   lastDayOfMonth.add(Duration(days: x + 1));
+            //               final dayName = DateFormat('E').format(currentDate);
+            //               return Row(
+            //                 children: [
+            //                   Container(
+            //                     height: 28.0,
+            //                     width: 28.0,
+            //                     alignment: Alignment.center,
+            //                     decoration: BoxDecoration(
+            //                       color: x == selected
+            //                           ? GREEN_CLR
+            //                           : Colors.transparent,
+            //                       borderRadius: BorderRadius.circular(100.0),
+            //                     ),
+            //                     child: Transform.rotate(
+            //                       angle: -70.7,
+            //                       child: Text(
+            //                         dayName.substring(0, 1),
+            //                         style: TextStyle(
+            //                           fontSize: 15.0,
+            //                           color:
+            //                               x == selected ? WHITE_CLR : GRAY_CLR,
+            //                           fontWeight: FontWeight.w900,
+            //                         ),
+            //                       ),
+            //                     ),
+            //                   ),
+            //                   const SizedBox(
+            //                     width: 20,
+            //                   ),
+            //                   Stack(
+            //                     children: [
+            //                       Transform.rotate(
+            //                         angle: -80.1,
+            //                         child: SvgPicture.asset(
+            //                             CYCLE_TRACKING_IMAGE,
+            //                             height: x == selected ? 55 : 40,
+            //                             color: x == selected
+            //                                 ? GREEN_CLR
+            //                                 : GREEN_CLR.withOpacity(0.6)),
+            //                       ),
+            //                       Container(
+            //                           height: 15,
+            //                           width: 15,
+            //                           margin: EdgeInsets.only(
+            //                               left: selected == x ? 7 : 4,
+            //                               top: selected == x ? 20 : 12),
+            //                           decoration: BoxDecoration(
+            //                               borderRadius:
+            //                                   BorderRadius.circular(20),
+            //                               color: list[x]
+            //                                   ? Colors.red
+            //                                   : Colors.transparent))
+            //                     ],
+            //                   ),
+            //                 ],
+            //               );
+            //             },
+            //           ),
+            //         )),
+            //   ),
+            // ),
 
             Align(
               alignment: Alignment.center,
@@ -225,87 +232,114 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
               height: h * 0.005,
             ),
             styleText(MENSTRUATION, FADE_GREEN_CLR, FontWeight.bold, 13),
-
-            Container(
-                alignment: Alignment.centerLeft,
-                margin: EdgeInsets.only(top: h * 0.010),
-                height: h * 0.06,
-                width: w * 1,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10), color: BROUN_CLR),
-                child: GestureDetector(
+            Consumer<CalenderProvider>(
+              builder: (context, value, child) {
+                return GestureDetector(
                   onTap: () => Navigate_to(context, const Symptoms()),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        styleText(PERIOD, BLACK_CLR, FontWeight.normal, 15),
-                        const Icon(
-                          Icons.add,
-                          size: 20,
-                          color: GRAY_CLR,
-                        )
-                      ],
+                  child: Container(
+                    alignment: Alignment.centerLeft,
+                    margin: EdgeInsets.only(top: h * 0.010),
+                    height: h * 0.06,
+                    width: w * 1,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: BROUN_CLR),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          styleText(PERIOD, BLACK_CLR, FontWeight.normal, 15),
+                          value.days[value.initialPage].iscycle
+                              ? styleText(
+                                  "Had Flow", RED_CLR, FontWeight.normal, 15)
+                              : const Icon(
+                                  Icons.add,
+                                  size: 20,
+                                  color: GRAY_CLR,
+                                )
+                        ],
+                      ),
                     ),
                   ),
-                )),
+                );
+              },
+            ),
             SizedBox(
               height: h * 0.025,
             ),
             styleText(OTHER_DATA, FADE_GREEN_CLR, FontWeight.bold, 13),
-
-            Container(
-              alignment: Alignment.centerLeft,
-              margin: EdgeInsets.only(top: h * 0.010),
-              height: h * 0.11,
-              width: w * 1,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10), color: BROUN_CLR),
-              child: Padding(
-                padding: EdgeInsets.all(h * 0.005),
+            Consumer<CalenderProvider>(builder: (context, value, child) {
+              return Container(
+                alignment: Alignment.centerLeft,
+                margin: EdgeInsets.only(top: h * 0.010),
+                height: h * 0.11,
+                width: w * 1,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10), color: BROUN_CLR),
                 child: Column(
                   children: [
                     GestureDetector(
                       onTap: () => Navigate_to(context, const Symptoms()),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          styleText(
-                              SYMPTOMAS, BLACK_CLR, FontWeight.normal, 15),
-                          const Icon(
-                            Icons.add,
-                            size: 20,
-                            color: GRAY_CLR,
-                          )
-                        ],
+                      child: Container(
+                        color: Colors.transparent,
+                        padding: EdgeInsets.all(h * 0.005),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            styleText(
+                                SYMPTOMAS, BLACK_CLR, FontWeight.normal, 15),
+                            value.days[value.initialPage].iscycle
+                                ? styleText(
+                                    value.days[value.initialPage].symptoms,
+                                    RED_CLR,
+                                    FontWeight.normal,
+                                    15)
+                                : const Icon(
+                                    Icons.add,
+                                    size: 20,
+                                    color: GRAY_CLR,
+                                  )
+                          ],
+                        ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 5,
-                    ),
+                    // const SizedBox(
+                    //   height: 5,
+                    // ),
                     Divider(
                       color: GRAY_CLR.withOpacity(0.2),
                       thickness: 2,
                     ),
                     GestureDetector(
                       onTap: () => Navigate_to(context, const Symptoms()),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          styleText(SPPOTING, BLACK_CLR, FontWeight.normal, 15),
-                          const Icon(
-                            Icons.add,
-                            size: 20,
-                            color: GRAY_CLR,
-                          )
-                        ],
+                      child: Container(
+                        color: Colors.transparent,
+                        padding: EdgeInsets.all(h * 0.005),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            styleText(
+                                SPPOTING, BLACK_CLR, FontWeight.normal, 15),
+                            value.days[value.initialPage].iscycle
+                                ? styleText(
+                                    value.days[value.initialPage].spotting,
+                                    RED_CLR,
+                                    FontWeight.normal,
+                                    15)
+                                : const Icon(
+                                    Icons.add,
+                                    size: 20,
+                                    color: GRAY_CLR,
+                                  )
+                          ],
+                        ),
                       ),
                     )
                   ],
                 ),
-              ),
-            ),
+              );
+            }),
             SizedBox(
               height: h * 0.020,
             ),
@@ -338,34 +372,32 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
             SizedBox(
               height: h * 0.010,
             ),
-
-            styleText(
-                "Your pet’s period is likely to start on or around 23 August",
-                DARK_CLR,
-                FontWeight.bold,
-                15),
-
+            context.watch<Predictions>().isLoading
+                ? loader
+                : Cycle_prediction_cal(
+                    index: 0,
+                  ),
             SizedBox(
               height: h * 0.020,
             ),
-            Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              child: FlutterCalendar(
-                style: const CalendarStyle(
-                  rangeLineColor: FADE_GREEN_CLR,
-                  markerColor: GREEN_CLR,
-                ),
-                isHeaderDisplayed: true,
-                selectionMode: CalendarSelectionMode.multiple,
-                onMultipleDates: (List<DateTime> dates) {
-                  for (var date in dates) {
-                    Date = date!;
-                    print(date);
-                  }
-                },
-              ),
-            ),
+            // Card(
+            //   shape: RoundedRectangleBorder(
+            //       borderRadius: BorderRadius.circular(10)),
+            //   child: FlutterCalendar(
+            //     style: const CalendarStyle(
+            //       rangeLineColor: FADE_GREEN_CLR,
+            //       markerColor: GREEN_CLR,
+            //     ),
+            //     isHeaderDisplayed: true,
+            //     selectionMode: CalendarSelectionMode.multiple,
+            //     onMultipleDates: (List<DateTime> dates) {
+            //       for (var date in dates) {
+            //         Date = date;
+            //         print(date);
+            //       }
+            //     },
+            //   ),
+            // ),
 
             //  Text("$Date"),
 

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pet_app/Provider/AddCycle.dart';
+import 'package:provider/provider.dart';
 
 import '../../Colors/COLORS.dart';
 import '../../UTILS/Utils.dart';
@@ -16,6 +18,12 @@ class _Cycle_TrackingState extends State<Cycle_Tracking> {
 
   var h;
   var w;
+  List<String> states = [
+    "Pregnant",
+    "Pregnancy",
+    "Other",
+    "None of These",
+  ];
   @override
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
@@ -34,46 +42,76 @@ class _Cycle_TrackingState extends State<Cycle_Tracking> {
                 DARK_CLR,
                 FontWeight.bold,
                 20),
-            DefaultRadioButton(
-                text: "Pregnant",
-                groupValue: _prengnant,
-                value: 1,
-                ontap: (value) {
-                  setState(() {
-                    _prengnant = value!;
-                    _prengnantvalue = "pregnant";
-                  });
-                }),
-            DefaultRadioButton(
-                text: "Pregnancy",
-                groupValue: _prengnant,
-                value: 2,
-                ontap: (value) {
-                  setState(() {
-                    _prengnant = value!;
-                    _prengnantvalue = "pregnancy";
-                  });
-                }),
-            DefaultRadioButton(
-                text: "Other",
-                groupValue: _prengnant,
-                value: 3,
-                ontap: (value) {
-                  setState(() {
-                    _prengnant = value!;
-                    _prengnantvalue = "other";
-                  });
-                }),
-            DefaultRadioButton(
-                text: "None of These",
-                groupValue: _prengnant,
-                value: 4,
-                ontap: (value) {
-                  setState(() {
-                    _prengnant = value!;
-                    _prengnantvalue = "None of these";
-                  });
-                }),
+            ListView.builder(
+              itemCount: states.length,
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.all(0),
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _prengnant = index + 1;
+                      _prengnantvalue = states[index];
+                      context.read<AddCycleProvider>().petcurrentstate =
+                          states[index];
+                    });
+                  },
+                  child: DefaultRadioButton(
+                      text: states[index],
+                      groupValue: _prengnant,
+                      value: index + 1,
+                      ontap: (value) {
+                        setState(() {
+                          _prengnant = value!;
+                          _prengnantvalue = states[index];
+                          context.read<AddCycleProvider>().petcurrentstate =
+                              states[index];
+                        });
+                      }),
+                );
+              },
+            ),
+            // DefaultRadioButton(
+            //     text: "Pregnant",
+            //     groupValue: _prengnant,
+            //     value: 1,
+            //     ontap: (value) {
+            //       setState(() {
+            //         _prengnant = value!;
+            //         _prengnantvalue = "pregnant";
+            //       });
+            //     }),
+            // DefaultRadioButton(
+            //     text: "Pregnancy",
+            //     groupValue: _prengnant,
+            //     value: 2,
+            //     ontap: (value) {
+            //       setState(() {
+            //         _prengnant = value!;
+            //         _prengnantvalue = "pregnancy";
+            //       });
+            //     }),
+            // DefaultRadioButton(
+            //     text: "Other",
+            //     groupValue: _prengnant,
+            //     value: 3,
+            //     ontap: (value) {
+            //       setState(() {
+            //         _prengnant = value!;
+            //         _prengnantvalue = "other";
+            //       });
+            //     }),
+            // DefaultRadioButton(
+            //     text: "None of These",
+            //     groupValue: _prengnant,
+            //     value: 4,
+            //     ontap: (value) {
+            //       setState(() {
+            //         _prengnant = value!;
+            //         _prengnantvalue = "None of these";
+            //       });
+            //     }),
           ]),
         ));
   }

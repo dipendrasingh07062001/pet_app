@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pet_app/Colors/COLORS.dart';
+import 'package:pet_app/Provider/AddCycle.dart';
 import 'package:pet_app/Screens/Add_Pets/AddPet3.dart';
 import 'package:pet_app/UTILS/Utils.dart';
+import 'package:provider/provider.dart';
 
 class CycleTracking2 extends StatefulWidget {
   const CycleTracking2({super.key});
@@ -11,27 +13,32 @@ class CycleTracking2 extends StatefulWidget {
 }
 
 class _CycleTracking2State extends State<CycleTracking2> {
-  List<Widget> items = [
-    styleText("1 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
-    styleText("2 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
-    styleText("3 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
-    styleText("4 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
-    styleText("5 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
-    styleText("6 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
-    styleText("8 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
-    styleText("9 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
-    styleText("10 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
-    styleText("11 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
-    styleText("12 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
-    styleText("13 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
-    styleText("14 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
-    styleText("15 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
-    styleText("16 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
-    styleText("17 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
-    styleText("18 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
-    styleText("19 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
-    styleText("20 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
-  ];
+  List<Widget> items = List.generate(
+    20,
+    (index) => styleText("${index + 1} Days", GREEN_CLR.withOpacity(0.75),
+        FontWeight.normal, 18),
+  );
+  // [
+  //   styleText("1 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
+  //   styleText("2 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
+  //   styleText("3 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
+  //   styleText("4 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
+  //   styleText("5 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
+  //   styleText("6 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
+  //   styleText("8 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
+  //   styleText("9 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
+  //   styleText("10 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
+  //   styleText("11 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
+  //   styleText("12 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
+  //   styleText("13 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
+  //   styleText("14 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
+  //   styleText("15 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
+  //   styleText("16 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
+  //   styleText("17 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
+  //   styleText("18 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
+  //   styleText("19 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
+  //   styleText("20 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
+  // ];
 
   FixedExtentScrollController fixedExtentScrollController =
       FixedExtentScrollController();
@@ -68,8 +75,8 @@ class _CycleTracking2State extends State<CycleTracking2> {
                     childDelegate: ListWheelChildLoopingListDelegate(
                       children: items,
                     ),
-                    onSelectedItemChanged: (context) {
-                      print(items[index]);
+                    onSelectedItemChanged: (index) {
+                      context.read<AddCycleProvider>().cycletime = index + 1;
                     })),
           ],
         ),

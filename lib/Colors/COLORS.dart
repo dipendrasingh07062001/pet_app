@@ -21,3 +21,4 @@ const TEXT_GREEN_CLR = Color(0xFF28CE00);
 const TFFBORDER_CLR = Color(0xFFD6D6D6);
 const BROUN_CLR = Color(0xFFF1F1F1);
 const PLACE_H_CLR = Color(0xFF0C0B0B);
+const RED_CLR = Colors.red;

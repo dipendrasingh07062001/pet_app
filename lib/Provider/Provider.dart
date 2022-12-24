@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pet_app/Screens/GetStart.dart';
+import '../Api/Models/addPetModel.dart';
 import '../Screens/HOME/Home.dart';
 import '../Screens/Onbording/ForgotPassword.dart';
 import '../Screens/Onbording/Login.dart';
@@ -72,14 +73,39 @@ class ProviderTutorial extends ChangeNotifier {
     final datePick = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
-        firstDate: DateTime(1900),
-        lastDate: DateTime(2100));
+        firstDate: DateTime(1990),
+        lastDate: DateTime.now());
     if (datePick != null && datePick != birthDate) {
       birthDate = datePick;
       selectAtdate =
           "${birthDate!.day}-${birthDate!.month}-${birthDate!.year}"; // 08/14/2019
-
     }
     notifyListeners();
   }
+}
+
+class CurrentPage extends ChangeNotifier {
+  PageController controller = PageController();
+  int currentIndex = 0;
+  onpettap(String selectedpet) {
+    AddPetModel.type = selectedpet;
+    controller.nextPage(
+      duration: Duration(milliseconds: 300),
+      curve: Curves.ease,
+    );
+    currentIndex++;
+    notifyListeners();
+  }
+
+  void increament() {
+    currentIndex++;
+    notifyListeners();
+  }
+
+  void decreament() {
+    currentIndex--;
+    notifyListeners();
+  }
+
+  notifyListeners();
 }

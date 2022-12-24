@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>535008496947-gm3tbd2nrm56lfbgt13b2hl1d1r8q11k.apps.googleusercontent.com</string>
+	<string>535008496947-4ajp07gh8qd217131d3rtc060epfl7ln.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.535008496947-gm3tbd2nrm56lfbgt13b2hl1d1r8q11k</string>
+	<string>com.googleusercontent.apps.535008496947-4ajp07gh8qd217131d3rtc060epfl7ln</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>535008496947-1fin993ijbmljkvid254gc500c4456iv.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.petapp</string>
+	<string>com.peturban</string>
 	<key>PROJECT_ID</key>
 	<string>petapp-6a070</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:535008496947:ios:1b31ecd0959a9816184246</string>
+	<string>1:535008496947:ios:0fc8d14db260b4fe184246</string>
 </dict>
 </plist>

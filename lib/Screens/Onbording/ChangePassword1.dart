@@ -310,7 +310,7 @@ class _ChangePassword1State extends State<ChangePassword1> {
                                   newPassError = "";
                                   confirmPassError = "";
                                   await ChangePasswordApi(
-                                    Preference.Pref.getInt('userid'),
+                                    Preference.Pref.getInt('userId'),
                                     oldPasswordCantroller.text.toString(),
                                     confirmPasswordCantrolller.text.toString(),
                                   ).then((value) {

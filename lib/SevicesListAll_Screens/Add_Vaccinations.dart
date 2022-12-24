@@ -26,7 +26,9 @@ class Add_Vaccinations extends StatefulWidget {
 
 class _Add_VaccinationsState extends State<Add_Vaccinations> {
   VModel vmodel = VModel();
+  File? imageFile;
   String editImage = "";
+  String picktype = "";
   @override
   void initState() {
     super.initState();
@@ -38,7 +40,10 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
     });
 
     if (widget.isEditVaccination) {
-      vmodel.name = widget.editVaccinationmodeldata!.vaccinationid.toString();
+      vmodel.id = widget.editVaccinationmodeldata!.vaccinationid!.id;
+      vmodel.name = widget.editVaccinationmodeldata!.vaccinationid!.name;
+      vmodel.status = widget.editVaccinationmodeldata!.vaccinationid!.status;
+
       selectStatus =
           widget.editVaccinationmodeldata!.vaccinationstatus.toString();
       vaccinationdate =
@@ -72,7 +77,8 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
     w = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: WHITE70_CLR,
-      appBar: DefaultAppBar(ADD_VACCINATION),
+      appBar: DefaultAppBar(
+          widget.isEditVaccination ? "Edit Vaccination" : ADD_VACCINATION),
       body: Padding(
         padding: EdgeInsets.only(
           left: w * 0.030,
@@ -183,6 +189,14 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
             ),
             styleText(
                 VACCINATION_CERTIFICATE, BLACK_CLR, FontWeight.normal, 15),
+            Visibility(
+              visible: picktype == "doc" && imageFile != null,
+              child: Text(
+                imageFile != null ? imageFile!.path.split("/").last : "",
+                style: const TextStyle(
+                    color: GRAY_CLR, fontSize: 14, fontWeight: FontWeight.bold),
+              ),
+            ),
             Container(
                 alignment: Alignment.center,
                 height: h * 0.15,
@@ -190,19 +204,20 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
                 margin: EdgeInsets.only(top: h * 0.010),
                 decoration: BoxDecoration(
                     color: WHITE70_CLR,
-                    image: editImage != "" && imageFile == null
-                        ? DecorationImage(
-                            image: NetworkImage(editImage),
-                            fit: BoxFit.cover,
-                          )
-                        : null,
+                    image:
+                        editImage != "" && imageFile == null || picktype == ""
+                            ? DecorationImage(
+                                image: NetworkImage(editImage),
+                                fit: BoxFit.cover,
+                              )
+                            : null,
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(color: TFFBORDER_CLR)),
-                child: imageFile == null
+                child: imageFile == null || picktype != "image"
                     ? GestureDetector(
                         onTap: () {
                           setState(() {
-                            FromGallery();
+                            askwhich();
                           });
                         },
                         child: Column(
@@ -220,7 +235,7 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
                     : GestureDetector(
                         onTap: () {
                           setState(() {
-                            FromGallery();
+                            askwhich();
                           });
                         },
                         child: ClipRRect(
@@ -343,7 +358,7 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
                               iseditvaccion = true;
                             });
                             await editVaccinationApi(
-                                    vmodel.name.toString(),
+                                    vmodel.id.toString(),
                                     selectStatus.toString(),
                                     vaccinationdate.toString(),
                                     imageFile != null
@@ -379,7 +394,7 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
                                 addvaccination = true;
                               });
                               await addVaccinationApi(
-                                      vmodel.name.toString(),
+                                      vmodel.id.toString(),
                                       selectStatus.toString(),
                                       vaccinationdate.toString(),
                                       File(
@@ -444,17 +459,73 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
     return true;
   }
 
-  File? imageFile;
-
-  FromGallery() async {
-    PickedFile? pickedFile = await ImagePicker().getImage(
-      source: ImageSource.gallery,
-      maxWidth: 1800,
-      maxHeight: 1800,
-    );
-    if (pickedFile != null) {
-      setState(() {});
-      imageFile = File(pickedFile.path);
-    }
+  Future askwhich() async {
+    showDialog(
+        context: context,
+        builder: (_) {
+          return AlertDialog(
+            title: Column(
+              children: [
+                Text(
+                  "Pick one options",
+                  style: TextStyle(color: BLACK_CLR),
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          backgroundColor: GREEN_CLR,
+                          padding: EdgeInsets.all(8),
+                        ),
+                        onPressed: () async {
+                          Navigator.pop(context);
+                          await pickimageFile().then((value) {
+                            if (value != null) {
+                              imageFile = File(value);
+                            }
+                          });
+                          setState(() {
+                            picktype = "image";
+                          });
+                        },
+                        child: Text(
+                          "Image",
+                          style: TextStyle(color: WHITE_CLR),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          backgroundColor: GREEN_CLR,
+                          padding: EdgeInsets.all(8),
+                        ),
+                        onPressed: () async {
+                          Navigator.pop(context);
+                          await pickdocFile().then((value) {
+                            if (value != null) {
+                              imageFile = File(value);
+                            }
+                          });
+                          setState(() {
+                            picktype = "doc";
+                          });
+                        },
+                        child: Text(
+                          "Document",
+                          style: TextStyle(color: WHITE_CLR),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          );
+        });
   }
 }

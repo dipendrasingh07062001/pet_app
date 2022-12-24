@@ -204,39 +204,42 @@ class _Add_PregnancyState extends State<Add_Pregnancy> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  customradioButton('6month', reminder, (value) {
-                    setState(() {
-                      reminder = value.toString();
-                    });
-                  }),
-                  SizedBox(
-                    width: w * 0.010,
-                  ),
-                  styleText(MONTH1, GRAY_CLR, FontWeight.normal, 15),
-                  SizedBox(
-                    width: w * 0.08,
-                  ),
-                  customradioButton('9month', reminder, (value) {
-                    setState(() {
-                      reminder = value.toString();
-                    });
-                  }),
-                  SizedBox(
-                    width: w * 0.010,
-                  ),
-                  styleText(MONTH2, GRAY_CLR, FontWeight.normal, 15),
-                  SizedBox(
-                    width: w * 0.08,
-                  ),
-                  customradioButton('12month', reminder, (value) {
-                    setState(() {
-                      reminder = value.toString();
-                    });
-                  }),
-                  SizedBox(
-                    width: w * 0.010,
-                  ),
-                  styleText(MONTH3, GRAY_CLR, FontWeight.normal, 15),
+                  Expanded(
+                      child: Row(children: [
+                    customradioButton('6month', reminder, (value) {
+                      setState(() {
+                        reminder = value.toString();
+                      });
+                    }),
+                    SizedBox(
+                      width: w * 0.010,
+                    ),
+                    styleText(MONTH1, GRAY_CLR, FontWeight.normal, 15),
+                  ])),
+                  Expanded(
+                      child: Row(children: [
+                    customradioButton('9month', reminder, (value) {
+                      setState(() {
+                        reminder = value.toString();
+                      });
+                    }),
+                    SizedBox(
+                      width: w * 0.010,
+                    ),
+                    styleText(MONTH2, GRAY_CLR, FontWeight.normal, 15),
+                  ])),
+                  Expanded(
+                      child: Row(children: [
+                    customradioButton('12month', reminder, (value) {
+                      setState(() {
+                        reminder = value.toString();
+                      });
+                    }),
+                    SizedBox(
+                      width: w * 0.010,
+                    ),
+                    styleText(MONTH3, GRAY_CLR, FontWeight.normal, 15),
+                  ])),
                 ],
               ),
               SizedBox(
@@ -387,7 +390,8 @@ class _Add_PregnancyState extends State<Add_Pregnancy> {
                                           .toString());
                                   customSnackbar(
                                       context, addPregnancysg.toString());
-                                  Navigator.of(context).pop();
+                                  // Navigator.of(context).pop();
+                                  Navigate_replace(context, Pregnancy());
                                   print(value);
                                   setState(() {
                                     isaddpregnancy = false;

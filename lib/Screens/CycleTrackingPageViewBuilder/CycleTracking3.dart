@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pet_app/Colors/COLORS.dart';
+import 'package:pet_app/Provider/AddCycle.dart';
 import 'package:pet_app/UTILS/Utils.dart';
+import 'package:provider/provider.dart';
 
 class CycleTracking3 extends StatefulWidget {
   const CycleTracking3({super.key});
@@ -10,27 +12,32 @@ class CycleTracking3 extends StatefulWidget {
 }
 
 class _CycleTracking3State extends State<CycleTracking3> {
-  List<Widget> items = [
-    styleText("11 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
-    styleText("12 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
-    styleText("13 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
-    styleText("14 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
-    styleText("15 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
-    styleText("16 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
-    styleText("18 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
-    styleText("19 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
-    styleText("20 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
-    styleText("21 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
-    styleText("22 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
-    styleText("23 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
-    styleText("24 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
-    styleText("25 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
-    styleText("26 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
-    styleText("27 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
-    styleText("28 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
-    styleText("29 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
-    styleText("30 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
-  ];
+  List<Widget> items = List.generate(
+    20,
+    (index) => styleText("${index + 11} Days", GREEN_CLR.withOpacity(0.75),
+        FontWeight.normal, 18),
+  );
+  // [
+  //   styleText("11 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
+  //   styleText("12 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
+  //   styleText("13 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
+  //   styleText("14 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
+  //   styleText("15 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
+  //   styleText("16 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
+  //   styleText("18 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
+  //   styleText("19 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
+  //   styleText("20 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
+  //   styleText("21 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
+  //   styleText("22 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
+  //   styleText("23 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
+  //   styleText("24 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
+  //   styleText("25 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
+  //   styleText("26 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
+  //   styleText("27 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
+  //   styleText("28 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
+  //   styleText("29 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
+  //   styleText("30 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
+  // ];
 
   var h;
   var w;
@@ -59,6 +66,10 @@ class _CycleTracking3State extends State<CycleTracking3> {
                   itemExtent: 50,
                   physics: const FixedExtentScrollPhysics(),
                   overAndUnderCenterOpacity: 0.4,
+                  onSelectedItemChanged: (value) {
+                    context.read<AddCycleProvider>().cyclerepeattime =
+                        value + 11;
+                  },
                   childDelegate: ListWheelChildLoopingListDelegate(
                     children: items,
                   ),

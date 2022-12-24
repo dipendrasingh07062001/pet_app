@@ -1,9 +1,13 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Componants/Images&Icons.dart';
 import 'package:pet_app/Screens/Add_Pets/AddPet3.dart';
+import 'package:pet_app/Testing1/linearCalender.dart';
+import 'package:provider/provider.dart';
 
+import '../../Api/Services.dart';
 import '../../UTILS/Utils.dart';
 
 class Symptoms extends StatefulWidget {
@@ -31,64 +35,76 @@ class _SymptomsState extends State<Symptoms> {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: WHITE70_CLR,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(height: h*0.080,),
-          styleText("25,August,2022", BLACK_CLR, FontWeight.bold, 19),
-          SizedBox(
-            height: h * 0.010,
-          ),
-          Container(
-              alignment: Alignment.topCenter,
-              // color: Colors.red,
-              margin: EdgeInsets.only(top: 15),
-              height: h * 0.45,
-              width: w * 1,
-              child: CarouselSlider(
-                items: [Symptomslst[index]],
-                options: CarouselOptions(
+        backgroundColor: WHITE70_CLR,
+        body: Consumer<CalenderProvider>(
+          builder: (context, value, child) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: h * 0.080,
+                ),
+                styleText(showdate(value.days[value.initialPage].date!),
+                    BLACK_CLR, FontWeight.bold, 19),
+                SizedBox(
+                  height: h * 0.010,
+                ),
+                Container(
+                    alignment: Alignment.topCenter,
+                    // color: Colors.red,
+                    margin: EdgeInsets.only(top: 15),
                     height: h * 0.45,
-                    aspectRatio: 1/4,
-                    viewportFraction: 0.75,
-                    initialPage: 2,
-                    scrollDirection: Axis.horizontal,
-                    enableInfiniteScroll: true,
-                    reverse: true,
-                    enlargeCenterPage: true,
-                    onPageChanged: (index, reason) {
-                      setState(() {
-                        currentIndex = index;
+                    width: w * 1,
+                    child: CarouselSlider(
+                      items: [Symptomslst[index]],
+                      options: CarouselOptions(
+                          height: h * 0.45,
+                          aspectRatio: 1 / 4,
+                          viewportFraction: 0.75,
+                          initialPage: 2,
+                          scrollDirection: Axis.horizontal,
+                          enableInfiniteScroll: true,
+                          reverse: true,
+                          enlargeCenterPage: true,
+                          onPageChanged: (index, reason) {
+                            setState(() {
+                              currentIndex = index;
 
-                        if (counter <= 2) {
-                          counter++;
-                        }
-                      });
-                    }),
-              )),
+                              if (counter <= 2) {
+                                counter++;
+                              }
+                            });
+                          }),
+                    )),
+                SizedBox(
+                  height: h * 0.030,
+                ),
+                styleText("$counter of 3", DARK_CLR, FontWeight.normal, 14),
+                SizedBox(
+                  height: h * 0.020,
+                ),
+                DefaultButton(
+                    text: DONE,
+                    ontap: () async {
+                      value.onDaySelected(value.days[value.initialPage].date!,
+                          value.days[value.initialPage].date!);
+                      await addcycle(value.days[value.initialPage].date!,
+                          "Had Flow", "qwertyu", "qwe", "1");
 
-              SizedBox(height: h*0.030,),
-          styleText("$counter of 3", DARK_CLR, FontWeight.normal, 14),
-          SizedBox(
-            height: h * 0.020,
-          ),
-          DefaultButton(
-              text: DONE,
-              ontap: () {
-                Navigator.of(context).pop();
-              },
-              fontsize: 15,
-              height: h * 0.055,
-              width: w * 0.8),
-          SizedBox(
-            height: h * 0.020,
-          ),
-          styleText("Cancel", GREEN_CLR, FontWeight.normal, 15),
-        ],
-      ),
-    );
+                      Navigator.of(context).pop();
+                    },
+                    fontsize: 15,
+                    height: h * 0.055,
+                    width: w * 0.8),
+                SizedBox(
+                  height: h * 0.020,
+                ),
+                styleText("Cancel", GREEN_CLR, FontWeight.normal, 15),
+              ],
+            );
+          },
+        ));
   }
 }
 
@@ -149,7 +165,7 @@ class _symptomslstState extends State<symptomslst> {
             //   color: GRAY_CLR.withOpacity(0.3),
             // ),
             Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10,top: 10),
+              padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -164,10 +180,9 @@ class _symptomslstState extends State<symptomslst> {
                           activeColor: GREEN_CLR,
                           onChanged: (value) {
                             setState(() {
-                                  _radioSelected = value!;
-                            _radioVal = 'one';
+                              _radioSelected = value!;
+                              _radioVal = 'one';
                             });
-                        
                           },
                         ))
                   ]),
@@ -180,7 +195,7 @@ class _symptomslstState extends State<symptomslst> {
               color: GRAY_CLR.withOpacity(0.3),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10,top: 5),
+              padding: const EdgeInsets.only(left: 10, right: 10, top: 5),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -196,9 +211,8 @@ class _symptomslstState extends State<symptomslst> {
                           onChanged: (value) {
                             setState(() {
                               _radioSelected = value!;
-                            _radioVal = 'two';
+                              _radioVal = 'two';
                             });
-                           
                           },
                         ))
                   ]),
@@ -211,7 +225,7 @@ class _symptomslstState extends State<symptomslst> {
               color: GRAY_CLR.withOpacity(0.3),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10,top: 5),
+              padding: const EdgeInsets.only(left: 10, right: 10, top: 5),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -225,12 +239,10 @@ class _symptomslstState extends State<symptomslst> {
                           groupValue: _radioSelected,
                           activeColor: GREEN_CLR,
                           onChanged: (value) {
-
                             setState(() {
                               _radioSelected = value!;
-                            _radioVal = 'three';
+                              _radioVal = 'three';
                             });
-                           
                           },
                         ))
                   ]),
@@ -243,7 +255,7 @@ class _symptomslstState extends State<symptomslst> {
               color: GRAY_CLR.withOpacity(0.3),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10,top: 5),
+              padding: const EdgeInsets.only(left: 10, right: 10, top: 5),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -258,10 +270,9 @@ class _symptomslstState extends State<symptomslst> {
                           activeColor: GREEN_CLR,
                           onChanged: (value) {
                             setState(() {
-                               _radioSelected = value!;
-                            _radioVal = 'four';
+                              _radioSelected = value!;
+                              _radioVal = 'four';
                             });
-                       
                           },
                         ))
                   ]),
@@ -273,8 +284,6 @@ class _symptomslstState extends State<symptomslst> {
               thickness: 1,
               color: GRAY_CLR.withOpacity(0.3),
             ),
-            
-            
           ],
         ),
       ),

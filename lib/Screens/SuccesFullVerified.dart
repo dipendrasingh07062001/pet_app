@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_app/Colors/COLORS.dart';
+import 'package:pet_app/Screens/HOME/Home.dart';
 import 'package:pet_app/Screens/Onbording/Login.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 import '../Componants/Images&Icons.dart';
@@ -61,9 +62,9 @@ class _SuccessFullyVerifiedState extends State<SuccessFullyVerified> {
                   height: h * 0.040,
                 ),
                 DefaultButton(
-                    text: GO_TO_LOGIN,
+                    text: GO_TO_DASHBOARD,
                     ontap: () {
-                      Navigate_PushRemove(context, const Login());
+                      Navigate_PushRemove(context, const Home());
                     },
                     fontsize: 18,
                     height: h * 0.060,

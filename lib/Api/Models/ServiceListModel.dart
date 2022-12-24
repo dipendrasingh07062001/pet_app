@@ -1,15 +1,20 @@
+import 'blogModel.dart';
+
 class ServiceModel {
   bool? status;
   String? message;
   List<ServiceListModel>? serviceListdata;
-
-  ServiceModel({this.status, this.message, this.serviceListdata});
+  List<BlogModelList>? blogListdata;
+  ServiceModel(
+      {this.status, this.message, this.serviceListdata, this.blogListdata});
 
   factory ServiceModel.fromjson(Map<String, dynamic> json) => ServiceModel(
         status: json["status"],
         message: json["message"],
         serviceListdata: List<ServiceListModel>.from(
             json["data"].map((x) => ServiceListModel.fromjson(x))),
+        blogListdata: List<BlogModelList>.from(
+            json["blog"].map((x) => BlogModelList.fromjson(x))),
       );
 }
 

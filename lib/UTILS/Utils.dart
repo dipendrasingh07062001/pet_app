@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import '../Componants/Images&Icons.dart';
 
@@ -335,3 +337,88 @@ const loader = Center(
 Widget valueLoader(double? value) => Center(
       child: CircularProgressIndicator.adaptive(value: value),
     );
+
+Future pickimageFile() async {
+  FilePickerResult? result = await FilePicker.platform.pickFiles(
+    type: FileType.image,
+  );
+
+  return result != null ? result.paths.first : null;
+}
+
+Future pickdocFile() async {
+  FilePickerResult? result = await FilePicker.platform.pickFiles(
+    type: FileType.custom,
+    allowedExtensions: ['pdf', 'doc'],
+  );
+
+  return result != null ? result.paths.first : null;
+}
+
+floatingsnackbar(BuildContext context, String message) {
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: Container(
+      // width: MediaQuery.of(context).size.width * 0.5,
+      height: MediaQuery.of(context).size.height * 0.06,
+      padding: EdgeInsets.all(5),
+      decoration: BoxDecoration(
+          color: BLACK70_CLR, borderRadius: BorderRadius.circular(20)),
+      alignment: Alignment.center,
+      child: Text(
+        message,
+        textAlign: TextAlign.center,
+      ),
+    ),
+    elevation: 0,
+    backgroundColor: Colors.transparent,
+    behavior: SnackBarBehavior.floating,
+    margin: EdgeInsets.only(
+      bottom: MediaQuery.of(context).size.height * 0.1,
+      left: MediaQuery.of(context).size.width * 0.15,
+      right: MediaQuery.of(context).size.width * 0.15,
+      // top: MediaQuery.of(context).size.height * 0.1,
+    ),
+  ));
+}
+
+Future pickImage(ImageSource imageType) async {
+  try {
+    final photo = await ImagePicker().pickImage(source: imageType);
+    if (photo == null) return;
+    final tempImage = File(photo.path);
+    return tempImage;
+  } catch (error) {
+    debugPrint(error.toString());
+    return null;
+  }
+}
+
+bool datematch(DateTime date1, DateTime date2) {
+  return date1.day == date2.day &&
+      date1.year == date2.year &&
+      date1.month == date2.month;
+}
+
+showdate(DateTime date) {
+  String qwe = "";
+  final now = DateTime.now();
+  final tomorrow = DateTime.now().add(const Duration(days: 1));
+  final yesterday = DateTime.now().subtract(const Duration(days: 1));
+  if (now.day == date.day && now.month == date.month && now.year == date.year) {
+    qwe = "Today,";
+    return qwe + DateFormat(" dd MMM").format(date);
+  }
+  if (tomorrow.day == date.day &&
+      tomorrow.month == date.month &&
+      tomorrow.year == date.year) {
+    qwe = "Tomorrow,";
+    return qwe + DateFormat(" dd MMM").format(date);
+  }
+  if (yesterday.day == date.day &&
+      yesterday.month == date.month &&
+      yesterday.year == date.year) {
+    qwe = "Yesterday,";
+    return qwe + DateFormat(" dd MMM").format(date);
+  }
+  return DateFormat("EEEE, dd MMM").format(date);
+}

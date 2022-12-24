@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pet_app/Colors/COLORS.dart';
+import 'package:pet_app/Provider/Provider.dart';
 import 'package:pet_app/UTILS/Utils.dart';
+import 'package:provider/provider.dart';
 import '../../Api/Models/My_pet_model.dart';
 import '../../Api/Services.dart';
 import '../../Componants/Images&Icons.dart';
@@ -33,10 +35,12 @@ class _My_PetsState extends State<My_Pets> {
             borderRadius: BorderRadius.all(Radius.circular(50)),
             side: BorderSide(color: GREEN_CLR)),
         onPressed: () {
+          context.read<CurrentPage>().currentIndex = 0;
+          context.read<ProviderTutorial>().selectAtdate = null;
           Navigate_replace(
               context,
               AddPetpage(
-                isedit: true,
+                isedit: false,
               ));
         },
         child: const Icon(
@@ -45,8 +49,10 @@ class _My_PetsState extends State<My_Pets> {
           color: GREEN_CLR,
         ),
       ),
-      body: mypetmoellist == null
-          ? loader
+      body: mypetmoellist.isEmpty
+          ? Center(
+              child: Text("No data"),
+            ) //loader
           : Padding(
               padding: const EdgeInsets.only(top: 10, left: 15),
               child: ListView.builder(
@@ -128,6 +134,13 @@ class _My_PetsState extends State<My_Pets> {
                                                   width: 28,
                                                   child: GestureDetector(
                                                     onTap: () {
+                                                      context
+                                                          .read<CurrentPage>()
+                                                          .currentIndex = 0;
+                                                      context
+                                                          .read<
+                                                              ProviderTutorial>()
+                                                          .selectAtdate = null;
                                                       setState(() {
                                                         Navigate_to(
                                                             context,
@@ -164,7 +177,8 @@ class _My_PetsState extends State<My_Pets> {
                                                               .then((value) {
                                                             mypetApi()
                                                                 .then((value) {
-                                                              result = value;
+                                                              result.mypetdata =
+                                                                  value;
                                                               print(result
                                                                   .mypetdata
                                                                   .toString());
@@ -211,7 +225,9 @@ class _My_PetsState extends State<My_Pets> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: Image.network(
-                                mypetmoellist[index].image.toString(),
+                                mypetmoellist[index].image.isNotEmpty
+                                    ? mypetmoellist[index].image.first
+                                    : "",
                                 loadingBuilder:
                                     (context, child, loadingProgress) {
                                   if (loadingProgress == null) {
@@ -233,7 +249,7 @@ class _My_PetsState extends State<My_Pets> {
                                 scale: 1.0,
                                 width: w * 0.315,
                                 height: h * 0.195,
-                                fit: BoxFit.fill,
+                                fit: BoxFit.cover,
                                 errorBuilder: (context, error, stackTrace) {
                                   return Container();
                                 },

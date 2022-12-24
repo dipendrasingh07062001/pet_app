@@ -4,6 +4,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pet_app/Api/ApiBaseUrl.dart';
 import 'package:http/http.dart' as http;
 import '../Api/Prefrence.dart';
+import 'package:provider/provider.dart';
 
 String? gname;
 String? gemail;
@@ -80,10 +81,11 @@ Future socialSigningApi(String email, String name, String type) async {
     if (data["status"] == true) {
       print(data["message"]);
       print(response.body);
-      Preference.Pref.setString('email', data['data']['email']);
-      Preference.Pref.setString('name', data['data']['name']);
-      Preference.Pref.setString('type', data['data']['type']);
-      Preference.Pref.setInt('userId', data['data']['id']);
+      Preference.Pref.setString('email', data['data']['email'] ?? "");
+      Preference.Pref.setString('name', data['data']['name'] ?? "");
+      Preference.Pref.setString('type', data['data']['type'] ?? "");
+      Preference.Pref.setString('token', data['token'] ?? "");
+      Preference.Pref.setInt('userId', data['data']['id'] ?? "");
       // Preference.Pref.setString('status', data['data']['status']);
       // Preference.Pref.setInt('email_verified', data['data']['email_verified']);
       // Preference.Pref.setString('image', data['data']['image']);

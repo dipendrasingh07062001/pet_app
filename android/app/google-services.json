@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "535008496947-1fin993ijbmljkvid254gc500c4456iv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.petapp",
+            "certificate_hash": "c41a42fad7df6e0f1ccaa87be6a2b43fe69bdff2"
+          }
+        },
+        {
+          "client_id": "535008496947-e0gvp7l8tufm4tn0t73gs8qt3gd5opok.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.petapp",
+            "certificate_hash": "7d9a76afbf73f22a70718d2962d8ae3b83e3cd3a"
+          }
+        },
+        {
           "client_id": "535008496947-ofc9d9tgb3978d2mfkcvln2l9oujemk5.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,6 +45,49 @@
             {
               "client_id": "535008496947-ofc9d9tgb3978d2mfkcvln2l9oujemk5.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "535008496947-gm3tbd2nrm56lfbgt13b2hl1d1r8q11k.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.petapp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:535008496947:android:202bcdd69a98b585184246",
+        "android_client_info": {
+          "package_name": "com.peturban"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "535008496947-ofc9d9tgb3978d2mfkcvln2l9oujemk5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABi7jihvJaVohySg7Jzxci8St2YlVxZ3I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "535008496947-ofc9d9tgb3978d2mfkcvln2l9oujemk5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "535008496947-gm3tbd2nrm56lfbgt13b2hl1d1r8q11k.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.petapp"
+              }
             }
           ]
         }

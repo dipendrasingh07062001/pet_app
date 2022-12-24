@@ -6,7 +6,8 @@ import '../../Colors/COLORS.dart';
 import '../../UTILS/Utils.dart';
 
 class BlogDetailsList extends StatefulWidget {
-  const BlogDetailsList({super.key});
+  List<BlogModelList> blogListdata;
+  BlogDetailsList({super.key, required this.blogListdata});
 
   @override
   State<BlogDetailsList> createState() => _BlogDetailsListState();
@@ -14,16 +15,20 @@ class BlogDetailsList extends StatefulWidget {
 
 class _BlogDetailsListState extends State<BlogDetailsList> {
   BlogModel result = BlogModel();
+  List<BlogModelList> blogListdata = [];
 
   @override
   void initState() {
     super.initState();
-    getblogApi().then((value) {
-      setState(() {
-        result = value;
-        // print(result.blogListdata.toString());
-      });
-    });
+    // getblogApi().then((value) {
+    //   setState(() {
+    //     result = value;
+    //     // print(result.blogListdata.toString());
+    //   });
+    // });
+    if (widget.blogListdata.isNotEmpty) {
+      blogListdata.addAll(widget.blogListdata);
+    }
   }
 
   var h;
@@ -35,12 +40,12 @@ class _BlogDetailsListState extends State<BlogDetailsList> {
     w = MediaQuery.of(context).size.width;
     return SizedBox(
       height: h * 0.25,
-      child: result.blogListdata == null
+      child: blogListdata.isEmpty
           ? loader
           : ListView.builder(
               physics: const BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
-              itemCount: result.blogListdata!.length,
+              itemCount: blogListdata.length,
               shrinkWrap: true,
               padding: const EdgeInsets.symmetric(horizontal: 0),
               itemBuilder: (BuildContext context, int index) {
@@ -54,7 +59,7 @@ class _BlogDetailsListState extends State<BlogDetailsList> {
                       borderRadius: BorderRadius.circular(15),
                       image: DecorationImage(
                           image: NetworkImage(
-                              result.blogListdata![index].image.toString(),
+                              blogListdata[index].image.toString(),
                               scale: 1.0),
                           fit: BoxFit.cover),
                     ),
@@ -79,8 +84,8 @@ class _BlogDetailsListState extends State<BlogDetailsList> {
                                     text: TextSpan(
                                       children: <InlineSpan>[
                                         TextSpan(
-                                            text: result
-                                                .blogListdata![index].name
+                                            text: blogListdata[index]
+                                                .name
                                                 .toString(),
                                             style: const TextStyle(
                                               color: GRAY_CLR,
@@ -93,7 +98,8 @@ class _BlogDetailsListState extends State<BlogDetailsList> {
                                               width: w * 0.1,
                                             )),
                                         TextSpan(
-                                            text: result.blogListdata![index].id
+                                            text: blogListdata[index]
+                                                .id
                                                 .toString(),
                                             style: const TextStyle(
                                                 color: GRAY_CLR, fontSize: 10)),
@@ -104,8 +110,7 @@ class _BlogDetailsListState extends State<BlogDetailsList> {
                                     height: h * 0.015,
                                   ),
                                   styleText(
-                                    result.blogListdata![index].description
-                                        .toString(),
+                                    blogListdata[index].description.toString(),
                                     DARK_CLR,
                                     FontWeight.bold,
                                     12,

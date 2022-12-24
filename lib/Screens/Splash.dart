@@ -6,6 +6,7 @@ import 'package:pet_app/Api/Services.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Screens/HOME/Home.dart';
 import '../Componants/Images&Icons.dart';
+import '../Testing1/linearCalender.dart';
 import '../UTILS/Utils.dart';
 import 'Onbording/Login.dart';
 
@@ -43,13 +44,16 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
     return Scaffold(
-        backgroundColor: WHITE70_CLR,
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Image.asset(SPLASH_LOGO),
-          ),
-        ));
+      backgroundColor: WHITE70_CLR,
+      body:
+          // LinearCalender()
+          Center(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Image.asset(SPLASH_LOGO),
+        ),
+      ),
+    );
   }
 
   getLoginStatus() {

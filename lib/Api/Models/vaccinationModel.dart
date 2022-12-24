@@ -1,3 +1,5 @@
+import 'package:pet_app/Api/Models/v_model.dart';
+
 class VaccinationMaodel {
   bool? status;
   String? message;
@@ -17,7 +19,7 @@ class VaccinationMaodel {
 class VaccinationMaodelList {
   int? id;
   String? vaccinationcertificate;
-  String? vaccinationid;
+  VModel? vaccinationid;
   String? vaccinationdate;
   String? reminder;
   String? vaccinationstatus;
@@ -39,7 +41,7 @@ class VaccinationMaodelList {
       VaccinationMaodelList(
           id: json["id"] ?? "",
           vaccinationcertificate: json['vaccination_certificatee'],
-          vaccinationid: json["vaccination_id"] ?? "",
+          vaccinationid: VModel.fromJson(json["vaccination_id"]),
           vaccinationdate: json['vaccination_date'],
           reminder: json['reminder'],
           vaccinationstatus: json['vaccination_status'],
