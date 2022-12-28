@@ -67,7 +67,7 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
   String? atdate;
   String? attime;
 
-  String reminder = "Daily";
+  String reminder = "3 Months";
 
   var h;
   var w;
@@ -197,6 +197,14 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
                     color: GRAY_CLR, fontSize: 14, fontWeight: FontWeight.bold),
               ),
             ),
+            Visibility(
+              visible: widget.isEditVaccination && editImage != "",
+              child: Text(
+                editImage,
+                style: const TextStyle(
+                    color: GRAY_CLR, fontSize: 14, fontWeight: FontWeight.bold),
+              ),
+            ),
             Container(
                 alignment: Alignment.center,
                 height: h * 0.15,
@@ -227,7 +235,7 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
                             SizedBox(
                               height: h * 0.015,
                             ),
-                            styleText(UPLOAD_DOCUMENT, GRAY_CLR,
+                            styleText("Upload Certificate", GRAY_CLR,
                                 FontWeight.normal, 14)
                           ],
                         ),
@@ -259,7 +267,7 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                customradioButton("Daily", reminder, (value) {
+                customradioButton("3 Months", reminder, (value) {
                   setState(() {
                     reminder = value.toString();
                   });
@@ -268,13 +276,13 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
                   width: w * 0.020,
                 ),
                 const Text(
-                  DAILY,
+                  "3 Months",
                   style: TextStyle(color: GRAY_CLR),
                 ),
                 SizedBox(
                   width: w * 0.1,
                 ),
-                customradioButton("Weekly", reminder, (value) {
+                customradioButton("6 Months", reminder, (value) {
                   setState(() {
                     reminder = value.toString();
                   });
@@ -283,13 +291,13 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
                   width: w * 0.020,
                 ),
                 const Text(
-                  WEEKLY,
+                  "6 Months",
                   style: TextStyle(color: GRAY_CLR),
                 ),
                 SizedBox(
                   width: w * 0.1,
                 ),
-                customradioButton("Monthly", reminder, (value) {
+                customradioButton("12 Months", reminder, (value) {
                   setState(() {
                     reminder = value.toString();
                   });
@@ -298,7 +306,7 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
                   width: w * 0.020,
                 ),
                 const Text(
-                  MONTHLY,
+                  "12 Months",
                   style: TextStyle(color: GRAY_CLR),
                 ),
               ],

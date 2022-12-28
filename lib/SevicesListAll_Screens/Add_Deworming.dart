@@ -425,7 +425,7 @@ class _Add_DewormingState extends State<Add_Deworming> {
       customSnackbar(context, "Please select deworming date");
       return false;
     } else if (selectAtdate == null) {
-      customSnackbar(context, "Please select  date");
+      customSnackbar(context, "Please select date");
       return false;
     } else if (selectedTime == null) {
       customSnackbar(context, "Please select time");

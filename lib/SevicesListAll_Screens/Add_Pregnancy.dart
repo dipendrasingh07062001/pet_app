@@ -28,7 +28,7 @@ class _Add_PregnancyState extends State<Add_Pregnancy> {
 
   String setualActive = 'Yes';
   String nuetered = 'Yes';
-  String reminder = '6month';
+  String reminder = '6 Month';
 
   @override
   void initState() {
@@ -291,7 +291,7 @@ class _Add_PregnancyState extends State<Add_Pregnancy> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      styleText(AT_DATE, BLACK_CLR, FontWeight.normal, 15),
+                      styleText(AT_TIME, BLACK_CLR, FontWeight.normal, 15),
                       GestureDetector(
                         onTap: () {
                           showTime(context).then((value) {

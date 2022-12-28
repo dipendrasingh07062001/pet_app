@@ -50,7 +50,11 @@ class _BlogDetailsListState extends State<BlogDetailsList> {
               padding: const EdgeInsets.symmetric(horizontal: 0),
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(
-                  onTap: () => Navigate_to(context, const Blog_Details()),
+                  onTap: () => Navigate_to(
+                      context,
+                      Blog_Details(
+                        blog: blogListdata[index],
+                      )),
                   child: Container(
                     padding: const EdgeInsets.all(3),
                     height: h * 0.24,

@@ -19,6 +19,7 @@ class _PregnancyState extends State<Pregnancy> {
   GetPregnancyModel result = GetPregnancyModel();
   final petId = Preference.Pref.getInt("selectedPetId").toString();
   bool isloading = true;
+  bool isfirsttime = false;
   var error;
   @override
   void initState() {
@@ -27,12 +28,15 @@ class _PregnancyState extends State<Pregnancy> {
       if (value != null) {
         result = value;
       }
-
+      if (result.data == null) {
+        isfirsttime = true;
+      }
       setState(() {
         isloading = false;
       });
     }).onError((error, stackTrace) {
       setState(() {
+        isfirsttime = true;
         isloading = false;
         this.error = error;
       });
@@ -50,7 +54,7 @@ class _PregnancyState extends State<Pregnancy> {
         backgroundColor: WHITE70_CLR,
         appBar: DefaultAppBar(PREGNANCY),
         floatingActionButton: Visibility(
-          visible: result.data == null,
+          visible: isfirsttime,
           child: flotingButton(() {
             Navigate_replace(
                 context,
@@ -63,7 +67,7 @@ class _PregnancyState extends State<Pregnancy> {
             ? loader
             : error != null
                 ? Center(
-                    child: styleText(error, BLACK_CLR, FontWeight.bold, 16),
+                    child: styleText(error, BLACK_CLR, FontWeight.w400, 14),
                   )
                 : Column(
                     children: [

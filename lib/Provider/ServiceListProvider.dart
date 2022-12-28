@@ -17,15 +17,7 @@ import 'package:pet_app/Screens/CycleTrackingPageViewBuilder/WheelList_CycleTrac
 
 ////ServiceHelthProvider
 class ServiceHealthProvider extends ChangeNotifier {
-  List<Widget> PageRoute = [
-    Preference.Pref!.getString("selectedpetcyclestatus") != "1"
-        ? CycleTrackingPage()
-        : Cycle_Tracking6(),
-    Medicines(),
-    Vaccinations(),
-    Deworming(),
-    Pregnancy()
-  ];
+  List<Widget> PageRoute = [];
   ServiceModel servicelistmodel = ServiceModel();
   bool loading = false;
   int currentindex = 0;
@@ -39,6 +31,15 @@ class ServiceHealthProvider extends ChangeNotifier {
   }
 
   onClickedList(BuildContext context, int index) {
+    PageRoute = [
+      Preference.Pref!.getString("selectedpetcyclestatus") != "1"
+          ? CycleTrackingPage()
+          : Cycle_Tracking6(),
+      Medicines(),
+      Vaccinations(),
+      Deworming(),
+      Pregnancy()
+    ];
     Navigate_to(context, PageRoute[index]);
     notifyListeners();
   }
@@ -46,6 +47,7 @@ class ServiceHealthProvider extends ChangeNotifier {
   // get data => Service;
   OnTap(int index) {
     currentindex = index;
+
     notifyListeners();
   }
 }

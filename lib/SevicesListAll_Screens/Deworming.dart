@@ -19,12 +19,16 @@ class _DewormingState extends State<Deworming> {
 
   final petId = Preference.Pref.getInt('selectedPetId').toString();
   bool isLoading = true;
+  bool isDewaming = false;
   @override
   void initState() {
     super.initState();
     getDewormingListApi(petId).then((value) {
       if (value != null) {
         result = value;
+      }
+      if (result.data == null) {
+        isDewaming = true;
       }
       setState(() {
         isLoading = false;
@@ -41,7 +45,7 @@ class _DewormingState extends State<Deworming> {
     return Scaffold(
         backgroundColor: WHITE70_CLR,
         appBar: DefaultAppBar(DEWORMING),
-        floatingActionButton: result.data != null
+        floatingActionButton: !isDewaming
             ? null
             : flotingButton(() {
                 Navigate_replace(context, Add_Deworming(isedit: false));

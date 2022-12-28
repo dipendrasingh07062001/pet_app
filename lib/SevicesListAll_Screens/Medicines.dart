@@ -50,12 +50,9 @@ class _MedicinesState extends State<Medicines> {
       body: isloading
           ? loader
           : result.getMedicinemodelListdata!.isEmpty
-              ? Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    styleText("\nPlease add Medicines...", BLACK_CLR,
-                        FontWeight.w400, 14),
-                  ],
+              ? Center(
+                  child: styleText("\nPlease add medicines.", BLACK_CLR,
+                      FontWeight.w400, 14),
                 )
               : ListView.builder(
                   scrollDirection: Axis.vertical,

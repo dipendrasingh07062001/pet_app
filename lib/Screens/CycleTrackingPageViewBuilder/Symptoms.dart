@@ -100,7 +100,12 @@ class _SymptomsState extends State<Symptoms> {
                 SizedBox(
                   height: h * 0.020,
                 ),
-                styleText("Cancel", GREEN_CLR, FontWeight.normal, 15),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child:
+                        styleText("Cancel", GREEN_CLR, FontWeight.normal, 15)),
               ],
             );
           },

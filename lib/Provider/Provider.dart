@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:pet_app/Screens/GetStart.dart';
 import '../Api/Models/addPetModel.dart';
 import '../Screens/HOME/Home.dart';
@@ -11,10 +12,16 @@ class ProviderTutorial extends ChangeNotifier {
   bool isClick = false;
 
   bool isloding = true;
+  late Position position;
 
   changePage() {
     isClick = true;
 
+    notifyListeners();
+  }
+
+  getcurrentLocation() async {
+    position = await determinePosition();
     notifyListeners();
   }
 

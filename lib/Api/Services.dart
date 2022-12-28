@@ -29,7 +29,7 @@ import 'Prefrence.dart';
 String? loginmsg;
 var headers = {
   'Authorization': 'Bearer ' + Preference.Pref.getString("token"),
-  "Content-Type": "application/json"
+  // "Content-Type": "application/json"
 };
 
 bool islogin = false;

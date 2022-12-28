@@ -44,7 +44,7 @@ class _HomeState extends State<Home> {
   var currentindex = 0;
   var searchcurrentindex = 0;
   var selectePetIndex;
-  bool issearching = true;
+  bool issearching = false;
 
   @override
   initState() {
@@ -262,166 +262,72 @@ class _HomeState extends State<Home> {
                       visible: searchCantrolller.text.isNotEmpty,
                       child: issearching
                           ? loader
-                          : SizedBox(
-                              height: h * 0.145,
-                              child: Consumer<ServiceHealthProvider>(builder:
-                                  (BuildContext context, value, Widget? child) {
-                                return ListView.builder(
-                                    physics: const BouncingScrollPhysics(),
-                                    shrinkWrap: true,
-                                    controller: scrollController,
-                                    itemCount:
-                                        searchdata.serviceListdata!.length,
-                                    scrollDirection: Axis.horizontal,
-                                    // physics: NeverScrollableScrollPhysics(),
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return Column(
-                                        children: [
-                                          GestureDetector(
-                                            onTap: () {
-                                              value.OnTap(index);
-                                              value.searchcurrentindex = index;
-                                              print(value.searchcurrentindex);
-                                              setState(() {});
-                                            },
-                                            child: Container(
-                                              margin:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 13),
-                                              height: 70,
-                                              width: 70,
-                                              alignment: Alignment.center,
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(15),
-                                                  color:
-                                                      value.searchcurrentindex ==
-                                                              index
-                                                          ? GREEN_CLR
-                                                          : WHITE_CLR,
-                                                  boxShadow: const [
-                                                    BoxShadow(color: SHADOW_CLR)
-                                                  ]),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(10),
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                  child: Image.network(
-                                                    result
-                                                        .serviceListdata![index]
-                                                        .image
-                                                        .toString(),
-                                                    scale: 1.0,
-                                                    width: w * 0.14,
-                                                    height: h * 0.08,
-                                                    fit: BoxFit.fill,
-                                                    // "",
-                                                    loadingBuilder: (context,
-                                                        child,
-                                                        loadingProgress) {
-                                                      if (loadingProgress ==
-                                                          null) {
-                                                        return child;
-                                                      } else {
-                                                        return valueLoader(loadingProgress
-                                                                    .expectedTotalBytes !=
-                                                                null
-                                                            ? loadingProgress
-                                                                    .cumulativeBytesLoaded /
-                                                                loadingProgress
-                                                                    .expectedTotalBytes!
-                                                            : null);
-                                                      }
-                                                    },
-                                                    errorBuilder: (context,
-                                                        error, stackTrace) {
-                                                      return Container();
-                                                    },
-                                                    // value.detaildata[index].ImageUrl),
-                                                  ),
-                                                ),
-                                              ),
-                                              // child: Image.asset(SERVICES_ICON,color: value.data.elementAt(index)==value.Services? WHITE70_CLR:GRAY_CLR,),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: h * 0.010,
-                                          ),
-                                          styleText(
-                                              result
-                                                  .serviceListdata![index].name
-                                                  .toString(),
-                                              GRAY_CLR,
-                                              FontWeight.bold,
-                                              13)
-                                        ],
-                                      );
-                                    });
-                              })),
-                    ),
-
-                    Visibility(
-                      visible: searchCantrolller.text.isNotEmpty,
-                      child: issearching
-                          ? loader
-                          : Consumer<ServiceHealthProvider>(builder:
-                              (BuildContext context, value, Widget? child) {
-                              return ListView.builder(
-                                  physics: const BouncingScrollPhysics(),
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: result
-                                      .serviceListdata?[
-                                          value.searchcurrentindex]
-                                      .subserviceListdata
-                                      ?.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    SubServiceListModel? subResultdata = result
-                                        .serviceListdata?[searchcurrentindex]
-                                        .subserviceListdata?[index];
-                                    print(subResultdata?.name);
-                                    return Visibility(
-                                      visible: check(subResultdata!.name!),
-                                      child: SizedBox(
-                                        height: h * 0.12,
-                                        width: w * 1,
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            value.onClickedList(context, index);
-                                          },
-                                          // onTap: ()=> Navigate_to(context, PageRoute[index]),
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                bottom: 8),
-                                            child: Card(
-                                                color: WHITE70_CLR,
-                                                elevation: 1,
-                                                // shadowColor: GRAY_CLR,
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            15)),
-                                                child: Row(
-                                                  children: [
-                                                    Padding(
+                          : Column(
+                              children: [
+                                SizedBox(
+                                    height: h * 0.145,
+                                    child: Consumer<ServiceHealthProvider>(
+                                        builder: (BuildContext context, value,
+                                            Widget? child) {
+                                      return ListView.builder(
+                                          physics:
+                                              const BouncingScrollPhysics(),
+                                          shrinkWrap: true,
+                                          controller: scrollController,
+                                          itemCount: searchdata
+                                              .serviceListdata!.length,
+                                          scrollDirection: Axis.horizontal,
+                                          // physics: NeverScrollableScrollPhysics(),
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            return Column(
+                                              children: [
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    value.OnTap(index);
+                                                    value.searchcurrentindex =
+                                                        index;
+                                                    print(value
+                                                        .searchcurrentindex);
+                                                    setState(() {});
+                                                  },
+                                                  child: Container(
+                                                    margin: const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 13),
+                                                    height: 70,
+                                                    width: 70,
+                                                    alignment: Alignment.center,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(15),
+                                                        color:
+                                                            value.searchcurrentindex ==
+                                                                    index
+                                                                ? GREEN_CLR
+                                                                : WHITE_CLR,
+                                                        boxShadow: const [
+                                                          BoxShadow(
+                                                              color: SHADOW_CLR)
+                                                        ]),
+                                                    child: Padding(
                                                       padding:
                                                           const EdgeInsets.all(
-                                                              8),
+                                                              10),
                                                       child: ClipRRect(
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(8),
                                                         child: Image.network(
-                                                          subResultdata.image
+                                                          result
+                                                              .serviceListdata![
+                                                                  index]
+                                                              .image
                                                               .toString(),
                                                           scale: 1.0,
-
-                                                          width: w * 0.17,
-                                                          height: h * 0.1,
+                                                          width: w * 0.14,
+                                                          height: h * 0.08,
                                                           fit: BoxFit.fill,
                                                           // "",
                                                           loadingBuilder: (context,
@@ -450,25 +356,139 @@ class _HomeState extends State<Home> {
                                                         ),
                                                       ),
                                                     ),
-                                                    SizedBox(
-                                                      width: w * 0.035,
-                                                    ),
-                                                    styleText(
-                                                        subResultdata.name
-                                                            .toString(),
-                                                        // "",
-                                                        // value.detaildata[index].name,
-                                                        DARK_CLR,
-                                                        FontWeight.bold,
-                                                        17)
-                                                  ],
-                                                )),
+                                                    // child: Image.asset(SERVICES_ICON,color: value.data.elementAt(index)==value.Services? WHITE70_CLR:GRAY_CLR,),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  height: h * 0.010,
+                                                ),
+                                                styleText(
+                                                    result
+                                                        .serviceListdata![index]
+                                                        .name
+                                                        .toString(),
+                                                    GRAY_CLR,
+                                                    FontWeight.bold,
+                                                    13)
+                                              ],
+                                            );
+                                          });
+                                    })),
+                                Consumer<ServiceHealthProvider>(builder:
+                                    (BuildContext context, value,
+                                        Widget? child) {
+                                  return ListView.builder(
+                                      physics: const BouncingScrollPhysics(),
+                                      shrinkWrap: true,
+                                      scrollDirection: Axis.vertical,
+                                      itemCount: result
+                                          .serviceListdata?[
+                                              value.searchcurrentindex]
+                                          .subserviceListdata
+                                          ?.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        SubServiceListModel? subResultdata =
+                                            result
+                                                .serviceListdata?[
+                                                    searchcurrentindex]
+                                                .subserviceListdata?[index];
+                                        print(subResultdata?.name);
+                                        return Visibility(
+                                          visible: check(subResultdata!.name!),
+                                          child: SizedBox(
+                                            height: h * 0.12,
+                                            width: w * 1,
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                value.onClickedList(
+                                                    context, index);
+                                              },
+                                              // onTap: ()=> Navigate_to(context, PageRoute[index]),
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    bottom: 8),
+                                                child: Card(
+                                                    color: WHITE70_CLR,
+                                                    elevation: 1,
+                                                    // shadowColor: GRAY_CLR,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        15)),
+                                                    child: Row(
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(8),
+                                                          child: ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8),
+                                                            child:
+                                                                Image.network(
+                                                              subResultdata
+                                                                  .image
+                                                                  .toString(),
+                                                              scale: 1.0,
+
+                                                              width: w * 0.17,
+                                                              height: h * 0.1,
+                                                              fit: BoxFit.fill,
+                                                              // "",
+                                                              loadingBuilder:
+                                                                  (context,
+                                                                      child,
+                                                                      loadingProgress) {
+                                                                if (loadingProgress ==
+                                                                    null) {
+                                                                  return child;
+                                                                } else {
+                                                                  return valueLoader(loadingProgress
+                                                                              .expectedTotalBytes !=
+                                                                          null
+                                                                      ? loadingProgress
+                                                                              .cumulativeBytesLoaded /
+                                                                          loadingProgress
+                                                                              .expectedTotalBytes!
+                                                                      : null);
+                                                                }
+                                                              },
+                                                              errorBuilder:
+                                                                  (context,
+                                                                      error,
+                                                                      stackTrace) {
+                                                                return Container();
+                                                              },
+                                                              // value.detaildata[index].ImageUrl),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          width: w * 0.035,
+                                                        ),
+                                                        styleText(
+                                                            subResultdata.name
+                                                                .toString(),
+                                                            // "",
+                                                            // value.detaildata[index].name,
+                                                            DARK_CLR,
+                                                            FontWeight.bold,
+                                                            17)
+                                                      ],
+                                                    )),
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                    );
-                                  });
-                            }),
+                                        );
+                                      });
+                                }),
+                              ],
+                            ),
                     ),
 
                     Visibility(
@@ -726,7 +746,9 @@ class _HomeState extends State<Home> {
                     CircleAvatar(
                       radius: 15,
                       backgroundImage: NetworkImage(
-                          mypetmoellist[index].image.toString(),
+                          mypetmoellist[index].image.isEmpty
+                              ? ""
+                              : mypetmoellist[index].image.first,
                           scale: 1.0),
                     ),
                     const SizedBox(

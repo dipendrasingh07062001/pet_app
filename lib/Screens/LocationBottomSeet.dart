@@ -16,6 +16,11 @@ class LocationBottomSeet extends StatefulWidget {
 class _LocationBottomSeetState extends State<LocationBottomSeet> {
   var h;
   var w;
+  @override
+  void initState() {
+    super.initState();
+    context.read<ProviderTutorial>().getcurrentLocation();
+  }
 
   @override
   Widget build(BuildContext context) {

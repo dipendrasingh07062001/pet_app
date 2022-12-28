@@ -21,6 +21,13 @@ class _Add_PeriodState extends State<Add_Period> {
   var w;
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read<CalenderProvider>().onenter();
+  }
+
+  @override
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;

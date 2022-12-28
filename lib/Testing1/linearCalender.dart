@@ -117,26 +117,36 @@ class _LinearCalenderState extends State<LinearCalender> {
                                 child: Stack(
                                   children: [
                                     Center(
-                                      child: SvgPicture.asset(
-                                          CYCLE_TRACKING_IMAGE,
-                                          height: value.initialPage == index
-                                              ? 55
-                                              : 40,
-                                          color: value.initialPage == index
-                                              ? GREEN_CLR
-                                              : GREEN_CLR.withOpacity(0.6)),
+                                      child: value.days[index].iscycle
+                                          ? Image.asset(
+                                              "assets/png_image/dogbone.png",
+                                              height: value.initialPage == index
+                                                  ? 55
+                                                  : 40,
+                                            )
+                                          : SvgPicture.asset(
+                                              // value.days[index].iscycle
+                                              //     ?
+                                              CYCLE_TRACKING_IMAGE,
+                                              // : CYCLE_TRACKING_selected_IMAGE,
+                                              height: value.initialPage == index
+                                                  ? 55
+                                                  : 40,
+                                              color: value.initialPage == index
+                                                  ? GREEN_CLR
+                                                  : GREEN_CLR.withOpacity(0.6)),
                                     ),
-                                    Center(
-                                      child: Container(
-                                          height: 15,
-                                          width: 15,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              color: value.days[index].iscycle
-                                                  ? Colors.red
-                                                  : Colors.transparent)),
-                                    )
+                                    // Center(
+                                    //   child: Container(
+                                    //       height: 15,
+                                    //       width: 15,
+                                    //       decoration: BoxDecoration(
+                                    //           borderRadius:
+                                    //               BorderRadius.circular(20),
+                                    //           color: value.days[index].iscycle
+                                    //               ? Colors.red
+                                    //               : Colors.transparent)),
+                                    // )
                                   ],
                                 ),
                               ),
@@ -164,6 +174,7 @@ class _LinearCalenderState extends State<LinearCalender> {
 class CalenderProvider extends ChangeNotifier {
   List<CycleModel> days = [];
   List<CycleModel> selecteddays = [];
+  List<DateTime> addeddays = [];
   List<CycleModel> cycle_tracking_data = [];
   bool isloading = false;
   Set<DateTime> selectedTableDays = LinkedHashSet<DateTime>(
@@ -236,15 +247,21 @@ class CalenderProvider extends ChangeNotifier {
     return selecteddays.any((element) => datematch(element.date!, day));
   }
 
+  onenter() {
+    addeddays.addAll(selecteddays.map((e) => e.date!).toList());
+    notifyListeners();
+  }
+
   final startdate = DateTime.now().subtract(Duration(days: 365));
   final enddate = DateTime.now().add(Duration(days: 365));
   int initialPage = 0;
-  ondaypressed(DateTime date) {
-    days.forEach((e) {
+  ondaypressed(DateTime date) async {
+    days.forEach((e) async {
       if (datematch(e.date!, date)) {
         e.iscycle = !e.iscycle;
         if (e.iscycle) {
           selecteddays.add(e);
+          await addcycle(date, "Had Flow", "qwertyu", "qwe", "1");
         } else {
           remove(e.date!);
         }
@@ -254,10 +271,11 @@ class CalenderProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  remove(DateTime date) {
+  remove(DateTime date) async {
     for (int i = 0; i < selecteddays.length; i++) {
       if (selecteddays[i].date!.compareTo(date) == 0) {
         selecteddays.removeAt(i);
+        await addcycle(date, "Had Flow", "qwertyu", "qwe", "0");
         return;
       }
     }

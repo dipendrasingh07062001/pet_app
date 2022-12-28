@@ -52,7 +52,7 @@ class _Cycle_Tracking1State extends State<Cycle_Tracking1> {
             SizedBox(
               height: h * 0.050,
             ),
-            styleText("When did your pet`s last\n period start?", DARK_CLR,
+            styleText("When did your pet's last\n period start?", DARK_CLR,
                 FontWeight.bold, 20),
             SizedBox(
               height: h * 0.030,

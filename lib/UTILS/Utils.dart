@@ -2,10 +2,55 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:pet_app/Colors/COLORS.dart';
+import '../Api/Prefrence.dart';
 import '../Componants/Images&Icons.dart';
+import '../Screens/Onbording/Login.dart';
+import 'package:geolocator/geolocator.dart';
+
+/// Determine the current position of the device.
+///
+/// When the location services are not enabled or permissions
+/// are denied the `Future` will return an error.
+Future<Position> determinePosition() async {
+  bool serviceEnabled;
+  LocationPermission permission;
+
+  // Test if location services are enabled.
+  serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  if (!serviceEnabled) {
+    // Location services are not enabled don't continue
+    // accessing the position and request users of the
+    // App to enable the location services.
+    return Future.error('Location services are disabled.');
+  }
+
+  permission = await Geolocator.checkPermission();
+  if (permission == LocationPermission.denied) {
+    permission = await Geolocator.requestPermission();
+    if (permission == LocationPermission.denied) {
+      // Permissions are denied, next time you could try
+      // requesting permissions again (this is also where
+      // Android's shouldShowRequestPermissionRationale
+      // returned true. According to Android guidelines
+      // your App should show an explanatory UI now.
+      return Future.error('Location permissions are denied');
+    }
+  }
+
+  if (permission == LocationPermission.deniedForever) {
+    // Permissions are denied forever, handle appropriately.
+    return Future.error(
+        'Location permissions are permanently denied, we cannot request permissions.');
+  }
+
+  // When we reach here, permissions are granted and we can
+  // continue accessing the position of the device.
+  return await Geolocator.getCurrentPosition();
+}
 
 //// select date
 
@@ -421,4 +466,59 @@ showdate(DateTime date) {
     return qwe + DateFormat(" dd MMM").format(date);
   }
   return DateFormat("EEEE, dd MMM").format(date);
+}
+
+Future<void> Logout(BuildContext context) {
+  var h;
+  var w;
+
+  h = MediaQuery.of(context).size.height;
+  w = MediaQuery.of(context).size.width;
+  return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Padding(
+          padding: const EdgeInsets.only(left: 20, right: 20),
+          child: AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            title: Center(
+              child:
+                  TutorialText(LOGOUT_TITLE, BLACK_CLR, FontWeight.normal, 17),
+            ),
+            content: SizedBox(
+              height: h * 0.12,
+              width: w * 0.18,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: h * 0.010,
+                  ),
+                  DefaultButton(
+                      text: LOGOUT,
+                      ontap: () async {
+                        Preference.Pref.clear().then((value) async {
+                          Navigate_PushRemove(context, Login());
+                          GoogleSignIn googleSignIn = GoogleSignIn();
+                          await googleSignIn.signOut();
+
+                          print(value.toString());
+                        });
+                      },
+                      fontsize: 17,
+                      height: 40,
+                      width: 300),
+                  const SizedBox(
+                    height: 18,
+                  ),
+                  GestureDetector(
+                      onTap: () => Navigator.of(context).pop(),
+                      child:
+                          styleText(CANCEL, GREEN_CLR, FontWeight.normal, 17)),
+                ],
+              ),
+            ),
+          ),
+        );
+      });
 }

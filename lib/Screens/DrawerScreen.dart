@@ -73,9 +73,9 @@ class _MyDrawerState extends State<MyDrawer> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     CircleAvatar(
-                      backgroundImage: NetworkImage(googlesigning == false
-                          ? gprofilePic.toString()
-                          : Preference.Pref.getString('image') ?? ""),
+                      backgroundImage: NetworkImage(
+                        Preference.Pref.getString('image') ?? "",
+                      ),
                     ),
                     SizedBox(
                       width: w * 0.020,
@@ -156,7 +156,12 @@ class _MyDrawerState extends State<MyDrawer> {
                 ),
                 Row(
                   children: [
-                    SvgPicture.asset(HEALTH_ICON),
+                    // SvgPicture.asset(HEALTH_ICON),
+                    Image.asset(
+                      "assets/png_image/question.png",
+                      height: h * 0.02,
+                      color: WHITE_CLR.withOpacity(0.8),
+                    ),
                     const SizedBox(
                       width: 10,
                     ),
@@ -205,7 +210,7 @@ class _MyDrawerState extends State<MyDrawer> {
                   GestureDetector(
                       onTap: () {
                         // Navigator.of(context).pop();
-                        _Logout(context);
+                        Logout(context);
                       },
                       child: styleText(
                           LOGOUT, WHITE60_CLR, FontWeight.normal, 15)),
@@ -218,61 +223,6 @@ class _MyDrawerState extends State<MyDrawer> {
       ),
     );
   }
-}
-
-Future<void> _Logout(BuildContext context) {
-  var h;
-  var w;
-
-  h = MediaQuery.of(context).size.height;
-  w = MediaQuery.of(context).size.width;
-  return showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20),
-          child: AlertDialog(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-            title: Center(
-              child:
-                  TutorialText(LOGOUT_TITLE, BLACK_CLR, FontWeight.normal, 17),
-            ),
-            content: SizedBox(
-              height: h * 0.12,
-              width: w * 0.18,
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: h * 0.010,
-                  ),
-                  DefaultButton(
-                      text: LOGOUT,
-                      ontap: () async {
-                        Preference.Pref.clear().then((value) async {
-                          Navigate_PushRemove(context, Login());
-                          GoogleSignIn googleSignIn = GoogleSignIn();
-                          await googleSignIn.signOut();
-
-                          print(value.toString());
-                        });
-                      },
-                      fontsize: 17,
-                      height: 40,
-                      width: 300),
-                  const SizedBox(
-                    height: 18,
-                  ),
-                  GestureDetector(
-                      onTap: () => Navigator.of(context).pop(),
-                      child:
-                          styleText(CANCEL, GREEN_CLR, FontWeight.normal, 17)),
-                ],
-              ),
-            ),
-          ),
-        );
-      });
 }
 
 showdialog(context) {
@@ -339,17 +289,24 @@ class _UploadDocState extends State<UploadDoc> {
                 textAlign: TextAlign.start,
                 decoration: const InputDecoration(
                     border: InputBorder.none,
-                    hintText: "Document Name",
+                    hintText: "Document name",
                     hintStyle: TextStyle(fontSize: 14, color: GRAY_CLR)),
               ),
             ),
             Visibility(
               visible: error && name.text.isEmpty,
-              child: styleText(
-                "Please enter documet name.",
-                Colors.red,
-                FontWeight.w400,
-                14,
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: w * 0.04,
+                  ),
+                  styleText(
+                    "Please enter document name",
+                    Colors.red,
+                    FontWeight.w400,
+                    14,
+                  ),
+                ],
               ),
             ),
             GestureDetector(
@@ -385,11 +342,18 @@ class _UploadDocState extends State<UploadDoc> {
             ),
             Visibility(
               visible: error && selectImage == null,
-              child: styleText(
-                "Please pick document.",
-                Colors.red,
-                FontWeight.w400,
-                14,
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: w * 0.04,
+                  ),
+                  styleText(
+                    "Please upload image/document",
+                    Colors.red,
+                    FontWeight.w400,
+                    14,
+                  ),
+                ],
               ),
             ),
             Visibility(

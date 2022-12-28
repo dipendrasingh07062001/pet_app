@@ -37,7 +37,7 @@ class _Add_MedicineState extends State<Add_Medicine> {
   @override
   void initState() {
     super.initState();
-    medicinename.name = "Select Medicine name";
+    medicinename.name = "Medicine Name";
     medicinenamelist.clear();
     medicinenamelist.add(medicinename);
     getMedicineNameApi().whenComplete(() {

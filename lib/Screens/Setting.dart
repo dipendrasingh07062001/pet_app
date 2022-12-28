@@ -90,7 +90,7 @@ class _SettingState extends State<Setting> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      // Navigate_to(context, widget);
+                      Navigate_to(context, Help1());
                     },
                     child: SizedBox(
                       height: 40,
@@ -116,9 +116,10 @@ class _SettingState extends State<Setting> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Preference.Pref.clear().then((value) {
-                        Navigate_PushRemove(context, const Login());
-                      });
+                      // Preference.Pref.clear().then((value) {
+                      // Navigate_PushRemove(context, const Login());
+                      // });
+                      Logout(context);
                     },
                     child: SizedBox(
                       height: 40,

@@ -279,28 +279,30 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
                     borderRadius: BorderRadius.circular(10), color: BROUN_CLR),
                 child: Column(
                   children: [
-                    GestureDetector(
-                      onTap: () => Navigate_to(context, const Symptoms()),
-                      child: Container(
-                        color: Colors.transparent,
-                        padding: EdgeInsets.all(h * 0.005),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            styleText(
-                                SYMPTOMAS, BLACK_CLR, FontWeight.normal, 15),
-                            value.days[value.initialPage].iscycle
-                                ? styleText(
-                                    value.days[value.initialPage].symptoms,
-                                    RED_CLR,
-                                    FontWeight.normal,
-                                    15)
-                                : const Icon(
-                                    Icons.add,
-                                    size: 20,
-                                    color: GRAY_CLR,
-                                  )
-                          ],
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () => Navigate_to(context, const Symptoms()),
+                        child: Container(
+                          color: Colors.transparent,
+                          padding: EdgeInsets.all(h * 0.005),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              styleText(
+                                  SYMPTOMAS, BLACK_CLR, FontWeight.normal, 15),
+                              value.days[value.initialPage].iscycle
+                                  ? styleText(
+                                      value.days[value.initialPage].symptoms,
+                                      RED_CLR,
+                                      FontWeight.normal,
+                                      15)
+                                  : const Icon(
+                                      Icons.add,
+                                      size: 20,
+                                      color: GRAY_CLR,
+                                    )
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -311,28 +313,30 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
                       color: GRAY_CLR.withOpacity(0.2),
                       thickness: 2,
                     ),
-                    GestureDetector(
-                      onTap: () => Navigate_to(context, const Symptoms()),
-                      child: Container(
-                        color: Colors.transparent,
-                        padding: EdgeInsets.all(h * 0.005),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            styleText(
-                                SPPOTING, BLACK_CLR, FontWeight.normal, 15),
-                            value.days[value.initialPage].iscycle
-                                ? styleText(
-                                    value.days[value.initialPage].spotting,
-                                    RED_CLR,
-                                    FontWeight.normal,
-                                    15)
-                                : const Icon(
-                                    Icons.add,
-                                    size: 20,
-                                    color: GRAY_CLR,
-                                  )
-                          ],
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () => Navigate_to(context, const Symptoms()),
+                        child: Container(
+                          color: Colors.transparent,
+                          padding: EdgeInsets.all(h * 0.005),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              styleText(
+                                  SPPOTING, BLACK_CLR, FontWeight.normal, 15),
+                              value.days[value.initialPage].iscycle
+                                  ? styleText(
+                                      value.days[value.initialPage].spotting,
+                                      RED_CLR,
+                                      FontWeight.normal,
+                                      15)
+                                  : const Icon(
+                                      Icons.add,
+                                      size: 20,
+                                      color: GRAY_CLR,
+                                    )
+                            ],
+                          ),
                         ),
                       ),
                     )
