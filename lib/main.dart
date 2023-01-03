@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:pet_app/Api/Prefrence.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Provider/Provider.dart';
+import 'package:pet_app/Provider/Reminder_provider.dart';
 import 'package:pet_app/Screens/Splash.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,7 +24,8 @@ Future<void> main() async {
   // requestNotificationPermission();
   // listeningMessaging();
   inMainMethodCall();
-  // shownotification();
+  shownotification();
+  NotificationHelper().configureLocalTimeZone();
   Preference.Pref = await SharedPreferences.getInstance();
   runApp(
     const MyApp(),
@@ -56,7 +58,9 @@ class MyApp extends StatelessWidget {
               create: ((context) =>
                   AuthenticationProvider(FirebaseAuth.instance))),
           ChangeNotifierProvider<CalenderProvider>(
-              create: ((context) => CalenderProvider()))
+              create: ((context) => CalenderProvider())),
+          ChangeNotifierProvider<ReminderService>(
+              create: ((context) => ReminderService())),
         ],
         child: AnnotatedRegion<SystemUiOverlayStyle>(
           value: const SystemUiOverlayStyle(

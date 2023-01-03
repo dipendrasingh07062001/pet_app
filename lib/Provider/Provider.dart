@@ -82,7 +82,7 @@ class ProviderTutorial extends ChangeNotifier {
         initialDate: DateTime.now(),
         firstDate: DateTime(1990),
         lastDate: DateTime.now());
-    if (datePick != null && datePick != birthDate) {
+    if (datePick != null) {
       birthDate = datePick;
       selectAtdate =
           "${birthDate!.day}-${birthDate!.month}-${birthDate!.year}"; // 08/14/2019

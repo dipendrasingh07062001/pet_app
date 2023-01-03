@@ -175,6 +175,8 @@ class CalenderProvider extends ChangeNotifier {
   List<CycleModel> days = [];
   List<CycleModel> selecteddays = [];
   List<DateTime> addeddays = [];
+  List<DateTime> removeDays = [];
+  Set<DateTime> sendaddeddates = {};
   List<CycleModel> cycle_tracking_data = [];
   bool isloading = false;
   Set<DateTime> selectedTableDays = LinkedHashSet<DateTime>(
@@ -184,7 +186,37 @@ class CalenderProvider extends ChangeNotifier {
   void onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     // Update values in a Set
     if (DateTime.now().isAfter(selectedDay)) {
-      ondaypressed(selectedDay);
+      // ondaypressed(selectedDay);
+      print(addeddays);
+      if (addeddays.any((element) => datematch(element, selectedDay))) {
+        removefromadded(selectedDay);
+      } else {
+        addeddays.add(selectedDay);
+        sendaddeddates.add(selectedDay);
+      }
+      // days.forEach((e) async {
+      //     if (datematch(e.date!, date)) {
+      //       e.iscycle = !e.iscycle;
+      //       if (e.iscycle) {
+      //         selecteddays.add(e);
+      //         await addcycle(date, "Had Flow", "qwertyu", "qwe", "1");
+      //       } else {
+      //         remove(e.date!);
+      //       }
+      //     }
+      //   });
+    }
+    notifyListeners();
+  }
+
+  removefromadded(DateTime date) async {
+    for (int i = 0; i < addeddays.length; i++) {
+      if (datematch(addeddays[i], date)) {
+        addeddays.removeAt(i);
+        removeDays.add(date);
+        // await addcycle(date, "Had Flow", "qwertyu", "qwe", "0");
+        return;
+      }
     }
     notifyListeners();
   }
@@ -244,10 +276,13 @@ class CalenderProvider extends ChangeNotifier {
   }
 
   bool selectedDayPredicate(DateTime day) {
-    return selecteddays.any((element) => datematch(element.date!, day));
+    return addeddays.any((element) => datematch(element, day));
   }
 
   onenter() {
+    addeddays.clear();
+    removeDays.clear();
+    sendaddeddates.clear();
     addeddays.addAll(selecteddays.map((e) => e.date!).toList());
     notifyListeners();
   }
@@ -261,7 +296,9 @@ class CalenderProvider extends ChangeNotifier {
         e.iscycle = !e.iscycle;
         if (e.iscycle) {
           selecteddays.add(e);
-          await addcycle(date, "Had Flow", "qwertyu", "qwe", "1");
+          await addcycle([
+            DateFormat("yyyy-MM-dd").format(date),
+          ], "Had Flow", "qwertyu", "qwe", "1");
         } else {
           remove(e.date!);
         }
@@ -275,7 +312,9 @@ class CalenderProvider extends ChangeNotifier {
     for (int i = 0; i < selecteddays.length; i++) {
       if (selecteddays[i].date!.compareTo(date) == 0) {
         selecteddays.removeAt(i);
-        await addcycle(date, "Had Flow", "qwertyu", "qwe", "0");
+        await addcycle([
+          DateFormat("yyyy-MM-dd").format(date),
+        ], "Had Flow", "qwertyu", "qwe", "0");
         return;
       }
     }
@@ -312,12 +351,41 @@ class CalenderProvider extends ChangeNotifier {
     if (days[index].iscycle) {
       selecteddays.add(days[index]);
       selectedTableDays.add(days[index].date!);
-      await addcycle(days[index].date!, "Had Flow", "qwertyu", "qwe", "1");
+      await addcycle([
+        DateFormat("yyyy-MM-dd").format(days[index].date!),
+      ], "Had Flow", "qwertyu", "qwe", "1");
     } else {
       remove(days[index].date!);
-      await addcycle(days[index].date!, "Had Flow", "qwertyu", "qwe", "0");
+      await addcycle([
+        DateFormat("yyyy-MM-dd").format(days[index].date!),
+      ], "Had Flow", "qwertyu", "qwe", "0");
       selectedTableDays.remove(days[index].date);
     }
+
+    notifyListeners();
+  }
+
+  onDone(BuildContext context) async {
+    // print(addeddays.map((e) => e.toIso8601String()).toList());
+    // print(DateFormat("yyyy-MM-dd").format(addeddays.first));
+    await addcycle(
+        sendaddeddates.map((e) => DateFormat("yyyy-MM-dd").format(e)).toList(),
+        "Had Flow",
+        "",
+        "",
+        "1");
+    Set<String> datesremove =
+        removeDays.map((e) => DateFormat("yyyy-MM-dd").format(e)).toSet();
+    await addcycle(datesremove.toList(), "Had Flow", "", "", "0");
+    getcycletracking(context);
+    removeDays.forEach((element) {
+      days.forEach((el) {
+        if (datematch(el.date!, element)) {
+          el.iscycle = !el.iscycle;
+        }
+      });
+    });
+    Navigator.of(context).pop();
     notifyListeners();
   }
 }

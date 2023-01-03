@@ -7,6 +7,7 @@ class Predictions extends ChangeNotifier {
   List<DateTime> showdates = [];
   bool isLoading = false;
   int iterval = 0;
+  int lastlong = 0;
 
   getPreductionDates(BuildContext context) {
     isLoading = true;
@@ -15,10 +16,12 @@ class Predictions extends ChangeNotifier {
       value.forEach((e) {
         showdates.add(DateTime.parse(e));
       });
+      days.clear();
       showdates.forEach((element) {
         generatedateList(element);
       });
       isLoading = false;
+      notifyListeners();
     });
     notifyListeners();
   }
@@ -28,11 +31,15 @@ class Predictions extends ChangeNotifier {
   }
 
   generatedateList(final value) {
-    days.add(value);
-    days.add(value.add(Duration(days: 1)));
-    days.add(value.add(Duration(days: 2)));
-    days.add(value.add(Duration(days: 3)));
-    days.add(value.add(Duration(days: 4)));
+    for (int i = 0; i < lastlong; i++) {
+      days.add(value.add(Duration(days: i)));
+    }
+    print(days);
+    // days.add(value);
+    // days.add(value.add(Duration(days: 1)));
+    // days.add(value.add(Duration(days: 2)));
+    // days.add(value.add(Duration(days: 3)));
+    // days.add(value.add(Duration(days: 4)));
     notifyListeners();
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Provider/AppleSignin_provider.dart';
@@ -170,13 +171,13 @@ class _HomeState extends State<Home> {
       floatingActionButton: SizedBox(
         height: 70,
         child: FloatingActionButton(
-          onPressed: () {
-            // uppersnackbar(context, "session has expired please log in again");
-            // flutterLocalNotificationsPlugin.show(
-            //     20, "Test", "Test body", platformChannelSpecifics);
-            getFCMtoken();
-            // context.read<AuthenticationProvider>().signInWithApple();
-            // Navigate_to(context, const Reminder());
+          onPressed: () async {
+            // NotificationHelper().schedulNotification(
+            //     "this is test",
+            //     "qwertyuiopoiuytrewq",
+            //     RepeatInterval.everyMinute,
+            //     DateTime.now());
+            Navigate_to(context, const Reminder());
           },
           child: SvgPicture.asset(NOTIFICATION_ICON),
         ),
@@ -337,14 +338,16 @@ class _HomeState extends State<Home> {
                                                                 null) {
                                                               return child;
                                                             } else {
-                                                              return valueLoader(loadingProgress
-                                                                          .expectedTotalBytes !=
-                                                                      null
-                                                                  ? loadingProgress
-                                                                          .cumulativeBytesLoaded /
-                                                                      loadingProgress
-                                                                          .expectedTotalBytes!
-                                                                  : null);
+                                                              return valueLoader(
+                                                                loadingProgress
+                                                                            .expectedTotalBytes !=
+                                                                        null
+                                                                    ? loadingProgress
+                                                                            .cumulativeBytesLoaded /
+                                                                        loadingProgress
+                                                                            .expectedTotalBytes!
+                                                                    : null,
+                                                              );
                                                             }
                                                           },
                                                           errorBuilder:

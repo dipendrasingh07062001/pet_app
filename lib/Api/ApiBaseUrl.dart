@@ -39,3 +39,4 @@ const get_cycle_url = 'get_cycle';
 const add_cycle_url = 'cycletracking_first';
 const period_priducation_url = 'period_priducation';
 const profile_update_url = 'update_profile';
+const get_reminder_url = 'get_reminder';

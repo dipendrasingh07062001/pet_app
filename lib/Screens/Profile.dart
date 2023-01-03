@@ -185,6 +185,7 @@ class _Profile1State extends State<Profile1> {
                     boxShadow: [BoxShadow(color: GRAY_CLR, blurRadius: 1)]),
                 child: TextFormField(
                   controller: phone,
+                  keyboardType: TextInputType.phone,
                   maxLength: 10,
                   decoration: InputDecoration(
                       contentPadding: EdgeInsets.only(left: 10),

@@ -89,8 +89,10 @@ class _SymptomsState extends State<Symptoms> {
                     ontap: () async {
                       value.onDaySelected(value.days[value.initialPage].date!,
                           value.days[value.initialPage].date!);
-                      await addcycle(value.days[value.initialPage].date!,
-                          "Had Flow", "qwertyu", "qwe", "1");
+                      await addcycle([
+                        DateFormat("yyyy-MM-dd")
+                            .format(value.days[value.initialPage].date!),
+                      ], "Had Flow", "qwertyu", "qwe", "2", true);
 
                       Navigator.of(context).pop();
                     },

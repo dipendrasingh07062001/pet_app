@@ -103,7 +103,8 @@ class _AddPetpageState extends State<AddPetpage> {
         toolbarHeight: 65,
         backgroundColor: WHITE70_CLR,
         elevation: 1,
-        title: styleText(ADD_PETS, DARK_CLR, FontWeight.bold, 16),
+        title: styleText(widget.isedit ? "Edit Pet" : ADD_PETS, DARK_CLR,
+            FontWeight.bold, 16),
       ),
       extendBodyBehindAppBar: true,
       resizeToAvoidBottomInset: false,
@@ -261,6 +262,7 @@ class _AddPetpageState extends State<AddPetpage> {
                                   AddPetModel.weight.toString(),
                                   AddPetModel.dob.toString(),
                                   AddPetModel.addPetIamge,
+                                  AddPetModel.editimage,
                                   AddPetModel.uploadDocumnt ?? null,
                                 ).then((valu) {
                                   ScaffoldMessenger.of(context).showSnackBar(

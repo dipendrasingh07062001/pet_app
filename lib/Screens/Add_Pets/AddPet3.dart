@@ -100,10 +100,9 @@ class _Addpet3State extends State<Addpet3> {
       // SizedBox(
       //   height: h * 0.030,
       // ),
-      Expanded(
-        child: Visibility(
-          visible: AddPetModel.addPetIamge.isNotEmpty ||
-              AddPetModel.editimage != null,
+      Visibility(
+        visible: AddPetModel.editimage.isNotEmpty,
+        child: Expanded(
           child: GridView.count(
             crossAxisCount: 3,
             shrinkWrap: true,
@@ -111,87 +110,268 @@ class _Addpet3State extends State<Addpet3> {
             mainAxisSpacing: 10,
             padding: EdgeInsets.only(top: 10),
             // physics: NeverScrollableScrollPhysics(),
-            children: List.generate(AddPetModel.addPetIamge.length, (index) {
-              print("===============");
-              print(
-                selectImage != null || AddPetModel.editimage != null,
-              );
-              return Visibility(
-                child: Container(
-                    alignment: Alignment.center,
-                    height: 83,
-                    width: 95,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: NetworkImage(
-                            AddPetModel.addPetIamge.isEmpty
-                                ? AddPetModel.editimage.toString()
-                                : "",
-                          ),
-                          fit: BoxFit.cover),
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: GRAY_CLR.withOpacity(0.1)),
-                      color: FADE_BLUE_CLR.withOpacity(0.3),
-                    ),
-                    child: Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            // clipBehavior: Clip.antiAlias,
-                            child: Stack(
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(15),
-                                  child: selectImage == null
-                                      ? AddPetModel.editimage == null
-                                          ? Image.asset(
-                                              DOG_IMAGE,
-                                              height: 90,
-                                            )
-                                          : Container()
-                                      : Padding(
-                                          padding: const EdgeInsets.all(1),
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            child: Image.file(
-                                              AddPetModel.addPetIamge[index],
-                                              scale: 1.0,
-                                              fit: BoxFit.cover,
-                                              height: 100,
-                                              width: w * 1,
-                                            ),
+            children: List.generate(AddPetModel.editimage.length, (index) {
+                  print("===============");
+                  print(
+                    selectImage != null || AddPetModel.editimage != null,
+                  );
+                  return Visibility(
+                    child: Container(
+                        alignment: Alignment.center,
+                        height: 83,
+                        width: 95,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: NetworkImage(
+                                AddPetModel.editimage[index],
+                              ),
+                              fit: BoxFit.cover),
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: GRAY_CLR.withOpacity(0.1)),
+                          color: FADE_BLUE_CLR.withOpacity(0.3),
+                        ),
+                        child: Padding(
+                            padding: const EdgeInsets.all(5),
+                            child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                // clipBehavior: Clip.antiAlias,
+                                child: Stack(
+                                  children: [
+                                    // ClipRRect(
+                                    //   borderRadius: BorderRadius.circular(15),
+                                    //   child: selectImage == null
+                                    //       ? AddPetModel.editimage == null
+                                    //           ? Image.asset(
+                                    //               DOG_IMAGE,
+                                    //               height: 90,
+                                    //             )
+                                    //           : Container()
+                                    //       : Padding(
+                                    //           padding: const EdgeInsets.all(1),
+                                    //           child: ClipRRect(
+                                    //             borderRadius:
+                                    //                 BorderRadius.circular(5),
+                                    //             child: Image.file(
+                                    //               AddPetModel.addPetIamge[index],
+                                    //               scale: 1.0,
+                                    //               fit: BoxFit.cover,
+                                    //               height: 100,
+                                    //               width: w * 1,
+                                    //             ),
+                                    //           ),
+                                    //         ),
+                                    // ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 60),
+                                      child: Align(
+                                        alignment: Alignment.topRight,
+                                        child: SizedBox(
+                                          height: 25,
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              AddPetModel.editimage
+                                                  .removeAt(index);
+                                              setState(() {});
+                                            },
+                                            child: CircleAvatar(
+                                                backgroundColor: WHITE_CLR,
+                                                child: GestureDetector(
+                                                  child: const Icon(
+                                                    Icons.delete,
+                                                    size: 10,
+                                                    color: FADE_GREEN_CLR,
+                                                  ),
+                                                )),
                                           ),
                                         ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 60),
-                                  child: Align(
-                                    alignment: Alignment.topRight,
-                                    child: SizedBox(
-                                      height: 25,
-                                      child: GestureDetector(
-                                        onTap: () {},
-                                        child: CircleAvatar(
-                                            backgroundColor: WHITE_CLR,
-                                            child: GestureDetector(
-                                              child: const Icon(
-                                                Icons.delete,
-                                                size: 10,
-                                                color: FADE_GREEN_CLR,
-                                              ),
-                                            )),
                                       ),
+                                    )
+                                  ],
+                                )))),
+                  );
+                }) +
+                List.generate(AddPetModel.addPetIamge.length, (index) {
+                  print("===============");
+                  print(
+                    selectImage != null || AddPetModel.editimage != null,
+                  );
+                  return Visibility(
+                    child: Container(
+                        alignment: Alignment.center,
+                        height: 83,
+                        width: 95,
+                        decoration: BoxDecoration(
+                          // image: DecorationImage(
+                          //     image: NetworkImage(
+                          //       AddPetModel.addPetIamge.isEmpty
+                          //           ? AddPetModel.editimage.toString()
+                          //           : "",
+                          //     ),
+                          //     fit: BoxFit.cover),
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: GRAY_CLR.withOpacity(0.1)),
+                          color: FADE_BLUE_CLR.withOpacity(0.3),
+                        ),
+                        child: Padding(
+                            padding: const EdgeInsets.all(5),
+                            child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                // clipBehavior: Clip.antiAlias,
+                                child: Stack(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: selectImage == null
+                                          ? AddPetModel.editimage == null
+                                              ? Image.asset(
+                                                  DOG_IMAGE,
+                                                  height: 90,
+                                                )
+                                              : Container()
+                                          : Padding(
+                                              padding: const EdgeInsets.all(1),
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                child: Image.file(
+                                                  AddPetModel
+                                                      .addPetIamge[index],
+                                                  scale: 1.0,
+                                                  fit: BoxFit.cover,
+                                                  height: 100,
+                                                  width: w * 1,
+                                                ),
+                                              ),
+                                            ),
                                     ),
-                                  ),
-                                )
-                              ],
-                            )))),
-              );
-            }),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 60),
+                                      child: Align(
+                                        alignment: Alignment.topRight,
+                                        child: SizedBox(
+                                          height: 25,
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              AddPetModel.addPetIamge
+                                                  .removeAt(index);
+                                              setState(() {});
+                                            },
+                                            child: CircleAvatar(
+                                                backgroundColor: WHITE_CLR,
+                                                child: GestureDetector(
+                                                  child: const Icon(
+                                                    Icons.delete,
+                                                    size: 10,
+                                                    color: FADE_GREEN_CLR,
+                                                  ),
+                                                )),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                )))),
+                  );
+                }),
           ),
         ),
       ),
+
+      // Visibility(
+      //   visible: AddPetModel.addPetIamge.isNotEmpty,
+      //   child: Expanded(
+      //     child: GridView.count(
+      //       crossAxisCount: 3,
+      //       shrinkWrap: true,
+      //       crossAxisSpacing: 10,
+      //       mainAxisSpacing: 10,
+      //       padding: EdgeInsets.only(top: 10),
+      //       // physics: NeverScrollableScrollPhysics(),
+      //       children: List.generate(AddPetModel.addPetIamge.length, (index) {
+      //         print("===============");
+      //         print(
+      //           selectImage != null || AddPetModel.editimage != null,
+      //         );
+      //         return Visibility(
+      //           child: Container(
+      //               alignment: Alignment.center,
+      //               height: 83,
+      //               width: 95,
+      //               decoration: BoxDecoration(
+      //                 // image: DecorationImage(
+      //                 //     image: NetworkImage(
+      //                 //       AddPetModel.addPetIamge.isEmpty
+      //                 //           ? AddPetModel.editimage.toString()
+      //                 //           : "",
+      //                 //     ),
+      //                 //     fit: BoxFit.cover),
+      //                 borderRadius: BorderRadius.circular(10),
+      //                 border: Border.all(color: GRAY_CLR.withOpacity(0.1)),
+      //                 color: FADE_BLUE_CLR.withOpacity(0.3),
+      //               ),
+      //               child: Padding(
+      //                   padding: const EdgeInsets.all(5),
+      //                   child: ClipRRect(
+      //                       borderRadius: BorderRadius.circular(10),
+      //                       // clipBehavior: Clip.antiAlias,
+      //                       child: Stack(
+      //                         children: [
+      //                           ClipRRect(
+      //                             borderRadius: BorderRadius.circular(15),
+      //                             child: selectImage == null
+      //                                 ? AddPetModel.editimage == null
+      //                                     ? Image.asset(
+      //                                         DOG_IMAGE,
+      //                                         height: 90,
+      //                                       )
+      //                                     : Container()
+      //                                 : Padding(
+      //                                     padding: const EdgeInsets.all(1),
+      //                                     child: ClipRRect(
+      //                                       borderRadius:
+      //                                           BorderRadius.circular(5),
+      //                                       child: Image.file(
+      //                                         AddPetModel.addPetIamge[index],
+      //                                         scale: 1.0,
+      //                                         fit: BoxFit.cover,
+      //                                         height: 100,
+      //                                         width: w * 1,
+      //                                       ),
+      //                                     ),
+      //                                   ),
+      //                           ),
+      //                           Padding(
+      //                             padding: const EdgeInsets.only(left: 60),
+      //                             child: Align(
+      //                               alignment: Alignment.topRight,
+      //                               child: SizedBox(
+      //                                 height: 25,
+      //                                 child: GestureDetector(
+      //                                   onTap: () {
+      //                                     AddPetModel.addPetIamge
+      //                                         .removeAt(index);
+      //                                     setState(() {});
+      //                                   },
+      //                                   child: CircleAvatar(
+      //                                       backgroundColor: WHITE_CLR,
+      //                                       child: GestureDetector(
+      //                                         child: const Icon(
+      //                                           Icons.delete,
+      //                                           size: 10,
+      //                                           color: FADE_GREEN_CLR,
+      //                                         ),
+      //                                       )),
+      //                                 ),
+      //                               ),
+      //                             ),
+      //                           )
+      //                         ],
+      //                       )))),
+      //         );
+      //       }),
+      //     ),
+      //   ),
+      // ),
     ]);
   }
 
@@ -210,11 +390,14 @@ class _Addpet3State extends State<Addpet3> {
   }
 
   OpenCamera(BuildContext context) async {
-    // final CameraImage = await ImagePicker().pickImage(
-    //   source: ImageSource.camera,
-    // );
+    final CameraImage = await ImagePicker().pickImage(
+      source: ImageSource.camera,
+    );
     // selectImage = CameraImage;
-    // AddPetModel.addPetIamge = File(selectImage!.path);
-    // setState(() {});
+    if (CameraImage != null) {
+      selectImage = CameraImage;
+      AddPetModel.addPetIamge.add(File(selectImage!.path));
+      setState(() {});
+    }
   }
 }

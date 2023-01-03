@@ -19,7 +19,7 @@ class Add_Period extends StatefulWidget {
 class _Add_PeriodState extends State<Add_Period> {
   var h;
   var w;
-
+  final currentdate = DateTime.now();
   @override
   void initState() {
     // TODO: implement initState
@@ -45,7 +45,7 @@ class _Add_PeriodState extends State<Add_Period> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
                   child: TableCalendar(
-                      focusedDay: DateTime.now(),
+                      focusedDay: currentdate,
                       daysOfWeekHeight: h * 0.03,
                       daysOfWeekStyle: DaysOfWeekStyle(
                         dowTextFormatter: (date, locale) {
@@ -118,7 +118,7 @@ class _Add_PeriodState extends State<Add_Period> {
             DefaultButton(
                 text: DONE,
                 ontap: () {
-                  Navigator.of(context).pop();
+                  context.read<CalenderProvider>().onDone(context);
                 },
                 fontsize: 15,
                 height: h * 0.060,

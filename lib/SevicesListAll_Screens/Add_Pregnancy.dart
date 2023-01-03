@@ -28,7 +28,7 @@ class _Add_PregnancyState extends State<Add_Pregnancy> {
 
   String setualActive = 'Yes';
   String nuetered = 'Yes';
-  String reminder = '6 Month';
+  String reminder = '6month';
 
   @override
   void initState() {

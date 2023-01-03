@@ -376,17 +376,35 @@ class _AddPet2State extends State<AddPet2> {
                                 // });
                                 askwhich();
                               },
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SvgPicture.asset(UPLOAD_ICON),
-                                  SizedBox(
-                                    height: h * 0.015,
-                                  ),
-                                  styleText(UPLOAD_DOCUMENT, GRAY_CLR,
-                                      FontWeight.normal, 14)
-                                ],
-                              ),
+                              child: AddPetModel.isedit &&
+                                      AddPetModel.editdoc!.isNotEmpty
+                                  ? ClipRRect(
+                                      borderRadius: BorderRadius.circular(5),
+                                      child: Image.network(
+                                        AddPetModel.editdoc!,
+
+                                        scale: 1.0,
+                                        fit: BoxFit.cover,
+                                        errorBuilder:
+                                            (context, error, stackTrace) {
+                                          return Container();
+                                        },
+                                        // height: 100,
+                                        width: w * 1,
+                                      ),
+                                    )
+                                  : Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        SvgPicture.asset(UPLOAD_ICON),
+                                        SizedBox(
+                                          height: h * 0.015,
+                                        ),
+                                        styleText(UPLOAD_DOCUMENT, GRAY_CLR,
+                                            FontWeight.normal, 14)
+                                      ],
+                                    ),
                             )
                           : GestureDetector(
                               onTap: () {

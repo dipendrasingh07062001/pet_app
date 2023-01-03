@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../Api/Models/My_pet_model.dart';
 import '../../Api/Services.dart';
 import '../../Componants/Images&Icons.dart';
+import '../../Testing1/imagepreview.dart';
 import '../Add_Pets/addPet.dart';
 
 class My_Pets extends StatefulWidget {
@@ -221,38 +222,47 @@ class _My_PetsState extends State<My_Pets> {
                           left: 0,
                           bottom: 0,
                           top: 0,
-                          child: Center(
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Image.network(
-                                mypetmoellist[index].image.isNotEmpty
-                                    ? mypetmoellist[index].image.first
-                                    : "",
-                                loadingBuilder:
-                                    (context, child, loadingProgress) {
-                                  if (loadingProgress == null) {
-                                    return child;
-                                  } else {
-                                    return Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: valueLoader(
-                                          loadingProgress.expectedTotalBytes !=
-                                                  null
-                                              ? loadingProgress
-                                                      .cumulativeBytesLoaded /
-                                                  loadingProgress
-                                                      .expectedTotalBytes!
-                                              : null),
-                                    );
-                                  }
-                                },
-                                scale: 1.0,
-                                width: w * 0.315,
-                                height: h * 0.195,
-                                fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return Container();
-                                },
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigate_to(
+                                  context,
+                                  Images(
+                                    images: mypetmoellist[index].image,
+                                  ));
+                            },
+                            child: Center(
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Image.network(
+                                  mypetmoellist[index].image.isNotEmpty
+                                      ? mypetmoellist[index].image.first
+                                      : "",
+                                  loadingBuilder:
+                                      (context, child, loadingProgress) {
+                                    if (loadingProgress == null) {
+                                      return child;
+                                    } else {
+                                      return Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: valueLoader(loadingProgress
+                                                    .expectedTotalBytes !=
+                                                null
+                                            ? loadingProgress
+                                                    .cumulativeBytesLoaded /
+                                                loadingProgress
+                                                    .expectedTotalBytes!
+                                            : null),
+                                      );
+                                    }
+                                  },
+                                  scale: 1.0,
+                                  width: w * 0.315,
+                                  height: h * 0.195,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Container();
+                                  },
+                                ),
                               ),
                             ),
                           ),

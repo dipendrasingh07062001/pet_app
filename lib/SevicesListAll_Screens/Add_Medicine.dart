@@ -29,6 +29,8 @@ class _Add_MedicineState extends State<Add_Medicine> {
   String? startdate;
   String? enddate;
   String? attime;
+  DateTime? start;
+  DateTime? end;
   String reminder = 'Daily';
   String? selectedmedicine;
 
@@ -246,6 +248,7 @@ class _Add_MedicineState extends State<Add_Medicine> {
                             setState(() {
                               startdate =
                                   DateFormat('dd/MM/yyyy').format(value!);
+                              start = value;
                             });
                           });
                         },
@@ -281,6 +284,7 @@ class _Add_MedicineState extends State<Add_Medicine> {
                           cutomDatePicker(context).then((value) {
                             setState(() {
                               enddate = DateFormat('dd/MM/yyyy').format(value!);
+                              end = value;
                             });
                           });
                         },
@@ -412,8 +416,8 @@ class _Add_MedicineState extends State<Add_Medicine> {
                                   selectedmedicine.toString(),
                                   Duration,
                                   day,
-                                  startdate.toString(),
-                                  enddate.toString(),
+                                  DateFormat("yyyy-MM-dd").format(start!),
+                                  DateFormat("yyyy-MM-dd").format(end!),
                                   reminder,
                                   attime.toString(),
                                 ).then((value) {

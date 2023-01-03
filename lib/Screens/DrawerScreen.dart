@@ -329,16 +329,18 @@ class _UploadDocState extends State<UploadDoc> {
                               fit: BoxFit.cover),
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(color: TFFBORDER_CLR)),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset(UPLOAD_ICON),
-                      SizedBox(
-                        height: h * 0.015,
-                      ),
-                      styleText(UPLOAD, GRAY_CLR, FontWeight.normal, 14),
-                    ],
-                  )),
+                  child: selectImage != null
+                      ? Container()
+                      : Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(UPLOAD_ICON),
+                            SizedBox(
+                              height: h * 0.015,
+                            ),
+                            styleText(UPLOAD, GRAY_CLR, FontWeight.normal, 14),
+                          ],
+                        )),
             ),
             Visibility(
               visible: error && selectImage == null,

@@ -64,7 +64,8 @@ class _SettingState extends State<Setting> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigate_replace(context, const ChangePassword1());
+                      Navigate_to(context, ChangePassword1());
+                      // Navigate_replace(context, const ChangePassword1());
                     },
                     child: SizedBox(
                       height: 40,

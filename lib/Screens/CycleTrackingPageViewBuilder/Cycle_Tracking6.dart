@@ -376,11 +376,18 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
             SizedBox(
               height: h * 0.010,
             ),
-            context.watch<Predictions>().isLoading
-                ? loader
-                : Cycle_prediction_cal(
-                    index: 0,
-                  ),
+            Consumer<Predictions>(builder: ((context, value, child) {
+              return value.isLoading
+                  ? loader
+                  : Cycle_prediction_cal(
+                      index: 0,
+                    );
+            })),
+            // context.watch<Predictions>().isLoading
+            //     ? loader
+            //     : Cycle_prediction_cal(
+            //         index: 0,
+            //       ),
             SizedBox(
               height: h * 0.020,
             ),

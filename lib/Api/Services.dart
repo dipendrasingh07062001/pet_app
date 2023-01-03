@@ -10,10 +10,12 @@ import 'package:pet_app/Api/Models/getBreedModel.dart';
 import 'package:pet_app/Api/Models/getDewormingModel.dart';
 import 'package:pet_app/Api/Models/getMedicineModel.dart';
 import 'package:pet_app/Api/Models/getMedicineNameModel.dart';
+import 'package:pet_app/Api/Models/remindermodel.dart';
 import 'package:pet_app/Api/Models/v_model.dart';
 import 'package:pet_app/Api/Models/vaccinationModel.dart';
 import 'package:pet_app/Provider/ServiceListProvider.dart';
 import 'package:pet_app/Provider/predictionProvider.dart';
+import 'package:pet_app/Screens/Reminder.dart';
 import 'package:provider/provider.dart';
 import '../Screens/Onbording/Login.dart';
 import '../Testing1/linearCalender.dart';
@@ -594,6 +596,7 @@ Future editPetApi(
   String weight,
   String dob,
   List<File?> image,
+  List<String?> image2,
   File? documnt,
 ) async {
   var request = http.MultipartRequest(
@@ -602,12 +605,16 @@ Future editPetApi(
   );
 
   request.headers.addAll(headers);
-
+  if (image2.isNotEmpty) {
+    request.fields.addAll({
+      "left_images": image2.join(","),
+    });
+  }
   if (image.isNotEmpty) {
     image.forEach((element) {
       request.files.add(
         http.MultipartFile(
-          'image',
+          'image[]',
           element!.readAsBytes().asStream(),
           element.lengthSync(),
           filename: element.path.split("/").last,
@@ -1413,6 +1420,7 @@ Future getcycletracking(BuildContext context) async {
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       if (data['status'] == true) {
+        read.selecteddays.clear();
         read.getCycleData(data["data"]);
         read.loadingstate(false);
         return true;
@@ -1447,6 +1455,7 @@ Future getcycleprediction(BuildContext context) async {
       if (data['status'] == true) {
         // read.getCycleData(data["data"]);
         // read.loadingstate(false);
+        read.lastlong = int.parse(data["data"]["last_period_days"] ?? 0);
         read.iterval = int.parse(data["data"]["last_long_period_days"] ?? "0");
         return data["data"]["next_period_days"] ?? [];
       } else {
@@ -1464,23 +1473,45 @@ Future getcycleprediction(BuildContext context) async {
   }
 }
 
-Future addcycle(
-  DateTime date,
-  String period,
-  String symptoms,
-  String spotting,
-  String is_add,
-) async {
+Future addcycle(List<String> date, String period, String symptoms,
+    String spotting, String is_add,
+    [bool isupdate = false]) async {
   try {
-    var response = await http
-        .post(Uri.parse(baseURL + add_cycle_url), headers: headers, body: {
-      'date': date.toIso8601String(),
-      'period': period,
-      'symptoms': symptoms,
-      'spotting': spotting,
-      'is_add': is_add,
-      'pet_id': Preference.Pref.getInt('selectedPetId').toString()
-    });
+    var body = date
+        .map((e) => {
+              'date': e,
+              'period': period,
+              'symptoms': symptoms,
+              'spotting': spotting,
+              // 'is_add': is_add,
+              'pet_id': Preference.Pref.getInt('selectedPetId').toString()
+            })
+        .toList();
+    print(jsonEncode(body));
+    var response = await http.post(Uri.parse(baseURL + add_cycle_url),
+        headers: headers,
+        body: isupdate
+            ? {
+                'date': date.first,
+                'period': period,
+                'symptoms': symptoms,
+                'spotting': spotting,
+                'is_add': is_add,
+                'pet_id': Preference.Pref.getInt('selectedPetId').toString()
+              }
+            : {
+                "cycle_period": jsonEncode(body),
+                'is_add': is_add,
+              }
+        //     {
+        //   'date': date.join(","),
+        //   'period': period,
+        //   'symptoms': symptoms,
+        //   'spotting': spotting,
+        //   'is_add': is_add,
+        //   'pet_id': Preference.Pref.getInt('selectedPetId').toString()
+        // }
+        );
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       if (data['status'] == true) {
@@ -1494,5 +1525,35 @@ Future addcycle(
   } catch (e) {
     // TODO
     return false;
+  }
+}
+
+Future getreminderData(BuildContext context) async {
+  try {
+    var response = await http.get(
+      Uri.parse(
+        baseURL +
+            get_reminder_url +
+            "?user_id=" +
+            Preference.Pref.getInt("userId").toString(),
+      ),
+      headers: headers,
+    );
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      if (data['status'] == true) {
+        List<ReminderModel> list = [];
+        list = reminderModelFromJson(jsonEncode(data["data"]));
+        return list;
+      } else {
+        // customSnackbar(context, jsoncode["message"]);
+        return [];
+      }
+    } else {
+      return [];
+    }
+  } catch (e) {
+    // TODO
+    return [];
   }
 }
