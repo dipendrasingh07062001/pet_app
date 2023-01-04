@@ -167,7 +167,7 @@ class CycleTrackingProvider extends ChangeNotifier {
     const Cycle_Tracking1(),
     const CycleTracking2(),
     const CycleTracking3(),
-    const Cycle_Tracking(),
+    // const Cycle_Tracking(),
     const CycleTracking5(),
   ];
   var currentIndex = 0;

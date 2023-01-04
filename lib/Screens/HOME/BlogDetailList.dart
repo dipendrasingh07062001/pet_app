@@ -83,45 +83,75 @@ class _BlogDetailsListState extends State<BlogDetailsList> {
                                   SizedBox(
                                     height: h * 0.005,
                                   ),
-                                  RichText(
-                                    textScaleFactor: 1,
-                                    text: TextSpan(
-                                      children: <InlineSpan>[
-                                        TextSpan(
-                                            text: blogListdata[index]
-                                                .name
-                                                .toString(),
-                                            style: const TextStyle(
-                                              color: GRAY_CLR,
-                                              fontSize: 10,
-                                            )),
-                                        WidgetSpan(
-                                            alignment: PlaceholderAlignment.top,
-                                            baseline: TextBaseline.alphabetic,
-                                            child: SizedBox(
-                                              width: w * 0.1,
-                                            )),
-                                        TextSpan(
-                                            text: blogListdata[index]
-                                                .id
-                                                .toString(),
-                                            style: const TextStyle(
-                                                color: GRAY_CLR, fontSize: 10)),
+                                  Expanded(
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          flex: 4,
+                                          child: styleText(
+                                              blogListdata[index]
+                                                  .name
+                                                  .toString(),
+                                              DARK_CLR,
+                                              FontWeight.w400,
+                                              10,
+                                              1),
+                                        ),
+                                        Expanded(
+                                          child: Container(
+                                            alignment: Alignment.centerRight,
+                                            padding: EdgeInsets.only(right: 8),
+                                            child: styleText(
+                                              blogListdata[index].id.toString(),
+                                              DARK_CLR,
+                                              FontWeight.w400,
+                                              10,
+                                            ),
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ),
+                                  // RichText(
+                                  //   overflow: TextOverflow.ellipsis,
+                                  //   textScaleFactor: 1,
+                                  //   text: TextSpan(
+                                  //     children: <InlineSpan>[
+                                  //       TextSpan(
+                                  //           text: blogListdata[index]
+                                  //               .name
+                                  //               .toString(),
+                                  //           style: const TextStyle(
+                                  //             color: GRAY_CLR,
+                                  //             fontSize: 10,
+                                  //           )),
+                                  //       WidgetSpan(
+                                  //           alignment: PlaceholderAlignment.top,
+                                  //           baseline: TextBaseline.alphabetic,
+                                  //           child: SizedBox(
+                                  //             width: w * 0.1,
+                                  //           )),
+                                  //       TextSpan(
+                                  //           text: blogListdata[index]
+                                  //               .id
+                                  //               .toString(),
+                                  //           style: const TextStyle(
+                                  //               color: GRAY_CLR, fontSize: 10)),
+                                  //     ],
+                                  //   ),
+                                  // ),
                                   SizedBox(
                                     height: h * 0.01,
                                   ),
                                   Expanded(
                                     child: styleText(
-                                      blogListdata[index]
-                                          .description
-                                          .toString(),
-                                      DARK_CLR,
-                                      FontWeight.bold,
-                                      12,
-                                    ),
+                                        blogListdata[index]
+                                            .description
+                                            .toString(),
+                                        DARK_CLR,
+                                        FontWeight.bold,
+                                        12,
+                                        1),
                                   )
                                 ]),
                           ),

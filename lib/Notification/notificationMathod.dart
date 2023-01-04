@@ -439,13 +439,14 @@ class NotificationHelper {
     String title,
     String body,
     RepeatInterval repeatInterval,
-    DateTime date,
+    int hour,
+    int minute,
   ) async {
     Time notificationTime = Time(
-      date.hour,
-      date.minute,
-      date.second,
+      hour,
+      minute,
     );
+    print("showing notification at $hour : $minute");
     await flutterLocalNotificationsPlugin.showDailyAtTime(
       id,
       title,
@@ -485,12 +486,12 @@ class NotificationHelper {
     RepeatInterval repeatInterval,
     int hour,
     int minute,
+    Day day,
   ) async {
     Time notificationTime = Time(
       hour,
       minute,
     );
-    Day day = Day(1);
     await flutterLocalNotificationsPlugin.showWeeklyAtDayAndTime(
       id,
       title,
@@ -512,6 +513,8 @@ class NotificationHelper {
     UILocalNotificationDateInterpretation
         uiLocalNotificationDateInterpretation =
         UILocalNotificationDateInterpretation.absoluteTime;
+    print("this scheduled on $date");
+    print("this scheduled on $scheduledate");
     await flutterLocalNotificationsPlugin.zonedSchedule(
       0,
       title,

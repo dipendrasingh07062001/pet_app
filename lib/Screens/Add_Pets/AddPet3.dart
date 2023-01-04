@@ -101,7 +101,8 @@ class _Addpet3State extends State<Addpet3> {
       //   height: h * 0.030,
       // ),
       Visibility(
-        visible: AddPetModel.editimage.isNotEmpty,
+        visible: AddPetModel.editimage.isNotEmpty ||
+            AddPetModel.addPetIamge.isNotEmpty,
         child: Expanded(
           child: GridView.count(
             crossAxisCount: 3,

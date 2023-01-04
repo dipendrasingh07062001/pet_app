@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:pet_app/Api/Models/remindermodel.dart';
 import 'package:pet_app/Colors/COLORS.dart';
+import 'package:pet_app/Notification/notificationMathod.dart';
 import 'package:pet_app/Provider/Reminder_provider.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 import 'package:provider/provider.dart';
@@ -39,6 +42,7 @@ class _ReminderState extends State<Reminder> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     context.read<ReminderService>().get_reminder(context);
   }
 
@@ -46,7 +50,7 @@ class _ReminderState extends State<Reminder> {
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
-
+    print(DateFormat.EEEE().format(DateTime.now()) + "qwertyui");
     return Scaffold(
         backgroundColor: WHITE70_CLR,
         appBar: DefaultAppBar(REMINDERS),
@@ -56,7 +60,15 @@ class _ReminderState extends State<Reminder> {
               borderRadius: BorderRadius.all(Radius.circular(50)),
               side: BorderSide(color: GREEN_CLR)),
           onPressed: () {
-            _AddReminder(context);
+            // _AddReminder(context);
+            // NotificationHelper().schedulDailyNotification(
+            //     0, "Test", "This is test", RepeatInterval.daily, 11, 40);
+            NotificationHelper().scheduleonday(
+              0,
+              "test",
+              "testing day",
+              DateTime(2023, 1, 4, 13, 6, 00),
+            );
           },
           child: Icon(
             Icons.add,
@@ -241,11 +253,11 @@ class _ReminderState extends State<Reminder> {
                                               bottom: h * 0.01),
                                           child: GestureDetector(
                                             onTap: () {
-                                              setState(() {
-                                                Select =
-                                                    TextName.elementAt(index)
-                                                        .toString();
-                                              });
+                                              // setState(() {
+                                              //   Select =
+                                              //       TextName.elementAt(index)
+                                              //           .toString();
+                                              // });
                                             },
                                             child: Card(
                                               shape: RoundedRectangleBorder(
@@ -257,12 +269,14 @@ class _ReminderState extends State<Reminder> {
                                                 decoration: BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.circular(10),
-                                                  color: TextName.elementAt(
-                                                              index) ==
-                                                          Select
-                                                      ? FADE_BLUE_CLR
-                                                          .withOpacity(0.12)
-                                                      : WHITE_CLR,
+                                                  color:
+                                                      // TextName.elementAt(
+                                                      //             index) ==
+                                                      //         Select
+                                                      //     ? FADE_BLUE_CLR
+                                                      //         .withOpacity(0.12)
+                                                      //     :
+                                                      WHITE_CLR,
                                                 ),
                                                 child: Padding(
                                                   padding: EdgeInsets.only(
@@ -410,7 +424,10 @@ class _ReminderState extends State<Reminder> {
                                                                             .reminderList[
                                                                                 index]
                                                                             .reminder ??
-                                                                        "",
+                                                                        "" +
+                                                                            " " +
+                                                                            value.reminderList[index].atTime
+                                                                                .toString(),
                                                                     GRAY_CLR,
                                                                     FontWeight
                                                                         .normal,

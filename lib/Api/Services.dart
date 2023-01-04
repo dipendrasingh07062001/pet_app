@@ -1201,6 +1201,7 @@ Future addMedicineApi(
       .post(Uri.parse(baseURL + addMedicine), headers: headers, body: {
     'pet_id': Preference.Pref.getInt("selectedPetId").toString(),
     'medicine_name': medicineName,
+    "user_id": Preference.Pref.getInt("userId").toString(),
     'duration': duration,
     'does': dose,
     'course_start_date': startDate,

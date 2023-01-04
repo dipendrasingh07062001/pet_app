@@ -7,10 +7,13 @@ import 'package:pet_app/Screens/Onbording/SignupOTP_Verify.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 import 'package:pet_app/main.dart';
 import 'package:provider/provider.dart';
+import '../../Api/Prefrence.dart';
 import '../../Api/Services.dart';
 import '../../Componants/Images&Icons.dart';
 import '../../FirebaseServices/GoogleAuth.dart';
+import '../../Provider/AppleSignin_provider.dart';
 import '../HOME/Home.dart';
+import 'dart:io' show Platform;
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -410,21 +413,83 @@ class _SignupState extends State<Signup> {
                                             ),
                                           )),
                                     ),
-                                    Container(
-                                        height: 45,
-                                        width: 45,
-                                        alignment: Alignment.center,
-                                        margin: const EdgeInsets.only(
-                                          left: 15,
-                                        ),
-                                        decoration: BoxDecoration(
-                                            color: WHITE_CLR,
-                                            borderRadius:
-                                                BorderRadius.circular(50)),
-                                        child: const Icon(
-                                          Icons.apple,
-                                          size: 35,
-                                        )),
+                                    Visibility(
+                                      visible: Platform.isIOS,
+                                      child: GestureDetector(
+                                        onTap: () async {
+                                          context
+                                              .read<AuthenticationProvider>()
+                                              // .signOut();
+                                              .signInWithApple()
+                                              .then((value) async {
+                                            if (value != null) {
+                                              print(value);
+                                              await socialSigningApi(
+                                                      context
+                                                          .read<
+                                                              AuthenticationProvider>()
+                                                          .appleEmail,
+                                                      context
+                                                          .read<
+                                                              AuthenticationProvider>()
+                                                          .displayName,
+                                                      "Apple")
+                                                  .then((value) {
+                                                context
+                                                    .read<
+                                                        AuthenticationProvider>()
+                                                    .loadingStatus(false);
+                                                mypetApi();
+                                                Preference.Pref.setString(
+                                                    'email',
+                                                    value['data']['email']);
+                                                Preference.Pref.setString(
+                                                    'name',
+                                                    value['data']['name']);
+                                                Preference.Pref.setString(
+                                                    'type',
+                                                    value['data']['type']);
+                                                Preference.Pref.setInt('userId',
+                                                    value['data']['id']);
+                                                setState(() {
+                                                  Navigate_PushRemove(
+                                                      context, const Home());
+                                                  googlesigning = false;
+                                                });
+                                              }).catchError((e) {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(SnackBar(
+                                                        backgroundColor:
+                                                            GREEN_CLR,
+                                                        content: Text(
+                                                            e.toString())));
+                                                setState(() {
+                                                  googlesigning = false;
+                                                });
+                                              });
+                                              setState(() {
+                                                googlesigning = false;
+                                              });
+                                            }
+                                          });
+                                        },
+                                        child: Container(
+                                            height: 45,
+                                            width: 45,
+                                            alignment: Alignment.center,
+                                            margin: const EdgeInsets.only(
+                                              left: 15,
+                                            ),
+                                            decoration: BoxDecoration(
+                                                color: WHITE_CLR,
+                                                borderRadius:
+                                                    BorderRadius.circular(50)),
+                                            child: const Icon(
+                                              Icons.apple,
+                                              size: 35,
+                                            )),
+                                      ),
+                                    ),
                                     Container(
                                         height: 45,
                                         width: 45,

@@ -4,6 +4,7 @@ import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Componants/Images&Icons.dart';
 import 'package:pet_app/Screens/AddPeriod.dart';
 import 'package:pet_app/Screens/CycleTrackingPageViewBuilder/CycleTracking_Predication.dart';
+import 'package:pet_app/Screens/CycleTrackingPageViewBuilder/Edit_cycle_previus.dart';
 import 'package:pet_app/Screens/CycleTrackingPageViewBuilder/Symptoms.dart';
 import 'package:pet_app/UTILS/Utils.dart';
 import 'package:provider/provider.dart';
@@ -57,7 +58,7 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
         title: styleText(CYCLE_TRACKING, DARK_CLR, FontWeight.bold, 16),
         actions: [
           Padding(
-            padding: const EdgeInsets.all(18),
+            padding: const EdgeInsets.only(right: 10, top: 18, bottom: 18),
             child: MaterialButton(
                 height: 35,
                 shape: RoundedRectangleBorder(
@@ -68,6 +69,25 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
                 },
                 child: const Text(
                   ADD_PERIOD,
+                  style: TextStyle(
+                      color: GREEN_CLR,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold),
+                )),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 10, top: 18, bottom: 18),
+            child: MaterialButton(
+                height: 35,
+                minWidth: 10,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    side: const BorderSide(color: GRAY_CLR)),
+                onPressed: () {
+                  Navigate_to(context, const EditCycle_tracking());
+                },
+                child: const Text(
+                  "Edit",
                   style: TextStyle(
                       color: GREEN_CLR,
                       fontSize: 12,

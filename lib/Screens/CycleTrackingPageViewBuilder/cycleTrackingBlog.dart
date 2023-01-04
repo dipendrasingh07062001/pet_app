@@ -78,48 +78,124 @@ class _CycleTrackingBlogState extends State<CycleTrackingBlog> {
                                   SizedBox(
                                     height: h * 0.005,
                                   ),
-                                  RichText(
-                                    textScaleFactor: 1,
-                                    text: TextSpan(
-                                      children: <InlineSpan>[
-                                        TextSpan(
-                                            text: result
-                                                .cycleTrackingblogListdata![
-                                                    index]
-                                                .name
-                                                .toString(),
-                                            style: const TextStyle(
-                                              color: GRAY_CLR,
-                                              fontSize: 10,
-                                            )),
-                                        WidgetSpan(
-                                            alignment: PlaceholderAlignment.top,
-                                            baseline: TextBaseline.alphabetic,
-                                            child: SizedBox(
-                                              width: w * 0.1,
-                                            )),
-                                        TextSpan(
-                                            text: result
-                                                .cycleTrackingblogListdata![
-                                                    index]
-                                                .id
-                                                .toString(),
-                                            style: const TextStyle(
-                                                color: GRAY_CLR, fontSize: 10)),
+                                  Expanded(
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          flex: 4,
+                                          child: styleText(
+                                              result
+                                                  .cycleTrackingblogListdata![
+                                                      index]
+                                                  .name
+                                                  .toString(),
+                                              DARK_CLR,
+                                              FontWeight.w400,
+                                              10,
+                                              1),
+                                        ),
+                                        Expanded(
+                                          child: Container(
+                                            alignment: Alignment.centerRight,
+                                            padding: EdgeInsets.only(right: 8),
+                                            child: styleText(
+                                              result
+                                                  .cycleTrackingblogListdata![
+                                                      index]
+                                                  .id
+                                                  .toString(),
+                                              DARK_CLR,
+                                              FontWeight.w400,
+                                              10,
+                                            ),
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ),
+                                  // RichText(
+                                  //   overflow: TextOverflow.ellipsis,
+                                  //   textScaleFactor: 1,
+                                  //   text: TextSpan(
+                                  //     children: <InlineSpan>[
+                                  //       TextSpan(
+                                  //           text: blogListdata[index]
+                                  //               .name
+                                  //               .toString(),
+                                  //           style: const TextStyle(
+                                  //             color: GRAY_CLR,
+                                  //             fontSize: 10,
+                                  //           )),
+                                  //       WidgetSpan(
+                                  //           alignment: PlaceholderAlignment.top,
+                                  //           baseline: TextBaseline.alphabetic,
+                                  //           child: SizedBox(
+                                  //             width: w * 0.1,
+                                  //           )),
+                                  //       TextSpan(
+                                  //           text: blogListdata[index]
+                                  //               .id
+                                  //               .toString(),
+                                  //           style: const TextStyle(
+                                  //               color: GRAY_CLR, fontSize: 10)),
+                                  //     ],
+                                  //   ),
+                                  // ),
                                   SizedBox(
-                                    height: h * 0.015,
+                                    height: h * 0.01,
                                   ),
-                                  styleText(
-                                    result.cycleTrackingblogListdata![index]
-                                        .description
-                                        .toString(),
-                                    DARK_CLR,
-                                    FontWeight.bold,
-                                    12,
+                                  Expanded(
+                                    child: styleText(
+                                        result.cycleTrackingblogListdata![index]
+                                            .description
+                                            .toString(),
+                                        DARK_CLR,
+                                        FontWeight.bold,
+                                        12,
+                                        1),
                                   )
+                                  // RichText(
+                                  //   textScaleFactor: 1,
+                                  //   text: TextSpan(
+                                  //     children: <InlineSpan>[
+                                  //       TextSpan(
+                                  //           text: result
+                                  //               .cycleTrackingblogListdata![
+                                  //                   index]
+                                  //               .name
+                                  //               .toString(),
+                                  //           style: const TextStyle(
+                                  //             color: GRAY_CLR,
+                                  //             fontSize: 10,
+                                  //           )),
+                                  //       WidgetSpan(
+                                  //           alignment: PlaceholderAlignment.top,
+                                  //           baseline: TextBaseline.alphabetic,
+                                  //           child: SizedBox(
+                                  //             width: w * 0.1,
+                                  //           )),
+                                  //       TextSpan(
+                                  //           text: result
+                                  //               .cycleTrackingblogListdata![
+                                  //                   index]
+                                  //               .id
+                                  //               .toString(),
+                                  //           style: const TextStyle(
+                                  //               color: GRAY_CLR, fontSize: 10)),
+                                  //     ],
+                                  //   ),
+                                  // ),
+                                  // SizedBox(
+                                  //   height: h * 0.015,
+                                  // ),
+                                  // styleText(
+                                  //   result.cycleTrackingblogListdata![index]
+                                  //       .description
+                                  //       .toString(),
+                                  //   DARK_CLR,
+                                  //   FontWeight.bold,
+                                  //   12,
+                                  // )
                                 ]),
                           ),
                         ),

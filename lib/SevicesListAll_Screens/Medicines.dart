@@ -297,8 +297,8 @@ class _MedicinesState extends State<Medicines> {
                                               result
                                                   .getMedicinemodelListdata![
                                                       index]
-                                                  .atTime
-                                                  .toString(),
+                                                  .atTime!
+                                                  .substring(0, 5),
                                               BLACK_CLR,
                                               FontWeight.normal,
                                               15),

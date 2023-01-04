@@ -38,6 +38,11 @@ class _CycleTracking3State extends State<CycleTracking3> {
   //   styleText("29 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
   //   styleText("30 Days", GREEN_CLR.withOpacity(0.75), FontWeight.normal, 18),
   // ];
+  @override
+  void initState() {
+    super.initState();
+    context.read<AddCycleProvider>().cyclerepeattime = 11;
+  }
 
   var h;
   var w;

@@ -46,6 +46,12 @@ class _CycleTracking2State extends State<CycleTracking2> {
   var h;
   var w;
   @override
+  void initState() {
+    super.initState();
+    context.read<AddCycleProvider>().cycletime = 1;
+  }
+
+  @override
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;

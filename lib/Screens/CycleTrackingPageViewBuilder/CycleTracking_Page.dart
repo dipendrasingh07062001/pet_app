@@ -46,7 +46,19 @@ class _CycleTrackingPageState extends State<CycleTrackingPage> {
         builder: (BuildContext context, value, Widget? child) {
       return Scaffold(
         backgroundColor: WHITE70_CLR,
-        appBar: DefaultAppBar("Cycle Tracking"),
+        appBar: DefaultAppBar(
+            "Cycle Tracking",
+            GestureDetector(
+                onTap: () {
+                  if (value.currentIndex != 0) {
+                    _controller.previousPage(
+                        duration: Duration(milliseconds: 100),
+                        curve: Curves.ease);
+                  } else {
+                    Navigator.pop(context);
+                  }
+                },
+                child: Icon(Icons.arrow_back))),
         extendBodyBehindAppBar: true,
         body: SingleChildScrollView(
           child: Column(
@@ -86,12 +98,12 @@ class _CycleTrackingPageState extends State<CycleTrackingPage> {
                                 onPressed: () {
                                   print(value.currentIndex);
                                   value.currentIndex;
-                                  if (value.currentIndex < 4) {
+                                  if (value.currentIndex < 3) {
                                     _controller.nextPage(
                                         duration: _kDuration, curve: _kCurve);
                                   }
 
-                                  if (value.currentIndex == 4) {
+                                  if (value.currentIndex == 3) {
                                     val.setLoading(true);
                                     addcycletracking(
                                             val.focusedDate,

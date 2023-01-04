@@ -62,7 +62,7 @@ class _Cycle_prediction_calState extends State<Cycle_prediction_cal> {
                 calendarStyle: CalendarStyle(
                   isTodayHighlighted: false,
                   selectedDecoration:
-                      BoxDecoration(color: RED_CLR, shape: BoxShape.circle),
+                      BoxDecoration(color: GREEN_CLR, shape: BoxShape.circle),
                 ),
                 headerStyle: HeaderStyle(
                   // leftChevronVisible: false,

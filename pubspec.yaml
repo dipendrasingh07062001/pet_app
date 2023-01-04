@@ -67,6 +67,7 @@ dependencies:
   geolocator: ^9.0.2
   flutter_google_places: ^0.3.0
   flutter_native_timezone: ^2.0.0
+  sqflite: ^2.2.2
 
 
 

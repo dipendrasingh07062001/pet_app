@@ -143,10 +143,12 @@ Navigate_PushRemove(BuildContext context, Widget widget) {
       (Route<dynamic> route) => false);
 }
 
-AppBar DefaultAppBar(String text) {
+AppBar DefaultAppBar(String text, [Widget? leading = null]) {
   return AppBar(
     centerTitle: true,
     toolbarHeight: 65,
+    automaticallyImplyLeading: true,
+    leading: leading,
     backgroundColor: WHITE70_CLR,
     elevation: 1,
     title: styleText(text, DARK_CLR, FontWeight.bold, 17),
@@ -154,14 +156,12 @@ AppBar DefaultAppBar(String text) {
 }
 
 //DefultText
-Text styleText(
-  String value,
-  Color color,
-  FontWeight weight,
-  double fontSize,
-) {
+Text styleText(String value, Color color, FontWeight weight, double fontSize,
+    [int? maxline = null]) {
   return Text(
     value,
+    overflow: TextOverflow.ellipsis,
+    maxLines: maxline,
     style: TextStyle(color: color, fontWeight: weight, fontSize: fontSize),
     textAlign: TextAlign.start,
   );
@@ -504,6 +504,62 @@ Future<void> Logout(BuildContext context) {
 
                           print(value.toString());
                         });
+                      },
+                      fontsize: 17,
+                      height: 40,
+                      width: 300),
+                  const SizedBox(
+                    height: 18,
+                  ),
+                  GestureDetector(
+                      onTap: () => Navigator.of(context).pop(),
+                      child:
+                          styleText(CANCEL, GREEN_CLR, FontWeight.normal, 17)),
+                ],
+              ),
+            ),
+          ),
+        );
+      });
+}
+
+Future<void> exitpop(BuildContext context) {
+  var h;
+  var w;
+
+  h = MediaQuery.of(context).size.height;
+  w = MediaQuery.of(context).size.width;
+  return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Padding(
+          padding: const EdgeInsets.only(left: 20, right: 20),
+          child: AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            title: Center(
+              child: TutorialText("Are you really want to exit?", BLACK_CLR,
+                  FontWeight.normal, 17),
+            ),
+            content: SizedBox(
+              height: h * 0.12,
+              width: w * 0.18,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: h * 0.010,
+                  ),
+                  DefaultButton(
+                      text: "Exit",
+                      ontap: () async {
+                        exit(1);
+                        // Preference.Pref.clear().then((value) async {
+                        //   Navigate_PushRemove(context, Login());
+                        //   GoogleSignIn googleSignIn = GoogleSignIn();
+                        //   await googleSignIn.signOut();
+
+                        //   print(value.toString());
+                        // });
                       },
                       fontsize: 17,
                       height: 40,
