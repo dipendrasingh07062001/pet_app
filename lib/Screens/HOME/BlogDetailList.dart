@@ -111,13 +111,17 @@ class _BlogDetailsListState extends State<BlogDetailsList> {
                                     ),
                                   ),
                                   SizedBox(
-                                    height: h * 0.015,
+                                    height: h * 0.01,
                                   ),
-                                  styleText(
-                                    blogListdata[index].description.toString(),
-                                    DARK_CLR,
-                                    FontWeight.bold,
-                                    12,
+                                  Expanded(
+                                    child: styleText(
+                                      blogListdata[index]
+                                          .description
+                                          .toString(),
+                                      DARK_CLR,
+                                      FontWeight.bold,
+                                      12,
+                                    ),
                                   )
                                 ]),
                           ),
