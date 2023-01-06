@@ -18,7 +18,7 @@ class ReminderService extends ChangeNotifier {
     notifyListeners();
     await getreminderData(context).then((value) {
       isLoading = false;
-      if (value != null) {
+      if (value.isNotEmpty) {
         reminderList.addAll(value);
       }
       notifyListeners();
@@ -30,43 +30,59 @@ class ReminderService extends ChangeNotifier {
   notificationschedule() {
     NotificationHelper notificationHelper = NotificationHelper();
     List<ScheduledSave> list = [];
+    int id = 0;
     reminderList.forEach((element) {
-      for (int i = 0;
-          i <
-              element.courseEndDate!
-                  .difference(element.courseStartDate!)
-                  .inDays;
-          i++) {
-        // print(element.courseStartDate!.element.courseEndDate!);
-        int hour = int.parse(element.atTime!.split(":").first);
-        int minute = int.parse(element.atTime!.split(":")[1]);
-        DateTime date = DateTime(
-          element.courseStartDate!.year,
-          element.courseStartDate!.month,
-          element.courseStartDate!.day + i,
-          hour,
-          minute + 7,
-          00,
-        ); //element.courseStartDate!.add(Duration(days: i));
-        if (DateTime.now().isBefore(date)) {
-          print("12345678909876543");
-          ScheduledSave mod = ScheduledSave();
-          mod.id = element.id;
-          mod.title = element.name;
-          mod.body = "Your pet's medicine time";
-          mod.date = date;
-          list.add(mod);
+      print("entering");
+      int hour = int.parse(element.atTime!.split(":").first);
+      int minute = int.parse(element.atTime!.split(":")[1]);
+      DateTime date = DateTime(
+        element.courseStartDate!.year,
+        element.courseStartDate!.month,
+        element.courseStartDate!.day,
+        hour,
+        minute,
+        00,
+      ); //element.courseStartDate!.add(Duration(days: i));
+      print("before");
+      print(DateTime.now().isBefore(date));
+      print(DateTime.now().toIso8601String());
+      print(date.toIso8601String());
+      if (DateTime.now().isBefore(date)) {
+        print("12345678909876543");
+        ScheduledSave mod = ScheduledSave();
+        mod.id = element.id;
+        mod.title = element.name;
+        mod.body = "Your pet's medicine time";
+        mod.date = date;
+        list.add(mod);
 
-          // notificationHelper.scheduleonday(
-          //   element.id!,
-          //   element.name!,
-          //   "your pet medicine time",
-          //   date,
-          // );
-        }
-
-        // print()
+        notificationHelper.scheduleonday(
+          element.id!,
+          element.name!,
+          "your pet medicine time",
+          date,
+        );
+        id++;
       }
+      // for (int i = 0;
+      //     i <
+      //         element.courseEndDate!
+      //             .difference(element.courseStartDate!)
+      //             .inDays;
+      //     i++) {
+      //   print(
+      //     "=======" +
+      //         element.courseEndDate!
+      //             .difference(element.courseStartDate!)
+      //             .inDays
+      //             .toString(),
+      //   );
+      //   print(
+      //     "=======+++" + id.toString(),
+      //   );
+
+      //   // print()
+      // }
 
       // switch (element.reminder!.toLowerCase()) {
       //   case "daily":
@@ -100,7 +116,7 @@ class ReminderService extends ChangeNotifier {
       // }
       // NotificationHelper
     });
-    SavePrefs.savedata(list);
-    SavePrefs.getdataAndSceduldNotification();
+    // SavePrefs.savedata(list);
+    // SavePrefs.getdataAndSceduldNotification();
   }
 }

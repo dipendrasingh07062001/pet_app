@@ -286,7 +286,7 @@ class _HomeState extends State<Home> {
                             : Column(
                                 children: [
                                   SizedBox(
-                                      height: h * 0.145,
+                                      height: h * 0.15,
                                       child: Consumer<ServiceHealthProvider>(
                                           builder: (BuildContext context, value,
                                               Widget? child) {
@@ -316,8 +316,8 @@ class _HomeState extends State<Home> {
                                                       margin: const EdgeInsets
                                                               .symmetric(
                                                           horizontal: 13),
-                                                      height: 70,
-                                                      width: 70,
+                                                      height: h * 0.1,
+                                                      width: h * 0.1,
                                                       alignment:
                                                           Alignment.center,
                                                       decoration: BoxDecoration(
@@ -424,7 +424,7 @@ class _HomeState extends State<Home> {
                                             visible:
                                                 check(subResultdata!.name!),
                                             child: SizedBox(
-                                              height: h * 0.12,
+                                              // height: h * 0.1,
                                               width: w * 1,
                                               child: GestureDetector(
                                                 onTap: () {
@@ -464,8 +464,8 @@ class _HomeState extends State<Home> {
                                                                     .toString(),
                                                                 scale: 1.0,
 
-                                                                width: w * 0.17,
-                                                                height: h * 0.1,
+                                                                width: 70,
+                                                                height: 70,
                                                                 fit:
                                                                     BoxFit.fill,
                                                                 // "",
@@ -520,7 +520,7 @@ class _HomeState extends State<Home> {
                       Visibility(
                         visible: searchCantrolller.text.isEmpty,
                         child: SizedBox(
-                            height: h * 0.145,
+                            height: h * 0.15,
                             child: Consumer<ServiceHealthProvider>(builder:
                                 (BuildContext context, value, Widget? child) {
                               return ListView.builder(
@@ -546,8 +546,8 @@ class _HomeState extends State<Home> {
                                           child: Container(
                                             margin: const EdgeInsets.symmetric(
                                                 horizontal: 13),
-                                            height: 70,
-                                            width: 70,
+                                            height: h * 0.1,
+                                            width: h * 0.1,
                                             alignment: Alignment.center,
                                             decoration: BoxDecoration(
                                                 borderRadius:
@@ -649,7 +649,7 @@ class _HomeState extends State<Home> {
                                     return Visibility(
                                       visible: check(subResultdata!.name!),
                                       child: SizedBox(
-                                        height: h * 0.12,
+                                        // height: h * 0.12,
                                         width: w * 1,
                                         child: GestureDetector(
                                           onTap: () {
@@ -682,8 +682,8 @@ class _HomeState extends State<Home> {
                                                               .toString(),
                                                           scale: 1.0,
 
-                                                          width: w * 0.17,
-                                                          height: h * 0.1,
+                                                          width: 70,
+                                                          height: 70,
                                                           fit: BoxFit.fill,
                                                           // "",
                                                           loadingBuilder: (context,

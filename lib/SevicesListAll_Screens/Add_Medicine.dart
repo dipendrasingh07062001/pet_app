@@ -387,12 +387,19 @@ class _Add_MedicineState extends State<Add_Medicine> {
                               setState(() {
                                 isdeditingmedicine = true;
                               });
+                              print("=====start");
                               await EditMedicineApi(
                                       medicinename.name ?? "",
                                       Duration,
                                       day,
-                                      startdate.toString(),
-                                      enddate.toString(),
+                                      start == null
+                                          ? startdate!
+                                          : DateFormat("yyyy-MM-dd")
+                                              .format(start!),
+                                      end == null
+                                          ? enddate!
+                                          : DateFormat("yyyy-MM-dd")
+                                              .format(end!),
                                       reminder,
                                       attime.toString(),
                                       widget.editmedicine!.id.toString())

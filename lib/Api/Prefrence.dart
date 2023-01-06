@@ -15,15 +15,18 @@ class SavePrefs {
   static Future<List<ScheduledSave>> getdataAndSceduldNotification() async {
     NotificationHelper notificationHelper = NotificationHelper();
     List<ScheduledSave> data = [];
+    int id = 0;
     data = scheduledSaveFromJson(
         await Preference.Pref.getString("scheduledNotification") ?? "");
+
     data.forEach((element) {
       notificationHelper.scheduleonday(
-        element.id!,
+        id,
         element.title!,
         element.body!,
         element.date!,
       );
+      id++;
     });
     return data;
   }
