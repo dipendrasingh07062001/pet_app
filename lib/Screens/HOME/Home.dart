@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:page_indicator/page_indicator.dart';
@@ -198,6 +201,8 @@ class _HomeState extends State<Home> {
               //     RepeatInterval.everyMinute,
               //     DateTime.now());
               Navigate_to(context, const Reminder());
+              // final service = FlutterBackgroundService();
+              // service.invoke("stopService");
             },
             child: SvgPicture.asset(NOTIFICATION_ICON),
           ),

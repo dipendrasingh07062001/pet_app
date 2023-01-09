@@ -44,6 +44,7 @@ String? selectedNotificationPayload;
 const DarwinNotificationDetails iOSPlatformChannelSpecifics =
     DarwinNotificationDetails(
   presentAlert: true,
+  // sound: 'notification_sound.aiff',
   presentBadge: true,
   presentSound: true,
 );
@@ -57,6 +58,8 @@ const AndroidNotificationDetails androidPlatformChannelSpecifics =
   enableLights: true,
   priority: Priority.high,
   playSound: true,
+  sound: RawResourceAndroidNotificationSound('notification_sound'),
+
   enableVibration: true,
 );
 
