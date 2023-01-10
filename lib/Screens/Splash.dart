@@ -8,6 +8,7 @@ import 'package:pet_app/Screens/HOME/Home.dart';
 import '../Componants/Images&Icons.dart';
 import '../Testing1/linearCalender.dart';
 import '../UTILS/Utils.dart';
+import '../main.dart';
 import 'Onbording/Login.dart';
 
 class Splash extends StatefulWidget {

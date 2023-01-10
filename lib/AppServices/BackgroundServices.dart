@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'dart:isolate';
 import 'dart:ui';
@@ -6,12 +7,20 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_background_service_android/flutter_background_service_android.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
+import '../Api/ApiBaseUrl.dart';
+import '../Api/Models/schedulemodel.dart';
+import '../Api/Prefrence.dart';
+import '../Api/Services.dart';
 import '../Notification/notificationMathod.dart';
+import '../UTILS/Utils.dart';
+import 'package:http/http.dart' as http;
 
 // Future <SendPort> initIsolate()async{}
 dynamic initializeService() async {
   final service = FlutterBackgroundService();
+  print("=======initalizing");
 
   await service.configure(
     androidConfiguration: AndroidConfiguration(
@@ -25,7 +34,7 @@ dynamic initializeService() async {
       notificationChannelId: 'high_importance_channel',
       initialNotificationTitle: 'Background service',
       initialNotificationContent: 'Initializing',
-      foregroundServiceNotificationId: 0,
+      foregroundServiceNotificationId: 888,
     ),
     iosConfiguration: IosConfiguration(
       // auto start service
@@ -78,29 +87,122 @@ void onStart(ServiceInstance service) async {
 
   // bring to foreground
   Timer.periodic(const Duration(seconds: 10), (timer) async {
-    if (service is AndroidServiceInstance) {
-      if (await service.isForegroundService()) {
-        /// OPTIONAL for use custom notification
-        /// the notification id must be equals with AndroidConfiguration when you call configure() method.
-        // flutterLocalNotificationsPlugin.show(
-        //   12345,
-        //   'Test Notification',
-        //   'Awesome ${DateTime.now()}',
-        //   // const NotificationDetails(android: androidPlatformChannelSpecifics),
-        //   platformChannelSpecifics,
-        // );
+    // if (service is AndroidServiceInstance) {
+    //   if (await service.isForegroundService()) {
+    //     /// OPTIONAL for use custom notification
+    //     /// the notification id must be equals with AndroidConfiguration when you call configure() method.
+    //     // flutterLocalNotificationsPlugin.show(
+    //     //   888,
+    //     //   'COOL SERVICE',
+    //     //   'Awesome ${DateTime.now()}',
+    //     //   platformChannelSpecifics,
+    //     // );
 
-        // if you don't using custom notification, uncomment this
-        // service.setForegroundNotificationInfo(
-        //   title: "My App Service",
-        //   content: "Updated at ${DateTime.now()}",
-        // );
-
-      }
-    }
+    //     // if you don't using custom notification, uncomment this
+    //     // service.setForegroundNotificationInfo(
+    //     //   title: "My App Service",
+    //     //   content: "Updated at ${DateTime.now()}",
+    //     // );
+    //   }
+    // }
 
     /// you can see this log in logcat
-    print('FLUTTER BACKGROUND SERVICE: ${DateTime.now()}');
+    // print('FLUTTER BACKGROUND SERVICE====: ${DateTime.now()}');
+    try {
+      var response = await http.post(
+        Uri.parse(baseURL + get_reminder_url),
+        body: {"user_id": Preference.Pref.getInt("userId").toString()},
+        headers: headers,
+      );
+      print("getting response");
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        print("got response");
+
+        // List<ReminderModel> list = [];
+        // list = reminderModelFromJson(jsonEncode(data["data"]));
+
+        // DateTime date = DateTime(
+        //   2023,
+        //   01, 10, 15, 50,
+        //   // int.parse(element.atTime!.split(":").first),
+        //   // int.parse(element.atTime!.split(":")[1]),
+        // );
+        // NotificationHelper().scheduleonday(
+        //   1,
+        //   "qwertyt",
+        //   "Your pet medicine time",
+        //   date,
+        // );
+
+        int i = 0;
+        List<Daily?>? dailyList = [];
+        List<Daily?>? weekList = [];
+        dailyList = dailyFromJson(jsonEncode(data["daily"]));
+        weekList = dailyFromJson(jsonEncode(data["week"]));
+
+        dailyList?.forEach((element) {
+          DateTime date = DateTime(
+            element!.nextdate!.year,
+            element.nextdate!.month,
+            element.nextdate!.day - 1,
+            int.parse(element.atTime!.split(":").first),
+            int.parse(element.atTime!.split(":")[1]),
+          );
+          if (is_In_This_hour(date)) {
+            flutterLocalNotificationsPlugin.show(
+              i,
+              element.medicineName,
+              "qwertyuiopuytre daily",
+              platformChannelSpecifics,
+            );
+            i++;
+
+            //   NotificationHelper().scheduleonday(
+            //     i,
+            //     element.medicineName.toString(),
+            //     "Your pet medicine time",
+            //     date,
+            //   );
+            //   i++;
+          }
+        });
+        weekList?.forEach((element) {
+          DateTime date = DateTime(
+            element!.nextdate!.year,
+            element.nextdate!.month,
+            element.nextdate!.day,
+            int.parse(element.atTime!.split(":").first),
+            int.parse(element.atTime!.split(":")[1]),
+          );
+          if (is_In_This_hour(date)) {
+            flutterLocalNotificationsPlugin.show(
+              i,
+              element.medicineName,
+              "qwertyuiopuytre week",
+              platformChannelSpecifics,
+            );
+            i++;
+
+            //   NotificationHelper().scheduleonday(
+            //     i,
+            //     element.medicineName.toString(),
+            //     "Your pet medicine time",
+            //     date,
+            //   );
+            //   i++;
+          }
+        });
+
+        // return list;
+        // customSnackbar(context, jsoncode["message"]);
+
+      } else {}
+    } catch (e) {
+      // TODO
+      ;
+    }
+    // await getreminderData();
 
     // test using external plugin
     final deviceInfo = DeviceInfoPlugin();

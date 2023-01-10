@@ -227,73 +227,74 @@ class _Add_MedicineState extends State<Add_Medicine> {
                 height: h * 0.020,
               ),
               styleText(COURSE_START_DATE, BLACK_CLR, FontWeight.normal, 15),
-              Container(
-                height: h * 0.06,
-                padding: EdgeInsets.only(left: w * 0.030, right: w * 0.030),
-                margin: EdgeInsets.only(top: h * 0.010),
-                decoration: BoxDecoration(
-                    color: WHITE_CLR,
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: BORDER_CLR, width: 1)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      startdate == null ? "DD-MM-YYYY" : "$startdate",
-                      style: TextStyle(color: GRAY_CLR, fontSize: 14),
-                    ),
-                    GestureDetector(
-                        onTap: () {
-                          cutomDatePicker(context).then((value) {
-                            setState(() {
-                              startdate =
-                                  DateFormat('dd/MM/yyyy').format(value!);
-                              start = value;
-                            });
-                          });
-                        },
-                        child: Icon(
-                          Icons.calendar_month_sharp,
-                          color: GRAY_CLR.withOpacity(0.5),
-                          size: 20,
-                        )),
-                  ],
+              GestureDetector(
+                onTap: () {
+                  cutomDatePicker(context).then((value) {
+                    setState(() {
+                      startdate = DateFormat('dd/MM/yyyy').format(value!);
+                      start = value;
+                    });
+                  });
+                },
+                child: Container(
+                  height: h * 0.06,
+                  padding: EdgeInsets.only(left: w * 0.030, right: w * 0.030),
+                  margin: EdgeInsets.only(top: h * 0.010),
+                  decoration: BoxDecoration(
+                      color: WHITE_CLR,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: BORDER_CLR, width: 1)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        startdate == null ? "DD-MM-YYYY" : "$startdate",
+                        style: TextStyle(color: GRAY_CLR, fontSize: 14),
+                      ),
+                      Icon(
+                        Icons.calendar_month_sharp,
+                        color: GRAY_CLR.withOpacity(0.5),
+                        size: 20,
+                      ),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(
                 height: h * 0.020,
               ),
               styleText(COURSE_END_DTAE, BLACK_CLR, FontWeight.normal, 15),
-              Container(
-                height: h * 0.06,
-                padding: EdgeInsets.only(left: w * 0.030, right: w * 0.030),
-                margin: EdgeInsets.only(top: h * 0.010),
-                decoration: BoxDecoration(
-                    color: WHITE_CLR,
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: BORDER_CLR, width: 1)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      enddate == null ? "DD-MM-YYYY" : "$enddate",
-                      style: TextStyle(color: GRAY_CLR, fontSize: 14),
-                    ),
-                    GestureDetector(
-                        onTap: () {
-                          cutomDatePicker(context).then((value) {
-                            setState(() {
-                              enddate = DateFormat('dd/MM/yyyy').format(value!);
-                              end = value;
-                            });
-                          });
-                        },
-                        child: Icon(
-                          Icons.calendar_month_sharp,
-                          color: GRAY_CLR.withOpacity(0.5),
-                          size: 20,
-                        )),
-                  ],
+              GestureDetector(
+                onTap: () {
+                  cutomDatePicker(context).then((value) {
+                    setState(() {
+                      enddate = DateFormat('dd/MM/yyyy').format(value!);
+                      end = value;
+                    });
+                  });
+                },
+                child: Container(
+                  height: h * 0.06,
+                  padding: EdgeInsets.only(left: w * 0.030, right: w * 0.030),
+                  margin: EdgeInsets.only(top: h * 0.010),
+                  decoration: BoxDecoration(
+                      color: WHITE_CLR,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: BORDER_CLR, width: 1)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        enddate == null ? "DD-MM-YYYY" : "$enddate",
+                        style: TextStyle(color: GRAY_CLR, fontSize: 14),
+                      ),
+                      Icon(
+                        Icons.calendar_month_sharp,
+                        color: GRAY_CLR.withOpacity(0.5),
+                        size: 20,
+                      ),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(
@@ -340,35 +341,37 @@ class _Add_MedicineState extends State<Add_Medicine> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   styleText(AT_TIME, BLACK_CLR, FontWeight.normal, 15),
-                  Container(
-                    height: h * 0.06,
-                    padding: EdgeInsets.only(left: w * 0.030, right: w * 0.030),
-                    margin: EdgeInsets.only(top: h * 0.010),
-                    decoration: BoxDecoration(
-                        color: WHITE_CLR,
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: BORDER_CLR, width: 1)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          attime != null ? attime! : '00 : 00 AM',
-                          style: TextStyle(color: GRAY_CLR, fontSize: 14),
-                        ),
-                        GestureDetector(
-                            onTap: () {
-                              showTime(context).then((value) {
-                                setState(() {
-                                  attime = value.format(context);
-                                });
-                              });
-                            },
-                            child: Icon(
-                              Icons.access_time_rounded,
-                              color: GRAY_CLR.withOpacity(0.5),
-                              size: 20,
-                            )),
-                      ],
+                  GestureDetector(
+                    onTap: () {
+                      showTime(context).then((value) {
+                        setState(() {
+                          attime = value.format(context);
+                        });
+                      });
+                    },
+                    child: Container(
+                      height: h * 0.06,
+                      padding:
+                          EdgeInsets.only(left: w * 0.030, right: w * 0.030),
+                      margin: EdgeInsets.only(top: h * 0.010),
+                      decoration: BoxDecoration(
+                          color: WHITE_CLR,
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: BORDER_CLR, width: 1)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            attime != null ? attime! : '00 : 00 AM',
+                            style: TextStyle(color: GRAY_CLR, fontSize: 14),
+                          ),
+                          Icon(
+                            Icons.access_time_rounded,
+                            color: GRAY_CLR.withOpacity(0.5),
+                            size: 20,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],

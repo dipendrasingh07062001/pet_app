@@ -16,13 +16,13 @@ class ReminderService extends ChangeNotifier {
     reminderList.clear();
     isLoading = true;
     notifyListeners();
-    await getreminderData(context).then((value) {
-      isLoading = false;
-      if (value.isNotEmpty) {
-        reminderList.addAll(value);
-      }
-      notifyListeners();
-    });
+    // await getreminderData(context).then((value) {
+    //   isLoading = false;
+    //   if (value.isNotEmpty) {
+    //     reminderList.addAll(value);
+    //   }
+    //   notifyListeners();
+    // });
     notificationschedule();
     notifyListeners();
   }

@@ -516,7 +516,7 @@ class NotificationHelper {
     UILocalNotificationDateInterpretation
         uiLocalNotificationDateInterpretation =
         UILocalNotificationDateInterpretation.absoluteTime;
-    print("this scheduled on $date");
+    print("this scheduled on $date +++ id + $id");
     print("this scheduled on $scheduledate");
     await flutterLocalNotificationsPlugin.zonedSchedule(
       0,

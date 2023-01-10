@@ -90,6 +90,15 @@ Future showTime(BuildContext context) async {
   return null;
 }
 
+Future showfullTime(BuildContext context) async {
+  final TimeOfDay? result =
+      await showTimePicker(context: context, initialTime: TimeOfDay.now());
+  if (result != null) {
+    return result;
+  }
+  return null;
+}
+
 //Default Button
 class DefaultButton extends StatelessWidget {
   final String text;
@@ -577,4 +586,12 @@ Future<void> exitpop(BuildContext context) {
           ),
         );
       });
+}
+
+bool is_In_This_hour(DateTime date) {
+  final date2 = DateTime.now();
+  print(date);
+  print(date2);
+  print(date2.difference(date).inMinutes.abs());
+  return (date2.difference(date).inMinutes.abs() <= 60);
 }

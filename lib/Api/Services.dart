@@ -13,6 +13,7 @@ import 'package:pet_app/Api/Models/getMedicineNameModel.dart';
 import 'package:pet_app/Api/Models/remindermodel.dart';
 import 'package:pet_app/Api/Models/v_model.dart';
 import 'package:pet_app/Api/Models/vaccinationModel.dart';
+import 'package:pet_app/Notification/notificationMathod.dart';
 import 'package:pet_app/Provider/ServiceListProvider.dart';
 import 'package:pet_app/Provider/predictionProvider.dart';
 import 'package:pet_app/Screens/Reminder.dart';
@@ -26,6 +27,7 @@ import 'Models/ServiceListModel.dart';
 import 'Models/addPetModel.dart';
 import 'Models/cycleTrackingBlogModel.dart';
 import 'Models/getPregnancyModel.dart';
+import 'Models/schedulemodel.dart';
 import 'Prefrence.dart';
 
 String? loginmsg;
@@ -1529,27 +1531,96 @@ Future addcycle(List<String> date, String period, String symptoms,
   }
 }
 
-Future getreminderData(BuildContext context) async {
+Future getreminderData(
+    // BuildContext context,
+    ) async {
   try {
-    var response = await http.get(
-      Uri.parse(
-        baseURL +
-            get_reminder_url +
-            "?user_id=" +
-            Preference.Pref.getInt("userId").toString(),
-      ),
+    var response = await http.post(
+      Uri.parse(baseURL + get_reminder_url),
+      body: {"user_id": Preference.Pref.getInt("userId").toString()},
       headers: headers,
     );
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      if (data['status'] == true) {
-        List<ReminderModel> list = [];
-        list = reminderModelFromJson(jsonEncode(data["data"]));
-        return list;
-      } else {
-        // customSnackbar(context, jsoncode["message"]);
-        return [];
-      }
+
+      // List<ReminderModel> list = [];
+      // list = reminderModelFromJson(jsonEncode(data["data"]));
+
+      // DateTime date = DateTime(
+      //   2023,
+      //   01, 10, 15, 50,
+      //   // int.parse(element.atTime!.split(":").first),
+      //   // int.parse(element.atTime!.split(":")[1]),
+      // );
+      // NotificationHelper().scheduleonday(
+      //   1,
+      //   "qwertyt",
+      //   "Your pet medicine time",
+      //   date,
+      // );
+
+      int i = 0;
+      List<Daily?>? dailyList = [];
+      List<Daily?>? weekList = [];
+      dailyList = dailyFromJson(jsonEncode(data["daily"]));
+      weekList = dailyFromJson(jsonEncode(data["week"]));
+
+      dailyList?.forEach((element) {
+        DateTime date = DateTime(
+          element!.nextdate!.year,
+          element.nextdate!.month,
+          element.nextdate!.day - 1,
+          int.parse(element.atTime!.split(":").first),
+          int.parse(element.atTime!.split(":")[1]),
+        );
+        if (is_In_This_hour(date)) {
+          flutterLocalNotificationsPlugin.show(
+            i,
+            element.medicineName,
+            "qwertyuiopuytre daily",
+            platformChannelSpecifics,
+          );
+          i++;
+
+          //   NotificationHelper().scheduleonday(
+          //     i,
+          //     element.medicineName.toString(),
+          //     "Your pet medicine time",
+          //     date,
+          //   );
+          //   i++;
+        }
+      });
+      weekList?.forEach((element) {
+        DateTime date = DateTime(
+          element!.nextdate!.year,
+          element.nextdate!.month,
+          element.nextdate!.day,
+          int.parse(element.atTime!.split(":").first),
+          int.parse(element.atTime!.split(":")[1]),
+        );
+        if (is_In_This_hour(date)) {
+          flutterLocalNotificationsPlugin.show(
+            i,
+            element.medicineName,
+            "qwertyuiopuytre week",
+            platformChannelSpecifics,
+          );
+          i++;
+
+          //   NotificationHelper().scheduleonday(
+          //     i,
+          //     element.medicineName.toString(),
+          //     "Your pet medicine time",
+          //     date,
+          //   );
+          //   i++;
+        }
+      });
+
+      // return list;
+      // customSnackbar(context, jsoncode["message"]);
+
     } else {
       return [];
     }

@@ -1,12 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:page_indicator/page_indicator.dart';
 import 'package:pet_app/Colors/COLORS.dart';
-import 'package:pet_app/Provider/AppleSignin_provider.dart';
 import 'package:pet_app/Provider/Provider.dart';
 import 'package:pet_app/Provider/ServiceListProvider.dart';
 import 'package:pet_app/Screens/Add_Pets/addPet.dart';
@@ -19,10 +14,8 @@ import '../../Api/Prefrence.dart';
 import '../../Api/Services.dart';
 import '../../Componants/Images&Icons.dart';
 import '../../FirebaseServices/GoogleAuth.dart';
-import '../../Notification/notificationMathod.dart';
 import '../DrawerScreen.dart';
 import '../LocationBottomSeet.dart';
-import '../Reminder.dart';
 
 String? Search;
 
@@ -54,7 +47,7 @@ class _HomeState extends State<Home> {
   @override
   initState() {
     super.initState();
-
+    // getreminderData();
     gname = Preference.Pref!.getString("gname") ?? "";
     gemail = Preference.Pref!.getString("gemail") ?? "";
     gprofilePic = Preference.Pref!.getString("gprofilePic") ?? "";
@@ -65,7 +58,7 @@ class _HomeState extends State<Home> {
         print(result.serviceListdata.toString());
       });
     });
-    SavePrefs.getdataAndSceduldNotification();
+    // SavePrefs.getdataAndSceduldNotification();
   }
 
   var h;
@@ -200,9 +193,17 @@ class _HomeState extends State<Home> {
               //     "qwertyuiopoiuytrewq",
               //     RepeatInterval.everyMinute,
               //     DateTime.now());
-              Navigate_to(context, const Reminder());
-              // final service = FlutterBackgroundService();
-              // service.invoke("stopService");
+              // Navigate_to(context, const Reminder());
+              // Workmanager().cancelAll();
+              // Workmanager().registerOneOffTask(
+              //   "task1",
+              //   foregorundfetch,
+              //   inputData: {"id": "dca"},
+              // );
+
+              final service = FlutterBackgroundService();
+              service.invoke("stopService");
+              print(await service.isRunning());
             },
             child: SvgPicture.asset(NOTIFICATION_ICON),
           ),
