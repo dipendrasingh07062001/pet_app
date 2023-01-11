@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
+// import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Provider/Provider.dart';
@@ -47,7 +48,7 @@ class _HomeState extends State<Home> {
   @override
   initState() {
     super.initState();
-    // getreminderData();
+    getreminderData();
     gname = Preference.Pref!.getString("gname") ?? "";
     gemail = Preference.Pref!.getString("gemail") ?? "";
     gprofilePic = Preference.Pref!.getString("gprofilePic") ?? "";
@@ -203,6 +204,8 @@ class _HomeState extends State<Home> {
 
               final service = FlutterBackgroundService();
               service.invoke("stopService");
+              // // service.invoke("setAsBackground");
+              // // service.invoke("setAsForeground");
               print(await service.isRunning());
             },
             child: SvgPicture.asset(NOTIFICATION_ICON),

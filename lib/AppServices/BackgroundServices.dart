@@ -2,12 +2,14 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:isolate';
+import 'dart:math';
 import 'dart:ui';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_background_service_android/flutter_background_service_android.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Api/ApiBaseUrl.dart';
 import '../Api/Models/schedulemodel.dart';
@@ -107,101 +109,110 @@ void onStart(ServiceInstance service) async {
     // }
 
     /// you can see this log in logcat
-    // print('FLUTTER BACKGROUND SERVICE====: ${DateTime.now()}');
-    try {
-      var response = await http.post(
-        Uri.parse(baseURL + get_reminder_url),
-        body: {"user_id": Preference.Pref.getInt("userId").toString()},
-        headers: headers,
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    print('FLUTTER BACKGROUND SERVICE====: ${DateTime.now()}');
+    List<Daily?>? dailyList = [];
+    List<Daily?>? weekList = [];
+    dailyList =
+        dailyFromJson(jsonEncode(preferences.getString("dailyReminder")));
+    weekList =
+        dailyFromJson(jsonEncode(preferences.getString("weeklyReminder")));
+    print(dailyList!.length);
+    print(weekList!.length);
+    // try {
+    //   var response = await http.post(
+    //     Uri.parse(baseURL + get_reminder_url),
+    //     body: {"user_id": Preference.Pref.getInt("userId").toString()},
+    //     headers: headers,
+    //   );
+    //   print("getting response");
+    //   if (response.statusCode == 200) {
+    //     final data = json.decode(response.body);
+    //     print("got response");
+
+    //     // List<ReminderModel> list = [];
+    //     // list = reminderModelFromJson(jsonEncode(data["data"]));
+
+    //     // DateTime date = DateTime(
+    //     //   2023,
+    //     //   01, 10, 15, 50,
+    //     //   // int.parse(element.atTime!.split(":").first),
+    //     //   // int.parse(element.atTime!.split(":")[1]),
+    //     // );
+    //     // NotificationHelper().scheduleonday(
+    //     //   1,
+    //     //   "qwertyt",
+    //     //   "Your pet medicine time",
+    //     //   date,
+    //     // );
+
+    int i = 0;
+    //     List<Daily?>? dailyList = [];
+    //     List<Daily?>? weekList = [];
+    //     dailyList = dailyFromJson(jsonEncode(data["daily"]));
+    //     weekList = dailyFromJson(jsonEncode(data["week"]));
+
+    dailyList.forEach((element) {
+      DateTime date = DateTime(
+        element!.nextdate!.year,
+        element.nextdate!.month,
+        element.nextdate!.day - 1,
+        int.parse(element.atTime!.split(":").first),
+        int.parse(element.atTime!.split(":")[1]),
       );
-      print("getting response");
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        print("got response");
+      if (is_In_This_hour(date)) {
+        flutterLocalNotificationsPlugin.show(
+          i,
+          element.medicineName,
+          "qwertyuiopuytre daily",
+          platformChannelSpecifics,
+        );
+        i++;
 
-        // List<ReminderModel> list = [];
-        // list = reminderModelFromJson(jsonEncode(data["data"]));
+        //   NotificationHelper().scheduleonday(
+        //     i,
+        //     element.medicineName.toString(),
+        //     "Your pet medicine time",
+        //     date,
+        //   );
+        //   i++;
+      }
+    });
+    weekList.forEach((element) {
+      DateTime date = DateTime(
+        element!.nextdate!.year,
+        element.nextdate!.month,
+        element.nextdate!.day,
+        int.parse(element.atTime!.split(":").first),
+        int.parse(element.atTime!.split(":")[1]),
+      );
+      if (is_In_This_hour(date)) {
+        flutterLocalNotificationsPlugin.show(
+          i,
+          element.medicineName,
+          "qwertyuiopuytre week",
+          platformChannelSpecifics,
+        );
+        i++;
 
-        // DateTime date = DateTime(
-        //   2023,
-        //   01, 10, 15, 50,
-        //   // int.parse(element.atTime!.split(":").first),
-        //   // int.parse(element.atTime!.split(":")[1]),
-        // );
-        // NotificationHelper().scheduleonday(
-        //   1,
-        //   "qwertyt",
-        //   "Your pet medicine time",
-        //   date,
-        // );
+        //   NotificationHelper().scheduleonday(
+        //     i,
+        //     element.medicineName.toString(),
+        //     "Your pet medicine time",
+        //     date,
+        //   );
+        //   i++;
+      }
+    });
 
-        int i = 0;
-        List<Daily?>? dailyList = [];
-        List<Daily?>? weekList = [];
-        dailyList = dailyFromJson(jsonEncode(data["daily"]));
-        weekList = dailyFromJson(jsonEncode(data["week"]));
+    //     // return list;
+    //     // customSnackbar(context, jsoncode["message"]);
 
-        dailyList?.forEach((element) {
-          DateTime date = DateTime(
-            element!.nextdate!.year,
-            element.nextdate!.month,
-            element.nextdate!.day - 1,
-            int.parse(element.atTime!.split(":").first),
-            int.parse(element.atTime!.split(":")[1]),
-          );
-          if (is_In_This_hour(date)) {
-            flutterLocalNotificationsPlugin.show(
-              i,
-              element.medicineName,
-              "qwertyuiopuytre daily",
-              platformChannelSpecifics,
-            );
-            i++;
-
-            //   NotificationHelper().scheduleonday(
-            //     i,
-            //     element.medicineName.toString(),
-            //     "Your pet medicine time",
-            //     date,
-            //   );
-            //   i++;
-          }
-        });
-        weekList?.forEach((element) {
-          DateTime date = DateTime(
-            element!.nextdate!.year,
-            element.nextdate!.month,
-            element.nextdate!.day,
-            int.parse(element.atTime!.split(":").first),
-            int.parse(element.atTime!.split(":")[1]),
-          );
-          if (is_In_This_hour(date)) {
-            flutterLocalNotificationsPlugin.show(
-              i,
-              element.medicineName,
-              "qwertyuiopuytre week",
-              platformChannelSpecifics,
-            );
-            i++;
-
-            //   NotificationHelper().scheduleonday(
-            //     i,
-            //     element.medicineName.toString(),
-            //     "Your pet medicine time",
-            //     date,
-            //   );
-            //   i++;
-          }
-        });
-
-        // return list;
-        // customSnackbar(context, jsoncode["message"]);
-
-      } else {}
-    } catch (e) {
-      // TODO
-      ;
-    }
+    //   } else {}
+    // } catch (e) {
+    //   // TODO
+    //   ;
+    // }
     // await getreminderData();
 
     // test using external plugin

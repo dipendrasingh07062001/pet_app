@@ -67,8 +67,8 @@ dependencies:
   flutter_google_places: ^0.3.0
   flutter_native_timezone: ^2.0.0
   device_info_plus: ^8.0.0
-  flutter_background_service: ^2.4.6
   syncfusion_flutter_datepicker: ^20.4.42
+  flutter_background_service: ^2.4.6
 
 
 

@@ -80,11 +80,22 @@ customSnackbar(
 }
 
 //// select time
+extension TimeOfDayConverter on TimeOfDay {
+  String to24hours() {
+    final hour = this.hour.toString().padLeft(2, "0");
+    final min = this.minute.toString().padLeft(2, "0");
+    return "$hour:$min";
+  }
+}
 
 Future showTime(BuildContext context) async {
-  final TimeOfDay? result =
-      await showTimePicker(context: context, initialTime: TimeOfDay.now());
+  final TimeOfDay? result = await showTimePicker(
+    context: context,
+    initialTime: TimeOfDay.now(),
+  );
   if (result != null) {
+    print(result.format(context));
+    print(to24Hours(result.format(context)));
     return result;
   }
   return null;
@@ -330,30 +341,30 @@ var w;
 customDateContainer(BuildContext context, Function()? ontap, String text) {
   h = MediaQuery.of(context).size.height;
   w = MediaQuery.of(context).size.width;
-  return Container(
-    height: h * 0.06,
-    padding: EdgeInsets.only(left: w * 0.030, right: w * 0.030),
-    margin: EdgeInsets.only(top: h * 0.010),
-    decoration: BoxDecoration(
-        color: WHITE_CLR,
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: BORDER_CLR, width: 1)),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          text,
-          style: const TextStyle(color: GRAY_CLR, fontSize: 14),
-        ),
-        GestureDetector(
-          onTap: ontap,
-          child: Icon(
+  return GestureDetector(
+    onTap: ontap,
+    child: Container(
+      height: h * 0.06,
+      padding: EdgeInsets.only(left: w * 0.030, right: w * 0.030),
+      margin: EdgeInsets.only(top: h * 0.010),
+      decoration: BoxDecoration(
+          color: WHITE_CLR,
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: BORDER_CLR, width: 1)),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            text,
+            style: const TextStyle(color: GRAY_CLR, fontSize: 14),
+          ),
+          Icon(
             Icons.calendar_month_sharp,
             color: GRAY_CLR.withOpacity(0.5),
             size: 20,
-          ),
-        )
-      ],
+          )
+        ],
+      ),
     ),
   );
 }
@@ -594,4 +605,15 @@ bool is_In_This_hour(DateTime date) {
   print(date2);
   print(date2.difference(date).inMinutes.abs());
   return (date2.difference(date).inMinutes.abs() <= 60);
+}
+
+String to24Hours(String time) {
+  String first = time.split(" ").first;
+  String last = time.split(" ").last;
+  int hour = int.parse(first.split(":").first);
+  int minute = int.parse(first.split(":").last);
+  if (last == "PM") {
+    hour = hour + 12;
+  }
+  return hour.toString() + ":" + minute.toString();
 }

@@ -29,6 +29,23 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
   File? imageFile;
   String editImage = "";
   String picktype = "";
+  String day = '1';
+
+  final SelectDay = ['1', '2', '3', '4', '5', "6", "7", "8", "9", "10"];
+  final Selectremind = [
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11",
+    "12"
+  ];
   @override
   void initState() {
     super.initState();
@@ -67,7 +84,7 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
   String? atdate;
   String? attime;
 
-  String reminder = "3 Months";
+  String reminder = "1";
 
   var h;
   var w;
@@ -75,6 +92,7 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
+    // addvaccination = false;
     return Scaffold(
       backgroundColor: WHITE70_CLR,
       appBar: DefaultAppBar(
@@ -98,91 +116,153 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
                   border: Border.all(color: BORDER_CLR, width: 1)),
               child: Padding(
                 padding: const EdgeInsets.only(left: 15, right: 5),
-                child: DropdownButton<VModel?>(
-                  isExpanded: true,
-                  borderRadius: BorderRadius.circular(10),
-                  underline: const SizedBox(),
-                  value: vmodel,
-                  onChanged: (newValue) {
-                    vmodel = newValue!;
-                    setState(() {});
-                    print("id......" + vmodel.id.toString());
-                  },
-                  items:
-                      //  vaccinationList.map((e) => e).toList()
-                      vaccinationList
-                          .map<DropdownMenuItem<VModel>>(
-                              (VModel value) => DropdownMenuItem<VModel>(
-                                    value: value,
-                                    child: Text(
-                                      value.name.toString(),
-                                      style: const TextStyle(
-                                          color: GRAY_CLR, fontSize: 14),
-                                    ),
-                                  ))
-                          .toList(),
-                  icon: Icon(
-                    Icons.keyboard_arrow_down_sharp,
-                    color: GRAY_CLR.withOpacity(0.5),
-                    size: 25,
-                  ),
-                  iconSize: 30,
-                ),
+                child: widget.isEditVaccination
+                    ? Text(
+                        vmodel.name.toString(),
+                        style: const TextStyle(color: GRAY_CLR, fontSize: 14),
+                      )
+                    : DropdownButton<VModel?>(
+                        isExpanded: true,
+                        borderRadius: BorderRadius.circular(10),
+                        underline: const SizedBox(),
+                        value: vmodel,
+                        onChanged: (newValue) {
+                          vmodel = newValue!;
+                          setState(() {});
+                          print("id......" + vmodel.id.toString());
+                        },
+                        items:
+                            //  vaccinationList.map((e) => e).toList()
+                            vaccinationList
+                                .map<DropdownMenuItem<VModel>>(
+                                    (VModel value) => DropdownMenuItem<VModel>(
+                                          value: value,
+                                          child: Text(
+                                            value.name.toString(),
+                                            style: const TextStyle(
+                                                color: GRAY_CLR, fontSize: 14),
+                                          ),
+                                        ))
+                                .toList(),
+                        icon: Icon(
+                          Icons.keyboard_arrow_down_sharp,
+                          color: GRAY_CLR.withOpacity(0.5),
+                          size: 25,
+                        ),
+                        iconSize: 30,
+                      ),
               ),
             ),
             SizedBox(
               height: h * 0.020,
             ),
-            styleText(VACCINATION_STATUS, BLACK_CLR, FontWeight.normal, 15),
-            Container(
-              height: h * 0.06,
-              margin: EdgeInsets.only(top: h * 0.010),
-              decoration: BoxDecoration(
-                  color: WHITE_CLR,
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: BORDER_CLR, width: 1)),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 15, right: 5),
-                child: DropdownButton<String>(
-                  isExpanded: true,
-                  borderRadius: BorderRadius.circular(10),
-                  underline: const SizedBox(),
-                  value: selectStatus,
-                  onChanged: (String? newValue) =>
-                      setState(() => selectStatus = newValue!),
-                  items: selectStatusitems
-                      .map<DropdownMenuItem<String>>(
-                          (String value) => DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(
-                                  value,
-                                  style: const TextStyle(
-                                      color: GRAY_CLR, fontSize: 14),
-                                ),
-                              ))
-                      .toList(),
-                  icon: Icon(
-                    Icons.keyboard_arrow_down_sharp,
-                    color: GRAY_CLR.withOpacity(0.5),
-                    size: 25,
+            Visibility(
+              visible: widget.isEditVaccination,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  styleText(
+                      VACCINATION_STATUS, BLACK_CLR, FontWeight.normal, 15),
+                  Container(
+                    height: h * 0.06,
+                    margin: EdgeInsets.only(top: h * 0.010),
+                    decoration: BoxDecoration(
+                        color: WHITE_CLR,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: BORDER_CLR, width: 1)),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 15, right: 5),
+                      child: DropdownButton<String>(
+                        isExpanded: true,
+                        borderRadius: BorderRadius.circular(10),
+                        underline: const SizedBox(),
+                        value: selectStatus,
+                        onChanged: (String? newValue) =>
+                            setState(() => selectStatus = newValue!),
+                        items: selectStatusitems
+                            .map<DropdownMenuItem<String>>(
+                                (String value) => DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(
+                                        value,
+                                        style: const TextStyle(
+                                            color: GRAY_CLR, fontSize: 14),
+                                      ),
+                                    ))
+                            .toList(),
+                        icon: Icon(
+                          Icons.keyboard_arrow_down_sharp,
+                          color: GRAY_CLR.withOpacity(0.5),
+                          size: 25,
+                        ),
+                        iconSize: 30,
+                      ),
+                    ),
                   ),
-                  iconSize: 30,
-                ),
+                  SizedBox(
+                    height: h * 0.020,
+                  ),
+                ],
               ),
             ),
-            SizedBox(
-              height: h * 0.020,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                styleText(DOSE_DAY, BLACK_CLR, FontWeight.normal, 15),
+                Container(
+                  height: h * 0.06,
+                  width: w * 0.3,
+                  margin: EdgeInsets.only(top: h * 0.010),
+                  decoration: BoxDecoration(
+                      color: WHITE_CLR,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: BORDER_CLR, width: 1)),
+                  alignment: Alignment.center,
+                  child: widget.isEditVaccination
+                      ? Text(
+                          day,
+                          style: TextStyle(color: PLACE_H_CLR, fontSize: 14),
+                        )
+                      : Padding(
+                          padding:
+                              const EdgeInsets.only(left: 15, right: 5, top: 3),
+                          child: DropdownButton<String>(
+                            isExpanded: true,
+                            borderRadius: BorderRadius.circular(10),
+                            underline: SizedBox(),
+                            value: day,
+                            onChanged: (String? newValue) =>
+                                setState(() => day = newValue!),
+                            items: SelectDay.map<DropdownMenuItem<String>>(
+                                (String value) => DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(
+                                        value,
+                                        style: TextStyle(
+                                            color: PLACE_H_CLR, fontSize: 14),
+                                      ),
+                                    )).toList(),
+                            icon: Image.asset(
+                              UPDOUN_ICON,
+                              color: GRAY_CLR.withOpacity(0.5),
+                              height: 25,
+                            ),
+                            iconSize: 30,
+                          ),
+                        ),
+                ),
+              ],
             ),
             styleText(VACCINATION_DATE, BLACK_CLR, FontWeight.normal, 15),
             customDateContainer(context, () {
               cutomDatePicker(context).then((value) {
                 setState(() {
-                  vaccinationdate = DateFormat('dd-MM-yyyy').format(value!);
+                  vaccinationdate = DateFormat('yyyy-MM-DD').format(value!);
                 });
               });
             },
                 vaccinationdate == null
-                    ? "DD-MM-YYYY"
+                    ? "YYYY-MM-DD"
                     : vaccinationdate.toString()),
             SizedBox(
               height: h * 0.020,
@@ -265,49 +345,136 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
               height: h * 0.015,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              // mainAxisAlignment: MainAxisAlignment.start,
+              // alignment: WrapAlignment.spaceBetween,
+
               children: [
-                customradioButton("3 Months", reminder, (value) {
-                  setState(() {
-                    reminder = value.toString();
-                  });
-                }),
+                Padding(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      customradioButton("3", reminder, (value) {
+                        setState(() {
+                          reminder = value.toString();
+                        });
+                      }),
+                      SizedBox(
+                        width: w * 0.020,
+                      ),
+                      const Text(
+                        "3 Months",
+                        style: TextStyle(color: GRAY_CLR),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      customradioButton("6", reminder, (value) {
+                        setState(() {
+                          reminder = value.toString();
+                        });
+                      }),
+                      SizedBox(
+                        width: w * 0.020,
+                      ),
+                      const Text(
+                        "6 Months",
+                        style: TextStyle(color: GRAY_CLR),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      customradioButton("9", reminder, (value) {
+                        setState(() {
+                          reminder = value.toString();
+                        });
+                      }),
+                      SizedBox(
+                        width: w * 0.020,
+                      ),
+                      const Text(
+                        "9 Months",
+                        style: TextStyle(color: GRAY_CLR),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: h * 0.030,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      customradioButton("12", reminder, (value) {
+                        setState(() {
+                          reminder = value.toString();
+                        });
+                      }),
+                      SizedBox(
+                        width: w * 0.020,
+                      ),
+                      const Text(
+                        "12 Months",
+                        style: TextStyle(color: GRAY_CLR),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  height: h * 0.04,
+                  width: w * 0.3,
+                  margin: EdgeInsets.only(top: h * 0.010),
+                  decoration: BoxDecoration(
+                      color: WHITE_CLR,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: BORDER_CLR, width: 1)),
+                  alignment: Alignment.center,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 15, right: 5, top: 3),
+                    child: DropdownButton<String>(
+                      isExpanded: true,
+                      borderRadius: BorderRadius.circular(10),
+                      underline: SizedBox(),
+                      value: reminder,
+                      onChanged: (String? newValue) =>
+                          setState(() => reminder = newValue!),
+                      items: Selectremind.map<DropdownMenuItem<String>>(
+                          (String value) => DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                  value,
+                                  style: TextStyle(
+                                      color: PLACE_H_CLR, fontSize: 14),
+                                ),
+                              )).toList(),
+                      icon: Text(
+                        " Months ",
+                        style: TextStyle(color: GRAY_CLR, height: 0.9),
+                      ),
+                      // iconSize: 30,
+                    ),
+                  ),
+                ),
                 SizedBox(
-                  width: w * 0.020,
-                ),
-                const Text(
-                  "3 Months",
-                  style: TextStyle(color: GRAY_CLR),
-                ),
-                SizedBox(
-                  width: w * 0.1,
-                ),
-                customradioButton("6 Months", reminder, (value) {
-                  setState(() {
-                    reminder = value.toString();
-                  });
-                }),
-                SizedBox(
-                  width: w * 0.020,
-                ),
-                const Text(
-                  "6 Months",
-                  style: TextStyle(color: GRAY_CLR),
-                ),
-                SizedBox(
-                  width: w * 0.1,
-                ),
-                customradioButton("12 Months", reminder, (value) {
-                  setState(() {
-                    reminder = value.toString();
-                  });
-                }),
-                SizedBox(
-                  width: w * 0.020,
-                ),
-                const Text(
-                  "12 Months",
-                  style: TextStyle(color: GRAY_CLR),
+                  width: w * 0.260,
                 ),
               ],
             ),
@@ -326,10 +493,10 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
                       customDateContainer(context, () {
                         cutomDatePicker(context).then((value) {
                           setState(() {
-                            atdate = DateFormat('dd-MM-yyyy').format(value!);
+                            atdate = DateFormat('yyyy-MM-dd').format(value!);
                           });
                         });
-                      }, atdate == null ? "DD-MM-YYYY" : atdate.toString())
+                      }, atdate == null ? "YYYY-MM-DD" : atdate.toString())
                     ],
                   ),
                 ),
@@ -374,7 +541,7 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
                                             imageFile!.path,
                                           )
                                         : File(""),
-                                    reminder.toString(),
+                                    reminder.toString() + " Months",
                                     atdate.toString(),
                                     attime.toString(),
                                     editImage)
@@ -405,10 +572,12 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
                                       vmodel.id.toString(),
                                       selectStatus.toString(),
                                       vaccinationdate.toString(),
-                                      File(
-                                        imageFile!.path,
-                                      ),
-                                      reminder.toString(),
+                                      imageFile != null
+                                          ? File(
+                                              imageFile!.path,
+                                            )
+                                          : File(""),
+                                      reminder.toString() + " Months",
                                       atdate.toString(),
                                       attime.toString())
                                   .then((value) {
@@ -448,13 +617,7 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
     if (vmodel.name == "---Select Vaccinations---") {
       customSnackbar(context, "Please select vaccination name");
       return false;
-    } else if (selectStatus == "---Select Status---") {
-      customSnackbar(context, "Please select vaccination status");
-      return false;
-    } else if (vaccinationdate == null) {
-      customSnackbar(context, "Please select vaccination date");
-      return false;
-    } else if (imageFile?.path == null) {
+    } else if (vaccinationdate != null && imageFile?.path == null) {
       customSnackbar(context, "Please select vaccination certificate");
       return false;
     } else if (atdate == null) {

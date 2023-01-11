@@ -33,6 +33,7 @@ class _Add_MedicineState extends State<Add_Medicine> {
   DateTime? end;
   String reminder = 'Daily';
   String? selectedmedicine;
+  TimeOfDay? time;
 
   GetMedicineNameModel medicinename = GetMedicineNameModel();
 
@@ -341,36 +342,41 @@ class _Add_MedicineState extends State<Add_Medicine> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   styleText(AT_TIME, BLACK_CLR, FontWeight.normal, 15),
-                  GestureDetector(
-                    onTap: () {
-                      showTime(context).then((value) {
-                        setState(() {
-                          attime = value.format(context);
+                  MediaQuery(
+                    data: MediaQuery.of(context)
+                        .copyWith(alwaysUse24HourFormat: true),
+                    child: GestureDetector(
+                      onTap: () {
+                        showTime(context).then((value) {
+                          setState(() {
+                            attime = value.format(context);
+                            print(attime);
+                          });
                         });
-                      });
-                    },
-                    child: Container(
-                      height: h * 0.06,
-                      padding:
-                          EdgeInsets.only(left: w * 0.030, right: w * 0.030),
-                      margin: EdgeInsets.only(top: h * 0.010),
-                      decoration: BoxDecoration(
-                          color: WHITE_CLR,
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: BORDER_CLR, width: 1)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            attime != null ? attime! : '00 : 00 AM',
-                            style: TextStyle(color: GRAY_CLR, fontSize: 14),
-                          ),
-                          Icon(
-                            Icons.access_time_rounded,
-                            color: GRAY_CLR.withOpacity(0.5),
-                            size: 20,
-                          ),
-                        ],
+                      },
+                      child: Container(
+                        height: h * 0.06,
+                        padding:
+                            EdgeInsets.only(left: w * 0.030, right: w * 0.030),
+                        margin: EdgeInsets.only(top: h * 0.010),
+                        decoration: BoxDecoration(
+                            color: WHITE_CLR,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: BORDER_CLR, width: 1)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              attime != null ? attime! : '00 : 00 AM',
+                              style: TextStyle(color: GRAY_CLR, fontSize: 14),
+                            ),
+                            Icon(
+                              Icons.access_time_rounded,
+                              color: GRAY_CLR.withOpacity(0.5),
+                              size: 20,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
