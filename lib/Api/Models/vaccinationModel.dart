@@ -18,33 +18,42 @@ class VaccinationMaodel {
 
 class VaccinationMaodelList {
   int? id;
-  String? vaccinationcertificate;
+  List<String>? vaccinationcertificate;
   VModel? vaccinationid;
-  String? vaccinationdate;
+  List<String>? vaccinationdate;
   String? reminder;
   String? vaccinationstatus;
   String? atdate;
   String? attime;
+  String? dose;
 
   VaccinationMaodelList({
     this.id,
-    this.vaccinationcertificate,
+    this.vaccinationcertificate = const [],
     this.vaccinationid,
-    this.vaccinationdate,
+    this.vaccinationdate = const [],
     this.reminder,
     this.vaccinationstatus,
     this.atdate,
     this.attime,
+    this.dose,
   });
 
   factory VaccinationMaodelList.fromjson(Map<String, dynamic> json) =>
       VaccinationMaodelList(
-          id: json["id"] ?? "",
-          vaccinationcertificate: json['vaccination_certificatee'],
-          vaccinationid: VModel.fromJson(json["vaccination_id"]),
-          vaccinationdate: json['vaccination_date'],
-          reminder: json['reminder'],
-          vaccinationstatus: json['vaccination_status'],
-          atdate: json['at_date'],
-          attime: json['at_time']);
+        id: json["id"] ?? "",
+        dose: json["dose"] ?? "",
+        vaccinationcertificate: json["vaccination_certificatee"] == null
+            ? []
+            : List<String>.from(
+                json["vaccination_certificatee"]!.map((x) => x)),
+        vaccinationid: VModel.fromJson(json["vaccination_id"]),
+        vaccinationdate: json["vaccination_date"] == null
+            ? []
+            : List<String>.from(json["vaccination_date"]!.map((x) => x)),
+        reminder: json['reminder'],
+        vaccinationstatus: json['vaccination_status'],
+        atdate: json['at_date'],
+        attime: json['at_time'],
+      );
 }

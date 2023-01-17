@@ -63,13 +63,18 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
 
       selectStatus =
           widget.editVaccinationmodeldata!.vaccinationstatus.toString();
-      vaccinationdate =
-          widget.editVaccinationmodeldata!.vaccinationdate.toString();
-      editImage =
-          widget.editVaccinationmodeldata!.vaccinationcertificate.toString();
+      // vaccinationdate =
+      //     widget.editVaccinationmodeldata!.vaccinationdate!.isEmpty
+      //         ? ""
+      //         : widget.editVaccinationmodeldata!.vaccinationdate!.last;
+      // editImage =
+      //     widget.editVaccinationmodeldata!.vaccinationcertificate!.isEmpty
+      //         ? ""
+      //         : widget.editVaccinationmodeldata!.vaccinationcertificate!.last;
       reminder = widget.editVaccinationmodeldata!.reminder.toString();
       atdate = widget.editVaccinationmodeldata!.atdate.toString();
       attime = widget.editVaccinationmodeldata!.attime.toString();
+      day = widget.editVaccinationmodeldata!.dose!;
     }
   }
 
@@ -109,6 +114,8 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
             styleText(VACCINATION_NAME, BLACK_CLR, FontWeight.normal, 15),
             Container(
               height: h * 0.06,
+              width: w,
+              alignment: Alignment.centerLeft,
               margin: EdgeInsets.only(top: h * 0.010),
               decoration: BoxDecoration(
                   color: WHITE_CLR,
@@ -165,6 +172,8 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
                       VACCINATION_STATUS, BLACK_CLR, FontWeight.normal, 15),
                   Container(
                     height: h * 0.06,
+                    width: w,
+                    alignment: Alignment.centerLeft,
                     margin: EdgeInsets.only(top: h * 0.010),
                     decoration: BoxDecoration(
                         color: WHITE_CLR,
@@ -172,31 +181,39 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
                         border: Border.all(color: BORDER_CLR, width: 1)),
                     child: Padding(
                       padding: const EdgeInsets.only(left: 15, right: 5),
-                      child: DropdownButton<String>(
-                        isExpanded: true,
-                        borderRadius: BorderRadius.circular(10),
-                        underline: const SizedBox(),
-                        value: selectStatus,
-                        onChanged: (String? newValue) =>
-                            setState(() => selectStatus = newValue!),
-                        items: selectStatusitems
-                            .map<DropdownMenuItem<String>>(
-                                (String value) => DropdownMenuItem<String>(
-                                      value: value,
-                                      child: Text(
-                                        value,
-                                        style: const TextStyle(
-                                            color: GRAY_CLR, fontSize: 14),
-                                      ),
-                                    ))
-                            .toList(),
-                        icon: Icon(
-                          Icons.keyboard_arrow_down_sharp,
-                          color: GRAY_CLR.withOpacity(0.5),
-                          size: 25,
-                        ),
-                        iconSize: 30,
-                      ),
+                      child: widget.isEditVaccination
+                          ? Text(
+                              selectStatus,
+                              style: const TextStyle(
+                                  color: GRAY_CLR, fontSize: 14),
+                            )
+                          : DropdownButton<String>(
+                              isExpanded: true,
+                              borderRadius: BorderRadius.circular(10),
+                              underline: const SizedBox(),
+                              value: selectStatus,
+                              onChanged: (String? newValue) =>
+                                  setState(() => selectStatus = newValue!),
+                              items: selectStatusitems
+                                  .map<DropdownMenuItem<String>>(
+                                      (String value) =>
+                                          DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(
+                                              value,
+                                              style: const TextStyle(
+                                                  color: GRAY_CLR,
+                                                  fontSize: 14),
+                                            ),
+                                          ))
+                                  .toList(),
+                              icon: Icon(
+                                Icons.keyboard_arrow_down_sharp,
+                                color: GRAY_CLR.withOpacity(0.5),
+                                size: 25,
+                              ),
+                              iconSize: 30,
+                            ),
                     ),
                   ),
                   SizedBox(
@@ -261,7 +278,7 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
                 });
               });
             },
-                vaccinationdate == null
+                vaccinationdate == null || vaccinationdate == ""
                     ? "YYYY-MM-DD"
                     : vaccinationdate.toString()),
             SizedBox(
@@ -541,9 +558,10 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
                                             imageFile!.path,
                                           )
                                         : File(""),
-                                    reminder.toString() + " Months",
+                                    reminder.toString(),
                                     atdate.toString(),
                                     attime.toString(),
+                                    day,
                                     editImage)
                                 .then((value) {
                               Preference.Pref.setInt(
@@ -569,18 +587,19 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
                                 addvaccination = true;
                               });
                               await addVaccinationApi(
-                                      vmodel.id.toString(),
-                                      selectStatus.toString(),
-                                      vaccinationdate.toString(),
-                                      imageFile != null
-                                          ? File(
-                                              imageFile!.path,
-                                            )
-                                          : File(""),
-                                      reminder.toString() + " Months",
-                                      atdate.toString(),
-                                      attime.toString())
-                                  .then((value) {
+                                vmodel.id.toString(),
+                                // selectStatus.toString(),
+                                vaccinationdate.toString(),
+                                imageFile != null
+                                    ? File(
+                                        imageFile!.path,
+                                      )
+                                    : File(""),
+                                reminder.toString(),
+                                atdate.toString(),
+                                attime.toString(),
+                                day,
+                              ).then((value) {
                                 Preference.Pref.setInt(
                                     'vaccinationId', value['data']['id']);
                                 customSnackbar(

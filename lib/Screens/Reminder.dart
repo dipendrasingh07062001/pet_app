@@ -63,12 +63,12 @@ class _ReminderState extends State<Reminder> {
             // _AddReminder(context);
             // NotificationHelper().schedulDailyNotification(
             //     0, "Test", "This is test", RepeatInterval.daily, 11, 40);
-            NotificationHelper().scheduleonday(
-              0,
-              "test",
-              "testing day",
-              DateTime(2023, 1, 4, 13, 6, 00),
-            );
+            // NotificationHelper().scheduleonday(
+            //   0,
+            //   "test",
+            //   "testing day",
+            //   DateTime(2023, 1, 4, 13, 6, 00),
+            // );
           },
           child: Icon(
             Icons.add,
@@ -239,207 +239,705 @@ class _ReminderState extends State<Reminder> {
                               ),
                               SizedBox(
                                 height: h * 0.56,
-                                child: ListView.builder(
-                                    physics: const BouncingScrollPhysics(),
-                                    scrollDirection: Axis.vertical,
-                                    shrinkWrap: true,
-                                    itemCount: value.reminderList.length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return Padding(
-                                          padding: EdgeInsets.only(
-                                              right: w * 0.030,
-                                              top: h * 0.005,
-                                              bottom: h * 0.01),
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              // setState(() {
-                                              //   Select =
-                                              //       TextName.elementAt(index)
-                                              //           .toString();
-                                              // });
-                                            },
-                                            child: Card(
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10)),
-                                              child: Container(
-                                                width: w * 0.5,
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  color:
-                                                      // TextName.elementAt(
-                                                      //             index) ==
-                                                      //         Select
-                                                      //     ? FADE_BLUE_CLR
-                                                      //         .withOpacity(0.12)
-                                                      //     :
-                                                      WHITE_CLR,
-                                                ),
-                                                child: Padding(
-                                                  padding: EdgeInsets.only(
-                                                      left: w * 0.030,
-                                                      right: w * 0.030,
-                                                      top: h * 0.015,
-                                                      bottom: h * 0.010),
-                                                  child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        styleText(
-                                                            value
-                                                                    .reminderList[
-                                                                        index]
-                                                                    .type ??
-                                                                "",
-                                                            BLACK_CLR,
-                                                            FontWeight.bold,
-                                                            16),
-                                                        SizedBox(
-                                                          height: h * 0.010,
-                                                        ),
-                                                        styleText(
-                                                            value
-                                                                    .reminderList[
-                                                                        index]
-                                                                    .name ??
-                                                                "",
-                                                            GRAY_CLR,
-                                                            FontWeight.bold,
-                                                            10),
-                                                        SizedBox(
-                                                          height: h * 0.010,
-                                                        ),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Row(
-                                                              children: [
-                                                                GestureDetector(
-                                                                  onTap: () {
-                                                                    setState(
-                                                                        () {
-                                                                      tap =
-                                                                          true;
-                                                                    });
-                                                                  },
-                                                                  child:
-                                                                      Container(
-                                                                    padding: const EdgeInsets
-                                                                            .only(
-                                                                        left:
-                                                                            10),
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .center,
-                                                                    height: 22,
-                                                                    width:
-                                                                        w * 0.2,
-                                                                    decoration: BoxDecoration(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(
-                                                                                10),
-                                                                        color:
-                                                                            FADE_GREEN_CLR),
-                                                                    child: Row(
-                                                                        children: [
-                                                                          SvgPicture.asset(
-                                                                              UNPIN_ICON),
-                                                                          SizedBox(
-                                                                            width:
-                                                                                w * 0.010,
-                                                                          ),
-                                                                          styleText(
-                                                                              UNPIN,
-                                                                              WHITE70_CLR,
-                                                                              FontWeight.normal,
-                                                                              12)
-                                                                        ]),
+                                width: w,
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                      children:
+                                          List.generate(
+                                                  value.dailyreminderList!
+                                                      .length, (index) {
+                                                return Container(
+                                                    width: w,
+                                                    padding: EdgeInsets.only(
+                                                        right: w * 0.030,
+                                                        top: h * 0.005,
+                                                        bottom: h * 0.01),
+                                                    child: GestureDetector(
+                                                      onTap: () {
+                                                        // setState(() {
+                                                        //   Select =
+                                                        //       TextName.elementAt(index)
+                                                        //           .toString();
+                                                        // });
+                                                      },
+                                                      child: Card(
+                                                        shape: RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10)),
+                                                        child: Container(
+                                                          width: w * 0.5,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10),
+                                                            color:
+                                                                // TextName.elementAt(
+                                                                //             index) ==
+                                                                //         Select
+                                                                //     ? FADE_BLUE_CLR
+                                                                //         .withOpacity(0.12)
+                                                                //     :
+                                                                WHITE_CLR,
+                                                          ),
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    left: w *
+                                                                        0.030,
+                                                                    right: w *
+                                                                        0.030,
+                                                                    top: h *
+                                                                        0.015,
+                                                                    bottom: h *
+                                                                        0.010),
+                                                            child: Column(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  styleText(
+                                                                      // value
+                                                                      //         .dailyreminderList?[
+                                                                      //             index]
+                                                                      //         ?.medicineName ??
+                                                                      //     "",
+                                                                      "Medicine",
+                                                                      BLACK_CLR,
+                                                                      FontWeight
+                                                                          .bold,
+                                                                      16),
+                                                                  SizedBox(
+                                                                    height: h *
+                                                                        0.0050,
                                                                   ),
-                                                                ),
-                                                                SizedBox(
-                                                                  width:
-                                                                      w * 0.030,
-                                                                ),
-                                                                GestureDetector(
-                                                                  onTap: () {
-                                                                    setState(
-                                                                        () {
-                                                                      tap =
-                                                                          false;
-                                                                    });
-                                                                  },
-                                                                  child:
-                                                                      Container(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .center,
-                                                                    height: 22,
-                                                                    width:
-                                                                        w * 0.2,
-                                                                    decoration: BoxDecoration(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(
-                                                                                10),
-                                                                        color:
-                                                                            GREEN_CLR),
-                                                                    child:
-                                                                        Padding(
-                                                                      padding: const EdgeInsets
-                                                                              .only(
-                                                                          left:
-                                                                              5),
-                                                                      child: Row(
-                                                                          children: [
-                                                                            const Icon(
-                                                                              Icons.check,
-                                                                              color: WHITE70_CLR,
-                                                                              size: 18,
-                                                                            ),
-                                                                            SizedBox(
-                                                                              width: w * 0.010,
-                                                                            ),
-                                                                            styleText(
-                                                                                DONE,
-                                                                                WHITE70_CLR,
-                                                                                FontWeight.normal,
-                                                                                12)
-                                                                          ]),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            Align(
-                                                                alignment:
-                                                                    Alignment
-                                                                        .topRight,
-                                                                child: styleText(
-                                                                    value
-                                                                            .reminderList[
-                                                                                index]
-                                                                            .reminder ??
-                                                                        "" +
-                                                                            " " +
-                                                                            value.reminderList[index].atTime
-                                                                                .toString(),
+                                                                  styleText(
+                                                                    value.dailyreminderList?[index]
+                                                                            ?.medicineName ??
+                                                                        "",
+                                                                    // "Give medicine to fluffy and take him for the vaccination",
                                                                     GRAY_CLR,
                                                                     FontWeight
                                                                         .normal,
-                                                                    10)),
-                                                          ],
+                                                                    13,
+                                                                  ),
+                                                                  SizedBox(
+                                                                    height: h *
+                                                                        0.010,
+                                                                  ),
+                                                                  Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .spaceBetween,
+                                                                    children: [
+                                                                      Row(
+                                                                        children: [
+                                                                          GestureDetector(
+                                                                            onTap:
+                                                                                () {
+                                                                              setState(() {
+                                                                                tap = true;
+                                                                              });
+                                                                            },
+                                                                            child:
+                                                                                Container(
+                                                                              padding: const EdgeInsets.only(left: 10),
+                                                                              alignment: Alignment.center,
+                                                                              height: 22,
+                                                                              width: w * 0.2,
+                                                                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: FADE_GREEN_CLR),
+                                                                              child: Row(children: [
+                                                                                SvgPicture.asset(UNPIN_ICON),
+                                                                                SizedBox(
+                                                                                  width: w * 0.010,
+                                                                                ),
+                                                                                styleText("Pin", WHITE70_CLR, FontWeight.normal, 12)
+                                                                              ]),
+                                                                            ),
+                                                                          ),
+                                                                          SizedBox(
+                                                                            width:
+                                                                                w * 0.030,
+                                                                          ),
+                                                                          GestureDetector(
+                                                                            onTap:
+                                                                                () {
+                                                                              setState(() {
+                                                                                tap = false;
+                                                                              });
+                                                                            },
+                                                                            child:
+                                                                                Container(
+                                                                              alignment: Alignment.center,
+                                                                              height: 22,
+                                                                              width: w * 0.2,
+                                                                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: GREEN_CLR),
+                                                                              child: Padding(
+                                                                                padding: const EdgeInsets.only(left: 5),
+                                                                                child: Row(children: [
+                                                                                  const Icon(
+                                                                                    Icons.check,
+                                                                                    color: WHITE70_CLR,
+                                                                                    size: 18,
+                                                                                  ),
+                                                                                  SizedBox(
+                                                                                    width: w * 0.010,
+                                                                                  ),
+                                                                                  styleText(DONE, WHITE70_CLR, FontWeight.normal, 12)
+                                                                                ]),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                      Align(
+                                                                          alignment: Alignment
+                                                                              .topRight,
+                                                                          child: styleText(
+                                                                              DateFormat("yyyy-MM-dd").format(value.dailyreminderList![index]!.nextdate!) + " at " + value.dailyreminderList![index]!.atTime.toString(),
+                                                                              GRAY_CLR,
+                                                                              FontWeight.normal,
+                                                                              10)),
+                                                                    ],
+                                                                  ),
+                                                                ]),
+                                                          ),
                                                         ),
-                                                      ]),
-                                                ),
-                                              ),
-                                            ),
-                                          ));
-                                    }),
+                                                      ),
+                                                    ));
+                                              }) +
+                                              List.generate(
+                                                  value.weeklyreminderList!
+                                                      .length, (index) {
+                                                return Container(
+                                                    width: w,
+                                                    padding: EdgeInsets.only(
+                                                        right: w * 0.030,
+                                                        top: h * 0.005,
+                                                        bottom: h * 0.01),
+                                                    child: GestureDetector(
+                                                      onTap: () {
+                                                        // setState(() {
+                                                        //   Select =
+                                                        //       TextName.elementAt(index)
+                                                        //           .toString();
+                                                        // });
+                                                      },
+                                                      child: Card(
+                                                        shape: RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10)),
+                                                        child: Container(
+                                                          width: w * 0.5,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10),
+                                                            color:
+                                                                // TextName.elementAt(
+                                                                //             index) ==
+                                                                //         Select
+                                                                //     ? FADE_BLUE_CLR
+                                                                //         .withOpacity(0.12)
+                                                                //     :
+                                                                WHITE_CLR,
+                                                          ),
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    left: w *
+                                                                        0.030,
+                                                                    right: w *
+                                                                        0.030,
+                                                                    top: h *
+                                                                        0.015,
+                                                                    bottom: h *
+                                                                        0.010),
+                                                            child: Column(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  styleText(
+                                                                      // value
+                                                                      //         .dailyreminderList?[
+                                                                      //             index]
+                                                                      //         ?.medicineName ??
+                                                                      //     "",
+                                                                      "Medicine",
+                                                                      BLACK_CLR,
+                                                                      FontWeight
+                                                                          .bold,
+                                                                      16),
+                                                                  SizedBox(
+                                                                    height: h *
+                                                                        0.0050,
+                                                                  ),
+                                                                  styleText(
+                                                                    value.weeklyreminderList?[index]
+                                                                            ?.medicineName ??
+                                                                        "",
+                                                                    // "Give medicine to fluffy and take him for the vaccination",
+                                                                    GRAY_CLR,
+                                                                    FontWeight
+                                                                        .normal,
+                                                                    13,
+                                                                  ),
+                                                                  SizedBox(
+                                                                    height: h *
+                                                                        0.010,
+                                                                  ),
+                                                                  Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .spaceBetween,
+                                                                    children: [
+                                                                      Row(
+                                                                        children: [
+                                                                          GestureDetector(
+                                                                            onTap:
+                                                                                () {
+                                                                              setState(() {
+                                                                                tap = true;
+                                                                              });
+                                                                            },
+                                                                            child:
+                                                                                Container(
+                                                                              padding: const EdgeInsets.only(left: 10),
+                                                                              alignment: Alignment.center,
+                                                                              height: 22,
+                                                                              width: w * 0.2,
+                                                                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: FADE_GREEN_CLR),
+                                                                              child: Row(children: [
+                                                                                SvgPicture.asset(UNPIN_ICON),
+                                                                                SizedBox(
+                                                                                  width: w * 0.010,
+                                                                                ),
+                                                                                styleText("Pin", WHITE70_CLR, FontWeight.normal, 12)
+                                                                              ]),
+                                                                            ),
+                                                                          ),
+                                                                          SizedBox(
+                                                                            width:
+                                                                                w * 0.030,
+                                                                          ),
+                                                                          GestureDetector(
+                                                                            onTap:
+                                                                                () {
+                                                                              setState(() {
+                                                                                tap = false;
+                                                                              });
+                                                                            },
+                                                                            child:
+                                                                                Container(
+                                                                              alignment: Alignment.center,
+                                                                              height: 22,
+                                                                              width: w * 0.2,
+                                                                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: GREEN_CLR),
+                                                                              child: Padding(
+                                                                                padding: const EdgeInsets.only(left: 5),
+                                                                                child: Row(children: [
+                                                                                  const Icon(
+                                                                                    Icons.check,
+                                                                                    color: WHITE70_CLR,
+                                                                                    size: 18,
+                                                                                  ),
+                                                                                  SizedBox(
+                                                                                    width: w * 0.010,
+                                                                                  ),
+                                                                                  styleText(DONE, WHITE70_CLR, FontWeight.normal, 12)
+                                                                                ]),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                      Align(
+                                                                          alignment: Alignment
+                                                                              .topRight,
+                                                                          child: styleText(
+                                                                              DateFormat("yyyy-MM-dd").format(value.weeklyreminderList![index]!.nextdate!) + " at " + value.weeklyreminderList![index]!.atTime.toString(),
+                                                                              GRAY_CLR,
+                                                                              FontWeight.normal,
+                                                                              10)),
+                                                                    ],
+                                                                  ),
+                                                                ]),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ));
+                                              }) +
+                                              List.generate(
+                                                  value.vaccineList.length,
+                                                  (index) {
+                                                return Container(
+                                                    width: w,
+                                                    padding: EdgeInsets.only(
+                                                        right: w * 0.030,
+                                                        top: h * 0.005,
+                                                        bottom: h * 0.01),
+                                                    child: GestureDetector(
+                                                      onTap: () {
+                                                        // setState(() {
+                                                        //   Select =
+                                                        //       TextName.elementAt(index)
+                                                        //           .toString();
+                                                        // });
+                                                      },
+                                                      child: Card(
+                                                        shape: RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10)),
+                                                        child: Container(
+                                                          width: w * 0.5,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10),
+                                                            color:
+                                                                // TextName.elementAt(
+                                                                //             index) ==
+                                                                //         Select
+                                                                //     ? FADE_BLUE_CLR
+                                                                //         .withOpacity(0.12)
+                                                                //     :
+                                                                WHITE_CLR,
+                                                          ),
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    left: w *
+                                                                        0.030,
+                                                                    right: w *
+                                                                        0.030,
+                                                                    top: h *
+                                                                        0.015,
+                                                                    bottom: h *
+                                                                        0.010),
+                                                            child: Column(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  styleText(
+                                                                      // value
+                                                                      //         .dailyreminderList?[
+                                                                      //             index]
+                                                                      //         ?.medicineName ??
+                                                                      //     "",
+                                                                      "Vaccination",
+                                                                      BLACK_CLR,
+                                                                      FontWeight
+                                                                          .bold,
+                                                                      16),
+                                                                  SizedBox(
+                                                                    height: h *
+                                                                        0.0050,
+                                                                  ),
+                                                                  styleText(
+                                                                    value.vaccineList[index]
+                                                                            .vaccinationId ??
+                                                                        "",
+                                                                    // "Vaccine name",
+                                                                    // "Give medicine to fluffy and take him for the vaccination",
+                                                                    GRAY_CLR,
+                                                                    FontWeight
+                                                                        .normal,
+                                                                    13,
+                                                                  ),
+                                                                  SizedBox(
+                                                                    height: h *
+                                                                        0.010,
+                                                                  ),
+                                                                  Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .spaceBetween,
+                                                                    children: [
+                                                                      Row(
+                                                                        children: [
+                                                                          GestureDetector(
+                                                                            onTap:
+                                                                                () {
+                                                                              setState(() {
+                                                                                tap = true;
+                                                                              });
+                                                                            },
+                                                                            child:
+                                                                                Container(
+                                                                              padding: const EdgeInsets.only(left: 10),
+                                                                              alignment: Alignment.center,
+                                                                              height: 22,
+                                                                              width: w * 0.2,
+                                                                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: FADE_GREEN_CLR),
+                                                                              child: Row(children: [
+                                                                                SvgPicture.asset(UNPIN_ICON),
+                                                                                SizedBox(
+                                                                                  width: w * 0.010,
+                                                                                ),
+                                                                                styleText("Pin", WHITE70_CLR, FontWeight.normal, 12)
+                                                                              ]),
+                                                                            ),
+                                                                          ),
+                                                                          SizedBox(
+                                                                            width:
+                                                                                w * 0.030,
+                                                                          ),
+                                                                          GestureDetector(
+                                                                            onTap:
+                                                                                () {
+                                                                              setState(() {
+                                                                                tap = false;
+                                                                              });
+                                                                            },
+                                                                            child:
+                                                                                Container(
+                                                                              alignment: Alignment.center,
+                                                                              height: 22,
+                                                                              width: w * 0.2,
+                                                                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: GREEN_CLR),
+                                                                              child: Padding(
+                                                                                padding: const EdgeInsets.only(left: 5),
+                                                                                child: Row(children: [
+                                                                                  const Icon(
+                                                                                    Icons.check,
+                                                                                    color: WHITE70_CLR,
+                                                                                    size: 18,
+                                                                                  ),
+                                                                                  SizedBox(
+                                                                                    width: w * 0.010,
+                                                                                  ),
+                                                                                  styleText(DONE, WHITE70_CLR, FontWeight.normal, 12)
+                                                                                ]),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                      Align(
+                                                                          alignment: Alignment
+                                                                              .topRight,
+                                                                          child: styleText(
+                                                                              DateFormat("yyyy-MM-dd").format(value.weeklyreminderList![index]!.nextdate!) + " at " + value.weeklyreminderList![index]!.atTime.toString(),
+                                                                              GRAY_CLR,
+                                                                              FontWeight.normal,
+                                                                              10)),
+                                                                    ],
+                                                                  ),
+                                                                ]),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ));
+                                              })
+
+                                      //  [
+                                      //   ListView.builder(
+                                      //       physics: const BouncingScrollPhysics(),
+                                      //       scrollDirection: Axis.vertical,
+                                      //       shrinkWrap: true,
+                                      //       itemCount:
+                                      //           value.dailyreminderList?.length,
+                                      //       itemBuilder:
+                                      //           (BuildContext context, int index) {
+                                      //         return Padding(
+                                      //             padding: EdgeInsets.only(
+                                      //                 right: w * 0.030,
+                                      //                 top: h * 0.005,
+                                      //                 bottom: h * 0.01),
+                                      //             child: GestureDetector(
+                                      //               onTap: () {
+                                      //                 // setState(() {
+                                      //                 //   Select =
+                                      //                 //       TextName.elementAt(index)
+                                      //                 //           .toString();
+                                      //                 // });
+                                      //               },
+                                      //               child: Card(
+                                      //                 shape: RoundedRectangleBorder(
+                                      //                     borderRadius:
+                                      //                         BorderRadius.circular(
+                                      //                             10)),
+                                      //                 child: Container(
+                                      //                   width: w * 0.5,
+                                      //                   decoration: BoxDecoration(
+                                      //                     borderRadius:
+                                      //                         BorderRadius.circular(
+                                      //                             10),
+                                      //                     color:
+                                      //                         // TextName.elementAt(
+                                      //                         //             index) ==
+                                      //                         //         Select
+                                      //                         //     ? FADE_BLUE_CLR
+                                      //                         //         .withOpacity(0.12)
+                                      //                         //     :
+                                      //                         WHITE_CLR,
+                                      //                   ),
+                                      //                   child: Padding(
+                                      //                     padding: EdgeInsets.only(
+                                      //                         left: w * 0.030,
+                                      //                         right: w * 0.030,
+                                      //                         top: h * 0.015,
+                                      //                         bottom: h * 0.010),
+                                      //                     child: Column(
+                                      //                         crossAxisAlignment:
+                                      //                             CrossAxisAlignment
+                                      //                                 .start,
+                                      //                         children: [
+                                      //                           styleText(
+                                      //                               // value
+                                      //                               //         .dailyreminderList?[
+                                      //                               //             index]
+                                      //                               //         ?.medicineName ??
+                                      //                               //     "",
+                                      //                               "Medicine",
+                                      //                               BLACK_CLR,
+                                      //                               FontWeight.bold,
+                                      //                               16),
+                                      //                           SizedBox(
+                                      //                             height:
+                                      //                                 h * 0.0050,
+                                      //                           ),
+                                      //                           styleText(
+                                      //                             value
+                                      //                                     .dailyreminderList?[
+                                      //                                         index]
+                                      //                                     ?.medicineName ??
+                                      //                                 "",
+                                      //                             // "Give medicine to fluffy and take him for the vaccination",
+                                      //                             GRAY_CLR,
+                                      //                             FontWeight.normal,
+                                      //                             13,
+                                      //                           ),
+                                      //                           SizedBox(
+                                      //                             height: h * 0.010,
+                                      //                           ),
+                                      //                           Row(
+                                      //                             mainAxisAlignment:
+                                      //                                 MainAxisAlignment
+                                      //                                     .spaceBetween,
+                                      //                             children: [
+                                      //                               Row(
+                                      //                                 children: [
+                                      //                                   GestureDetector(
+                                      //                                     onTap:
+                                      //                                         () {
+                                      //                                       setState(
+                                      //                                           () {
+                                      //                                         tap =
+                                      //                                             true;
+                                      //                                       });
+                                      //                                     },
+                                      //                                     child:
+                                      //                                         Container(
+                                      //                                       padding:
+                                      //                                           const EdgeInsets.only(left: 10),
+                                      //                                       alignment:
+                                      //                                           Alignment.center,
+                                      //                                       height:
+                                      //                                           22,
+                                      //                                       width: w *
+                                      //                                           0.2,
+                                      //                                       decoration: BoxDecoration(
+                                      //                                           borderRadius:
+                                      //                                               BorderRadius.circular(10),
+                                      //                                           color: FADE_GREEN_CLR),
+                                      //                                       child: Row(
+                                      //                                           children: [
+                                      //                                             SvgPicture.asset(UNPIN_ICON),
+                                      //                                             SizedBox(
+                                      //                                               width: w * 0.010,
+                                      //                                             ),
+                                      //                                             styleText(UNPIN, WHITE70_CLR, FontWeight.normal, 12)
+                                      //                                           ]),
+                                      //                                     ),
+                                      //                                   ),
+                                      //                                   SizedBox(
+                                      //                                     width: w *
+                                      //                                         0.030,
+                                      //                                   ),
+                                      //                                   GestureDetector(
+                                      //                                     onTap:
+                                      //                                         () {
+                                      //                                       setState(
+                                      //                                           () {
+                                      //                                         tap =
+                                      //                                             false;
+                                      //                                       });
+                                      //                                     },
+                                      //                                     child:
+                                      //                                         Container(
+                                      //                                       alignment:
+                                      //                                           Alignment.center,
+                                      //                                       height:
+                                      //                                           22,
+                                      //                                       width: w *
+                                      //                                           0.2,
+                                      //                                       decoration: BoxDecoration(
+                                      //                                           borderRadius:
+                                      //                                               BorderRadius.circular(10),
+                                      //                                           color: GREEN_CLR),
+                                      //                                       child:
+                                      //                                           Padding(
+                                      //                                         padding:
+                                      //                                             const EdgeInsets.only(left: 5),
+                                      //                                         child:
+                                      //                                             Row(children: [
+                                      //                                           const Icon(
+                                      //                                             Icons.check,
+                                      //                                             color: WHITE70_CLR,
+                                      //                                             size: 18,
+                                      //                                           ),
+                                      //                                           SizedBox(
+                                      //                                             width: w * 0.010,
+                                      //                                           ),
+                                      //                                           styleText(
+                                      //                                               DONE,
+                                      //                                               WHITE70_CLR,
+                                      //                                               FontWeight.normal,
+                                      //                                               12)
+                                      //                                         ]),
+                                      //                                       ),
+                                      //                                     ),
+                                      //                                   ),
+                                      //                                 ],
+                                      //                               ),
+                                      //                               Align(
+                                      //                                   alignment:
+                                      //                                       Alignment
+                                      //                                           .topRight,
+                                      //                                   child: styleText(
+                                      //                                       DateFormat("yyyy-MM-dd").format(value.dailyreminderList![index]!.nextdate!) +
+                                      //                                           " at " +
+                                      //                                           value.dailyreminderList![index]!.atTime
+                                      //                                               .toString(),
+                                      //                                       GRAY_CLR,
+                                      //                                       FontWeight
+                                      //                                           .normal,
+                                      //                                       10)),
+                                      //                             ],
+                                      //                           ),
+                                      //                         ]),
+                                      //                   ),
+                                      //                 ),
+                                      //               ),
+                                      //             ));
+                                      //       }),
+                                      // ],
+                                      ),
+                                ),
                               ),
                             ],
                           ),

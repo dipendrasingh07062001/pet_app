@@ -92,32 +92,45 @@ class _VaccinationsState extends State<Vaccinations> {
                                 FontWeight.bold,
                                 16),
                             SizedBox(
-                              height: h * 0.005,
-                            ),
-                            SizedBox(
-                              height: h * 0.005,
+                              height: h * 0.01,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                SizedBox(
-                                  width: w * 0.4,
-                                  child: styleText(
-                                      "Dose", BLACK_CLR, FontWeight.w400, 14),
-                                ),
-                                SizedBox(
-                                  width: w * 0.4,
-                                  child: Row(
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      styleText("Status     ", BLACK_CLR,
-                                          FontWeight.w400, 14),
+                                      styleText("Dose ", GRAY_CLR,
+                                          FontWeight.w400, 13),
+                                      styleText(
+                                          result.vaccinationModeldata![index]
+                                                  .dose ??
+                                              "",
+                                          BLACK_CLR,
+                                          FontWeight.w400,
+                                          14),
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      styleText("Status", GRAY_CLR,
+                                          FontWeight.w400, 13),
                                       SizedBox(
                                         height: h * 0.005,
                                       ),
                                       styleText(
-                                        "due in ${DateTime.parse(result.vaccinationModeldata![index].atdate!).difference(DateTime.now()).inDays}",
-                                        GREEN_CLR,
-                                        FontWeight.w500,
+                                        // "due in ${DateTime.parse(result.vaccinationModeldata![index].atdate!).difference(DateTime.now()).inDays}",
+                                        result.vaccinationModeldata![index]
+                                                .vaccinationstatus ??
+                                            "",
+                                        BLACK_CLR,
+                                        FontWeight.w400,
                                         14,
                                       )
                                     ],
@@ -125,167 +138,204 @@ class _VaccinationsState extends State<Vaccinations> {
                                 ),
                               ],
                             ),
+                            SizedBox(
+                              height: h * 0.02,
+                            ),
                             Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                SizedBox(
-                                  width: w * 0.4,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      styleText(LAST_VACCINATION, GRAY_CLR,
-                                          FontWeight.normal, 13),
-                                      styleText(
-                                          "Date ${result.vaccinationModeldata![index].vaccinationdate.toString()}",
-                                          BLACK_CLR,
-                                          FontWeight.bold,
-                                          15),
-                                    ],
+                                Visibility(
+                                  visible: result.vaccinationModeldata![index]
+                                      .vaccinationdate!.isNotEmpty,
+                                  child: Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        styleText(LAST_VACCINATION, GRAY_CLR,
+                                            FontWeight.normal, 13),
+                                        Row(
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: List.generate(
+                                                  result
+                                                      .vaccinationModeldata![
+                                                          index]
+                                                      .vaccinationdate!
+                                                      .length,
+                                                  (i) => Row(
+                                                        children: [
+                                                          SizedBox(
+                                                            // width: w * 0.6,
+                                                            child: styleText(
+                                                                "${result.vaccinationModeldata![index].vaccinationdate![i]}  ",
+                                                                BLACK_CLR,
+                                                                FontWeight.w400,
+                                                                15),
+                                                          ),
+                                                          GestureDetector(
+                                                            onTap: () {
+                                                              downloadFile(
+                                                                      result.vaccinationModeldata![index].vaccinationcertificate![
+                                                                          i],
+                                                                      result
+                                                                          .vaccinationModeldata![
+                                                                              index]
+                                                                          .vaccinationcertificate![
+                                                                              i]
+                                                                          .split(
+                                                                              "/")
+                                                                          .last,
+                                                                      context)
+                                                                  .then(
+                                                                      (value) {
+                                                                print(value);
+                                                              });
+                                                              // downloader(result
+                                                              //     .vaccinationModeldata![
+                                                              //         index]
+                                                              //     .vaccinationcertificate![i]);
+                                                            },
+                                                            child: Icon(
+                                                              Icons
+                                                                  .cloud_download_outlined,
+                                                              size: 20,
+                                                            ),
+                                                          )
+                                                        ],
+                                                      )),
+                                            ),
+                                            // Column(
+                                            //   crossAxisAlignment:
+                                            //       CrossAxisAlignment.start,
+                                            //   children: result
+                                            //       .vaccinationModeldata![index]
+                                            //       .vaccinationcertificate!
+                                            //       .map((e) => Icon(
+                                            //             Icons
+                                            //                 .cloud_download_outlined,
+                                            //             size: 20,
+                                            //           ))
+                                            //       .toList(),
+                                            // )
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                                SizedBox(
-                                  width: w * 0.4,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      styleText(NEXT_VACCINATION, GRAY_CLR,
-                                          FontWeight.normal, 13),
-                                      styleText(
-                                          "Date ${result.vaccinationModeldata![index].atdate.toString()}",
-                                          BLACK_CLR,
-                                          FontWeight.bold,
-                                          15),
-                                    ],
+                                Visibility(
+                                  visible: result.vaccinationModeldata![index]
+                                          .vaccinationdate!.length <
+                                      4,
+                                  child: Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        styleText(NEXT_VACCINATION + " - Date",
+                                            GRAY_CLR, FontWeight.normal, 13),
+                                        styleText(
+                                            result.vaccinationModeldata![index]
+                                                .atdate
+                                                .toString(),
+                                            BLACK_CLR,
+                                            FontWeight.w400,
+                                            15),
+                                      ],
+                                    ),
                                   ),
-                                )
+                                ),
                               ],
                             ),
                             SizedBox(
                               height: h * 0.005,
                             ),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(6),
-                                  child: Image.network(
-                                    result.vaccinationModeldata![index]
-                                        .vaccinationcertificate
-                                        .toString(),
-                                    loadingBuilder:
-                                        (context, child, loadingProgress) {
-                                      if (loadingProgress == null) {
-                                        return child;
-                                      } else {
-                                        return Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: valueLoader(loadingProgress
-                                                      .expectedTotalBytes !=
-                                                  null
-                                              ? loadingProgress
-                                                      .cumulativeBytesLoaded /
-                                                  loadingProgress
-                                                      .expectedTotalBytes!
-                                              : null),
-                                        );
-                                      }
-                                    },
-                                    scale: 1.0,
-                                    errorBuilder:
-                                        (context, error, stackTrace) =>
-                                            Container(),
-                                    height: h * 0.075,
-                                    width: w * 0.27,
-                                    fit: BoxFit.cover,
+                                Visibility(
+                                  visible: result.vaccinationModeldata![index]
+                                          .vaccinationdate!.length <
+                                      4,
+                                  child: SizedBox(
+                                    height: 28,
+                                    width: 28,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          Preference.Pref.setInt(
+                                              'vaccinationId',
+                                              result
+                                                  .vaccinationModeldata![index]
+                                                  .id);
+                                          Navigate_replace(
+                                              context,
+                                              Add_Vaccinations(
+                                                isEditVaccination: true,
+                                                editVaccinationmodeldata: result
+                                                        .vaccinationModeldata![
+                                                    index],
+                                              ));
+
+                                          print("m, m, " +
+                                              Preference.Pref.getInt(
+                                                      'vaccinationId')
+                                                  .toString());
+                                        });
+                                      },
+                                      child: const CircleAvatar(
+                                        backgroundColor: FADE_BLUE_CLR,
+                                        child: Icon(
+                                          Icons.edit,
+                                          size: 15,
+                                          color: WHITE70_CLR,
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      height: 28,
-                                      width: 28,
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            Preference.Pref.setInt(
-                                                'vaccinationId',
-                                                result
-                                                    .vaccinationModeldata![
-                                                        index]
-                                                    .id);
-                                            Navigate_replace(
-                                                context,
-                                                Add_Vaccinations(
-                                                  isEditVaccination: true,
-                                                  editVaccinationmodeldata:
-                                                      result.vaccinationModeldata![
-                                                          index],
-                                                ));
+                                SizedBox(
+                                  width: w * 0.010,
+                                ),
+                                SizedBox(
+                                  height: 28,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        deleteDialog(context, () {
+                                          deleteVaccintionApi(result
+                                                  .vaccinationModeldata![index]
+                                                  .id
+                                                  .toString())
+                                              .then((value) {
+                                            customSnackbar(context,
+                                                value['message'].toString());
+                                            getVaccinationListApi()
+                                                .then((value) {
+                                              result = value;
+                                              setState(() {});
+                                            });
 
-                                            print("m, m, " +
-                                                Preference.Pref.getInt(
-                                                        'vaccinationId')
-                                                    .toString());
+                                            Navigator.of(context).pop();
+                                          }).catchError((e) {
+                                            customSnackbar(
+                                                context, e.toString());
                                           });
-                                        },
-                                        child: const CircleAvatar(
-                                          backgroundColor: FADE_BLUE_CLR,
-                                          child: Icon(
-                                            Icons.edit,
-                                            size: 15,
-                                            color: WHITE70_CLR,
-                                          ),
-                                        ),
+                                        }, deletVaccination);
+                                      });
+                                    },
+                                    child: const CircleAvatar(
+                                      backgroundColor: FADE_BLUE_CLR,
+                                      child: Icon(
+                                        Icons.delete,
+                                        color: WHITE70_CLR,
+                                        size: 15,
                                       ),
                                     ),
-                                    SizedBox(
-                                      width: w * 0.010,
-                                    ),
-                                    SizedBox(
-                                      height: 28,
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            deleteDialog(context, () {
-                                              deleteVaccintionApi(result
-                                                      .vaccinationModeldata![
-                                                          index]
-                                                      .id
-                                                      .toString())
-                                                  .then((value) {
-                                                customSnackbar(
-                                                    context,
-                                                    value['message']
-                                                        .toString());
-                                                getVaccinationListApi()
-                                                    .then((value) {
-                                                  result = value;
-                                                  setState(() {});
-                                                });
-
-                                                Navigator.of(context).pop();
-                                              }).catchError((e) {
-                                                customSnackbar(
-                                                    context, e.toString());
-                                              });
-                                            }, deletVaccination);
-                                          });
-                                        },
-                                        child: const CircleAvatar(
-                                          backgroundColor: FADE_BLUE_CLR,
-                                          child: Icon(
-                                            Icons.delete,
-                                            color: WHITE70_CLR,
-                                            size: 15,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                                  ),
                                 ),
                               ],
                             ),

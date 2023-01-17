@@ -15,8 +15,10 @@ import '../../Api/Prefrence.dart';
 import '../../Api/Services.dart';
 import '../../Componants/Images&Icons.dart';
 import '../../FirebaseServices/GoogleAuth.dart';
+import '../../Notification/notificationMathod.dart';
 import '../DrawerScreen.dart';
 import '../LocationBottomSeet.dart';
+import '../Reminder.dart';
 
 String? Search;
 
@@ -48,7 +50,7 @@ class _HomeState extends State<Home> {
   @override
   initState() {
     super.initState();
-    getreminderData();
+    // getreminderData();
     gname = Preference.Pref!.getString("gname") ?? "";
     gemail = Preference.Pref!.getString("gemail") ?? "";
     gprofilePic = Preference.Pref!.getString("gprofilePic") ?? "";
@@ -194,6 +196,7 @@ class _HomeState extends State<Home> {
               //     "qwertyuiopoiuytrewq",
               //     RepeatInterval.everyMinute,
               //     DateTime.now());
+              getFCMtoken();
               // Navigate_to(context, const Reminder());
               // Workmanager().cancelAll();
               // Workmanager().registerOneOffTask(

@@ -6,6 +6,7 @@ import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'package:pet_app/Api/Prefrence.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Provider/Provider.dart';
@@ -16,6 +17,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Api/Services.dart';
 import 'AppServices/BackgroundServices.dart';
+import 'AppServices/cron_servies.dart';
 import 'Notification/notificationMathod.dart';
 import 'Provider/AddCycle.dart';
 import 'Provider/AppleSignin_provider.dart';
@@ -26,9 +28,11 @@ import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 
+import 'UTILS/Utils.dart';
+
 const fetchBackground = "fetchBackground";
 const foregorundfetch = "foregorundfetch";
-
+late String localPath;
 bool isLoading = false;
 
 // void callbackDispatcher() {
@@ -82,7 +86,10 @@ Future<void> main() async {
   //   callbackDispatcher,
   //   isInDebugMode: true,
   // );
-  initializeService();
+  // initializeService();
+  // cron_services();
+  prepareSaveDir();
+
   runApp(
     const MyApp(),
   );

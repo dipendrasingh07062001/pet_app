@@ -148,7 +148,7 @@ class _DewormingState extends State<Deworming> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        styleText(NEXT_DEWORMING, GRAY_CLR,
+                                        styleText("Last Deworming", GRAY_CLR,
                                             FontWeight.normal, 13),
                                         styleText(
                                             result.data!.dewormingDate
@@ -161,33 +161,33 @@ class _DewormingState extends State<Deworming> {
                                   )
                                 ],
                               ),
-                              Container(
-                                // height: h * 0.062,
-                                // width: w * 0.4,
-                                margin: EdgeInsets.only(bottom: h * 0.010),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    color: WHITE_CLR,
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: DROP_CLR.withOpacity(0.1),
-                                          blurRadius: 3)
-                                    ]),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    styleText(DEWORMING_DURATION, GRAY_CLR,
-                                        FontWeight.normal, 13),
-                                    styleText(
-                                        result.data!.dewormingDuration
-                                            .toString(),
-                                        BLACK_CLR,
-                                        FontWeight.normal,
-                                        15),
-                                  ],
-                                ),
-                              ),
+                              // Container(
+                              //   // height: h * 0.062,
+                              //   // width: w * 0.4,
+                              //   margin: EdgeInsets.only(bottom: h * 0.010),
+                              //   decoration: BoxDecoration(
+                              //       borderRadius: BorderRadius.circular(5),
+                              //       color: WHITE_CLR,
+                              //       boxShadow: [
+                              //         BoxShadow(
+                              //             color: DROP_CLR.withOpacity(0.1),
+                              //             blurRadius: 3)
+                              //       ]),
+                              //   child: Column(
+                              //     mainAxisAlignment: MainAxisAlignment.center,
+                              //     crossAxisAlignment: CrossAxisAlignment.center,
+                              //     children: [
+                              //       styleText(DEWORMING_DURATION, GRAY_CLR,
+                              //           FontWeight.normal, 13),
+                              //       styleText(
+                              //           result.data!.dewormingDuration
+                              //               .toString(),
+                              //           BLACK_CLR,
+                              //           FontWeight.normal,
+                              //           15),
+                              //     ],
+                              //   ),
+                              // ),
                               Divider(
                                 thickness: 2,
                                 color: GRAY_CLR.withOpacity(0.1),
@@ -208,7 +208,7 @@ class _DewormingState extends State<Deworming> {
                                               BorderRadius.circular(5)),
                                       onPressed: () {},
                                       child: styleText(
-                                          result.data!.reminder.toString(),
+                                          "In every ${result.data!.reminder} month",
                                           WHITE_CLR,
                                           FontWeight.normal,
                                           11))

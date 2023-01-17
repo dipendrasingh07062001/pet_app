@@ -4,9 +4,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:permission_handler/permission_handler.dart' as permission;
+import 'package:pet_app/Api/Prefrence.dart';
 import 'package:rxdart/rxdart.dart';
 import 'dart:collection';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -67,11 +69,13 @@ const NotificationDetails platformChannelSpecifics = NotificationDetails(
     android: androidPlatformChannelSpecifics, iOS: iOSPlatformChannelSpecifics);
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  final pref = await SharedPreferences.getInstance();
   print("notification backgroung handler");
   await Firebase.initializeApp();
   if (message.notification != null) {
     Map<String, dynamic> map = HashMap();
     print(map.toString());
+    print(message.notification!.title);
     map["title"] = message.notification!.title;
     map["body"] = message.notification!.body;
     if (message.data.isNotEmpty) {
@@ -82,6 +86,14 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
         map["type"] = message.data["type"];
       }
     }
+    List<String> titlelist = [];
+    if (pref.getStringList("titlelist") != null) {
+      titlelist = pref.getStringList("titlelist")!;
+    }
+    print(titlelist);
+    titlelist.add(map["title"]);
+    pref.setStringList("titlelist", titlelist);
+    print(pref.getStringList("titlelist"));
   }
 }
 
@@ -193,6 +205,13 @@ shownotification() async {
           map["type"] = message.data["type"];
         }
       }
+      List<String> titlelist = [];
+      if (Preference.Pref.getStringList("titlelist") != null) {
+        titlelist = Preference.Pref.getStringList("titlelist");
+      }
+      titlelist.add(map["title"]);
+      Preference.Pref.setStringList("titlelist", titlelist);
+      print(Preference.Pref.getStringList("titlelist"));
     }
     // If `onMessage` is triggered with a notification, construct our own
     // local notification to show to users using the created channel.
@@ -228,6 +247,13 @@ shownotification() async {
           map["type"] = message.data["type"];
         }
       }
+      List<String> titlelist = [];
+      if (Preference.Pref.getStringList("titlelist") != null) {
+        titlelist = Preference.Pref.getStringList("titlelist");
+      }
+      titlelist.add(map["title"]);
+      Preference.Pref.setStringList("titlelist", titlelist);
+      print(Preference.Pref.getStringList("titlelist"));
     }
 
     await flutterLocalNotificationsPlugin.show(

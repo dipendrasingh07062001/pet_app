@@ -18,6 +18,7 @@ import 'package:pet_app/Provider/ServiceListProvider.dart';
 import 'package:pet_app/Provider/predictionProvider.dart';
 import 'package:pet_app/Screens/Reminder.dart';
 import 'package:provider/provider.dart';
+import '../Provider/Reminder_provider.dart';
 import '../Screens/Onbording/Login.dart';
 import '../Testing1/linearCalender.dart';
 import '../UTILS/Utils.dart';
@@ -793,12 +794,13 @@ bool addvaccination = false;
 String? addVaccinationmsg;
 Future addVaccinationApi(
   String vaccinationName,
-  String vaccinationStatus,
+  // String vaccinationStatus,
   String vaccinationdate,
   File vaccinationCertificate,
   String reminder,
   String atdate,
   String attime,
+  String dose,
 ) async {
   ///MultiPart request
   var request = http.MultipartRequest(
@@ -817,11 +819,15 @@ Future addVaccinationApi(
     );
   }
   request.headers.addAll(headers);
-
+  if (vaccinationdate != "null" && vaccinationdate != "") {
+    request.fields["vaccination_date"] = vaccinationdate;
+  }
   request.fields.addAll({
+    'user_id': Preference.Pref.getInt("userId").toString(),
+    'dose': dose,
     'vaccination_id': vaccinationName,
-    'vaccination_status': vaccinationStatus,
-    'vaccination_date': vaccinationdate,
+    // 'vaccination_status': vaccinationStatus,
+    // 'vaccination_date': vaccinationdate,
     'reminder': reminder,
     'at_date': atdate,
     'at_time': attime,
@@ -866,6 +872,7 @@ Future editVaccinationApi(
     String reminder,
     String atdate,
     String attime,
+    String dose,
     String editImageUrl) async {
   ///MultiPart request
   var request = http.MultipartRequest(
@@ -874,6 +881,9 @@ Future editVaccinationApi(
           "https://appicsoftwares.in/development/petapp/api/edit_vaccinations") //baseURL + editvaccination),
       );
   request.headers.addAll(headers);
+  if (vaccinationdate != "null" && vaccinationdate != "") {
+    request.fields["vaccination_date"] = vaccinationdate;
+  }
   if (vaccinationCertificate.path.isNotEmpty) {
     request.files.add(
       http.MultipartFile(
@@ -885,21 +895,25 @@ Future editVaccinationApi(
     );
 
     request.fields.addAll({
+      'user_id': Preference.Pref.getInt("userId").toString(),
+      'pet_id': Preference.Pref.getInt("selectedPetId").toString(),
       'vaccination_id': vaccinationName,
       'vaccination_status': vaccinationStatus,
-      'vaccination_date': vaccinationdate,
       'reminder': reminder,
       'at_date': atdate,
       'at_time': attime,
+      'dose': dose,
       'id': Preference.Pref.getInt('vaccinationId').toString(),
     });
   } else {
     request.fields.addAll({
+      'user_id': Preference.Pref.getInt("userId").toString(),
+      'pet_id': Preference.Pref.getInt("selectedPetId").toString(),
       'vaccination_id': vaccinationName,
       'vaccination_status': vaccinationStatus,
-      'vaccination_date': vaccinationdate,
       'reminder': reminder,
       'at_date': atdate,
+      'dose': dose,
       'at_time': attime,
       'id': Preference.Pref.getInt('vaccinationId').toString(),
       'vaccination_certificatee': editImageUrl
@@ -955,13 +969,14 @@ Future getDewormingListApi(String petid) async {
 
 String? addDewormingmsg;
 bool isAddDeworming = false;
-Future addDewormingApi(String status, String duration, String date,
-    String reminder, String atDate, String time) async {
+Future addDewormingApi(String duration, String date, String reminder,
+    String atDate, String time) async {
   var response = await http
       .post(Uri.parse(baseURL + addDeworming), headers: headers, body: {
     'pet_id': Preference.Pref.getInt('selectedPetId').toString(),
-    'deworming_status': status,
-    'deworming_duration': duration,
+    'user_id': Preference.Pref.getInt('userId').toString(),
+    // 'deworming_status': status,
+    // 'deworming_duration': duration,
     "deworming_date": date,
     'reminder': reminder,
     'at_date': atDate,
@@ -1253,6 +1268,7 @@ Future EditMedicineApi(
     'course_end_date': enddate,
     'reminder': reminder,
     'at_time': attime,
+    "user_id": Preference.Pref.getInt("userId").toString(),
     'id': medicineId,
   });
   isdeditingmedicine = true;
@@ -1537,13 +1553,22 @@ Future getreminderData(
     // BuildContext context,
     ) async {
   try {
+    print("object");
     var response = await http.post(
       Uri.parse(baseURL + get_reminder_url),
       body: {"user_id": Preference.Pref.getInt("userId").toString()},
       headers: headers,
     );
+    print("qwerqweqweqweqwe");
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
+      print("====== services is started");
+      // flutterLocalNotificationsPlugin.show(
+      //   10,
+      //   "qqwerqwerwe",
+      //   "qwertyuiopuytre daily",
+      //   platformChannelSpecifics,
+      // );
 // List<Daily?>? dailyList = [];
 //           List<Daily?>? weekList = [];
 //           dailyList = dailyFromJson(jsonEncode(data["daily"]));
@@ -1569,60 +1594,104 @@ Future getreminderData(
       weekList = dailyFromJson(jsonEncode(data["week"]));
       Preference.Pref.setString("dailyReminder", dailyToJson(dailyList));
       Preference.Pref.setString("weeklyReminder", dailyToJson(weekList));
+      print("========");
+      dailyList?.forEach((element) {
+        String time = to24Hours(element!.atTime!);
+        print(time);
 
-      // dailyList?.forEach((element) {
-      //   DateTime date = DateTime(
-      //     element!.nextdate!.year,
-      //     element.nextdate!.month,
-      //     element.nextdate!.day - 1,
-      //     int.parse(element.atTime!.split(":").first),
-      //     int.parse(element.atTime!.split(":")[1]),
-      //   );
-      //   if (is_In_This_hour(date)) {
-      //     flutterLocalNotificationsPlugin.show(
-      //       i,
-      //       element.medicineName,
-      //       "qwertyuiopuytre daily",
-      //       platformChannelSpecifics,
-      //     );
-      //     i++;
+        DateTime date = DateTime(
+          element.nextdate!.year,
+          element.nextdate!.month,
+          element.nextdate!.day - 1,
+          int.parse(time.split(":").first),
+          int.parse(time.split(":")[1]),
+        );
+        if (is_In_This_hour(date)) {
+          flutterLocalNotificationsPlugin.show(
+            i,
+            element.medicineName,
+            "qwertyuiopuytre daily",
+            platformChannelSpecifics,
+          );
+          i++;
 
-      //     //   NotificationHelper().scheduleonday(
-      //     //     i,
-      //     //     element.medicineName.toString(),
-      //     //     "Your pet medicine time",
-      //     //     date,
-      //     //   );
-      //     //   i++;
-      //   }
-      // });
-      // weekList?.forEach((element) {
-      //   DateTime date = DateTime(
-      //     element!.nextdate!.year,
-      //     element.nextdate!.month,
-      //     element.nextdate!.day,
-      //     int.parse(element.atTime!.split(":").first),
-      //     int.parse(element.atTime!.split(":")[1]),
-      //   );
-      //   if (is_In_This_hour(date)) {
-      //     flutterLocalNotificationsPlugin.show(
-      //       i,
-      //       element.medicineName,
-      //       "qwertyuiopuytre week",
-      //       platformChannelSpecifics,
-      //     );
-      //     i++;
+          //   NotificationHelper().scheduleonday(
+          //     i,
+          //     element.medicineName.toString(),
+          //     "Your pet medicine time",
+          //     date,
+          //   );
+          //   i++;
+        }
+      });
+      weekList?.forEach((element) {
+        String time = to24Hours(element!.atTime!);
+        print(time);
+        DateTime date = DateTime(
+          element.nextdate!.year,
+          element.nextdate!.month,
+          element.nextdate!.day,
+          int.parse(time.split(":").first),
+          int.parse(time.split(":")[1]),
+        );
+        if (is_In_This_hour(date)) {
+          flutterLocalNotificationsPlugin.show(
+            i,
+            element.medicineName,
+            "qwertyuiopuytre week",
+            platformChannelSpecifics,
+          );
+          i++;
 
-      //     //   NotificationHelper().scheduleonday(
-      //     //     i,
-      //     //     element.medicineName.toString(),
-      //     //     "Your pet medicine time",
-      //     //     date,
-      //     //   );
-      //     //   i++;
-      //   }
-      // });
+          //   NotificationHelper().scheduleonday(
+          //     i,
+          //     element.medicineName.toString(),
+          //     "Your pet medicine time",
+          //     date,
+          //   );
+          //   i++;
+        }
+      });
 
+      // return list;
+      // customSnackbar(context, jsoncode["message"]);
+
+    } else {
+      return [];
+    }
+  } catch (e) {
+    // TODO
+    return [];
+  }
+}
+
+Future getAllreminderData(
+  BuildContext context,
+) async {
+  try {
+    print("object");
+    var response = await http.get(
+      Uri.parse(baseURL +
+          all_reminder_url +
+          "?user_id=" +
+          Preference.Pref.getInt("userId").toString()),
+      // body: {"user_id": Preference.Pref.getInt("userId").toString()},
+      headers: headers,
+    );
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+
+      int i = 0;
+      List<Daily?>? dailyList = [];
+      List<Daily?>? weekList = [];
+      List<VaccinationReminder> dewormingList = [];
+      dailyList = dailyFromJson(jsonEncode(data["daily"]));
+      weekList = dailyFromJson(jsonEncode(data["week"]));
+      dewormingList =
+          vaccinationReminderFromJson(jsonEncode(data["vaccination"]));
+      context.read<ReminderService>().dailyreminderList?.addAll(dailyList!);
+      context.read<ReminderService>().weeklyreminderList?.addAll(weekList!);
+      context.read<ReminderService>().vaccineList.addAll(dewormingList);
       // return list;
       // customSnackbar(context, jsoncode["message"]);
 

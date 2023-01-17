@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,6 +11,10 @@ import '../Api/Prefrence.dart';
 import '../Componants/Images&Icons.dart';
 import '../Screens/Onbording/Login.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:android_path_provider/android_path_provider.dart';
+
+import '../main.dart';
 
 /// Determine the current position of the device.
 ///
@@ -616,4 +621,61 @@ String to24Hours(String time) {
     hour = hour + 12;
   }
   return hour.toString() + ":" + minute.toString();
+}
+
+// downloader(String url) async {
+//   await prepareSaveDir();
+//   final taskId = await FlutterDownloader.enqueue(
+//     url:
+//         "https://media.istockphoto.com/id/1135820309/photo/amber-fort-and-maota-lake-jaipur-rajasthan-india.jpg?s=1024x1024&w=is&k=20&c=GzMFwHZE6rktQgOnEnVXQLm3-MPxHF1K6lY6g91O3Kc=",
+//     headers: {}, // optional: header send with url (auth token etc)
+//     savedDir: localPath,
+//     showNotification:
+//         true, // show download progress in status bar (for Android)
+//     openFileFromNotification:
+//         true, // click on notification to open downloaded file (for Android)
+//   );
+// }
+
+Future<void> prepareSaveDir() async {
+  localPath = (await _getSavedDir())!;
+  final savedDir = Directory(localPath);
+  if (!savedDir.existsSync()) {
+    await savedDir.create();
+  }
+  print(localPath);
+}
+
+Future<String?> _getSavedDir() async {
+  String? externalStorageDirPath;
+
+  if (Platform.isAndroid) {
+    try {
+      externalStorageDirPath = await AndroidPathProvider.downloadsPath;
+    } catch (err, st) {
+      print('failed to get downloads path: $err, $st');
+
+      final directory = await getExternalStorageDirectory();
+      externalStorageDirPath = directory?.path;
+    }
+  } else if (Platform.isIOS) {
+    externalStorageDirPath =
+        (await getApplicationDocumentsDirectory()).absolute.path;
+  }
+  return externalStorageDirPath;
+}
+
+Future<File> downloadFile(
+    String url, String filename, BuildContext context) async {
+  customSnackbar(context, "Downloading...");
+  var httpClient = new HttpClient();
+  var request = await httpClient.getUrl(Uri.parse(url));
+  var response = await request.close();
+  var bytes = await consolidateHttpClientResponseBytes(response);
+  String dir = localPath;
+  File file = new File('$dir/$filename');
+  await file.writeAsBytes(bytes);
+
+  customSnackbar(context, "File succefully downloaded");
+  return file;
 }

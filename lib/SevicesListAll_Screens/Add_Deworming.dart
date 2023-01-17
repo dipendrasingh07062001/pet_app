@@ -26,6 +26,21 @@ class _Add_DewormingState extends State<Add_Deworming> {
     'false',
     'true',
   ];
+  String reminder = "1";
+  final Selectremind = [
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11",
+    "12"
+  ];
   var selectAtdate;
   String? selectDate;
   String? selectedTime;
@@ -35,7 +50,7 @@ class _Add_DewormingState extends State<Add_Deworming> {
     if (widget.isedit) {
       selectStatus = widget.editDewormingModel!.dewormingStatus.toString();
       day = widget.editDewormingModel!.dewormingDuration.toString();
-      selectDate = widget.editDewormingModel!.dewormingDate.toString();
+      // selectDate = widget.editDewormingModel!.dewormingDate.toString();
       day1 = widget.editDewormingModel!.reminder.toString();
       selectAtdate = widget.editDewormingModel!.atDate.toString();
       selectedTime = widget.editDewormingModel!.atTime.toString();
@@ -61,192 +76,356 @@ class _Add_DewormingState extends State<Add_Deworming> {
           child: SingleChildScrollView(
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              styleText(DEWORMING_STATUS, BLACK_CLR, FontWeight.normal, 15),
-              Container(
-                height: h * 0.06,
-                margin: EdgeInsets.only(top: h * 0.010),
-                decoration: BoxDecoration(
-                    color: WHITE_CLR,
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: BORDER_CLR, width: 1)),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 15, right: 5, top: 3),
-                  child: DropdownButton<String>(
-                    isExpanded: true,
-                    borderRadius: BorderRadius.circular(10),
-                    underline: SizedBox(),
-                    value: selectStatus,
-                    onChanged: (String? newValue) => setState(
-                      () => selectStatus = newValue!,
+              Visibility(
+                visible: widget.isedit,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    styleText(
+                        DEWORMING_STATUS, BLACK_CLR, FontWeight.normal, 15),
+                    Container(
+                      height: h * 0.06,
+                      width: w,
+                      margin: EdgeInsets.only(top: h * 0.010),
+                      alignment: Alignment.centerLeft,
+                      decoration: BoxDecoration(
+                          color: WHITE_CLR,
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: BORDER_CLR, width: 1)),
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.only(left: 15, right: 5, top: 3),
+                        child: styleText(
+                          selectStatus,
+                          GRAY_CLR,
+                          FontWeight.normal,
+                          15,
+                        ),
+
+                        // child: DropdownButton<String>(
+                        //   isExpanded: true,
+                        //   borderRadius: BorderRadius.circular(10),
+                        //   underline: SizedBox(),
+                        //   value: selectStatus,
+                        //   onChanged: (String? newValue) => setState(
+                        //     () => selectStatus = newValue!,
+                        //   ),
+                        //   items:
+                        //       SelectStstusitems.map<DropdownMenuItem<String>>(
+                        //           (String value) => DropdownMenuItem<String>(
+                        //                 value: value,
+                        //                 child: Text(
+                        //                   value.toString(),
+                        //                   style: TextStyle(
+                        //                       color: GRAY_CLR, fontSize: 14),
+                        //                 ),
+                        //               )).toList(),
+                        //   icon: Icon(
+                        //     Icons.keyboard_arrow_down_sharp,
+                        //     color: GRAY_CLR.withOpacity(0.5),
+                        //     size: 25,
+                        //   ),
+                        //   iconSize: 30,
+                        // ),
+                      ),
                     ),
-                    items: SelectStstusitems.map<DropdownMenuItem<String>>(
-                        (String value) => DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(
-                                value.toString(),
-                                style: TextStyle(color: GRAY_CLR, fontSize: 14),
-                              ),
-                            )).toList(),
-                    icon: Icon(
-                      Icons.keyboard_arrow_down_sharp,
-                      color: GRAY_CLR.withOpacity(0.5),
-                      size: 25,
+                    SizedBox(
+                      height: h * 0.020,
                     ),
-                    iconSize: 30,
-                  ),
+                  ],
                 ),
               ),
-              SizedBox(
-                height: h * 0.020,
-              ),
-              styleText(DEWORMING_DURATION, BLACK_CLR, FontWeight.normal, 15),
-              SizedBox(
-                height: h * 0.020,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  customradioButton("Daily", day, (value) {
+              // SizedBox(
+              //   height: h * 0.020,
+              // ),
+              // styleText(DEWORMING_DURATION, BLACK_CLR, FontWeight.normal, 15),
+              // SizedBox(
+              //   height: h * 0.020,
+              // ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.start,
+              //   children: [
+              //     customradioButton("Daily", day, (value) {
+              //       setState(() {
+              //         day = value.toString();
+              //       });
+              //     }),
+              //     SizedBox(
+              //       width: w * 0.010,
+              //     ),
+              //     Text(
+              //       DAILY,
+              //       style: TextStyle(color: GRAY_CLR),
+              //     ),
+              //     SizedBox(
+              //       width: w * 0.1,
+              //     ),
+              //     customradioButton("Weekly", day, (value) {
+              //       setState(() {
+              //         day = value.toString();
+              //       });
+              //     }),
+              //     SizedBox(
+              //       width: w * 0.010,
+              //     ),
+              //     Text(
+              //       WEEKLY,
+              //       style: TextStyle(color: GRAY_CLR),
+              //     ),
+              //     SizedBox(
+              //       width: w * 0.1,
+              //     ),
+              //     customradioButton("Monthly", day, (value) {
+              //       setState(() {
+              //         day = value.toString();
+              //       });
+              //     }),
+              //     SizedBox(
+              //       width: w * 0.010,
+              //     ),
+              //     Text(
+              //       MONTHLY,
+              //       style: TextStyle(color: GRAY_CLR),
+              //     ),
+              //   ],
+              // ),
+              // SizedBox(
+              //   height: h * 0.020,
+              // ),
+              styleText(
+                  "Last " + DEWORMING_DATE, BLACK_CLR, FontWeight.normal, 15),
+              GestureDetector(
+                onTap: () {
+                  cutomDatePicker(context).then((value) {
                     setState(() {
-                      day = value.toString();
+                      selectDate = DateFormat("yyyy-MM-dd").format(value!);
                     });
-                  }),
-                  SizedBox(
-                    width: w * 0.010,
+                  });
+                },
+                child: Container(
+                  height: h * 0.06,
+                  padding: EdgeInsets.only(left: w * 0.030, right: w * 0.030),
+                  margin: EdgeInsets.only(top: h * 0.010),
+                  decoration: BoxDecoration(
+                      color: WHITE_CLR,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: BORDER_CLR, width: 1)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        selectDate == null ? "YYYY-MM-DD" : "${selectDate}",
+                        style: TextStyle(color: GRAY_CLR, fontSize: 14),
+                      ),
+                      Icon(
+                        Icons.calendar_month_sharp,
+                        color: GRAY_CLR.withOpacity(0.5),
+                        size: 20,
+                      )
+                    ],
                   ),
-                  Text(
-                    DAILY,
-                    style: TextStyle(color: GRAY_CLR),
-                  ),
-                  SizedBox(
-                    width: w * 0.1,
-                  ),
-                  customradioButton("Weekly", day, (value) {
-                    setState(() {
-                      day = value.toString();
-                    });
-                  }),
-                  SizedBox(
-                    width: w * 0.010,
-                  ),
-                  Text(
-                    WEEKLY,
-                    style: TextStyle(color: GRAY_CLR),
-                  ),
-                  SizedBox(
-                    width: w * 0.1,
-                  ),
-                  customradioButton("Monthly", day, (value) {
-                    setState(() {
-                      day = value.toString();
-                    });
-                  }),
-                  SizedBox(
-                    width: w * 0.010,
-                  ),
-                  Text(
-                    MONTHLY,
-                    style: TextStyle(color: GRAY_CLR),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: h * 0.020,
-              ),
-              styleText(DEWORMING_DATE, BLACK_CLR, FontWeight.normal, 15),
-              Container(
-                height: h * 0.06,
-                padding: EdgeInsets.only(left: w * 0.030, right: w * 0.030),
-                margin: EdgeInsets.only(top: h * 0.010),
-                decoration: BoxDecoration(
-                    color: WHITE_CLR,
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: BORDER_CLR, width: 1)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      selectDate == null ? "DD-MM-YYYY" : "${selectDate}",
-                      style: TextStyle(color: GRAY_CLR, fontSize: 14),
-                    ),
-                    GestureDetector(
-                        onTap: () {
-                          cutomDatePicker(context).then((value) {
-                            setState(() {
-                              selectDate =
-                                  DateFormat("dd-MM-yyyy").format(value!);
-                            });
-                          });
-                        },
-                        child: Icon(
-                          Icons.calendar_month_sharp,
-                          color: GRAY_CLR.withOpacity(0.5),
-                          size: 20,
-                        ))
-                  ],
                 ),
               ),
               SizedBox(
                 height: h * 0.025,
               ),
               styleText(REMINDER, BLACK_CLR, FontWeight.normal, 17),
-              SizedBox(
-                height: h * 0.020,
-              ),
-              styleText(REMINDER_DURATION, BLACK_CLR, FontWeight.normal, 15),
-              SizedBox(
-                height: h * 0.020,
-              ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                // mainAxisAlignment: MainAxisAlignment.start,
+                // alignment: WrapAlignment.spaceBetween,
+
                 children: [
-                  customradioButton("Daily", day1, (value) {
-                    setState(() {
-                      day1 = value.toString();
-                    });
-                  }),
-                  SizedBox(
-                    width: w * 0.010,
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        customradioButton("3", reminder, (value) {
+                          setState(() {
+                            reminder = value.toString();
+                          });
+                        }),
+                        SizedBox(
+                          width: w * 0.020,
+                        ),
+                        const Text(
+                          "3 Months",
+                          style: TextStyle(color: GRAY_CLR),
+                        ),
+                      ],
+                    ),
                   ),
-                  Text(
-                    DAILY,
-                    style: TextStyle(color: GRAY_CLR),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        customradioButton("6", reminder, (value) {
+                          setState(() {
+                            reminder = value.toString();
+                          });
+                        }),
+                        SizedBox(
+                          width: w * 0.020,
+                        ),
+                        const Text(
+                          "6 Months",
+                          style: TextStyle(color: GRAY_CLR),
+                        ),
+                      ],
+                    ),
                   ),
-                  SizedBox(
-                    width: w * 0.1,
-                  ),
-                  customradioButton("Weekly", day1, (value) {
-                    setState(() {
-                      day1 = value.toString();
-                    });
-                  }),
-                  SizedBox(
-                    width: w * 0.010,
-                  ),
-                  Text(
-                    WEEKLY,
-                    style: TextStyle(color: GRAY_CLR),
-                  ),
-                  SizedBox(
-                    width: w * 0.1,
-                  ),
-                  customradioButton("Monthly", day1, (value) {
-                    setState(() {
-                      day1 = value.toString();
-                    });
-                  }),
-                  SizedBox(
-                    width: w * 0.010,
-                  ),
-                  Text(
-                    MONTHLY,
-                    style: TextStyle(color: GRAY_CLR),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        customradioButton("9", reminder, (value) {
+                          setState(() {
+                            reminder = value.toString();
+                          });
+                        }),
+                        SizedBox(
+                          width: w * 0.020,
+                        ),
+                        const Text(
+                          "9 Months",
+                          style: TextStyle(color: GRAY_CLR),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
               SizedBox(
                 height: h * 0.030,
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        customradioButton("12", reminder, (value) {
+                          setState(() {
+                            reminder = value.toString();
+                          });
+                        }),
+                        SizedBox(
+                          width: w * 0.020,
+                        ),
+                        const Text(
+                          "12 Months",
+                          style: TextStyle(color: GRAY_CLR),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: h * 0.04,
+                    width: w * 0.3,
+                    margin: EdgeInsets.only(top: h * 0.010),
+                    decoration: BoxDecoration(
+                        color: WHITE_CLR,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: BORDER_CLR, width: 1)),
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding:
+                          const EdgeInsets.only(left: 15, right: 5, top: 3),
+                      child: DropdownButton<String>(
+                        isExpanded: true,
+                        borderRadius: BorderRadius.circular(10),
+                        underline: SizedBox(),
+                        value: reminder,
+                        onChanged: (String? newValue) =>
+                            setState(() => reminder = newValue!),
+                        items: Selectremind.map<DropdownMenuItem<String>>(
+                            (String value) => DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: TextStyle(
+                                        color: PLACE_H_CLR, fontSize: 14),
+                                  ),
+                                )).toList(),
+                        icon: Text(
+                          " Months ",
+                          style: TextStyle(color: GRAY_CLR, height: 0.9),
+                        ),
+                        // iconSize: 30,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: w * 0.260,
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: h * 0.030,
+              ),
+
+              // SizedBox(
+              //   height: h * 0.020,
+              // ),
+              // styleText(REMINDER_DURATION, BLACK_CLR, FontWeight.normal, 15),
+              // SizedBox(
+              //   height: h * 0.020,
+              // ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.start,
+              //   children: [
+              //     customradioButton("Daily", day1, (value) {
+              //       setState(() {
+              //         day1 = value.toString();
+              //       });
+              //     }),
+              //     SizedBox(
+              //       width: w * 0.010,
+              //     ),
+              //     Text(
+              //       DAILY,
+              //       style: TextStyle(color: GRAY_CLR),
+              //     ),
+              //     SizedBox(
+              //       width: w * 0.1,
+              //     ),
+              //     customradioButton("Weekly", day1, (value) {
+              //       setState(() {
+              //         day1 = value.toString();
+              //       });
+              //     }),
+              //     SizedBox(
+              //       width: w * 0.010,
+              //     ),
+              //     Text(
+              //       WEEKLY,
+              //       style: TextStyle(color: GRAY_CLR),
+              //     ),
+              //     SizedBox(
+              //       width: w * 0.1,
+              //     ),
+              //     customradioButton("Monthly", day1, (value) {
+              //       setState(() {
+              //         day1 = value.toString();
+              //       });
+              //     }),
+              //     SizedBox(
+              //       width: w * 0.010,
+              //     ),
+              //     Text(
+              //       MONTHLY,
+              //       style: TextStyle(color: GRAY_CLR),
+              //     ),
+              //   ],
+              // ),
+              // SizedBox(
+              //   height: h * 0.030,
+              // ),
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -257,7 +436,7 @@ class _Add_DewormingState extends State<Add_Deworming> {
                         cutomDatePicker(context).then((value) {
                           setState(() {
                             selectAtdate =
-                                DateFormat("dd-MM-yyyy").format(value!);
+                                DateFormat("yyyy-MM-dd").format(value!);
                           });
                         });
                       },
@@ -276,7 +455,7 @@ class _Add_DewormingState extends State<Add_Deworming> {
                           children: [
                             Text(
                               selectAtdate == null
-                                  ? "DD-MM-YYYY"
+                                  ? "YYYY-MM-DD"
                                   : selectAtdate,
                               style: TextStyle(color: GRAY_CLR, fontSize: 14),
                             ),
@@ -353,8 +532,9 @@ class _Add_DewormingState extends State<Add_Deworming> {
                               await editDewormingApi(
                                 selectStatus,
                                 day,
-                                selectDate.toString(),
-                                day1,
+                                selectDate ??
+                                    widget.editDewormingModel!.dewormingDate!,
+                                reminder,
                                 selectAtdate,
                                 selectedTime.toString(),
                               ).then((value) {
@@ -382,10 +562,9 @@ class _Add_DewormingState extends State<Add_Deworming> {
                                   isAddDeworming = true;
                                 });
                                 await addDewormingApi(
-                                        selectStatus,
                                         day,
                                         selectDate.toString(),
-                                        day1,
+                                        reminder,
                                         selectAtdate,
                                         selectedTime.toString())
                                     .then((value) {
