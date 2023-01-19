@@ -210,7 +210,7 @@ class _HomeState extends State<Home> {
               //     RepeatInterval.everyMinute,
               //     DateTime.now());
               // getFCMtoken();
-              // Navigate_to(context, const Reminder());
+              Navigate_to(context, const Reminder());
               // Workmanager().cancelAll();
               // Workmanager().registerOneOffTask(
               //   "task1",
@@ -218,8 +218,8 @@ class _HomeState extends State<Home> {
               //   inputData: {"id": "dca"},
               // );
 
-              final service = FlutterBackgroundService();
-              service.invoke("stopService");
+              // final service = FlutterBackgroundService();
+              // service.invoke("stopService");
               // // service.invoke("setAsBackground");
               // // service.invoke("setAsForeground");
               // print(await service.isRunning());
