@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 // import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pet_app/Api/Models/remindermodel.dart';
+import 'package:pet_app/AppServices/database.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Provider/Provider.dart';
 import 'package:pet_app/Provider/ServiceListProvider.dart';
@@ -50,7 +52,7 @@ class _HomeState extends State<Home> {
   @override
   initState() {
     super.initState();
-    // getreminderData();
+    getreminderData();
     gname = Preference.Pref!.getString("gname") ?? "";
     gemail = Preference.Pref!.getString("gemail") ?? "";
     gprofilePic = Preference.Pref!.getString("gprofilePic") ?? "";
@@ -191,12 +193,23 @@ class _HomeState extends State<Home> {
           height: 70,
           child: FloatingActionButton(
             onPressed: () async {
+              // getreminderData();
+              // NotesDatabase.instance.create(Note(
+              //     pet_id: 1,
+              //     medicine_name: "qwerty",
+              //     duration: "1234",
+              //     does: "4",
+              //     attime: "1234",
+              //     nextdate: "123svdsv"));
+
+              final list = await NotesDatabase.instance.readAllNotes();
+              print(list);
               // NotificationHelper().schedulNotification(
               //     "this is test",
               //     "qwertyuiopoiuytrewq",
               //     RepeatInterval.everyMinute,
               //     DateTime.now());
-              getFCMtoken();
+              // getFCMtoken();
               // Navigate_to(context, const Reminder());
               // Workmanager().cancelAll();
               // Workmanager().registerOneOffTask(
@@ -209,7 +222,7 @@ class _HomeState extends State<Home> {
               service.invoke("stopService");
               // // service.invoke("setAsBackground");
               // // service.invoke("setAsForeground");
-              print(await service.isRunning());
+              // print(await service.isRunning());
             },
             child: SvgPicture.asset(NOTIFICATION_ICON),
           ),

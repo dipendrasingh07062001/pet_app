@@ -13,6 +13,7 @@ import 'package:pet_app/Api/Models/getMedicineNameModel.dart';
 import 'package:pet_app/Api/Models/remindermodel.dart';
 import 'package:pet_app/Api/Models/v_model.dart';
 import 'package:pet_app/Api/Models/vaccinationModel.dart';
+import 'package:pet_app/AppServices/database.dart';
 import 'package:pet_app/Notification/notificationMathod.dart';
 import 'package:pet_app/Provider/ServiceListProvider.dart';
 import 'package:pet_app/Provider/predictionProvider.dart';
@@ -1590,68 +1591,79 @@ Future getreminderData(
       int i = 0;
       List<Daily?>? dailyList = [];
       List<Daily?>? weekList = [];
+      NotesDatabase.instance.delete();
       dailyList = dailyFromJson(jsonEncode(data["daily"]));
       weekList = dailyFromJson(jsonEncode(data["week"]));
       Preference.Pref.setString("dailyReminder", dailyToJson(dailyList));
       Preference.Pref.setString("weeklyReminder", dailyToJson(weekList));
       print("========");
-      dailyList?.forEach((element) {
-        String time = to24Hours(element!.atTime!);
-        print(time);
-
-        DateTime date = DateTime(
-          element.nextdate!.year,
-          element.nextdate!.month,
-          element.nextdate!.day - 1,
-          int.parse(time.split(":").first),
-          int.parse(time.split(":")[1]),
-        );
-        if (is_In_This_hour(date)) {
-          flutterLocalNotificationsPlugin.show(
-            i,
-            element.medicineName,
-            "qwertyuiopuytre daily",
-            platformChannelSpecifics,
-          );
-          i++;
-
-          //   NotificationHelper().scheduleonday(
-          //     i,
-          //     element.medicineName.toString(),
-          //     "Your pet medicine time",
-          //     date,
-          //   );
-          //   i++;
-        }
+      dailyList!.forEach((e) {
+        Note note = Note(
+            pet_id: e!.petId!,
+            medicine_name: e.medicineName!,
+            duration: e.duration!,
+            does: e.does!,
+            attime: e.atTime!,
+            nextdate: e.nextdate!.toIso8601String());
+        NotesDatabase.instance.create(note);
       });
-      weekList?.forEach((element) {
-        String time = to24Hours(element!.atTime!);
-        print(time);
-        DateTime date = DateTime(
-          element.nextdate!.year,
-          element.nextdate!.month,
-          element.nextdate!.day,
-          int.parse(time.split(":").first),
-          int.parse(time.split(":")[1]),
-        );
-        if (is_In_This_hour(date)) {
-          flutterLocalNotificationsPlugin.show(
-            i,
-            element.medicineName,
-            "qwertyuiopuytre week",
-            platformChannelSpecifics,
-          );
-          i++;
+      // dailyList?.forEach((element) {
+      //   String time = to24Hours(element!.atTime!);
+      //   print(time);
 
-          //   NotificationHelper().scheduleonday(
-          //     i,
-          //     element.medicineName.toString(),
-          //     "Your pet medicine time",
-          //     date,
-          //   );
-          //   i++;
-        }
-      });
+      //   DateTime date = DateTime(
+      //     element.nextdate!.year,
+      //     element.nextdate!.month,
+      //     element.nextdate!.day - 1,
+      //     int.parse(time.split(":").first),
+      //     int.parse(time.split(":")[1]),
+      //   );
+      //   if (is_In_This_hour(date)) {
+      //     flutterLocalNotificationsPlugin.show(
+      //       i,
+      //       element.medicineName,
+      //       "qwertyuiopuytre daily",
+      //       platformChannelSpecifics,
+      //     );
+      //     i++;
+
+      //     //   NotificationHelper().scheduleonday(
+      //     //     i,
+      //     //     element.medicineName.toString(),
+      //     //     "Your pet medicine time",
+      //     //     date,
+      //     //   );
+      //     //   i++;
+      //   }
+      // });
+      // weekList?.forEach((element) {
+      //   String time = to24Hours(element!.atTime!);
+      //   print(time);
+      //   DateTime date = DateTime(
+      //     element.nextdate!.year,
+      //     element.nextdate!.month,
+      //     element.nextdate!.day,
+      //     int.parse(time.split(":").first),
+      //     int.parse(time.split(":")[1]),
+      //   );
+      //   if (is_In_This_hour(date)) {
+      //     flutterLocalNotificationsPlugin.show(
+      //       i,
+      //       element.medicineName,
+      //       "qwertyuiopuytre week",
+      //       platformChannelSpecifics,
+      //     );
+      //     i++;
+
+      //     //   NotificationHelper().scheduleonday(
+      //     //     i,
+      //     //     element.medicineName.toString(),
+      //     //     "Your pet medicine time",
+      //     //     date,
+      //     //   );
+      //     //   i++;
+      //   }
+      // });
 
       // return list;
       // customSnackbar(context, jsoncode["message"]);

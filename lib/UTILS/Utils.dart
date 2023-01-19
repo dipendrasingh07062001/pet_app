@@ -606,9 +606,6 @@ Future<void> exitpop(BuildContext context) {
 
 bool is_In_This_hour(DateTime date) {
   final date2 = DateTime.now();
-  print(date);
-  print(date2);
-  print(date2.difference(date).inMinutes.abs());
   return (date2.difference(date).inMinutes.abs() <= 60);
 }
 

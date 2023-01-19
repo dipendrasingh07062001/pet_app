@@ -96,3 +96,79 @@ class ReminderModel {
         "reminderdaily": reminderdaily == null ? null : reminderdaily,
       };
 }
+
+final String tableNotes = 'medicine_notification';
+
+class NoteFields {
+  static final List<String> values = [
+    /// Add all fields
+    id, pet_id, medicine_name, duration, does, attime, nextdate,
+  ];
+
+  static final String id = 'id';
+  static final String pet_id = 'pet_id';
+  static final String medicine_name = 'medicine_name';
+  static final String duration = 'duration';
+  static final String does = "does";
+  static final String attime = 'attime';
+  static final String nextdate = 'nextdate';
+}
+
+class Note {
+  final int? id;
+  final int pet_id;
+  final String medicine_name;
+  final String duration;
+  final String does;
+  final String attime;
+  final String nextdate;
+
+  Note({
+    this.id,
+    required this.pet_id,
+    required this.medicine_name,
+    required this.duration,
+    required this.does,
+    required this.attime,
+    required this.nextdate,
+  });
+
+  Note copy({
+    int? id,
+    int? pet_id,
+    String? medicine_name,
+    String? duration,
+    String? does,
+    String? attime,
+    String? nextdate,
+  }) =>
+      Note(
+        id: id ?? this.id,
+        pet_id: pet_id ?? this.pet_id,
+        medicine_name: medicine_name ?? this.medicine_name,
+        duration: duration ?? this.duration,
+        does: does ?? this.does,
+        attime: attime ?? this.attime,
+        nextdate: nextdate ?? this.nextdate,
+      );
+
+  static Note fromJson(Map<String, Object?> json) => Note(
+        id: json[NoteFields.id] as int?,
+        pet_id: json[NoteFields.pet_id] as int,
+        medicine_name: json[NoteFields.medicine_name] as String,
+        duration: json[NoteFields.duration] as String,
+        does: json[NoteFields.does] as String,
+        attime: json[NoteFields.attime] as String,
+        nextdate: json[NoteFields.nextdate] as String,
+      );
+
+  Map<String, Object?> toJson() => {
+        NoteFields.id: id,
+        NoteFields.pet_id: pet_id,
+        NoteFields.medicine_name: medicine_name,
+        NoteFields.duration: duration,
+        NoteFields.does: does,
+        NoteFields.attime: attime,
+        NoteFields.nextdate: nextdate,
+      };
+}

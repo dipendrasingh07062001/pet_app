@@ -9,9 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_background_service_android/flutter_background_service_android.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:pet_app/AppServices/database.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Api/ApiBaseUrl.dart';
+import '../Api/Models/remindermodel.dart';
 import '../Api/Models/schedulemodel.dart';
 import '../Api/Prefrence.dart';
 import '../Api/Services.dart';
@@ -33,7 +35,7 @@ dynamic initializeService() async {
 
       // auto start service
       autoStart: true,
-      isForegroundMode: true,
+      isForegroundMode: false,
 
       notificationChannelId: 'high_importance_channel',
       initialNotificationTitle: 'Background service',
@@ -88,8 +90,34 @@ void onStart(ServiceInstance service) async {
   service.on('stopService').listen((event) async {
     service.stopSelf();
   });
-
-  await cron_services();
+  Timer.periodic(const Duration(seconds: 30), (timer) async {
+    List<Note> list = await NotesDatabase.instance.readAllNotes();
+    print('FLUTTER BACKGROUND SERVICE====: ${DateTime.now()}');
+    list.forEach((element) {
+      final time = to24Hours(element.attime);
+      final date = DateTime.parse(element.nextdate);
+      DateTime date2 = DateTime(
+        date.year,
+        date.month,
+        date.day - 1,
+        int.parse(time.split(":").first),
+        int.parse(time.split(":")[1]),
+      );
+      print("inthis" + is_In_This_hour(date2).toString());
+      print("after" + date2.isAfter(DateTime.now()).toString());
+      if (date2.isAfter(DateTime.now())) {
+        if (is_In_This_hour(date2)) {
+          flutterLocalNotificationsPlugin.show(
+            element.id!,
+            element.medicine_name,
+            "Please give medicine to your pet",
+            platformChannelSpecifics,
+          );
+        }
+      }
+    });
+  });
+  // await cron_services();
   // bring to foreground
   // Timer.periodic(const Duration(seconds: 10), (timer) async {
   //   // if (service is AndroidServiceInstance) {

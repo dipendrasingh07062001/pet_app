@@ -72,6 +72,7 @@ dependencies:
   path_provider: ^2.0.11
   android_path_provider: ^0.3.0
   cron: ^0.5.1
+  sqflite: ^2.2.3
 
 
 

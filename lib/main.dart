@@ -86,7 +86,7 @@ Future<void> main() async {
   //   callbackDispatcher,
   //   isInDebugMode: true,
   // );
-  // initializeService();
+  initializeService();
   // cron_services();
   prepareSaveDir();
 
