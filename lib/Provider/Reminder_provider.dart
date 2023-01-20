@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
+import 'package:pet_app/Api/Models/getDewormingModel.dart';
 import 'package:pet_app/Api/Models/remindermodel.dart';
 import 'package:pet_app/Api/Models/schedulemodel.dart';
 import 'package:pet_app/Api/Prefrence.dart';
@@ -14,6 +15,7 @@ class ReminderService extends ChangeNotifier {
   List<Daily?>? dailyreminderList = [];
   List<Daily?>? weeklyreminderList = [];
   List<VaccinationReminder> vaccineList = [];
+  List<Data> dList = [];
   bool isLoading = false;
   get_reminder(BuildContext context) async {
     dailyreminderList?.clear();

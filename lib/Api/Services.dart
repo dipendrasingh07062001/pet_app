@@ -1590,21 +1590,67 @@ Future getreminderData(
 
       int i = 0;
       List<Daily?>? dailyList = [];
+      List<VaccinationReminder> dewormingList = [];
       List<Daily?>? weekList = [];
+      List<Data> dlist = [];
+
       NotesDatabase.instance.delete();
       dailyList = dailyFromJson(jsonEncode(data["daily"]));
       weekList = dailyFromJson(jsonEncode(data["week"]));
+      print(data["deworming"]);
+      // dlist.add(Data.fromJson(data["deworming"].first));
+      dlist = List<Data>.from(data["deworming"].map((e) => Data.fromJson(e)));
       Preference.Pref.setString("dailyReminder", dailyToJson(dailyList));
       Preference.Pref.setString("weeklyReminder", dailyToJson(weekList));
       print("========");
+      dlist.forEach((element) {
+        Note note = Note(
+          pet_id: element.petId!,
+          medicine_name: "Dewarming",
+          duration: element.reminder!,
+          does: element.reminder!,
+          attime: element.atTime!,
+          which: "Dewarming",
+          nextdate: element.nextdose!,
+        );
+        NotesDatabase.instance.create(note);
+      });
       dailyList!.forEach((e) {
         Note note = Note(
-            pet_id: e!.petId!,
-            medicine_name: e.medicineName!,
-            duration: e.duration!,
-            does: e.does!,
-            attime: e.atTime!,
-            nextdate: e.nextdate!.toIso8601String());
+          pet_id: e!.petId!,
+          medicine_name: e.medicineName!,
+          duration: e.duration!,
+          does: e.does!,
+          attime: e.atTime!,
+          which: "medicine",
+          nextdate: e.nextdate!.toIso8601String(),
+        );
+        NotesDatabase.instance.create(note);
+      });
+      weekList!.forEach((e) {
+        Note note = Note(
+          pet_id: e!.petId!,
+          medicine_name: e.medicineName!,
+          duration: e.duration!,
+          does: e.does!,
+          attime: e.atTime!,
+          nextdate: e.nextdate!.toIso8601String(),
+          which: "medicine",
+        );
+        NotesDatabase.instance.create(note);
+      });
+      dewormingList =
+          vaccinationReminderFromJson(jsonEncode(data["vaccination"]));
+      dewormingList.forEach((element) {
+        Note note = Note(
+          pet_id: element.petId!,
+          medicine_name: element.vaccinationId!,
+          duration: element.reminder!,
+          does: element.dose!,
+          attime: element.atTime!,
+          nextdate: element.atDate!.toIso8601String(),
+          which: "vaccine",
+        );
         NotesDatabase.instance.create(note);
       });
       // dailyList?.forEach((element) {
@@ -1696,14 +1742,17 @@ Future getAllreminderData(
       int i = 0;
       List<Daily?>? dailyList = [];
       List<Daily?>? weekList = [];
+      List<Data> dlist = [];
       List<VaccinationReminder> dewormingList = [];
       dailyList = dailyFromJson(jsonEncode(data["daily"]));
       weekList = dailyFromJson(jsonEncode(data["week"]));
       dewormingList =
           vaccinationReminderFromJson(jsonEncode(data["vaccination"]));
+      dlist = List<Data>.from(data["deworming"].map((e) => Data.fromJson(e)));
       context.read<ReminderService>().dailyreminderList?.addAll(dailyList!);
       context.read<ReminderService>().weeklyreminderList?.addAll(weekList!);
       context.read<ReminderService>().vaccineList.addAll(dewormingList);
+      context.read<ReminderService>().dList.addAll(dlist);
       // return list;
       // customSnackbar(context, jsoncode["message"]);
 

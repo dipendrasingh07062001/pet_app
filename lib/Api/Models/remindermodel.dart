@@ -112,6 +112,7 @@ class NoteFields {
   static final String does = "does";
   static final String attime = 'attime';
   static final String nextdate = 'nextdate';
+  static final String which = 'which';
 }
 
 class Note {
@@ -122,6 +123,7 @@ class Note {
   final String does;
   final String attime;
   final String nextdate;
+  final String which;
 
   Note({
     this.id,
@@ -131,6 +133,7 @@ class Note {
     required this.does,
     required this.attime,
     required this.nextdate,
+    required this.which,
   });
 
   Note copy({
@@ -141,6 +144,7 @@ class Note {
     String? does,
     String? attime,
     String? nextdate,
+    String? which,
   }) =>
       Note(
         id: id ?? this.id,
@@ -150,6 +154,7 @@ class Note {
         does: does ?? this.does,
         attime: attime ?? this.attime,
         nextdate: nextdate ?? this.nextdate,
+        which: which ?? this.which,
       );
 
   static Note fromJson(Map<String, Object?> json) => Note(
@@ -160,6 +165,7 @@ class Note {
         does: json[NoteFields.does] as String,
         attime: json[NoteFields.attime] as String,
         nextdate: json[NoteFields.nextdate] as String,
+        which: json[NoteFields.which] as String,
       );
 
   Map<String, Object?> toJson() => {
@@ -170,5 +176,6 @@ class Note {
         NoteFields.does: does,
         NoteFields.attime: attime,
         NoteFields.nextdate: nextdate,
+        NoteFields.which: which,
       };
 }

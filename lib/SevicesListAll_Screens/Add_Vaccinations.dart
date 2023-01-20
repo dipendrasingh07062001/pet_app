@@ -274,7 +274,7 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
             customDateContainer(context, () {
               cutomDatePicker(context).then((value) {
                 setState(() {
-                  vaccinationdate = DateFormat('yyyy-MM-DD').format(value!);
+                  vaccinationdate = DateFormat('yyyy-MM-dd').format(value!);
                 });
               });
             },
@@ -508,7 +508,7 @@ class _Add_VaccinationsState extends State<Add_Vaccinations> {
                     children: [
                       styleText(AT_DATE, BLACK_CLR, FontWeight.normal, 15),
                       customDateContainer(context, () {
-                        cutomDatePicker(context).then((value) {
+                        cutomDatePicker(context, true).then((value) {
                           setState(() {
                             atdate = DateFormat('yyyy-MM-dd').format(value!);
                           });

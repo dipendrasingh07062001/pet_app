@@ -41,6 +41,7 @@ class Data {
     this.reminder,
     this.atDate,
     this.atTime,
+    this.nextdose,
   });
 
   int? id;
@@ -51,17 +52,18 @@ class Data {
   String? reminder;
   String? atDate;
   String? atTime;
+  String? nextdose;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        id: json["id"],
-        petId: json["pet_id"],
-        dewormingStatus: json["deworming_status"],
-        dewormingDuration: json["deworming_duration"],
-        dewormingDate: json["deworming_date"],
-        reminder: json["reminder"],
-        atDate: json["at_date"],
-        atTime: json["at_time"],
-      );
+      id: json["id"],
+      petId: json["pet_id"],
+      dewormingStatus: json["deworming_status"],
+      dewormingDuration: json["deworming_duration"],
+      dewormingDate: json["deworming_date"],
+      reminder: json["reminder"],
+      atDate: json["at_date"],
+      atTime: json["at_time"],
+      nextdose: json["nextdose"] ?? "");
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -72,5 +74,6 @@ class Data {
         "reminder": reminder.toString(),
         "at_date": atDate.toString(),
         "at_time": atTime,
+        "nextdose": nextdose,
       };
 }

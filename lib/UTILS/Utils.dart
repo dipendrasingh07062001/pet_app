@@ -59,12 +59,17 @@ Future<Position> determinePosition() async {
 
 //// select date
 
-Future<DateTime?> cutomDatePicker(BuildContext context) async {
+Future<DateTime?> cutomDatePicker(BuildContext context,
+    [bool lastmonth = false]) async {
   final datePick = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime(2100));
+      firstDate: lastmonth
+          ? DateTime(DateTime.now().year, DateTime.now().month, 1)
+          : DateTime(1900),
+      lastDate: lastmonth
+          ? DateTime(DateTime.now().year, DateTime.now().month, 30)
+          : DateTime(2100));
   if (datePick != null) {
     return datePick;
   }

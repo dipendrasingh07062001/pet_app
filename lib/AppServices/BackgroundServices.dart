@@ -103,14 +103,13 @@ void onStart(ServiceInstance service) async {
         int.parse(time.split(":").first),
         int.parse(time.split(":")[1]),
       );
-      print("inthis" + is_In_This_hour(date2).toString());
-      print("after" + date2.isAfter(DateTime.now()).toString());
+      print("notify ${element.which} date $date2");
       if (date2.isAfter(DateTime.now())) {
         if (is_In_This_hour(date2)) {
           flutterLocalNotificationsPlugin.show(
             element.id!,
             element.medicine_name,
-            "Please give medicine to your pet",
+            "Please give ${element.which == "medicine" ? "medicine" : element.which == "vaccine" ? "vaccine" : "dewarming"} to your pet",
             platformChannelSpecifics,
           );
         }
