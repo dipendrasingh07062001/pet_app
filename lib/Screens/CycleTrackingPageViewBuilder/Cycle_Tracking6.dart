@@ -31,13 +31,17 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
 
   DateTime now = DateTime.now();
   late DateTime lastDayOfMonth;
+  bool isLoading = true;
 
   List list = [];
   @override
   void initState() {
     super.initState();
     lastDayOfMonth = DateTime(2025, 12, 0);
-    context.read<Predictions>().getPreductionDates(context);
+    context.read<Predictions>().getPreductionDates(context).then((value) {
+      isLoading = false;
+      setState(() {});
+    });
     getcycletracking(context);
     list = List.generate(lastDayOfMonth.day, (x) => false);
   }
@@ -105,126 +109,7 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
               height: h * 0.040,
             ),
 
-            // Align(
-            //     alignment: Alignment.center,
-            //     child: TutorialText("Today, ${selected} August", BLACK_CLR,
-            //         FontWeight.bold, 15)),
-            // // CycleCalendra(),
-            // Stack(children: [
-            //   Container(
-            //     margin: const EdgeInsets.only(top: 10),
-            //     width: w * 1,
-            //     decoration: const BoxDecoration(
-            //         border:
-            //             Border(top: BorderSide(color: GREEN_CLR, width: 2))),
-            //   ),
-            //   Center(
-            //     child: Padding(
-            //       padding: const EdgeInsets.only(top: 6),
-            //       child: Image.asset(DROP_ICON, height: 30, color: GREEN_CLR
-            //           // color: GREEN_CLR,
-            //           ),
-            //     ),
-            //   )
-            // ]),
             LinearCalender(),
-
-            // SizedBox(
-            //   height: 100,
-            // ),
-            // Container(
-            //   alignment: Alignment.bottomCenter,
-            //   height: h * 0.12,
-            //   child: GestureDetector(
-            //     onTap: () {
-            //       setState(() {
-            //         list[selected] = !list[selected];
-            //         print(list);
-            //       });
-            //     },
-            //     child: RotatedBox(
-            //         quarterTurns: 5,
-            //         child: ListWheelScrollView(
-            //           useMagnifier: false,
-            //           physics: const FixedExtentScrollPhysics(),
-            //           diameterRatio: 1.5,
-            //           perspective: 0.0000000001,
-            //           clipBehavior: Clip.hardEdge,
-            //           onSelectedItemChanged: (x) {
-            //             setState(() {
-            //               selected = x;
-            //               print(x);
-            //             });
-            //             // print(selected);
-            //           },
-            //           itemExtent: itemWidth,
-            //           controller: _scrollController,
-            //           children: List.generate(
-            //             lastDayOfMonth.day,
-            //             (x) {
-            //               final currentDate =
-            //                   lastDayOfMonth.add(Duration(days: x + 1));
-            //               final dayName = DateFormat('E').format(currentDate);
-            //               return Row(
-            //                 children: [
-            //                   Container(
-            //                     height: 28.0,
-            //                     width: 28.0,
-            //                     alignment: Alignment.center,
-            //                     decoration: BoxDecoration(
-            //                       color: x == selected
-            //                           ? GREEN_CLR
-            //                           : Colors.transparent,
-            //                       borderRadius: BorderRadius.circular(100.0),
-            //                     ),
-            //                     child: Transform.rotate(
-            //                       angle: -70.7,
-            //                       child: Text(
-            //                         dayName.substring(0, 1),
-            //                         style: TextStyle(
-            //                           fontSize: 15.0,
-            //                           color:
-            //                               x == selected ? WHITE_CLR : GRAY_CLR,
-            //                           fontWeight: FontWeight.w900,
-            //                         ),
-            //                       ),
-            //                     ),
-            //                   ),
-            //                   const SizedBox(
-            //                     width: 20,
-            //                   ),
-            //                   Stack(
-            //                     children: [
-            //                       Transform.rotate(
-            //                         angle: -80.1,
-            //                         child: SvgPicture.asset(
-            //                             CYCLE_TRACKING_IMAGE,
-            //                             height: x == selected ? 55 : 40,
-            //                             color: x == selected
-            //                                 ? GREEN_CLR
-            //                                 : GREEN_CLR.withOpacity(0.6)),
-            //                       ),
-            //                       Container(
-            //                           height: 15,
-            //                           width: 15,
-            //                           margin: EdgeInsets.only(
-            //                               left: selected == x ? 7 : 4,
-            //                               top: selected == x ? 20 : 12),
-            //                           decoration: BoxDecoration(
-            //                               borderRadius:
-            //                                   BorderRadius.circular(20),
-            //                               color: list[x]
-            //                                   ? Colors.red
-            //                                   : Colors.transparent))
-            //                     ],
-            //                   ),
-            //                 ],
-            //               );
-            //             },
-            //           ),
-            //         )),
-            //   ),
-            // ),
 
             Align(
               alignment: Alignment.center,
@@ -255,7 +140,11 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
             Consumer<CalenderProvider>(
               builder: (context, value, child) {
                 return GestureDetector(
-                  onTap: () => Navigate_to(context, const Symptoms()),
+                  onTap: () => Navigate_to(
+                      context,
+                      Symptoms(
+                        index: 0,
+                      )),
                   child: Container(
                     alignment: Alignment.centerLeft,
                     margin: EdgeInsets.only(top: h * 0.010),
@@ -301,10 +190,14 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
                   children: [
                     Expanded(
                       child: GestureDetector(
-                        onTap: () => Navigate_to(context, const Symptoms()),
+                        onTap: () => Navigate_to(
+                            context,
+                            Symptoms(
+                              index: 1,
+                            )),
                         child: Container(
                           color: Colors.transparent,
-                          padding: EdgeInsets.all(h * 0.005),
+                          padding: EdgeInsets.all(8.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -335,10 +228,14 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
                     ),
                     Expanded(
                       child: GestureDetector(
-                        onTap: () => Navigate_to(context, const Symptoms()),
+                        onTap: () => Navigate_to(
+                            context,
+                            Symptoms(
+                              index: 2,
+                            )),
                         child: Container(
                           color: Colors.transparent,
-                          padding: EdgeInsets.all(h * 0.005),
+                          padding: EdgeInsets.all(8.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -396,13 +293,13 @@ class _Cycle_Tracking6State extends State<Cycle_Tracking6> {
             SizedBox(
               height: h * 0.010,
             ),
-            Consumer<Predictions>(builder: ((context, value, child) {
-              return value.isLoading
-                  ? loader
-                  : Cycle_prediction_cal(
+            isLoading
+                ? loader
+                : Consumer<Predictions>(builder: ((context, value, child) {
+                    return Cycle_prediction_cal(
                       index: 0,
                     );
-            })),
+                  })),
             // context.watch<Predictions>().isLoading
             //     ? loader
             //     : Cycle_prediction_cal(

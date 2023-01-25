@@ -277,7 +277,7 @@ class _UploadDocState extends State<UploadDoc> {
             styleText(UPLOAD_DOCUMENT, DARK_CLR, FontWeight.bold, 17),
             Container(
               alignment: Alignment.centerLeft,
-              height: h * 0.055,
+              height: h * 0.065,
               width: w * 0.82,
               margin: EdgeInsets.only(top: h * 0.020),
               padding: const EdgeInsets.only(left: 10),
@@ -287,8 +287,12 @@ class _UploadDocState extends State<UploadDoc> {
               child: TextFormField(
                 controller: name,
                 textAlign: TextAlign.start,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                     border: InputBorder.none,
+                    contentPadding: EdgeInsets.only(
+                      top: h * 0.02,
+                      bottom: h * 0.02,
+                    ),
                     hintText: "Document name",
                     hintStyle: TextStyle(fontSize: 14, color: GRAY_CLR)),
               ),

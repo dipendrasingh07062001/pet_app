@@ -66,7 +66,7 @@ class _VaccinationsState extends State<Vaccinations> {
                     shrinkWrap: true,
                     physics: BouncingScrollPhysics(),
                     itemCount: result.vaccinationModeldata!.length,
-                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    padding: EdgeInsets.only(top: 20, bottom: h * 0.1),
                     itemBuilder: (BuildContext context, int index) {
                       return Container(
                         width: w * 1,

@@ -84,7 +84,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     ),
                     styleText(FORGOT_PASS, BLACK_CLR, FontWeight.bold, 19),
                     Container(
-                      height: h * 0.065,
+                      // height: h * 0.065,
                       margin: EdgeInsets.only(top: h * 0.028),
                       decoration: BoxDecoration(
                         color: WHITE70_CLR,

@@ -14,21 +14,34 @@ class Blog_Details extends StatefulWidget {
 }
 
 class _Blog_DetailsState extends State<Blog_Details> {
+  var h;
+  var w;
   @override
   Widget build(BuildContext context) {
+    h = MediaQuery.of(context).size.height;
+    w = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: WHITE70_CLR,
       appBar: DefaultAppBar(Blog_Detail),
       body: SingleChildScrollView(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           const SizedBox(
-            height: 10,
+            height: 20,
           ),
-          Align(
-              alignment: Alignment.center,
-              child: Image.network(
-                widget.blog.image!,
-              )),
+
+          Container(
+            height: h * 0.38,
+            width: w,
+            margin:
+                EdgeInsets.symmetric(horizontal: w * 0.02, vertical: h * 0.01),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(h * 0.02),
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(
+                      widget.blog.image!,
+                    ))),
+          ),
           // Image.asset("assets/png_image/company-pic-3.png")),
           Padding(
             padding: EdgeInsets.only(left: 15, right: 15),

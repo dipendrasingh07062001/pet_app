@@ -11,7 +11,8 @@ import '../../Api/Services.dart';
 import '../../UTILS/Utils.dart';
 
 class Symptoms extends StatefulWidget {
-  const Symptoms({super.key});
+  int index;
+  Symptoms({super.key, required this.index});
 
   @override
   State<Symptoms> createState() => _SymptomsState();
@@ -19,12 +20,24 @@ class Symptoms extends StatefulWidget {
 
 class _SymptomsState extends State<Symptoms> {
   int counter = 0;
-  int currentIndex = 0;
+  int currentIndex = 1;
 
-  List<Widget> Symptomslst = [
-    symptomslst(),
-    symptomslst(),
-    symptomslst(),
+  List<Widget> symptomslst = [
+    Periods(),
+    Symptomslst(),
+    Spottings(),
+
+    // symptomslst(
+    //   title: "Period",
+    //   options: ["Had Flow", "No Flow"],
+    // ),
+    // symptomslst(
+    //   title: "Symptoms",
+    //   options: [""],
+    // ),
+    // symptomslst(
+    //   title: "Spotting",
+    // ),
   ];
 
   var h;
@@ -54,33 +67,30 @@ class _SymptomsState extends State<Symptoms> {
                     alignment: Alignment.topCenter,
                     // color: Colors.red,
                     margin: EdgeInsets.only(top: 15),
-                    height: h * 0.45,
+                    // height: h * 0.45,
                     width: w * 1,
                     child: CarouselSlider(
-                      items: [Symptomslst[index]],
+                      items: symptomslst,
                       options: CarouselOptions(
                           height: h * 0.45,
                           aspectRatio: 1 / 4,
                           viewportFraction: 0.75,
-                          initialPage: 2,
+                          initialPage: widget.index,
                           scrollDirection: Axis.horizontal,
-                          enableInfiniteScroll: true,
-                          reverse: true,
+                          enableInfiniteScroll: false,
+                          // reverse: true,
                           enlargeCenterPage: true,
                           onPageChanged: (index, reason) {
                             setState(() {
-                              currentIndex = index;
-
-                              if (counter <= 2) {
-                                counter++;
-                              }
+                              currentIndex = index + 1;
                             });
                           }),
                     )),
                 SizedBox(
                   height: h * 0.030,
                 ),
-                styleText("$counter of 3", DARK_CLR, FontWeight.normal, 14),
+                styleText("$currentIndex of ${symptomslst.length}", DARK_CLR,
+                    FontWeight.normal, 14),
                 SizedBox(
                   height: h * 0.020,
                 ),
@@ -89,10 +99,27 @@ class _SymptomsState extends State<Symptoms> {
                     ontap: () async {
                       value.onDaySelected(value.days[value.initialPage].date!,
                           value.days[value.initialPage].date!);
-                      await addcycle([
-                        DateFormat("yyyy-MM-dd")
-                            .format(value.days[value.initialPage].date!),
-                      ], "Had Flow", "qwertyu", "qwe", "2", true);
+                      if (!value.days[value.initialPage].iscycle) {
+                        value.days[value.initialPage].iscycle = true;
+                        value.selecteddays.add(value.days[value.initialPage]);
+                        value.days[value.initialPage].period = Periods.period;
+                        value.days[value.initialPage].spotting =
+                            Spottings.spotting;
+                        value.days[value.initialPage].symptoms =
+                            Symptomslst.symptoms.first;
+                      }
+                      await addcycle(
+                        [
+                          DateFormat("yyyy-MM-dd")
+                              .format(value.days[value.initialPage].date!),
+                        ],
+                        Periods.period,
+                        Symptomslst.symptoms.join(","),
+                        Spottings.spotting,
+                        "2",
+                        true,
+                      );
+                      getcycletracking(context);
 
                       Navigator.of(context).pop();
                     },
@@ -118,17 +145,58 @@ class _SymptomsState extends State<Symptoms> {
 int _radioSelected = 1;
 String? _radioVal;
 
-class symptomslst extends StatefulWidget {
-  symptomslst({super.key});
+class Symptomslst extends StatefulWidget {
+  static List symptoms = [];
+  Symptomslst({
+    super.key,
+  });
 
   @override
-  State<symptomslst> createState() => _symptomslstState();
+  State<Symptomslst> createState() => _SymptomslstState();
 }
 
-class _symptomslstState extends State<symptomslst> {
+class _SymptomslstState extends State<Symptomslst> {
   var h;
 
   var w;
+  List list = [
+    {
+      "title": "Excessive Licking",
+      "status": false,
+    },
+    {
+      "title": "Frequent Urination",
+      "status": false,
+    },
+    {
+      "title": "Hyperactive",
+      "status": false,
+    },
+    {
+      "title": "Anxious",
+      "status": false,
+    },
+    {
+      "title": "Aggressive",
+      "status": false,
+    },
+    {
+      "title": "Lazy",
+      "status": false,
+    },
+    {
+      "title": "Appetite Change",
+      "status": false,
+    },
+    {
+      "title": "Swelling of The Vulva",
+      "status": false,
+    },
+    {
+      "title": "Tail Tucking",
+      "status": false,
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -167,129 +235,225 @@ class _symptomslstState extends State<symptomslst> {
                   child: styleText("Select all that apply.", BLACK_CLR,
                       FontWeight.normal, 14),
                 )),
-            // Divider(
-            //   thickness: 1,
-            //   color: GRAY_CLR.withOpacity(0.3),
-            // ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    styleText(
-                        "Abdominal Cramps", DARK_CLR, FontWeight.normal, 14),
-                    SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: Radio(
-                          value: 1,
-                          groupValue: _radioSelected,
-                          activeColor: GREEN_CLR,
-                          onChanged: (value) {
-                            setState(() {
-                              _radioSelected = value!;
-                              _radioVal = 'one';
-                            });
-                          },
-                        ))
-                  ]),
+            Expanded(
+              child: ListView.separated(
+                shrinkWrap: true,
+                itemCount: list.length,
+                separatorBuilder: (context, index) {
+                  return Divider(
+                    height: 1,
+                  );
+                },
+                padding: EdgeInsets.all(0),
+                itemBuilder: (context, index) => ListTile(
+                  onTap: () {
+                    setState(() {
+                      list[index]["status"] = !list[index]["status"];
+                      Symptomslst.symptoms.clear();
+                      list.forEach((element) {
+                        if (element["status"]) {
+                          Symptomslst.symptoms.add(element["title"]);
+                        }
+                      });
+                      print(Symptomslst.symptoms);
+                    });
+                  },
+                  tileColor: Color(0xffF9F9F9),
+                  dense: true,
+                  isThreeLine: false,
+                  leading: styleText(
+                      list[index]["title"], DARK_CLR, FontWeight.normal, 14),
+                  trailing: Radio<bool>(
+                    value: true,
+                    // groupValue: "",
+                    groupValue: list[index]["status"],
+                    // Symptomslst.symptoms.isEmpty
+                    //     ? ""
+                    //     : Symptomslst.symptoms
+                    //         .singleWhere((element) => element == list[index]),
+                    activeColor: GREEN_CLR,
+                    onChanged: (value) {
+                      setState(() {
+                        list[index]["status"] = !list[index]["status"];
+                        Symptomslst.symptoms.clear();
+                        list.forEach((element) {
+                          if (element["status"]) {
+                            Symptomslst.symptoms.add(element["title"]);
+                          }
+                        });
+                        print(Symptomslst.symptoms);
+                      });
+                    },
+                  ),
+                ),
+              ),
             ),
-            SizedBox(
-              height: h * 0.010,
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class Periods extends StatefulWidget {
+  static String period = "";
+  const Periods({super.key});
+
+  @override
+  State<Periods> createState() => _PeriodsState();
+}
+
+class _PeriodsState extends State<Periods> {
+  var h;
+
+  var w;
+  List<String> list = [
+    "Had Flow",
+    "No Flow",
+  ];
+  @override
+  Widget build(BuildContext context) {
+    h = MediaQuery.of(context).size.height;
+    w = MediaQuery.of(context).size.width;
+    return SizedBox(
+      // height: h*0.8,
+      width: w * 0.75,
+      child: Card(
+        color: WHITE70_CLR,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        child: Column(
+          children: [
+            Container(
+                alignment: Alignment.centerLeft,
+                width: w * 1,
+                height: 40,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                  ),
+                  color: GREEN_CLR,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: styleText("Period", WHITE_CLR, FontWeight.bold, 15),
+                )),
+            ListView.separated(
+              shrinkWrap: true,
+              itemCount: list.length,
+              separatorBuilder: (context, index) {
+                return Divider(
+                  height: 1,
+                );
+              },
+              padding: EdgeInsets.all(0),
+              itemBuilder: (context, index) => ListTile(
+                onTap: () {
+                  setState(() {
+                    Periods.period = list[index];
+                    print(Periods.period);
+                  });
+                },
+                tileColor: Color(0xffF9F9F9),
+                dense: true,
+                isThreeLine: false,
+                leading:
+                    styleText(list[index], DARK_CLR, FontWeight.normal, 14),
+                trailing: Radio<String>(
+                  value: list[index],
+                  groupValue: Periods.period,
+                  activeColor: GREEN_CLR,
+                  onChanged: (value) {
+                    setState(() {
+                      Periods.period = value!;
+                    });
+                  },
+                ),
+              ),
             ),
-            Divider(
-              thickness: 1,
-              color: GRAY_CLR.withOpacity(0.3),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10, top: 5),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    styleText(
-                        "Abdominal Cramps", DARK_CLR, FontWeight.normal, 14),
-                    SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: Radio(
-                          value: 2,
-                          groupValue: _radioSelected,
-                          activeColor: GREEN_CLR,
-                          onChanged: (value) {
-                            setState(() {
-                              _radioSelected = value!;
-                              _radioVal = 'two';
-                            });
-                          },
-                        ))
-                  ]),
-            ),
-            SizedBox(
-              height: h * 0.010,
-            ),
-            Divider(
-              thickness: 1,
-              color: GRAY_CLR.withOpacity(0.3),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10, top: 5),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    styleText(
-                        "Abdominal Cramps", DARK_CLR, FontWeight.normal, 14),
-                    SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: Radio(
-                          value: 3,
-                          groupValue: _radioSelected,
-                          activeColor: GREEN_CLR,
-                          onChanged: (value) {
-                            setState(() {
-                              _radioSelected = value!;
-                              _radioVal = 'three';
-                            });
-                          },
-                        ))
-                  ]),
-            ),
-            SizedBox(
-              height: h * 0.010,
-            ),
-            Divider(
-              thickness: 1,
-              color: GRAY_CLR.withOpacity(0.3),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10, top: 5),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    styleText(
-                        "Abdominal Cramps", DARK_CLR, FontWeight.normal, 14),
-                    SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: Radio(
-                          value: 4,
-                          groupValue: _radioSelected,
-                          activeColor: GREEN_CLR,
-                          onChanged: (value) {
-                            setState(() {
-                              _radioSelected = value!;
-                              _radioVal = 'four';
-                            });
-                          },
-                        ))
-                  ]),
-            ),
-            SizedBox(
-              height: h * 0.010,
-            ),
-            Divider(
-              thickness: 1,
-              color: GRAY_CLR.withOpacity(0.3),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class Spottings extends StatefulWidget {
+  static String spotting = "";
+  const Spottings({super.key});
+
+  @override
+  State<Spottings> createState() => _SpottingsState();
+}
+
+class _SpottingsState extends State<Spottings> {
+  var h;
+
+  var w;
+  List<String> list = [
+    "Heavy",
+    "Regular",
+    "Light",
+  ];
+  @override
+  Widget build(BuildContext context) {
+    h = MediaQuery.of(context).size.height;
+    w = MediaQuery.of(context).size.width;
+    return SizedBox(
+      // height: h*0.8,
+      width: w * 0.75,
+      child: Card(
+        color: WHITE70_CLR,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        child: Column(
+          children: [
+            Container(
+                alignment: Alignment.centerLeft,
+                width: w * 1,
+                height: 40,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                  ),
+                  color: GREEN_CLR,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: styleText("Spotting", WHITE_CLR, FontWeight.bold, 15),
+                )),
+            ListView.separated(
+              shrinkWrap: true,
+              itemCount: list.length,
+              separatorBuilder: (context, index) {
+                return Divider(
+                  height: 1,
+                );
+              },
+              padding: EdgeInsets.all(0),
+              itemBuilder: (context, index) => ListTile(
+                onTap: () {
+                  setState(() {
+                    Spottings.spotting = list[index];
+                    print(Spottings.spotting);
+                  });
+                },
+                tileColor: Color(0xffF9F9F9),
+                dense: true,
+                isThreeLine: false,
+                leading:
+                    styleText(list[index], DARK_CLR, FontWeight.normal, 14),
+                trailing: Radio<String>(
+                  value: list[index],
+                  groupValue: Spottings.spotting,
+                  activeColor: GREEN_CLR,
+                  onChanged: (value) {
+                    setState(() {
+                      Spottings.spotting = value!;
+                    });
+                  },
+                ),
+              ),
             ),
           ],
         ),

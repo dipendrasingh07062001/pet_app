@@ -142,6 +142,7 @@ class _HomeState extends State<Home> {
               elevation: 10,
               // initialValue: mypetmoellist[index],
               icon: CircleAvatar(
+                backgroundColor: GREEN_CLR,
                 backgroundImage:
                     Preference.Pref.getString("selectedPetImage") != null ||
                             Preference.Pref.getString("selectedPetImage") !=
@@ -245,7 +246,7 @@ class _HomeState extends State<Home> {
                     children: [
                       Container(
                         alignment: Alignment.center,
-                        height: 48,
+                        height: h * 0.065,
                         margin: EdgeInsets.only(top: h * 0.03),
                         decoration: BoxDecoration(
                           color: WHITE70_CLR,
@@ -279,6 +280,10 @@ class _HomeState extends State<Home> {
                             //   });
                             // },
                             decoration: InputDecoration(
+                                contentPadding: EdgeInsets.only(
+                                  top: h * 0.02,
+                                  bottom: h * 0.02,
+                                ),
                                 errorText: "",
                                 errorStyle: const TextStyle(height: 0),
                                 hintText: "Search",

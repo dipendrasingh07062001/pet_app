@@ -44,8 +44,8 @@ class _LoginState extends State<Login> {
     w = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: GREEN_CLR,
-      resizeToAvoidBottomInset: false,
+      // backgroundColor: GREEN_CLR,
+      // resizeToAvoidBottomInset: false,
       extendBody: false,
       body: googlesigning
           ? Center(
@@ -62,411 +62,473 @@ class _LoginState extends State<Login> {
                 ),
               ],
             ))
-          : SingleChildScrollView(
-              child: Form(
-                key: _formkey,
+          : Form(
+              key: _formkey,
+              child: SingleChildScrollView(
                 child: Stack(
-                  alignment: Alignment.center,
+                  // alignment: Alignment.center,
                   children: [
-                    Column(children: [
-                      Image.asset(BACK_GROUND_IMAGE,
-                          height: h * 0.47,
-                          width: w * 1,
-                          color: WHITE70_CLR,
-                          fit: BoxFit.cover),
-                      Container(
-                        height: h * 0.625,
-                        color: WHITE70_CLR,
-                      )
-                    ]),
-                    Column(
-                      children: [
-                        SizedBox(
-                          height: h * 0.2,
-                        ),
-                        styleText(
-                            HELLO_AGAIN, WHITE70_CLR, FontWeight.normal, 21),
-                        Padding(
-                          padding: const EdgeInsets.all(15),
-                          child: Container(
-                            padding: EdgeInsets.only(top: h * 0.028),
-                            alignment: Alignment.topCenter,
-                            height: h * 0.8,
+                    Align(
+                      alignment: Alignment.topCenter,
+                      child: Container(
+                        color: GREEN_CLR,
+                        child: Image.asset(BACK_GROUND_IMAGE,
+                            height: h * 0.47,
                             width: w * 1,
-                            decoration: const BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(24),
-                                    topRight: Radius.circular(24)),
-                                color: WHITE70_CLR),
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                left: w * 0.030,
-                                right: w * 0.030,
-                              ),
-                              child: Column(
-                                children: [
-                                  TutorialText(WELCOME_BACK, BLACK_CLR,
-                                      FontWeight.bold, 19),
-                                  Container(
-                                    height: h * 0.06,
-                                    margin: EdgeInsets.only(top: h * 0.030),
-                                    decoration: BoxDecoration(
-                                      color: WHITE70_CLR,
-                                      borderRadius: BorderRadius.circular(10),
-                                      boxShadow: [
-                                        BoxShadow(
-                                            blurRadius: 14,
-                                            color: SHADOW_CLR.withOpacity(0.1)),
-                                      ],
-                                    ),
-                                    child: TextFormField(
-                                      controller: emailCantroller,
-                                      textAlign: TextAlign.start,
-                                      keyboardType: TextInputType.emailAddress,
-                                      decoration: const InputDecoration(
-                                          errorText: "",
-                                          errorStyle: TextStyle(height: 0),
-                                          hintText: "Email Address",
-                                          hintStyle: TextStyle(
-                                              color: GRAY_CLR,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.normal),
-                                          prefixIcon: Icon(
-                                            Icons.email_outlined,
-                                            color: GRAY_CLR,
-                                            size: 22,
-                                          ),
-                                          border: InputBorder.none),
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          emailError = "Please enter email";
-                                          setState(() {});
-                                          return "";
-                                        } else if (!isEmail(value)) {
-                                          emailError =
-                                              "Please enter a valid email";
-                                          setState(() {});
-                                          return "";
-                                        } else {
-                                          emailError = "";
-                                          setState(() {});
-                                        }
-                                      },
-                                    ),
+                            color: WHITE70_CLR,
+                            fit: BoxFit.cover),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          // shrinkWrap: true,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SizedBox(
+                              height: h * 0.2,
+                            ),
+                            Center(
+                              child: styleText(HELLO_AGAIN, WHITE70_CLR,
+                                  FontWeight.normal, 21),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(15),
+                              child: Container(
+                                padding: EdgeInsets.only(top: h * 0.028),
+                                alignment: Alignment.topCenter,
+                                // height: h * 0.8,
+                                width: w * 1,
+                                decoration: const BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(24),
+                                        topRight: Radius.circular(24)),
+                                    color: WHITE70_CLR),
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                    left: w * 0.030,
+                                    right: w * 0.030,
                                   ),
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Visibility(
-                                        visible: emailError != "",
-                                        child: Text(
-                                          emailError,
-                                          style: const TextStyle(
-                                              color: Colors.red, fontSize: 12),
-                                          textAlign: TextAlign.start,
-                                        )),
-                                  ),
-                                  Container(
-                                    height: h * 0.06,
-                                    margin: EdgeInsets.only(top: h * 0.025),
-                                    decoration: BoxDecoration(
-                                        color: WHITE70_CLR,
-                                        borderRadius: BorderRadius.circular(10),
-                                        boxShadow: [
-                                          BoxShadow(
-                                              color:
-                                                  SHADOW_CLR.withOpacity(0.1),
-                                              blurRadius: 14)
-                                        ]),
-                                    // color: WHITE_CLR,
-
-                                    child: TextFormField(
-                                      controller: passwordCantroller,
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          passError = "Please enter password";
-                                          // setState(() {});
-                                          return "";
-                                        } else if (value.length < 6) {
-                                          passError =
-                                              "Please enter at least 6 character";
-                                          setState(() {});
-                                        } else {
-                                          passError = "";
-                                        }
-                                      },
-
-                                      obscureText: _passwordVisible,
-                                      // textCapitalization: TextCapitalization.none,
-                                      textAlign: TextAlign.start,
-                                      decoration: InputDecoration(
-                                          errorText: "",
-                                          errorStyle:
-                                              const TextStyle(height: 0),
-                                          hintText: "Password",
-                                          hintStyle: const TextStyle(
-                                              color: GRAY_CLR,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.normal),
-                                          prefixIcon: const Icon(
-                                            Icons.lock_open_outlined,
-                                            color: GRAY_CLR,
-                                            size: 22,
-                                          ),
-                                          border: InputBorder.none,
-                                          suffixIcon: IconButton(
-                                            icon: Icon(
-                                                _passwordVisible
-                                                    ? Icons.visibility_off
-                                                    : Icons.visibility,
-                                                color: GRAY_CLR),
-                                            onPressed: () {
-                                              setState(() {
-                                                _passwordVisible =
-                                                    !_passwordVisible;
-                                              });
-                                            },
-                                          )),
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Visibility(
-                                        visible: passError != "",
-                                        child: Text(
-                                          passError,
-                                          style: const TextStyle(
-                                              color: Colors.red, fontSize: 12),
-                                        )),
-                                  ),
-                                  SizedBox(
-                                    height: h * 0.010,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
+                                  child: Column(
                                     children: [
-                                      SvgPicture.asset(
-                                        Passsword_Key,
-                                        color: GRAY_CLR,
+                                      TutorialText(WELCOME_BACK, BLACK_CLR,
+                                          FontWeight.bold, 19),
+                                      Container(
+                                        height: h * 0.065,
+                                        margin: EdgeInsets.only(top: h * 0.030),
+                                        decoration: BoxDecoration(
+                                          color: WHITE70_CLR,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          boxShadow: [
+                                            BoxShadow(
+                                                blurRadius: 14,
+                                                color: SHADOW_CLR
+                                                    .withOpacity(0.1)),
+                                          ],
+                                        ),
+                                        alignment: Alignment.center,
+                                        child: TextFormField(
+                                          controller: emailCantroller,
+                                          // textAlign: TextAlign.center,
+                                          keyboardType:
+                                              TextInputType.emailAddress,
+                                          decoration: InputDecoration(
+                                              contentPadding: EdgeInsets.only(
+                                                top: h * 0.02,
+                                                bottom: h * 0.02,
+                                              ),
+                                              // isDense: false,
+                                              errorText: "",
+                                              errorStyle: TextStyle(height: 0),
+                                              hintText: "Email Address",
+                                              hintStyle: TextStyle(
+                                                  color: GRAY_CLR,
+                                                  fontSize: 16,
+                                                  fontWeight:
+                                                      FontWeight.normal),
+                                              prefixIcon: Icon(
+                                                Icons.email_outlined,
+                                                color: GRAY_CLR,
+                                                size: 22,
+                                              ),
+                                              border: InputBorder.none),
+                                          validator: (value) {
+                                            if (value!.isEmpty) {
+                                              emailError = "Please enter email";
+                                              setState(() {});
+                                              return "";
+                                            } else if (!isEmail(value)) {
+                                              emailError =
+                                                  "Please enter a valid email";
+                                              setState(() {});
+                                              return "";
+                                            } else {
+                                              emailError = "";
+                                              setState(() {});
+                                            }
+                                          },
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Visibility(
+                                            visible: emailError != "",
+                                            child: Text(
+                                              emailError,
+                                              style: const TextStyle(
+                                                  color: Colors.red,
+                                                  fontSize: 12),
+                                              textAlign: TextAlign.start,
+                                            )),
+                                      ),
+                                      Container(
+                                        height: h * 0.065,
+                                        margin: EdgeInsets.only(top: h * 0.025),
+                                        decoration: BoxDecoration(
+                                            color: WHITE70_CLR,
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                  color: SHADOW_CLR
+                                                      .withOpacity(0.1),
+                                                  blurRadius: 14)
+                                            ]),
+                                        // color: WHITE_CLR,
+                                        alignment: Alignment.center,
+
+                                        child: TextFormField(
+                                          controller: passwordCantroller,
+                                          validator: (value) {
+                                            if (value!.isEmpty) {
+                                              passError =
+                                                  "Please enter password";
+                                              // setState(() {});
+                                              return "";
+                                            } else if (value.length < 6) {
+                                              passError =
+                                                  "Please enter at least 6 character";
+                                              setState(() {});
+                                            } else {
+                                              passError = "";
+                                            }
+                                          },
+
+                                          obscureText: _passwordVisible,
+                                          // textCapitalization: TextCapitalization.none,
+                                          textAlign: TextAlign.start,
+                                          decoration: InputDecoration(
+                                              contentPadding: EdgeInsets.only(
+                                                top: h * 0.02,
+                                                bottom: h * 0.02,
+                                              ),
+                                              errorText: "",
+                                              errorStyle:
+                                                  const TextStyle(height: 0),
+                                              hintText: "Password",
+                                              hintStyle: const TextStyle(
+                                                  color: GRAY_CLR,
+                                                  fontSize: 16,
+                                                  fontWeight:
+                                                      FontWeight.normal),
+                                              prefixIcon: const Icon(
+                                                Icons.lock_open_outlined,
+                                                color: GRAY_CLR,
+                                                size: 22,
+                                              ),
+                                              border: InputBorder.none,
+                                              suffixIcon: IconButton(
+                                                icon: Icon(
+                                                    _passwordVisible
+                                                        ? Icons.visibility_off
+                                                        : Icons.visibility,
+                                                    color: GRAY_CLR),
+                                                onPressed: () {
+                                                  setState(() {
+                                                    _passwordVisible =
+                                                        !_passwordVisible;
+                                                  });
+                                                },
+                                              )),
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Visibility(
+                                            visible: passError != "",
+                                            child: Text(
+                                              passError,
+                                              style: const TextStyle(
+                                                  color: Colors.red,
+                                                  fontSize: 12),
+                                            )),
                                       ),
                                       SizedBox(
-                                        width: w * 0.005,
+                                        height: h * 0.010,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          SvgPicture.asset(
+                                            Passsword_Key,
+                                            color: GRAY_CLR,
+                                          ),
+                                          SizedBox(
+                                            width: w * 0.005,
+                                          ),
+                                          Consumer<ProviderTutorial>(builder:
+                                              (BuildContext context, value,
+                                                  Widget? child) {
+                                            return GestureDetector(
+                                              onTap: () {
+                                                value.NavigateForgotPassword(
+                                                    context);
+                                              },
+                                              child: styleText(
+                                                  FORGOT_PASSWORD,
+                                                  NON_DARK_CLR,
+                                                  FontWeight.normal,
+                                                  15),
+                                            );
+                                          })
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: h * 0.030,
                                       ),
                                       Consumer<ProviderTutorial>(builder:
                                           (BuildContext context, value,
                                               Widget? child) {
-                                        return GestureDetector(
-                                          onTap: () {
-                                            value.NavigateForgotPassword(
-                                                context);
-                                          },
-                                          child: styleText(
-                                              FORGOT_PASSWORD,
-                                              NON_DARK_CLR,
-                                              FontWeight.normal,
-                                              15),
-                                        );
-                                      })
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: h * 0.030,
-                                  ),
-                                  Consumer<ProviderTutorial>(builder:
-                                      (BuildContext context, value,
-                                          Widget? child) {
-                                    return islogin == true
-                                        ? loader
-                                        : DefaultButton(
-                                            text: "Login",
-                                            ontap: () async {
-                                              unfocus(context);
-                                              if (_formkey.currentState!
-                                                  .validate()) {
-                                                emailError = "";
-                                                passError = "";
-                                                unfocus(context);
+                                        return islogin == true
+                                            ? loader
+                                            : DefaultButton(
+                                                text: "Login",
+                                                ontap: () async {
+                                                  unfocus(context);
+                                                  if (_formkey.currentState!
+                                                      .validate()) {
+                                                    emailError = "";
+                                                    passError = "";
+                                                    unfocus(context);
 
-                                                setState(() {
-                                                  islogin = true;
-                                                });
-                                                await LoginApi(
-                                                        emailCantroller.text
-                                                            .toString(),
-                                                        passwordCantroller.text
-                                                            .toString())
-                                                    .then((value) {
-                                                  mypetApi();
-                                                  emailCantroller.clear();
-                                                  passwordCantroller.clear();
-                                                  Navigate_PushRemove(
-                                                      context, const Home());
-                                                  setState(() {
-                                                    islogin = false;
+                                                    setState(() {
+                                                      islogin = true;
+                                                    });
+                                                    await LoginApi(
+                                                            emailCantroller.text
+                                                                .toString(),
+                                                            passwordCantroller
+                                                                .text
+                                                                .toString())
+                                                        .then((value) {
+                                                      mypetApi();
+                                                      emailCantroller.clear();
+                                                      passwordCantroller
+                                                          .clear();
+                                                      Navigate_PushRemove(
+                                                          context,
+                                                          const Home());
+                                                      setState(() {
+                                                        islogin = false;
+                                                      });
+                                                    }).catchError((e) {
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(SnackBar(
+                                                              backgroundColor:
+                                                                  GREEN_CLR,
+                                                              content: Text(e
+                                                                  .toString())));
+
+                                                      print(e.toString());
+                                                      setState(() {
+                                                        islogin = false;
+                                                      });
+                                                    });
+
+                                                    setState(() {
+                                                      islogin = false;
+                                                    });
+                                                  }
+                                                },
+                                                fontsize: 16,
+                                                height: h * 0.060,
+                                                width: w * 1);
+                                      }),
+                                      SizedBox(
+                                        height: h * 0.015,
+                                      ),
+                                      styleText(Or_Continue, GREEN_CLR,
+                                          FontWeight.normal, 15),
+                                      SizedBox(
+                                        height: h * 0.010,
+                                      ),
+                                      Row(
+                                        // crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () async {
+                                              setState(() {
+                                                googlesigning = true;
+                                              });
+
+                                              await googleLogin()
+                                                  .then((value) async {
+                                                if (value) {
+                                                  await socialSigningApi(
+                                                          gemail.toString(),
+                                                          gname.toString(),
+                                                          "Google")
+                                                      .then((value) {
+                                                    mypetApi();
+                                                    Preference.Pref.setString(
+                                                        'email',
+                                                        value['data']['email']);
+                                                    Preference.Pref.setString(
+                                                        'name',
+                                                        value['data']['name']);
+                                                    Preference.Pref.setString(
+                                                        'type',
+                                                        value['data']['type']);
+                                                    Preference.Pref.setInt(
+                                                        'userId',
+                                                        value['data']['id']);
+                                                    setState(() {
+                                                      Navigate_PushRemove(
+                                                          context,
+                                                          const Home());
+                                                      googlesigning = false;
+                                                    });
+                                                  }).catchError((e) {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(SnackBar(
+                                                            backgroundColor:
+                                                                GREEN_CLR,
+                                                            content: Text(
+                                                                e.toString())));
+                                                    setState(() {
+                                                      googlesigning = false;
+                                                    });
                                                   });
-                                                }).catchError((e) {
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(SnackBar(
-                                                          backgroundColor:
-                                                              GREEN_CLR,
-                                                          content: Text(
-                                                              e.toString())));
-
-                                                  print(e.toString());
                                                   setState(() {
-                                                    islogin = false;
+                                                    googlesigning = false;
                                                   });
-                                                });
-
-                                                setState(() {
-                                                  islogin = false;
-                                                });
-                                              }
-                                            },
-                                            fontsize: 16,
-                                            height: h * 0.060,
-                                            width: w * 1);
-                                  }),
-                                  SizedBox(
-                                    height: h * 0.015,
-                                  ),
-                                  styleText(Or_Continue, GREEN_CLR,
-                                      FontWeight.normal, 15),
-                                  SizedBox(
-                                    height: h * 0.010,
-                                  ),
-                                  Row(
-                                    // crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      GestureDetector(
-                                        onTap: () async {
-                                          setState(() {
-                                            googlesigning = true;
-                                          });
-
-                                          await googleLogin()
-                                              .then((value) async {
-                                            if (value) {
-                                              await socialSigningApi(
-                                                      gemail.toString(),
-                                                      gname.toString(),
-                                                      "Google")
-                                                  .then((value) {
-                                                mypetApi();
-                                                Preference.Pref.setString(
-                                                    'email',
-                                                    value['data']['email']);
-                                                Preference.Pref.setString(
-                                                    'name',
-                                                    value['data']['name']);
-                                                Preference.Pref.setString(
-                                                    'type',
-                                                    value['data']['type']);
-                                                Preference.Pref.setInt('userId',
-                                                    value['data']['id']);
-                                                setState(() {
-                                                  Navigate_PushRemove(
-                                                      context, const Home());
-                                                  googlesigning = false;
-                                                });
-                                              }).catchError((e) {
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(SnackBar(
-                                                        backgroundColor:
-                                                            GREEN_CLR,
-                                                        content: Text(
-                                                            e.toString())));
-                                                setState(() {
-                                                  googlesigning = false;
-                                                });
+                                                }
                                               });
                                               setState(() {
                                                 googlesigning = false;
                                               });
-                                            }
-                                          });
-                                          setState(() {
-                                            googlesigning = false;
-                                          });
-                                        },
-                                        child: Container(
-                                            height: 45,
-                                            width: 45,
-                                            alignment: Alignment.center,
-                                            decoration: BoxDecoration(
-                                                color: WHITE_CLR,
-                                                borderRadius:
-                                                    BorderRadius.circular(50)),
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(10),
-                                              child: Image.asset(
-                                                GOOGLE_ICON,
-                                                height: 40,
-                                              ),
-                                            )),
-                                      ),
-                                      Visibility(
-                                        visible: Platform.isIOS,
-                                        child: GestureDetector(
-                                          onTap: () async {
-                                            context
-                                                .read<AuthenticationProvider>()
-                                                // .signOut();
-                                                .signInWithApple()
-                                                .then((value) async {
-                                              if (value != null) {
-                                                print(value);
-                                                await socialSigningApi(
-                                                        context
-                                                            .read<
-                                                                AuthenticationProvider>()
-                                                            .appleEmail,
-                                                        context
-                                                            .read<
-                                                                AuthenticationProvider>()
-                                                            .displayName,
-                                                        "Apple")
-                                                    .then((value) {
-                                                  context
-                                                      .read<
-                                                          AuthenticationProvider>()
-                                                      .loadingStatus(false);
-                                                  mypetApi();
-                                                  Preference.Pref.setString(
-                                                      'email',
-                                                      value['data']['email']);
-                                                  Preference.Pref.setString(
-                                                      'name',
-                                                      value['data']['name']);
-                                                  Preference.Pref.setString(
-                                                      'type',
-                                                      value['data']['type']);
-                                                  Preference.Pref.setInt(
-                                                      'userId',
-                                                      value['data']['id']);
-                                                  setState(() {
-                                                    Navigate_PushRemove(
-                                                        context, const Home());
-                                                    googlesigning = false;
-                                                  });
-                                                }).catchError((e) {
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(SnackBar(
-                                                          backgroundColor:
-                                                              GREEN_CLR,
-                                                          content: Text(
-                                                              e.toString())));
-                                                  setState(() {
-                                                    googlesigning = false;
-                                                  });
+                                            },
+                                            child: Container(
+                                                height: 45,
+                                                width: 45,
+                                                alignment: Alignment.center,
+                                                decoration: BoxDecoration(
+                                                    color: WHITE_CLR,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            50)),
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(10),
+                                                  child: Image.asset(
+                                                    GOOGLE_ICON,
+                                                    height: 40,
+                                                  ),
+                                                )),
+                                          ),
+                                          Visibility(
+                                            visible: Platform.isIOS,
+                                            child: GestureDetector(
+                                              onTap: () async {
+                                                context
+                                                    .read<
+                                                        AuthenticationProvider>()
+                                                    // .signOut();
+                                                    .signInWithApple()
+                                                    .then((value) async {
+                                                  if (value != null) {
+                                                    print(value);
+                                                    await socialSigningApi(
+                                                            context
+                                                                .read<
+                                                                    AuthenticationProvider>()
+                                                                .appleEmail,
+                                                            context
+                                                                .read<
+                                                                    AuthenticationProvider>()
+                                                                .displayName,
+                                                            "Apple")
+                                                        .then((value) {
+                                                      context
+                                                          .read<
+                                                              AuthenticationProvider>()
+                                                          .loadingStatus(false);
+                                                      mypetApi();
+                                                      Preference.Pref.setString(
+                                                          'email',
+                                                          value['data']
+                                                              ['email']);
+                                                      Preference.Pref.setString(
+                                                          'name',
+                                                          value['data']
+                                                              ['name']);
+                                                      Preference.Pref.setString(
+                                                          'type',
+                                                          value['data']
+                                                              ['type']);
+                                                      Preference.Pref.setInt(
+                                                          'userId',
+                                                          value['data']['id']);
+                                                      setState(() {
+                                                        Navigate_PushRemove(
+                                                            context,
+                                                            const Home());
+                                                        googlesigning = false;
+                                                      });
+                                                    }).catchError((e) {
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(SnackBar(
+                                                              backgroundColor:
+                                                                  GREEN_CLR,
+                                                              content: Text(e
+                                                                  .toString())));
+                                                      setState(() {
+                                                        googlesigning = false;
+                                                      });
+                                                    });
+                                                    setState(() {
+                                                      googlesigning = false;
+                                                    });
+                                                  }
                                                 });
-                                                setState(() {
-                                                  googlesigning = false;
-                                                });
-                                              }
-                                            });
-                                          },
-                                          child: Container(
+                                              },
+                                              child: Container(
+                                                  height: 45,
+                                                  width: 45,
+                                                  alignment: Alignment.center,
+                                                  margin: const EdgeInsets.only(
+                                                    left: 15,
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                      color: WHITE_CLR,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              50)),
+                                                  child: const Icon(
+                                                    Icons.apple,
+                                                    size: 35,
+                                                  )),
+                                            ),
+                                          ),
+                                          Container(
                                               height: 45,
                                               width: 45,
                                               alignment: Alignment.center,
@@ -478,61 +540,47 @@ class _LoginState extends State<Login> {
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           50)),
-                                              child: const Icon(
-                                                Icons.apple,
-                                                size: 35,
+                                              child: Image.asset(
+                                                'assets/png_icon/fb_icon_325x325.png',
+                                                height: 30,
                                               )),
-                                        ),
+                                        ],
                                       ),
-                                      Container(
-                                          height: 45,
-                                          width: 45,
-                                          alignment: Alignment.center,
-                                          margin: const EdgeInsets.only(
-                                            left: 15,
-                                          ),
-                                          decoration: BoxDecoration(
-                                              color: WHITE_CLR,
-                                              borderRadius:
-                                                  BorderRadius.circular(50)),
-                                          child: Image.asset(
-                                            'assets/png_icon/fb_icon_325x325.png',
-                                            height: 30,
-                                          )),
+                                      SizedBox(
+                                        height: h * 0.020,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          styleText(NOT_MEMBER, GRAY_CLR,
+                                              FontWeight.normal, 15),
+                                          Consumer<ProviderTutorial>(builder:
+                                              (BuildContext context, value,
+                                                  Widget? child) {
+                                            return GestureDetector(
+                                                onTap: () {
+                                                  Navigate_replace(
+                                                      context, const Signup());
+                                                },
+                                                child: styleText(
+                                                    REGISTER_NOW,
+                                                    GREEN_CLR,
+                                                    FontWeight.normal,
+                                                    15));
+                                          }),
+                                        ],
+                                      )
                                     ],
                                   ),
-                                  SizedBox(
-                                    height: h * 0.020,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      styleText(NOT_MEMBER, GRAY_CLR,
-                                          FontWeight.normal, 15),
-                                      Consumer<ProviderTutorial>(builder:
-                                          (BuildContext context, value,
-                                              Widget? child) {
-                                        return GestureDetector(
-                                            onTap: () {
-                                              Navigate_replace(
-                                                  context, const Signup());
-                                            },
-                                            child: styleText(
-                                                REGISTER_NOW,
-                                                GREEN_CLR,
-                                                FontWeight.normal,
-                                                15));
-                                      }),
-                                    ],
-                                  )
-                                ],
+                                ),
                               ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                     Visibility(
                         visible: context

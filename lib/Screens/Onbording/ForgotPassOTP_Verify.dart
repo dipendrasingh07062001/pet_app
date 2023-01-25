@@ -152,119 +152,27 @@ class _ForgotPassword_OTP_VerifyState extends State<ForgotPassword_OTP_Verify> {
                             decoration: BoxDecoration(
                                 color: GREEN_CLR,
                                 borderRadius: BorderRadius.circular(8)),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.5),
-                              child: TextFormField(
-                                controller: first,
-                                focusNode: pin1FocusNode,
-                                // autofocus: true,
-                                // obscureText: false,
-                                maxLength: 1,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                    fontSize: 24, color: WHITE70_CLR),
-                                keyboardType: TextInputType.number,
+                            child: TextFormField(
+                              controller: first,
+                              focusNode: pin1FocusNode,
+                              // autofocus: true,
+                              // obscureText: false,
+                              maxLength: 1,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                  fontSize: 24, color: WHITE70_CLR),
+                              keyboardType: TextInputType.number,
 
-                                decoration: const InputDecoration(
-                                    border: InputBorder.none,
-                                    counterText: "",
-                                    filled: true,
-                                    fillColor: GREEN_CLR,
-                                    counterStyle: TextStyle(height: 0)),
-                                onChanged: (value) {
-                                  nextField(value, pin2FocusNode);
-                                  //previousField(value, pin2FocusNode);
-                                },
-                              ),
-                            ),
-                          ),
-                          Container(
-                            height: 60,
-                            width: 60,
-                            decoration: BoxDecoration(
-                                color: GREEN_CLR,
-                                borderRadius: BorderRadius.circular(8)),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.5),
-                              child: TextFormField(
-                                  maxLength: 1,
-                                  controller: second,
-                                  focusNode: pin2FocusNode,
-                                  obscureText: false,
-                                  style: const TextStyle(
-                                      fontSize: 24, color: Colors.white),
-                                  keyboardType: TextInputType.number,
-                                  textAlign: TextAlign.center,
-                                  decoration: const InputDecoration(
-                                      border: InputBorder.none,
-                                      counterText: "",
-                                      filled: true,
-                                      focusColor: GREEN_CLR,
-                                      fillColor: GREEN_CLR,
-                                      counterStyle: TextStyle(height: 0)),
-                                  onChanged: (value) {
-                                    // nextField(value, pin3FocusNode);
-
-                                    if (value.toString().length == 0 &&
-                                        tap2 == 0) {
-                                      print("Print1");
-
-                                      tap2 = 1;
-                                    }
-                                    if (value.toString().length > 0) {
-                                      print("Print2");
-                                      FocusScope.of(context)
-                                          .requestFocus(pin3FocusNode);
-                                    }
-                                    if (value.toString().length == 0 &&
-                                        tap2 == 1) {
-                                      print("Print3");
-                                      FocusScope.of(context)
-                                          .requestFocus(pin1FocusNode);
-                                    }
-                                  }),
-                            ),
-                          ),
-                          Container(
-                            height: 60,
-                            width: 60,
-                            decoration: BoxDecoration(
-                                color: GREEN_CLR,
-                                borderRadius: BorderRadius.circular(8)),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.5),
-                              child: TextFormField(
-                                  maxLength: 1,
-                                  controller: third,
-                                  focusNode: pin3FocusNode,
-                                  obscureText: false,
-                                  style: const TextStyle(
-                                      fontSize: 24, color: Colors.white),
-                                  keyboardType: TextInputType.number,
-                                  textAlign: TextAlign.center,
-                                  decoration: const InputDecoration(
-                                      border: InputBorder.none,
-                                      counterText: "",
-                                      filled: true,
-                                      focusColor: GREEN_CLR,
-                                      fillColor: GREEN_CLR,
-                                      counterStyle: TextStyle(height: 0)),
-                                  onChanged: (value) {
-                                    //nextField(value, pin4FocusNode);
-                                    if (value.toString().length == 0 &&
-                                        tap3 == 0) {
-                                      tap3 = 1;
-                                    }
-                                    if (value.toString().length > 0) {
-                                      FocusScope.of(context)
-                                          .requestFocus(pin4FocusNode);
-                                    }
-                                    if (value.toString().length == 0 &&
-                                        tap3 == 1) {
-                                      FocusScope.of(context)
-                                          .requestFocus(pin2FocusNode);
-                                    }
-                                  }),
+                              decoration: const InputDecoration(
+                                  border: InputBorder.none,
+                                  counterText: "",
+                                  // filled: true,
+                                  fillColor: GREEN_CLR,
+                                  counterStyle: TextStyle(height: 0)),
+                              onChanged: (value) {
+                                nextField(value, pin2FocusNode);
+                                //previousField(value, pin2FocusNode);
+                              },
                             ),
                           ),
                           Container(
@@ -274,42 +182,123 @@ class _ForgotPassword_OTP_VerifyState extends State<ForgotPassword_OTP_Verify> {
                             decoration: BoxDecoration(
                                 color: GREEN_CLR,
                                 borderRadius: BorderRadius.circular(8)),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.5),
-                              child: TextFormField(
+                            child: TextFormField(
                                 maxLength: 1,
-                                controller: fourth,
-                                focusNode: pin4FocusNode,
+                                controller: second,
+                                focusNode: pin2FocusNode,
                                 obscureText: false,
                                 style: const TextStyle(
                                     fontSize: 24, color: Colors.white),
                                 keyboardType: TextInputType.number,
-                                // textAlign: TextAlign.center,
+                                textAlign: TextAlign.center,
                                 decoration: const InputDecoration(
                                     border: InputBorder.none,
                                     counterText: "",
-                                    filled: true,
+                                    // filled: true,
                                     focusColor: GREEN_CLR,
                                     fillColor: GREEN_CLR,
                                     counterStyle: TextStyle(height: 0)),
                                 onChanged: (value) {
-                                  // if (value.length == 1) {
-                                  //   pin4FocusNode.unfocus();
+                                  // nextField(value, pin3FocusNode);
 
+                                  if (value.toString().length == 0 &&
+                                      tap2 == 0) {
+                                    print("Print1");
+
+                                    tap2 = 1;
+                                  }
+                                  if (value.toString().length > 0) {
+                                    print("Print2");
+                                    FocusScope.of(context)
+                                        .requestFocus(pin3FocusNode);
+                                  }
+                                  if (value.toString().length == 0 &&
+                                      tap2 == 1) {
+                                    print("Print3");
+                                    FocusScope.of(context)
+                                        .requestFocus(pin1FocusNode);
+                                  }
+                                }),
+                          ),
+                          Container(
+                            alignment: Alignment.center,
+                            height: 60,
+                            width: 60,
+                            decoration: BoxDecoration(
+                                color: GREEN_CLR,
+                                borderRadius: BorderRadius.circular(8)),
+                            child: TextFormField(
+                                maxLength: 1,
+                                controller: third,
+                                focusNode: pin3FocusNode,
+                                obscureText: false,
+                                style: const TextStyle(
+                                    fontSize: 24, color: Colors.white),
+                                keyboardType: TextInputType.number,
+                                textAlign: TextAlign.center,
+                                decoration: const InputDecoration(
+                                    border: InputBorder.none,
+                                    counterText: "",
+                                    // filled: true,
+                                    focusColor: GREEN_CLR,
+                                    fillColor: GREEN_CLR,
+                                    counterStyle: TextStyle(height: 0)),
+                                onChanged: (value) {
+                                  //nextField(value, pin4FocusNode);
                                   if (value.toString().length == 0 &&
                                       tap3 == 0) {
                                     tap3 = 1;
                                   }
                                   if (value.toString().length > 0) {
-                                    FocusScope.of(context).unfocus();
+                                    FocusScope.of(context)
+                                        .requestFocus(pin4FocusNode);
                                   }
                                   if (value.toString().length == 0 &&
                                       tap3 == 1) {
                                     FocusScope.of(context)
-                                        .requestFocus(pin3FocusNode);
+                                        .requestFocus(pin2FocusNode);
                                   }
-                                },
-                              ),
+                                }),
+                          ),
+                          Container(
+                            alignment: Alignment.center,
+                            height: 60,
+                            width: 60,
+                            decoration: BoxDecoration(
+                                color: GREEN_CLR,
+                                borderRadius: BorderRadius.circular(8)),
+                            child: TextFormField(
+                              textAlign: TextAlign.center,
+                              maxLength: 1,
+                              controller: fourth,
+                              focusNode: pin4FocusNode,
+                              obscureText: false,
+                              style: const TextStyle(
+                                  fontSize: 24, color: Colors.white),
+                              keyboardType: TextInputType.number,
+                              // textAlign: TextAlign.center,
+                              decoration: const InputDecoration(
+                                  border: InputBorder.none,
+                                  counterText: "",
+                                  // filled: true,
+                                  focusColor: GREEN_CLR,
+                                  fillColor: GREEN_CLR,
+                                  counterStyle: TextStyle(height: 0)),
+                              onChanged: (value) {
+                                // if (value.length == 1) {
+                                //   pin4FocusNode.unfocus();
+
+                                if (value.toString().length == 0 && tap3 == 0) {
+                                  tap3 = 1;
+                                }
+                                if (value.toString().length > 0) {
+                                  FocusScope.of(context).unfocus();
+                                }
+                                if (value.toString().length == 0 && tap3 == 1) {
+                                  FocusScope.of(context)
+                                      .requestFocus(pin3FocusNode);
+                                }
+                              },
                             ),
                           ),
                         ]),

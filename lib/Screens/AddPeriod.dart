@@ -115,14 +115,16 @@ class _Add_PeriodState extends State<Add_Period> {
             SizedBox(
               height: h * 0.040,
             ),
-            DefaultButton(
-                text: DONE,
-                ontap: () {
-                  context.read<CalenderProvider>().onDone(context);
-                },
-                fontsize: 15,
-                height: h * 0.060,
-                width: w * 0.8)
+            context.read<CalenderProvider>().ondone
+                ? loader
+                : DefaultButton(
+                    text: DONE,
+                    ontap: () {
+                      context.read<CalenderProvider>().onDone(context);
+                    },
+                    fontsize: 15,
+                    height: h * 0.060,
+                    width: w * 0.8)
           ],
         ),
       ),

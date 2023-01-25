@@ -9,9 +9,9 @@ class Predictions extends ChangeNotifier {
   int iterval = 0;
   int lastlong = 0;
 
-  getPreductionDates(BuildContext context) {
+  Future getPreductionDates(BuildContext context) async {
     isLoading = true;
-    getcycleprediction(context).then((value) {
+    await getcycleprediction(context).then((value) {
       showdates.clear();
       value.forEach((e) {
         showdates.add(DateTime.parse(e));

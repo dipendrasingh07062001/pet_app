@@ -41,3 +41,5 @@ const period_priducation_url = 'period_priducation';
 const profile_update_url = 'update_profile';
 const get_reminder_url = 'get_reminder';
 const all_reminder_url = "all_reminder";
+const get_cycletracking_url = "get_cycle_trackings";
+const edit_cycletracking_url = "edit_cycle_tracking";

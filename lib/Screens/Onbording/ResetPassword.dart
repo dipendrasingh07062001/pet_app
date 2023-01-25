@@ -83,7 +83,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                     ),
                     styleText(RESET_PASWORD, BLACK_CLR, FontWeight.bold, 19),
                     Container(
-                      height: h * 0.06,
+                      // height: h * 0.06,
                       margin: EdgeInsets.only(top: h * 0.025),
                       decoration: BoxDecoration(
                           color: WHITE70_CLR,
@@ -115,6 +115,10 @@ class _ResetPasswordState extends State<ResetPassword> {
                         textCapitalization: TextCapitalization.none,
                         textAlign: TextAlign.start,
                         decoration: InputDecoration(
+                            contentPadding: EdgeInsets.only(
+                              top: h * 0.02,
+                              bottom: h * 0.02,
+                            ),
                             errorText: "",
                             errorStyle: const TextStyle(height: 0),
                             hintText: "New Password",
@@ -154,7 +158,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                           )),
                     ),
                     Container(
-                      height: h * 0.06,
+                      // height: h * 0.06,
                       margin: EdgeInsets.only(top: h * 0.025),
                       decoration: BoxDecoration(
                           color: WHITE70_CLR,
@@ -187,6 +191,10 @@ class _ResetPasswordState extends State<ResetPassword> {
                         textCapitalization: TextCapitalization.none,
                         textAlign: TextAlign.start,
                         decoration: InputDecoration(
+                            contentPadding: EdgeInsets.only(
+                              top: h * 0.02,
+                              bottom: h * 0.02,
+                            ),
                             errorText: "",
                             errorStyle: const TextStyle(height: 0),
                             hintText: "Confirm Password",

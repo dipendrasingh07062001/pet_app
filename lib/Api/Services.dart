@@ -28,6 +28,7 @@ import 'Models/My_pet_model.dart';
 import 'Models/ServiceListModel.dart';
 import 'Models/addPetModel.dart';
 import 'Models/cycleTrackingBlogModel.dart';
+import 'Models/cycletackingModel.dart';
 import 'Models/getPregnancyModel.dart';
 import 'Models/schedulemodel.dart';
 import 'Prefrence.dart';
@@ -439,6 +440,9 @@ Future mypetApi() async {
       Preference.Pref.getString('selectedPetGender') ??
           Preference.Pref.setString(
               'selectedPetGender', mypetmoellist[0].gendar);
+      Preference.Pref.getString("selectedPetImage") ??
+          Preference.Pref.setString(
+              "selectedPetImage", mypetmoellist[0].image[0]);
 
       return result.mypetdata;
     } else {
@@ -1761,6 +1765,80 @@ Future getAllreminderData(
     }
   } catch (e) {
     // TODO
+    return [];
+  }
+}
+
+Future getcycletrackingData(
+  BuildContext context,
+) async {
+  try {
+    print("object");
+    var response = await http.get(
+      Uri.parse(baseURL +
+          get_cycletracking_url +
+          "?pet_id=" +
+          Preference.Pref.getInt("selectedPetId").toString()),
+      // body: {"user_id": Preference.Pref.getInt("userId").toString()},
+      headers: headers,
+    );
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      GetCycleModel mod = GetCycleModel();
+      mod = GetCycleModel.fromJson(data["data"].first);
+      // return list;
+      return mod;
+      // customSnackbar(context, jsoncode["message"]);
+
+    } else {
+      return [];
+    }
+  } catch (e) {
+    // TODO
+    return [];
+  }
+}
+
+Future editcycletrackingData(
+  BuildContext context,
+  String cycle_tracking_id,
+  String last_period_date,
+  String last_period_days,
+  String last_long_period_days,
+  String currently_pet,
+  bool predictions,
+  bool period_notification,
+) async {
+  try {
+    print("object");
+    var response = await http.post(
+      Uri.parse(baseURL + edit_cycletracking_url),
+      body: {
+        "cycle_tracking_id": cycle_tracking_id,
+        "pet_id": Preference.Pref.getInt('selectedPetId').toString(),
+        "last_period_date": last_period_date,
+        "last_period_days": last_period_days,
+        "last_long_period_days": last_long_period_days,
+        "currently_pet": currently_pet,
+        "predictions": predictions.toString(),
+        "period_notification": period_notification.toString(),
+      },
+      headers: headers,
+    );
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      if (data["status"]) {
+        Navigator.pop(context);
+      } else {
+        customSnackbar(context, data["message"]);
+      }
+    } else {
+      customSnackbar(context, "Some error occered");
+    }
+  } catch (e) {
+    // TODO
+    customSnackbar(context, "Something went wrong!!!");
+
     return [];
   }
 }

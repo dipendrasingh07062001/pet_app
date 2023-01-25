@@ -179,6 +179,7 @@ class CalenderProvider extends ChangeNotifier {
   Set<DateTime> sendaddeddates = {};
   List<CycleModel> cycle_tracking_data = [];
   bool isloading = false;
+  bool ondone = false;
   Set<DateTime> selectedTableDays = LinkedHashSet<DateTime>(
     equals: isSameDay,
     // hashCode: getHashCode,
@@ -206,10 +207,14 @@ class CalenderProvider extends ChangeNotifier {
       //     }
       //   });
     }
+    print(sendaddeddates);
+
     notifyListeners();
   }
 
   removefromadded(DateTime date) async {
+    sendaddeddates.removeWhere((element) => datematch(element, date));
+
     for (int i = 0; i < addeddays.length; i++) {
       if (datematch(addeddays[i], date)) {
         addeddays.removeAt(i);
@@ -298,7 +303,7 @@ class CalenderProvider extends ChangeNotifier {
           selecteddays.add(e);
           await addcycle([
             DateFormat("yyyy-MM-dd").format(date),
-          ], "Had Flow", "qwertyu", "qwe", "1");
+          ], "Had Flow", "", "", "1");
         } else {
           remove(e.date!);
         }
@@ -314,7 +319,7 @@ class CalenderProvider extends ChangeNotifier {
         selecteddays.removeAt(i);
         await addcycle([
           DateFormat("yyyy-MM-dd").format(date),
-        ], "Had Flow", "qwertyu", "qwe", "0");
+        ], "Had Flow", "", "", "0");
         return;
       }
     }
@@ -353,12 +358,12 @@ class CalenderProvider extends ChangeNotifier {
       selectedTableDays.add(days[index].date!);
       await addcycle([
         DateFormat("yyyy-MM-dd").format(days[index].date!),
-      ], "Had Flow", "qwertyu", "qwe", "1");
+      ], "Had Flow", "", "", "1");
     } else {
       remove(days[index].date!);
       await addcycle([
         DateFormat("yyyy-MM-dd").format(days[index].date!),
-      ], "Had Flow", "qwertyu", "qwe", "0");
+      ], "Had Flow", "", "", "0");
       selectedTableDays.remove(days[index].date);
     }
 
@@ -368,12 +373,19 @@ class CalenderProvider extends ChangeNotifier {
   onDone(BuildContext context) async {
     // print(addeddays.map((e) => e.toIso8601String()).toList());
     // print(DateFormat("yyyy-MM-dd").format(addeddays.first));
+    ondone = true;
     await addcycle(
         sendaddeddates.map((e) => DateFormat("yyyy-MM-dd").format(e)).toList(),
         "Had Flow",
         "",
         "",
         "1");
+    await addcycle(
+        removeDays.map((e) => DateFormat("yyyy-MM-dd").format(e)).toList(),
+        "Had Flow",
+        "",
+        "",
+        "0");
     Set<String> datesremove =
         removeDays.map((e) => DateFormat("yyyy-MM-dd").format(e)).toSet();
     await addcycle(datesremove.toList(), "Had Flow", "", "", "0");
@@ -385,6 +397,8 @@ class CalenderProvider extends ChangeNotifier {
         }
       });
     });
+    ondone = false;
+
     Navigator.of(context).pop();
     notifyListeners();
   }
