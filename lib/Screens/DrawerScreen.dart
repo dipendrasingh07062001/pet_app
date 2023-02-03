@@ -86,7 +86,9 @@ class _MyDrawerState extends State<MyDrawer> {
                         Text(
                           googlesigning
                               ? gname.toString()
-                              : Preference.Pref.getString('name') == ""
+                              : Preference.Pref.getString('name') == "" ||
+                                      Preference.Pref.getString('name') ==
+                                          "null"
                                   ? "Hello.."
                                   : Preference.Pref.getString('name') ?? "",
                           style:

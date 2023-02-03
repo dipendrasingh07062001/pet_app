@@ -4,8 +4,12 @@ import 'package:loading_overlay_pro/animations/bouncing_line.dart';
 import 'package:pet_app/Colors/COLORS.dart';
 import 'package:pet_app/Screens/SuccesFullVerified.dart';
 import 'package:pet_app/UTILS/Utils.dart';
+import 'package:provider/provider.dart';
+import '../../Api/Models/My_pet_model.dart';
+import '../../Api/Prefrence.dart';
 import '../../Api/Services.dart';
 import '../../Componants/Images&Icons.dart';
+import '../../Provider/ServiceListProvider.dart';
 
 class Signup_OTP_Verify extends StatefulWidget {
   const Signup_OTP_Verify({super.key});
@@ -180,6 +184,7 @@ class _Signup_OTP_VerifyState extends State<Signup_OTP_Verify> {
                           Container(
                             height: 60,
                             width: 60,
+                            alignment: Alignment.center,
                             decoration: BoxDecoration(
                                 color: GREEN_CLR,
                                 borderRadius: BorderRadius.circular(8)),
@@ -227,6 +232,7 @@ class _Signup_OTP_VerifyState extends State<Signup_OTP_Verify> {
                           Container(
                             height: 60,
                             width: 60,
+                            alignment: Alignment.center,
                             decoration: BoxDecoration(
                                 color: GREEN_CLR,
                                 borderRadius: BorderRadius.circular(8)),
@@ -283,7 +289,7 @@ class _Signup_OTP_VerifyState extends State<Signup_OTP_Verify> {
                                 style: const TextStyle(
                                     fontSize: 24, color: Colors.white),
                                 keyboardType: TextInputType.number,
-                                // textAlign: TextAlign.center,
+                                textAlign: TextAlign.center,
                                 decoration: const InputDecoration(
                                     border: InputBorder.none,
                                     counterText: "",
@@ -403,6 +409,14 @@ class _Signup_OTP_VerifyState extends State<Signup_OTP_Verify> {
 
                                   Navigate_replace(
                                       context, const SuccessFullyVerified());
+                                  mypetApi().then((value) {
+                                    mypetmoellist = value;
+                                    Preference.Pref.getInt("selectedPetId") ??
+                                        Preference.Pref.setInt(
+                                            "selectedPetId", value[0].id);
+
+                                    setState(() {});
+                                  });
 
                                   setState(() {
                                     isLoadingOtp = false;

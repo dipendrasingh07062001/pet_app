@@ -374,6 +374,7 @@ class CalenderProvider extends ChangeNotifier {
     // print(addeddays.map((e) => e.toIso8601String()).toList());
     // print(DateFormat("yyyy-MM-dd").format(addeddays.first));
     ondone = true;
+    notifyListeners();
     await addcycle(
         sendaddeddates.map((e) => DateFormat("yyyy-MM-dd").format(e)).toList(),
         "Had Flow",

@@ -381,7 +381,7 @@ Future ChangePasswordApi(
 ///
 
 Future servicelistApi(BuildContext context, [String search = ""]) async {
-  String qwe = "?key$search";
+  String qwe = "?key=$search";
   ServiceModel result = ServiceModel();
   var response = await http.get(
     Uri.parse(baseURL + getService + (search == "" ? "" : qwe)),
@@ -1127,7 +1127,8 @@ Future editPregnancyApi(
 Future getPregnancyListApi(String petId) async {
   GetPregnancyModel result = GetPregnancyModel();
   var response = await http.get(
-      Uri.parse(baseURL + getPregnancy + "?pet_id=$petId"),
+      Uri.parse(
+          baseURL + getPregnancy + "?pet_id=${petId == "null" ? "" : petId}"),
       headers: headers);
   if (response.statusCode == 200) {
     final data = json.decode(response.body);

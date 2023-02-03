@@ -267,7 +267,12 @@ class _Add_MedicineState extends State<Add_Medicine> {
               styleText(COURSE_END_DTAE, BLACK_CLR, FontWeight.normal, 15),
               GestureDetector(
                 onTap: () {
-                  cutomDatePicker(context).then((value) {
+                  cutomDatePicker(context, false, start
+                          // startdate == null || startdate == "" || startdate == "null"
+                          //     ? null
+                          //     : DateTime.parse(startdate!),
+                          )
+                      .then((value) {
                     setState(() {
                       enddate = DateFormat('dd/MM/yyyy').format(value!);
                       end = value;

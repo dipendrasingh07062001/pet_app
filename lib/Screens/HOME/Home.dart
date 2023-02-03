@@ -237,101 +237,104 @@ class _HomeState extends State<Home> {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(25),
                     color: HBACKGROUND_CLR),
-                child: Padding(
-                  padding: EdgeInsets.only(left: w * 0.030, right: w * 0.030),
-                  child: ListView(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    physics: BouncingScrollPhysics(),
-                    children: [
-                      Container(
-                        alignment: Alignment.center,
-                        height: h * 0.065,
-                        margin: EdgeInsets.only(top: h * 0.03),
-                        decoration: BoxDecoration(
-                          color: WHITE70_CLR,
-                          borderRadius: BorderRadius.circular(15),
-                          boxShadow: [
-                            BoxShadow(
-                                blurRadius: 8,
-                                color: SHADOW_CLR.withOpacity(0.1)),
-                          ],
-                        ),
-                        child: TextFormField(
-                            controller: searchCantrolller,
-                            onFieldSubmitted: (v) {
+                padding: EdgeInsets.only(left: w * 0.030, right: w * 0.030),
+                child: ListView(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  physics: BouncingScrollPhysics(),
+                  children: [
+                    Container(
+                      alignment: Alignment.center,
+                      height: h * 0.065,
+                      margin: EdgeInsets.only(top: h * 0.03),
+                      decoration: BoxDecoration(
+                        color: WHITE70_CLR,
+                        borderRadius: BorderRadius.circular(15),
+                        boxShadow: [
+                          BoxShadow(
+                              blurRadius: 8,
+                              color: SHADOW_CLR.withOpacity(0.1)),
+                        ],
+                      ),
+                      child: TextFormField(
+                          controller: searchCantrolller,
+                          onFieldSubmitted: (v) {
+                            setState(() {
+                              issearching = true;
+                            });
+                            servicelistApi(context, searchCantrolller.text)
+                                .then((value) {
                               setState(() {
-                                issearching = true;
+                                searchdata = value;
+                                issearching = false;
                               });
-                              servicelistApi(context, searchCantrolller.text)
-                                  .then((value) {
-                                setState(() {
-                                  searchdata = value;
-                                  issearching = false;
-                                });
-                              });
-                            },
-                            // onEditingComplete: () {
-                            //   servicelistApi(context, searchCantrolller.text)
-                            //       .then((value) {
-                            //     setState(() {
-                            //       searchdata = value;
-                            //     });
-                            //   });
-                            // },
-                            decoration: InputDecoration(
-                                contentPadding: EdgeInsets.only(
-                                  top: h * 0.02,
-                                  bottom: h * 0.02,
-                                ),
-                                errorText: "",
-                                errorStyle: const TextStyle(height: 0),
-                                hintText: "Search",
-                                hintStyle: const TextStyle(
-                                    color: GRAY_CLR,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.normal),
-                                prefixIcon: Image.asset(
-                                  "assets/png_icon/magnifying-glass.png",
+                            });
+                          },
+                          // onEditingComplete: () {
+                          //   servicelistApi(context, searchCantrolller.text)
+                          //       .then((value) {
+                          //     setState(() {
+                          //       searchdata = value;
+                          //     });
+                          //   });
+                          // },
+                          decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(
+                                top: h * 0.02,
+                                bottom: h * 0.02,
+                              ),
+                              errorText: "",
+                              errorStyle: const TextStyle(height: 0),
+                              hintText: "Search",
+                              hintStyle: const TextStyle(
                                   color: GRAY_CLR,
-                                ),
-                                // suffixIcon: Image.asset(FILTTER_ICON),
-                                border: InputBorder.none)),
-                      ),
-                      SizedBox(
-                        height: h * 0.020,
-                      ),
-                      // Visibility(
-                      //   visible: searchCantrolller.text.isNotEmpty,
-                      //   child: Text("searching"),
-                      // ),
-                      styleText(SERVICES, BLACK_CLR, FontWeight.bold, 19),
-                      SizedBox(
-                        height: h * 0.010,
-                      ),
-                      Visibility(
-                        visible: searchCantrolller.text.isNotEmpty,
-                        child: issearching
-                            ? loader
-                            : Column(
-                                children: [
-                                  SizedBox(
-                                      height: h * 0.15,
-                                      child: Consumer<ServiceHealthProvider>(
-                                          builder: (BuildContext context, value,
-                                              Widget? child) {
-                                        return ListView.builder(
-                                            physics:
-                                                const BouncingScrollPhysics(),
-                                            shrinkWrap: true,
-                                            controller: scrollController,
-                                            itemCount: searchdata
-                                                .serviceListdata!.length,
-                                            scrollDirection: Axis.horizontal,
-                                            // physics: NeverScrollableScrollPhysics(),
-                                            itemBuilder: (BuildContext context,
-                                                int index) {
-                                              return Column(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.normal),
+                              prefixIcon: Image.asset(
+                                "assets/png_icon/magnifying-glass.png",
+                                color: GRAY_CLR,
+                              ),
+                              // suffixIcon: Image.asset(FILTTER_ICON),
+                              border: InputBorder.none)),
+                    ),
+                    SizedBox(
+                      height: h * 0.020,
+                    ),
+                    // Visibility(
+                    //   visible: searchCantrolller.text.isNotEmpty,
+                    //   child: Text("searching"),
+                    // ),
+                    styleText(SERVICES, BLACK_CLR, FontWeight.bold, 19),
+                    SizedBox(
+                      height: h * 0.010,
+                    ),
+                    Visibility(
+                      visible: searchCantrolller.text.isNotEmpty,
+                      child: issearching
+                          ? loader
+                          : Column(
+                              children: [
+                                SizedBox(
+                                    height: 110,
+                                    child: Consumer<ServiceHealthProvider>(
+                                        builder: (BuildContext context, value,
+                                            Widget? child) {
+                                      return ListView.builder(
+                                          physics:
+                                              const BouncingScrollPhysics(),
+                                          shrinkWrap: true,
+                                          controller: scrollController,
+                                          itemCount: searchdata
+                                              .serviceListdata!.length,
+                                          scrollDirection: Axis.horizontal,
+                                          padding: EdgeInsets.all(0),
+                                          // physics: NeverScrollableScrollPhysics(),
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            return Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 26),
+                                              child: Column(
                                                 children: [
                                                   GestureDetector(
                                                     onTap: () {
@@ -343,11 +346,8 @@ class _HomeState extends State<Home> {
                                                       setState(() {});
                                                     },
                                                     child: Container(
-                                                      margin: const EdgeInsets
-                                                              .symmetric(
-                                                          horizontal: 13),
-                                                      height: h * 0.1,
-                                                      width: h * 0.1,
+                                                      height: 70,
+                                                      width: 70,
                                                       alignment:
                                                           Alignment.center,
                                                       decoration: BoxDecoration(
@@ -427,144 +427,161 @@ class _HomeState extends State<Home> {
                                                       FontWeight.bold,
                                                       13)
                                                 ],
-                                              );
-                                            });
-                                      })),
-                                  Consumer<ServiceHealthProvider>(builder:
-                                      (BuildContext context, value,
-                                          Widget? child) {
-                                    return ListView.builder(
-                                        physics: const BouncingScrollPhysics(),
-                                        shrinkWrap: true,
-                                        scrollDirection: Axis.vertical,
-                                        itemCount: result
-                                            .serviceListdata?[
-                                                value.searchcurrentindex]
-                                            .subserviceListdata
-                                            ?.length,
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          SubServiceListModel? subResultdata =
-                                              result
-                                                  .serviceListdata?[
-                                                      searchcurrentindex]
-                                                  .subserviceListdata?[index];
-                                          print(subResultdata?.name);
-                                          return Visibility(
-                                            visible:
-                                                check(subResultdata!.name!),
-                                            child: SizedBox(
-                                              // height: h * 0.1,
-                                              width: w * 1,
-                                              child: GestureDetector(
-                                                onTap: () {
-                                                  value.onClickedList(
-                                                      context, index);
-                                                },
-                                                // onTap: ()=> Navigate_to(context, PageRoute[index]),
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          bottom: 8),
-                                                  child: Card(
-                                                      color: WHITE70_CLR,
-                                                      elevation: 1,
-                                                      // shadowColor: GRAY_CLR,
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          15)),
-                                                      child: Row(
-                                                        children: [
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(8),
-                                                            child: ClipRRect(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8),
-                                                              child:
-                                                                  Image.network(
-                                                                subResultdata
-                                                                    .image
-                                                                    .toString(),
-                                                                scale: 1.0,
+                                              ),
+                                            );
+                                          });
+                                    })),
+                                Consumer<ServiceHealthProvider>(builder:
+                                    (BuildContext context, value,
+                                        Widget? child) {
+                                  return value.currentindex != 0
+                                      ? Center(
+                                          child: Container(
+                                            height: h * 0.1,
+                                            alignment: Alignment.center,
+                                            child: styleText(
+                                              "Comming soon",
+                                              BLACK_CLR,
+                                              FontWeight.bold,
+                                              19,
+                                            ),
+                                          ),
+                                        )
+                                      : ListView.builder(
+                                          physics:
+                                              const BouncingScrollPhysics(),
+                                          shrinkWrap: true,
+                                          scrollDirection: Axis.vertical,
+                                          itemCount: result
+                                              .serviceListdata?[
+                                                  value.currentindex]
+                                              .subserviceListdata
+                                              ?.length,
+                                          padding: EdgeInsets.all(0),
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            SubServiceListModel? subResultdata =
+                                                result
+                                                    .serviceListdata?[
+                                                        currentindex]
+                                                    .subserviceListdata?[index];
+                                            print(subResultdata?.name);
+                                            return Visibility(
+                                              visible:
+                                                  check(subResultdata!.name!),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                    color: WHITE70_CLR,
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        color: BLACK_CLR
+                                                            .withOpacity(0.1),
+                                                        blurRadius: 2,
+                                                        offset: Offset(0, 2),
+                                                      )
+                                                    ],
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15)),
+                                                margin: const EdgeInsets.only(
+                                                    bottom: 15),
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    value.onClickedList(
+                                                        context, index);
+                                                  },
+                                                  // onTap: ()=> Navigate_to(context, PageRoute[index]),
+                                                  child: Row(
+                                                    children: [
+                                                      Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8),
+                                                        width: 80,
+                                                        height: 80,
+                                                        child: ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                          child: Image.network(
+                                                            subResultdata.image
+                                                                .toString(),
+                                                            scale: 1.0,
 
-                                                                width: 70,
-                                                                height: 70,
-                                                                fit:
-                                                                    BoxFit.fill,
-                                                                // "",
-                                                                loadingBuilder:
-                                                                    (context,
-                                                                        child,
-                                                                        loadingProgress) {
-                                                                  if (loadingProgress ==
-                                                                      null) {
-                                                                    return child;
-                                                                  } else {
-                                                                    return valueLoader(loadingProgress.expectedTotalBytes !=
-                                                                            null
-                                                                        ? loadingProgress.cumulativeBytesLoaded /
-                                                                            loadingProgress.expectedTotalBytes!
-                                                                        : null);
-                                                                  }
-                                                                },
-                                                                errorBuilder:
-                                                                    (context,
-                                                                        error,
-                                                                        stackTrace) {
-                                                                  return Container();
-                                                                },
-                                                                // value.detaildata[index].ImageUrl),
-                                                              ),
-                                                            ),
+                                                            width: 70,
+                                                            height: 70,
+                                                            fit: BoxFit.cover,
+                                                            // "",
+                                                            loadingBuilder:
+                                                                (context, child,
+                                                                    loadingProgress) {
+                                                              if (loadingProgress ==
+                                                                  null) {
+                                                                return child;
+                                                              } else {
+                                                                return valueLoader(loadingProgress
+                                                                            .expectedTotalBytes !=
+                                                                        null
+                                                                    ? loadingProgress
+                                                                            .cumulativeBytesLoaded /
+                                                                        loadingProgress
+                                                                            .expectedTotalBytes!
+                                                                    : null);
+                                                              }
+                                                            },
+                                                            errorBuilder:
+                                                                (context, error,
+                                                                    stackTrace) {
+                                                              return Container();
+                                                            },
+                                                            // value.detaildata[index].ImageUrl),
                                                           ),
-                                                          SizedBox(
-                                                            width: w * 0.035,
-                                                          ),
-                                                          styleText(
-                                                              subResultdata.name
-                                                                  .toString(),
-                                                              // "",
-                                                              // value.detaildata[index].name,
-                                                              DARK_CLR,
-                                                              FontWeight.bold,
-                                                              17)
-                                                        ],
-                                                      )),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        width: w * 0.035,
+                                                      ),
+                                                      styleText(
+                                                          subResultdata.name
+                                                              .toString(),
+                                                          // "",
+                                                          // value.detaildata[index].name,
+                                                          DARK_CLR,
+                                                          FontWeight.bold,
+                                                          17)
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                          );
-                                        });
-                                  }),
-                                ],
-                              ),
-                      ),
+                                            );
+                                          });
+                                }),
+                              ],
+                            ),
+                    ),
 
-                      Visibility(
-                        visible: searchCantrolller.text.isEmpty,
-                        child: SizedBox(
-                            height: h * 0.15,
-                            child: Consumer<ServiceHealthProvider>(builder:
-                                (BuildContext context, value, Widget? child) {
-                              return ListView.builder(
-                                  physics: const BouncingScrollPhysics(),
-                                  shrinkWrap: true,
-                                  controller: scrollController,
-                                  itemCount: result.serviceListdata!.length,
-                                  scrollDirection: Axis.horizontal,
-                                  // physics: NeverScrollableScrollPhysics(),
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    print(result.serviceListdata![index].name
-                                        .toString());
-                                    return Column(
+                    Visibility(
+                      visible: searchCantrolller.text.isEmpty,
+                      child: SizedBox(
+                          height: 110,
+                          child: Consumer<ServiceHealthProvider>(builder:
+                              (BuildContext context, value, Widget? child) {
+                            return ListView.builder(
+                                physics: const BouncingScrollPhysics(),
+                                shrinkWrap: true,
+                                controller: scrollController,
+                                itemCount: result.serviceListdata!.length,
+                                scrollDirection: Axis.horizontal,
+                                padding: EdgeInsets.all(0),
+                                // physics: NeverScrollableScrollPhysics(),
+                                itemBuilder: (BuildContext context, int index) {
+                                  print(result.serviceListdata![index].name
+                                      .toString());
+                                  return Padding(
+                                    padding: const EdgeInsets.only(right: 20),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
                                         GestureDetector(
                                           onTap: () {
@@ -574,10 +591,8 @@ class _HomeState extends State<Home> {
                                             setState(() {});
                                           },
                                           child: Container(
-                                            margin: const EdgeInsets.symmetric(
-                                                horizontal: 13),
-                                            height: h * 0.1,
-                                            width: h * 0.1,
+                                            height: 70,
+                                            width: 70,
                                             alignment: Alignment.center,
                                             decoration: BoxDecoration(
                                                 borderRadius:
@@ -634,148 +649,145 @@ class _HomeState extends State<Home> {
                                           height: h * 0.010,
                                         ),
                                         styleText(
-                                            result.serviceListdata![index].name
-                                                .toString(),
-                                            GRAY_CLR,
-                                            FontWeight.bold,
-                                            13)
+                                          result.serviceListdata![index].name
+                                              .toString(),
+                                          GRAY_CLR,
+                                          FontWeight.bold,
+                                          13,
+                                        )
                                       ],
-                                    );
-                                  });
-                            })),
-                      ),
-
-                      Visibility(
-                        visible: searchCantrolller.text.isEmpty,
-                        child: Consumer<ServiceHealthProvider>(builder:
-                            (BuildContext context, value, Widget? child) {
-                          return value.currentindex != 0
-                              ? Center(
-                                  child: Container(
-                                    height: h * 0.1,
-                                    alignment: Alignment.center,
-                                    child: styleText(
-                                      "Comming soon",
-                                      BLACK_CLR,
-                                      FontWeight.bold,
-                                      19,
                                     ),
+                                  );
+                                });
+                          })),
+                    ),
+                    SizedBox(
+                      height: h * 0.010,
+                    ),
+                    Visibility(
+                      visible: searchCantrolller.text.isEmpty,
+                      child: Consumer<ServiceHealthProvider>(builder:
+                          (BuildContext context, value, Widget? child) {
+                        return value.currentindex != 0
+                            ? Center(
+                                child: Container(
+                                  height: h * 0.1,
+                                  alignment: Alignment.center,
+                                  child: styleText(
+                                    "Comming soon",
+                                    BLACK_CLR,
+                                    FontWeight.bold,
+                                    19,
                                   ),
-                                )
-                              : ListView.builder(
-                                  physics: const BouncingScrollPhysics(),
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: result
-                                      .serviceListdata?[value.currentindex]
-                                      .subserviceListdata
-                                      ?.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    SubServiceListModel? subResultdata = result
-                                        .serviceListdata?[currentindex]
-                                        .subserviceListdata?[index];
-                                    print(subResultdata?.name);
-                                    return Visibility(
-                                      visible: check(subResultdata!.name!),
-                                      child: SizedBox(
-                                        // height: h * 0.12,
-                                        width: w * 1,
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            value.onClickedList(context, index);
-                                          },
-                                          // onTap: ()=> Navigate_to(context, PageRoute[index]),
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                bottom: 8),
-                                            child: Card(
-                                                color: WHITE70_CLR,
-                                                elevation: 1,
-                                                // shadowColor: GRAY_CLR,
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            15)),
-                                                child: Row(
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              8),
-                                                      child: ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                        child: Image.network(
-                                                          subResultdata.image
-                                                              .toString(),
-                                                          scale: 1.0,
+                                ),
+                              )
+                            : ListView.builder(
+                                physics: const BouncingScrollPhysics(),
+                                shrinkWrap: true,
+                                scrollDirection: Axis.vertical,
+                                itemCount: result
+                                    .serviceListdata?[value.currentindex]
+                                    .subserviceListdata
+                                    ?.length,
+                                padding: EdgeInsets.all(0),
+                                itemBuilder: (BuildContext context, int index) {
+                                  SubServiceListModel? subResultdata = result
+                                      .serviceListdata?[currentindex]
+                                      .subserviceListdata?[index];
+                                  print(subResultdata?.name);
+                                  return Visibility(
+                                    visible: check(subResultdata!.name!),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: WHITE70_CLR,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: BLACK_CLR.withOpacity(0.1),
+                                              blurRadius: 2,
+                                              offset: Offset(0, 2),
+                                            )
+                                          ],
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
+                                      margin: const EdgeInsets.only(bottom: 15),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          value.onClickedList(context, index);
+                                        },
+                                        // onTap: ()=> Navigate_to(context, PageRoute[index]),
+                                        child: Row(
+                                          children: [
+                                            Container(
+                                              padding: const EdgeInsets.all(8),
+                                              width: 80,
+                                              height: 80,
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                child: Image.network(
+                                                  subResultdata.image
+                                                      .toString(),
+                                                  scale: 1.0,
 
-                                                          width: 70,
-                                                          height: 70,
-                                                          fit: BoxFit.fill,
-                                                          // "",
-                                                          loadingBuilder: (context,
-                                                              child,
-                                                              loadingProgress) {
-                                                            if (loadingProgress ==
-                                                                null) {
-                                                              return child;
-                                                            } else {
-                                                              return valueLoader(loadingProgress
-                                                                          .expectedTotalBytes !=
-                                                                      null
-                                                                  ? loadingProgress
-                                                                          .cumulativeBytesLoaded /
-                                                                      loadingProgress
-                                                                          .expectedTotalBytes!
-                                                                  : null);
-                                                            }
-                                                          },
-                                                          errorBuilder:
-                                                              (context, error,
-                                                                  stackTrace) {
-                                                            return Container();
-                                                          },
-                                                          // value.detaildata[index].ImageUrl),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      width: w * 0.035,
-                                                    ),
-                                                    styleText(
-                                                        subResultdata.name
-                                                            .toString(),
-                                                        // "",
-                                                        // value.detaildata[index].name,
-                                                        DARK_CLR,
-                                                        FontWeight.bold,
-                                                        17)
-                                                  ],
-                                                )),
-                                          ),
+                                                  width: 70,
+                                                  height: 70,
+                                                  fit: BoxFit.cover,
+                                                  // "",
+                                                  loadingBuilder: (context,
+                                                      child, loadingProgress) {
+                                                    if (loadingProgress ==
+                                                        null) {
+                                                      return child;
+                                                    } else {
+                                                      return valueLoader(loadingProgress
+                                                                  .expectedTotalBytes !=
+                                                              null
+                                                          ? loadingProgress
+                                                                  .cumulativeBytesLoaded /
+                                                              loadingProgress
+                                                                  .expectedTotalBytes!
+                                                          : null);
+                                                    }
+                                                  },
+                                                  errorBuilder: (context, error,
+                                                      stackTrace) {
+                                                    return Container();
+                                                  },
+                                                  // value.detaildata[index].ImageUrl),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: w * 0.035,
+                                            ),
+                                            styleText(
+                                                subResultdata.name.toString(),
+                                                // "",
+                                                // value.detaildata[index].name,
+                                                DARK_CLR,
+                                                FontWeight.bold,
+                                                17)
+                                          ],
                                         ),
                                       ),
-                                    );
-                                  });
-                        }),
-                      ),
-                      styleText(EXPLORE, BLACK_CLR, FontWeight.bold, 19),
-                      SizedBox(
-                        height: h * 0.015,
-                      ),
+                                    ),
+                                  );
+                                });
+                      }),
+                    ),
+                    styleText(EXPLORE, BLACK_CLR, FontWeight.bold, 19),
+                    SizedBox(
+                      height: h * 0.015,
+                    ),
 
-                      ///BlogDetailList
-                      BlogDetailsList(
-                        blogListdata: result.blogListdata ?? [],
-                      ),
-                      SizedBox(
-                        height: h * 0.015,
-                      ),
-                    ],
-                  ),
+                    ///BlogDetailList
+                    BlogDetailsList(
+                      blogListdata: result.blogListdata ?? [],
+                    ),
+                    SizedBox(
+                      height: h * 0.015,
+                    ),
+                  ],
                 ),
               ),
       ),

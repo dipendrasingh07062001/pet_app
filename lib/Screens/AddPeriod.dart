@@ -115,7 +115,7 @@ class _Add_PeriodState extends State<Add_Period> {
             SizedBox(
               height: h * 0.040,
             ),
-            context.read<CalenderProvider>().ondone
+            context.watch<CalenderProvider>().ondone
                 ? loader
                 : DefaultButton(
                     text: DONE,

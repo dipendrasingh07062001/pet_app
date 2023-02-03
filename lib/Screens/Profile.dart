@@ -30,7 +30,9 @@ class _Profile1State extends State<Profile1> {
     // TODO: implement initState
     super.initState();
     email.text = Preference.Pref.getString('email') ?? "";
-    name.text = Preference.Pref.getString('name') ?? "";
+    name.text = Preference.Pref.getString('name') == "null"
+        ? ""
+        : Preference.Pref.getString('name') ?? "";
     phone.text = Preference.Pref.getString('mobile') ?? "";
   }
 
@@ -50,8 +52,9 @@ class _Profile1State extends State<Profile1> {
         elevation: 1,
         title: styleText(PROFILE, DARK_CLR, FontWeight.bold, 17),
       ),
-      body: Padding(
+      body: Container(
         padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
+        color: WHITE70_CLR,
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,9 +68,10 @@ class _Profile1State extends State<Profile1> {
                       Container(
                         decoration: BoxDecoration(
                             // border: Border.all(color: Colors.indigo, width: 5),
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(100),
-                            ),
+                            // borderRadius: const BorderRadius.all(
+                            //   Radius.circular(100),
+                            // ),
+                            shape: BoxShape.circle,
                             color: WHITE_CLR),
                         child: ClipOval(
                           child:
@@ -77,8 +81,8 @@ class _Profile1State extends State<Profile1> {
                             child: pickedImage != null
                                 ? Image.file(
                                     pickedImage!,
-                                    width: 100,
-                                    height: 100,
+                                    width: 90,
+                                    height: 90,
                                     fit: BoxFit.cover,
                                   )
                                 :
@@ -87,23 +91,23 @@ class _Profile1State extends State<Profile1> {
                                     ? Image.network(
                                         Preference.Pref.getString('image') ??
                                             "",
-                                        width: 100,
-                                        height: 100,
+                                        width: 90,
+                                        height: 90,
                                         fit: BoxFit.cover,
                                         errorBuilder:
                                             (context, error, stackTrace) {
                                           return Image.asset(
                                             DEFAULT_USER_IMAGE,
-                                            width: 100,
-                                            height: 100,
+                                            width: 90,
+                                            height: 90,
                                             fit: BoxFit.cover,
                                           );
                                         },
                                       )
                                     : Image.asset(
                                         DEFAULT_USER_IMAGE,
-                                        width: 100,
-                                        height: 100,
+                                        width: 90,
+                                        height: 90,
                                         fit: BoxFit.cover,
                                       ),
                           ),
@@ -111,10 +115,10 @@ class _Profile1State extends State<Profile1> {
                       ),
                       Positioned(
                           bottom: 0,
-                          right: 10,
+                          right: 0,
                           child: Container(
-                            height: 35,
-                            width: 35,
+                            height: 30,
+                            width: 30,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(50),
                                 color: GREEN_CLR),
@@ -126,7 +130,7 @@ class _Profile1State extends State<Profile1> {
                                 child: Icon(
                                   Icons.camera_alt_sharp,
                                   color: WHITE70_CLR,
-                                  size: 20,
+                                  size: 16,
                                 )),
                           ))
                     ],
@@ -134,12 +138,13 @@ class _Profile1State extends State<Profile1> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: h * 0.03),
+                padding: EdgeInsets.only(top: h * 0.03, left: w * 0.01),
                 child: styleText(NAME, BLACK_CLR, FontWeight.normal, 15),
               ),
               Container(
                 padding: EdgeInsets.only(left: 10),
-                margin: EdgeInsets.only(top: h * 0.015),
+                margin: EdgeInsets.only(
+                    top: h * 0.010, left: w * 0.01, right: w * 0.01),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: WHITE_CLR,
@@ -153,11 +158,15 @@ class _Profile1State extends State<Profile1> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: h * 0.02),
+                padding: EdgeInsets.only(
+                  top: h * 0.02,
+                  left: w * 0.01,
+                ),
                 child: styleText(EMAIL, BLACK_CLR, FontWeight.normal, 15),
               ),
               Container(
-                margin: EdgeInsets.only(top: h * 0.010),
+                margin: EdgeInsets.only(
+                    top: h * 0.010, left: w * 0.01, right: w * 0.01),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: WHITE_CLR,
@@ -172,13 +181,17 @@ class _Profile1State extends State<Profile1> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: h * 0.02),
+                padding: EdgeInsets.only(
+                  top: h * 0.02,
+                  left: w * 0.01,
+                ),
                 child: styleText(NUMBER, BLACK_CLR, FontWeight.normal, 15),
               ),
               Container(
                 // padding: EdgeInsets.only(left: 10),\
 
-                margin: EdgeInsets.only(top: h * 0.01),
+                margin: EdgeInsets.only(
+                    top: h * 0.01, left: w * 0.01, right: w * 0.01),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: WHITE_CLR,
